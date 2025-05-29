@@ -14,10 +14,10 @@
     "@calcom/ui": "*",
     "bcryptjs": "^2.4.3",
     "handlebars": "^4.7.7",
-    "jose": "^4.13.1",
+    "jose": "^4.15.5",
     "lru-cache": "^9.0.3",
-    "next-auth": "^4.22.1",
-    "nodemailer": "^6.7.8",
+    "next-auth": "^4.24.5",
+    "nodemailer": "^6.9.9",
     "otplib": "^12.0.1"
   }
 }
