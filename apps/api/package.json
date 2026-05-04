@@ -32,7 +32,7 @@
     "@sentry/nextjs": "^10.51.0",
     "bcryptjs": "^3.0.3",
     "memory-cache": "^0.2.0",
-    "next": "^16.2.4",
+    "next": "^15.5.15",
     "next-api-middleware": "^3.0.0",
     "next-axiom": "^1.10.0",
     "next-swagger-doc": "^0.4.1",
