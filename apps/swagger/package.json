@@ -12,18 +12,18 @@
     "start": "PORT=4200 next start"
   },
   "dependencies": {
-    "highlight.js": "^11.6.0",
+    "highlight.js": "^11.11.1",
     "isarray": "2.0.5",
-    "next": "^13.4.6",
-    "openapi-snippet": "^0.13.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "swagger-ui-react": "4.11.1"
+    "next": "^16.2.4",
+    "openapi-snippet": "^0.14.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "swagger-ui-react": "5.32.5"
   },
   "devDependencies": {
-    "@types/node": "16.9.1",
-    "@types/react": "18.0.26",
-    "@types/react-dom": "^18.0.9",
-    "typescript": "^4.9.4"
+    "@types/node": "25.6.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.3"
   }
 }

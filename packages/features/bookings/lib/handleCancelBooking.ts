@@ -306,10 +306,10 @@ async function handler(req: CustomRequest) {
     await sendCancelledReminders({
       workflows: bookingToDelete.eventType?.workflows,
       smsReminderNumber: bookingToDelete.smsReminderNumber,
-      evt: {
-        ...evt,
-        ...{ eventType: { slug: bookingToDelete.eventType.slug } },
-      },
+      evt: ({
+	...evt,
+	eventType: { slug: bookingToDelete.eventType.slug }
+}),
       hideBranding: !!bookingToDelete.eventType.owner?.hideBranding,
       isKYCVerified,
     });

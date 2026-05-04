@@ -429,7 +429,7 @@ class CalApi {
 
     CalApi.initializedNamespaces.push(this.cal.namespace);
 
-    const { calOrigin: calOrigin, origin: origin, ...restConfig } = config;
+    const { calOrigin, origin, ...restConfig } = config;
 
     this.cal.__config.calOrigin = calOrigin || origin || this.cal.__config.calOrigin;
 

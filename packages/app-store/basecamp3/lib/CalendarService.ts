@@ -110,7 +110,7 @@ export default class BasecampCalendarService implements Calendar {
       event.attendees.reduce((acc, attendee) => {
         return (
           acc +
-          `<br/><a target=\"_blank\" rel=\"noreferrer\" class=\"autolinked\" data-behavior=\"truncate\" href=\"mailto:${attendee.email}\">${attendee.email}</a>`
+          `<br/><a target="_blank" rel="noreferrer" class="autolinked" data-behavior="truncate" href="mailto:${attendee.email}">${attendee.email}</a>`
         );
       }, "");
 

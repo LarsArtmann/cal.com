@@ -41,41 +41,35 @@ export default class AttendeeScheduledEmail extends BaseEmail {
     }
     const partstat: ParticipationStatus = "ACCEPTED";
     const role: ParticipationRole = "REQ-PARTICIPANT";
-    const icsEvent = createEvent({
-      uid: this.calEvent.iCalUID || this.calEvent.uid!,
-      start: dayjs(this.calEvent.startTime)
-        .utc()
-        .toArray()
-        .slice(0, 6)
-        .map((v, i) => (i === 1 ? v + 1 : v)) as DateArray,
-      startInputType: "utc",
-      productId: "calcom/ics",
-      title: this.calEvent.title,
-      description: this.getTextBody(),
-      duration: { minutes: dayjs(this.calEvent.endTime).diff(dayjs(this.calEvent.startTime), "minute") },
-      organizer: { name: this.calEvent.organizer.name, email: this.calEvent.organizer.email },
-      attendees: [
-        ...this.calEvent.attendees.map((attendee: Person) => ({
-          name: attendee.name,
-          email: attendee.email,
-          partstat,
-          role,
-          rsvp: true,
-        })),
-        ...(this.calEvent.team?.members
-          ? this.calEvent.team?.members.map((member: Person) => ({
-              name: member.name,
-              email: member.email,
-              partstat,
-              role,
-              rsvp: true,
-            }))
-          : []),
-      ],
-      method: "REQUEST",
-      ...{ recurrenceRule },
-      status: "CONFIRMED",
-    });
+    const icsEvent = createEvent(({
+	uid: this.calEvent.iCalUID || this.calEvent.uid!,
+	start: dayjs(this.calEvent.startTime).utc().toArray().slice(0, 6).map((v, i) => i === 1 ? v + 1 : v) as DateArray,
+	startInputType: 'utc',
+	productId: 'calcom/ics',
+	title: this.calEvent.title,
+	description: this.getTextBody(),
+	duration: { minutes: dayjs(this.calEvent.endTime).diff(dayjs(this.calEvent.startTime), 'minute') },
+	organizer: {
+		name: this.calEvent.organizer.name,
+		email: this.calEvent.organizer.email
+	},
+	attendees: [...this.calEvent.attendees.map((attendee: Person) => ({
+		name: attendee.name,
+		email: attendee.email,
+		partstat,
+		role,
+		rsvp: true
+	})), ...this.calEvent.team?.members ? this.calEvent.team?.members.map((member: Person) => ({
+		name: member.name,
+		email: member.email,
+		partstat,
+		role,
+		rsvp: true
+	})) : []],
+	method: 'REQUEST',
+	recurrenceRule,
+	status: 'CONFIRMED'
+}));
     if (icsEvent.error) {
       throw icsEvent.error;
     }

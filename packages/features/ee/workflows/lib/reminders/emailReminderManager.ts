@@ -55,32 +55,29 @@ function getiCalEventAsString(evt: BookingInfo, status?: ParticipationStatus) {
     recurrenceRule = new RRule(evt.eventType.recurringEvent).toString().replace("RRULE:", "");
   }
 
-  const icsEvent = createEvent({
-    uid,
-    startInputType: "utc",
-    start: dayjs(evt.startTime)
-      .utc()
-      .toArray()
-      .slice(0, 6)
-      .map((v, i) => (i === 1 ? v + 1 : v)) as DateArray,
-    duration: { minutes: dayjs(evt.endTime).diff(dayjs(evt.startTime), "minute") },
-    title: evt.title,
-    description: evt.additionalNotes || "",
-    location: evt.location || "",
-    organizer: { email: evt.organizer.email || "", name: evt.organizer.name },
-    attendees: [
-      {
-        name: preprocessNameFieldDataWithVariant("fullName", evt.attendees[0].name) as string,
-        email: evt.attendees[0].email,
-        partstat: status,
-        role: "REQ-PARTICIPANT",
-        rsvp: true,
-      },
-    ],
-    method: "REQUEST",
-    ...{ recurrenceRule },
-    status: "CONFIRMED",
-  });
+  const icsEvent = createEvent(({
+	uid,
+	startInputType: 'utc',
+	start: dayjs(evt.startTime).utc().toArray().slice(0, 6).map((v, i) => i === 1 ? v + 1 : v) as DateArray,
+	duration: { minutes: dayjs(evt.endTime).diff(dayjs(evt.startTime), 'minute') },
+	title: evt.title,
+	description: evt.additionalNotes || '',
+	location: evt.location || '',
+	organizer: {
+		email: evt.organizer.email || '',
+		name: evt.organizer.name
+	},
+	attendees: [{
+		name: preprocessNameFieldDataWithVariant('fullName', evt.attendees[0].name) as string,
+		email: evt.attendees[0].email,
+		partstat: status,
+		role: 'REQ-PARTICIPANT',
+		rsvp: true
+	}],
+	method: 'REQUEST',
+	recurrenceRule,
+	status: 'CONFIRMED'
+}));
 
   if (icsEvent.error) {
     throw icsEvent.error;

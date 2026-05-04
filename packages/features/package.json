@@ -11,14 +11,14 @@
     "@calcom/lib": "*",
     "@calcom/trpc": "*",
     "@calcom/ui": "*",
-    "@lexical/react": "^0.9.0",
-    "@tanstack/react-table": "^8.9.3",
-    "framer-motion": "^10.12.8",
-    "lexical": "^0.9.0",
-    "react-select": "^5.7.0",
-    "react-sticky-box": "^2.0.4",
+    "@lexical/react": "^0.44.0",
+    "@tanstack/react-table": "^8.21.3",
+    "framer-motion": "^12.38.0",
+    "lexical": "^0.44.0",
+    "react-select": "^5.10.2",
+    "react-sticky-box": "^2.0.5",
     "react-virtual": "^2.10.4",
-    "zustand": "^4.3.2"
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^8.0.1"

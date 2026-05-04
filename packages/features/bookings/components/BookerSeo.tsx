@@ -34,12 +34,10 @@ export const BookerSeo = (props: BookerSeoProps) => {
       meeting={{
         title: title,
         profile: { name: profileName, image: profileImage },
-        users: [
-          ...(event?.users || []).map((user) => ({
+        users: (event?.users || []).map((user) => ({
             name: `${user.name}`,
             username: `${user.username}`,
           })),
-        ],
       }}
       nextSeoProps={{
         nofollow: event?.hidden || !isSEOIndexable,

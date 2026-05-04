@@ -36,34 +36,28 @@ export default class OrganizerScheduledEmail extends BaseEmail {
       // ics appends "RRULE:" already, so removing it from RRule generated string
       recurrenceRule = new RRule(this.calEvent.recurringEvent).toString().replace("RRULE:", "");
     }
-    const icsEvent = createEvent({
-      uid: this.calEvent.iCalUID || this.calEvent.uid!,
-      start: dayjs(this.calEvent.startTime)
-        .utc()
-        .toArray()
-        .slice(0, 6)
-        .map((v, i) => (i === 1 ? v + 1 : v)) as DateArray,
-      startInputType: "utc",
-      productId: "calcom/ics",
-      title: this.calEvent.title,
-      description: this.getTextBody(),
-      duration: { minutes: dayjs(this.calEvent.endTime).diff(dayjs(this.calEvent.startTime), "minute") },
-      organizer: { name: this.calEvent.organizer.name, email: this.calEvent.organizer.email },
-      ...{ recurrenceRule },
-      attendees: [
-        ...this.calEvent.attendees.map((attendee: Person) => ({
-          name: attendee.name,
-          email: attendee.email,
-        })),
-        ...(this.calEvent.team?.members
-          ? this.calEvent.team?.members.map((member: Person) => ({
-              name: member.name,
-              email: member.email,
-            }))
-          : []),
-      ],
-      status: "CONFIRMED",
-    });
+    const icsEvent = createEvent(({
+	uid: this.calEvent.iCalUID || this.calEvent.uid!,
+	start: dayjs(this.calEvent.startTime).utc().toArray().slice(0, 6).map((v, i) => i === 1 ? v + 1 : v) as DateArray,
+	startInputType: 'utc',
+	productId: 'calcom/ics',
+	title: this.calEvent.title,
+	description: this.getTextBody(),
+	duration: { minutes: dayjs(this.calEvent.endTime).diff(dayjs(this.calEvent.startTime), 'minute') },
+	organizer: {
+		name: this.calEvent.organizer.name,
+		email: this.calEvent.organizer.email
+	},
+	recurrenceRule,
+	attendees: [...this.calEvent.attendees.map((attendee: Person) => ({
+		name: attendee.name,
+		email: attendee.email
+	})), ...this.calEvent.team?.members ? this.calEvent.team?.members.map((member: Person) => ({
+		name: member.name,
+		email: member.email
+	})) : []],
+	status: 'CONFIRMED'
+}));
     if (icsEvent.error) {
       throw icsEvent.error;
     }

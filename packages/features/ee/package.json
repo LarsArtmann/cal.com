@@ -8,13 +8,13 @@
   "dependencies": {
     "@calcom/lib": "*",
     "@calcom/ui": "*",
-    "@hookform/error-message": "^2.0.0",
-    "@hookform/resolvers": "^2.9.7",
-    "@sendgrid/client": "^7.7.0",
-    "@sendgrid/mail": "^7.6.2",
-    "libphonenumber-js": "^1.10.12",
-    "twilio": "^3.80.1",
-    "zod": "^3.22.2"
+    "@hookform/error-message": "^2.0.1",
+    "@hookform/resolvers": "^5.2.2",
+    "@sendgrid/client": "^8.1.6",
+    "@sendgrid/mail": "^8.1.6",
+    "libphonenumber-js": "^1.12.42",
+    "twilio": "^6.0.0",
+    "zod": "^4.4.1"
   },
   "devDependencies": {
     "@calcom/tsconfig": "*"

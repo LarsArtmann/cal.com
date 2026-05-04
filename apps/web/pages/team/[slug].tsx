@@ -277,8 +277,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
   if (!team || (team.parent && !team.parent.slug)) {
     const unpublishedTeam = await prisma.team.findFirst({
-      where: {
-        ...(team?.parent
+      where: (team?.parent
           ? { id: team.parent.id }
           : {
               metadata: {
@@ -286,7 +285,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
                 equals: slug,
               },
             }),
-      },
     });
 
     if (!unpublishedTeam) return { notFound: true } as const;

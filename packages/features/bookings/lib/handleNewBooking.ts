@@ -1763,7 +1763,11 @@ async function handler(
       await scheduleWorkflowReminders({
         workflows: eventType.workflows,
         smsReminderNumber: smsReminderNumber || null,
-        calendarEvent: { ...evt, ...{ metadata, eventType: { slug: eventType.slug } } },
+        calendarEvent: ({
+	...evt,
+	metadata,
+	eventType: { slug: eventType.slug }
+}),
         isNotConfirmed: evt.requiresConfirmation || false,
         isRescheduleEvent: !!rescheduleUid,
         isFirstRecurringEvent: true,
@@ -2407,10 +2411,11 @@ async function handler(
     await scheduleWorkflowReminders({
       workflows: eventType.workflows,
       smsReminderNumber: smsReminderNumber || null,
-      calendarEvent: {
-        ...evt,
-        ...{ metadata: metadataFromEvent, eventType: { slug: eventType.slug } },
-      },
+      calendarEvent: ({
+	...evt,
+	metadata: metadataFromEvent,
+	eventType: { slug: eventType.slug }
+}),
       isNotConfirmed: evt.requiresConfirmation || false,
       isRescheduleEvent: !!rescheduleUid,
       isFirstRecurringEvent: true,

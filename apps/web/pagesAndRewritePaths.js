@@ -25,13 +25,13 @@ const otherNonExistingRoutePrefixes = ["forms", "router", "success", "cancel"];
 let subdomainRegExp = (exports.subdomainRegExp = getSubdomainRegExp(
   process.env.NEXT_PUBLIC_WEBAPP_URL || "https://" + process.env.VERCEL_URL
 ));
-exports.orgHostPath = `^(?<orgSlug>${subdomainRegExp})\\.(?!vercel\.app).*`;
+exports.orgHostPath = `^(?<orgSlug>${subdomainRegExp})\\.(?!vercel.app).*`;
 
 let beforeRewriteExcludePages = pages.concat(otherNonExistingRoutePrefixes);
-exports.orgUserRoutePath = `/:user((?!${beforeRewriteExcludePages.join("|")}|_next|public)[a-zA-Z0-9\-_]+)`;
+exports.orgUserRoutePath = `/:user((?!${beforeRewriteExcludePages.join("|")}|_next|public)[a-zA-Z0-9-_]+)`;
 exports.orgUserTypeRoutePath = `/:user((?!${beforeRewriteExcludePages.join(
   "/|"
-)}|_next/|public/)[^/]+)/:type((?!avatar\.png)[^/]+)`;
+)}|_next/|public/)[^/]+)/:type((?!avatar.png)[^/]+)`;
 exports.orgUserTypeEmbedRoutePath = `/:user((?!${beforeRewriteExcludePages.join(
   "/|"
 )}|_next/|public/)[^/]+)/:type/embed`;

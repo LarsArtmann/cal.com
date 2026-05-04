@@ -225,9 +225,7 @@ const nextConfig = {
     return config;
   },
   async rewrites() {
-    const beforeFiles = [
-      // These rewrites are other than booking pages rewrites and so that they aren't redirected to org pages ensure that they happen in beforeFiles
-      ...(isOrganizationsEnabled
+    const beforeFiles = (isOrganizationsEnabled
         ? [
             {
               ...matcherConfigRootPath,
@@ -246,8 +244,7 @@ const nextConfig = {
               destination: "/org/:orgSlug/:user/:type/embed",
             },
           ]
-        : []),
-    ];
+        : []);
 
     let afterFiles = [
       {
@@ -441,7 +438,7 @@ const nextConfig = {
             type: "query",
             key: "callbackUrl",
             // prettier-ignore
-            value: "^(?!https?:\/\/).*$",
+            value: "^(?!https?://).*$",
           },
         ],
         destination: "/404",

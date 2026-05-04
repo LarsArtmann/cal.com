@@ -32,7 +32,7 @@ beforeAll(async () => {
 describe("next.config.js - Org Rewrite", () => {
   const orgHostRegExp = (subdomainRegExp: string) =>
     // RegExp copied from pagesAndRewritePaths.js orgHostPath. Do make the change there as well.
-    new RegExp(`^(?<orgSlug>${subdomainRegExp})\\.(?!vercel\.app).*`);
+    new RegExp(`^(?<orgSlug>${subdomainRegExp})\\.(?!vercel.app).*`);
 
   describe("Host matching based on NEXT_PUBLIC_WEBAPP_URL", () => {
     it("https://app.cal.com", () => {

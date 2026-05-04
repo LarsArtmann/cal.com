@@ -73,7 +73,7 @@ export const convertScheduleToAvailability = (
       });
       return schedule;
     },
-    Array.from([...Array(7)]).map(() => [])
+    Array.from(Array(7)).map(() => [])
   );
 };
 

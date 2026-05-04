@@ -43,40 +43,29 @@ function getiCalEventAsString(booking: Booking) {
 
   const uid = uuidv4();
 
-  const icsEvent = createEvent({
-    uid,
-    startInputType: "utc",
-    start: dayjs(booking.startTime.toISOString() || "")
-      .utc()
-      .toArray()
-      .slice(0, 6)
-      .map((v, i) => (i === 1 ? v + 1 : v)) as DateArray,
-    duration: {
-      minutes: dayjs(booking.endTime.toISOString() || "").diff(
-        dayjs(booking.startTime.toISOString() || ""),
-        "minute"
-      ),
-    },
-    title: booking.eventType?.title || "",
-    description: booking.description || "",
-    location: booking.location || "",
-    organizer: {
-      email: booking.user?.email || "",
-      name: booking.user?.name || "",
-    },
-    attendees: [
-      {
-        name: booking.attendees[0].name,
-        email: booking.attendees[0].email,
-        partstat: "ACCEPTED",
-        role: "REQ-PARTICIPANT",
-        rsvp: true,
-      },
-    ],
-    method: "REQUEST",
-    ...{ recurrenceRule },
-    status: "CONFIRMED",
-  });
+  const icsEvent = createEvent(({
+	uid,
+	startInputType: 'utc',
+	start: dayjs(booking.startTime.toISOString() || '').utc().toArray().slice(0, 6).map((v, i) => i === 1 ? v + 1 : v) as DateArray,
+	duration: { minutes: dayjs(booking.endTime.toISOString() || '').diff(dayjs(booking.startTime.toISOString() || ''), 'minute') },
+	title: booking.eventType?.title || '',
+	description: booking.description || '',
+	location: booking.location || '',
+	organizer: {
+		email: booking.user?.email || '',
+		name: booking.user?.name || ''
+	},
+	attendees: [{
+		name: booking.attendees[0].name,
+		email: booking.attendees[0].email,
+		partstat: 'ACCEPTED',
+		role: 'REQ-PARTICIPANT',
+		rsvp: true
+	}],
+	method: 'REQUEST',
+	recurrenceRule,
+	status: 'CONFIRMED'
+}));
 
   if (icsEvent.error) {
     throw icsEvent.error;

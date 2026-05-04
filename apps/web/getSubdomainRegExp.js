@@ -4,7 +4,7 @@ const getDefaultSubdomain = (url) => {
     url = `https://${url}`;
   }
   const _url = new URL(url);
-  const regex = new RegExp(/^([a-z]+\:\/{2})?((?<subdomain>[\w-.]+)\.[\w-]+\.\w+)$/);
+  const regex = new RegExp(/^([a-z]+:\/{2})?((?<subdomain>[\w-.]+)\.[\w-]+\.\w+)$/);
   //console.log(_url.hostname, _url.hostname.match(regex));
   return _url.hostname.match(regex)?.groups?.subdomain || null;
 };

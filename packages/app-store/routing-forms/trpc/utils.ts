@@ -49,13 +49,10 @@ export async function onFormSubmission(
         teamId: form.teamId,
         responses: fieldResponsesByName,
       },
-      rootData: {
-        // Send responses unwrapped at root level for backwards compatibility
-        ...Object.entries(fieldResponsesByName).reduce((acc, [key, value]) => {
+      rootData: Object.entries(fieldResponsesByName).reduce((acc, [key, value]) => {
           acc[key] = value.value;
           return acc;
         }, {} as Record<string, Response[keyof Response]["value"]>),
-      },
     }).catch((e) => {
       console.error(`Error executing routing form webhook`, webhook, e);
     });

@@ -55,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             parsedUrl.hostname +
             (parsedUrl.port ? ":" + parsedUrl.port : "") +
             "/admin/?/settings/standard/";
-          message = `Couldn\'t connect to caldav account, please verify WebDAV authentication type is set to "Basic"`;
+          message = `Couldn't connect to caldav account, please verify WebDAV authentication type is set to "Basic"`;
           return res.status(500).json({ message, actionUrl: adminUrl });
         }
       }

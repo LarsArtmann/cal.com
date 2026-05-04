@@ -268,19 +268,15 @@ async function main() {
     }
 
     await prisma.booking.createMany({
-      data: [
-        ...new Array(10000)
+      data: new Array(10000)
           .fill(0)
           .map(() => shuffle({ ...baseBookingSingle }, dayjs().get("y") - 1, singleEvents)),
-      ],
     });
 
     await prisma.booking.createMany({
-      data: [
-        ...new Array(10000)
+      data: new Array(10000)
           .fill(0)
           .map(() => shuffle({ ...baseBookingSingle }, dayjs().get("y") - 0, singleEvents)),
-      ],
     });
   }
 
@@ -332,8 +328,7 @@ async function main() {
 
   // Create past bookings -2y, -1y, -0y
   await prisma.booking.createMany({
-    data: [
-      ...new Array(10000)
+    data: new Array(10000)
         .fill(0)
         .map(() =>
           shuffle({ ...baseBooking }, dayjs().get("y") - 2, teamEvents, [
@@ -341,12 +336,10 @@ async function main() {
             insightsUser?.id ?? 0,
           ])
         ),
-    ],
   });
 
   await prisma.booking.createMany({
-    data: [
-      ...new Array(10000)
+    data: new Array(10000)
         .fill(0)
         .map(() =>
           shuffle({ ...baseBooking }, dayjs().get("y") - 1, teamEvents, [
@@ -354,12 +347,10 @@ async function main() {
             insightsUser?.id ?? 0,
           ])
         ),
-    ],
   });
 
   await prisma.booking.createMany({
-    data: [
-      ...new Array(10000)
+    data: new Array(10000)
         .fill(0)
         .map(() =>
           shuffle({ ...baseBooking }, dayjs().get("y"), teamEvents, [
@@ -367,7 +358,6 @@ async function main() {
             insightsUser?.id ?? 0,
           ])
         ),
-    ],
   });
 }
 main()
@@ -514,11 +504,9 @@ async function createPerformanceData() {
     };
 
     await prisma.booking.createMany({
-      data: [
-        ...new Array(10000)
+      data: new Array(10000)
           .fill(0)
           .map(() => shuffle({ ...baseBooking }, dayjs().get("y"), singleEventsCreated)),
-      ],
     });
   }
 }

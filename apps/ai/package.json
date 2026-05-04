@@ -5,15 +5,15 @@
   "author": "Cal.com Inc.",
   "dependencies": {
     "@calcom/prisma": "*",
-    "@t3-oss/env-nextjs": "^0.6.1",
-    "langchain": "^0.0.131",
-    "mailparser": "^3.6.5",
-    "next": "^13.4.6",
-    "supports-color": "8.1.1",
-    "zod": "^3.22.2"
+    "@t3-oss/env-nextjs": "^0.13.11",
+    "langchain": "^1.3.5",
+    "mailparser": "^3.9.8",
+    "next": "^16.2.4",
+    "supports-color": "10.2.2",
+    "zod": "^4.4.1"
   },
   "devDependencies": {
-    "@types/mailparser": "^3.4.0"
+    "@types/mailparser": "^3.4.6"
   },
   "scripts": {
     "build": "next build",

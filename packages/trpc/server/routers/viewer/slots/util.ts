@@ -472,7 +472,7 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
     );
     if (occupiedSeats?.length) {
       const addedToCurrentSeats: string[] = [];
-      if (typeof availabilityCheckProps.currentSeats !== undefined) {
+      if (typeof availabilityCheckProps.currentSeats !== "undefined") {
         availabilityCheckProps.currentSeats = (availabilityCheckProps.currentSeats as CurrentSeats).map(
           (item) => {
             const attendees =
@@ -493,7 +493,7 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
         );
       }
 
-      if (occupiedSeats?.length && typeof availabilityCheckProps.currentSeats === undefined)
+      if (occupiedSeats?.length && typeof availabilityCheckProps.currentSeats === "undefined")
         availabilityCheckProps.currentSeats = [];
       const occupiedSeatsCount = countBy(occupiedSeats, (item) => item.slotUtcStartDate.toISOString());
       Object.keys(occupiedSeatsCount).forEach((date) => {

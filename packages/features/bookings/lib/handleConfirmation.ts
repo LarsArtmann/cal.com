@@ -269,10 +269,11 @@ export async function handleConfirmation(args: {
         await scheduleWorkflowReminders({
           workflows: updatedBookings[index]?.eventType?.workflows || [],
           smsReminderNumber: updatedBookings[index].smsReminderNumber,
-          calendarEvent: {
-            ...evtOfBooking,
-            ...{ metadata: { videoCallUrl }, eventType: { slug: eventTypeSlug } },
-          },
+          calendarEvent: ({
+	...evtOfBooking,
+	metadata: { videoCallUrl },
+	eventType: { slug: eventTypeSlug }
+}),
           isFirstRecurringEvent: isFirstBooking,
           hideBranding: !!updatedBookings[index].eventType?.owner?.hideBranding,
           eventTypeRequiresConfirmation: true,

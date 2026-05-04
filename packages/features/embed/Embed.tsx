@@ -970,7 +970,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                               }
                               setPreviewState((previewState) => {
                                 const config = {
-                                  ...(previewState.floatingPopup.config ?? {}),
+                                  ...previewState.floatingPopup.config,
                                   layout: option.value,
                                 };
                                 return {
