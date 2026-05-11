@@ -22,7 +22,10 @@ interface DataTableSelectionBarProps<TData> {
   actions?: ActionItem<TData>[];
 }
 
-export function DataTableSelectionBar<TData>({ table, actions }: DataTableSelectionBarProps<TData>) {
+export function DataTableSelectionBar<TData>({
+  table,
+  actions,
+}: DataTableSelectionBarProps<TData>) {
   const numberOfSelectedRows = table.getSelectedRowModel().rows.length;
 
   if (numberOfSelectedRows === 0) return null;

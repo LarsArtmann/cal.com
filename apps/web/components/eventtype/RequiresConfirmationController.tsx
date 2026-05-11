@@ -30,7 +30,7 @@ export default function RequiresConfirmationController({
 }: RequiresConfirmationControllerProps) {
   const { t } = useLocale();
   const [requiresConfirmationSetup, setRequiresConfirmationSetup] = useState(
-    metadata?.requiresConfirmationThreshold
+    metadata?.requiresConfirmationThreshold,
   );
   const defaultRequiresConfirmationSetup = { time: 30, unit: "minutes" as UnitTypeLongPlural };
   const formMethods = useFormContext<FormValues>();
@@ -45,7 +45,7 @@ export default function RequiresConfirmationController({
   const { shouldLockDisableProps } = useLockedFieldsManager(
     eventType,
     t("locked_fields_admin_description"),
-    t("locked_fields_member_description")
+    t("locked_fields_member_description"),
   );
   const requiresConfirmationLockedProps = shouldLockDisableProps("requiresConfirmation");
 
@@ -56,7 +56,8 @@ export default function RequiresConfirmationController({
 
   const defaultValue = options.find(
     (opt) =>
-      opt.value === (metadata?.requiresConfirmationThreshold?.unit ?? defaultRequiresConfirmationSetup.unit)
+      opt.value ===
+      (metadata?.requiresConfirmationThreshold?.unit ?? defaultRequiresConfirmationSetup.unit),
   );
 
   return (
@@ -76,7 +77,8 @@ export default function RequiresConfirmationController({
               onCheckedChange={(val) => {
                 formMethods.setValue("requiresConfirmation", val);
                 onRequiresConfirmation(val);
-              }}>
+              }}
+            >
               <RadioGroup.Root
                 defaultValue={
                   requiresConfirmation
@@ -96,12 +98,14 @@ export default function RequiresConfirmationController({
                     onRequiresConfirmation(true);
                     formMethods.setValue(
                       "metadata.requiresConfirmationThreshold",
-                      requiresConfirmationSetup || defaultRequiresConfirmationSetup
+                      requiresConfirmationSetup || defaultRequiresConfirmationSetup,
                     );
                   }
-                }}>
+                }}
+              >
                 <div className="flex flex-col flex-wrap justify-start gap-y-2">
-                  {(requiresConfirmationSetup === undefined || !requiresConfirmationLockedProps.disabled) && (
+                  {(requiresConfirmationSetup === undefined ||
+                    !requiresConfirmationLockedProps.disabled) && (
                     <RadioField
                       label={t("always_requires_confirmation")}
                       disabled={requiresConfirmationLockedProps.disabled}
@@ -109,7 +113,8 @@ export default function RequiresConfirmationController({
                       value="always"
                     />
                   )}
-                  {(requiresConfirmationSetup !== undefined || !requiresConfirmationLockedProps.disabled) && (
+                  {(requiresConfirmationSetup !== undefined ||
+                    !requiresConfirmationLockedProps.disabled) && (
                     <RadioField
                       disabled={requiresConfirmationLockedProps.disabled}
                       className="items-center"
@@ -135,16 +140,20 @@ export default function RequiresConfirmationController({
                                       });
                                       formMethods.setValue(
                                         "metadata.requiresConfirmationThreshold.time",
-                                        val
+                                        val,
                                       );
                                     }}
                                     className="border-default !m-0 block w-16 rounded-md text-sm [appearance:textfield]"
-                                    defaultValue={metadata?.requiresConfirmationThreshold?.time || 30}
+                                    defaultValue={
+                                      metadata?.requiresConfirmationThreshold?.time || 30
+                                    }
                                   />
                                   <label
                                     className={classNames(
-                                      requiresConfirmationLockedProps.disabled && "cursor-not-allowed"
-                                    )}>
+                                      requiresConfirmationLockedProps.disabled &&
+                                        "cursor-not-allowed",
+                                    )}
+                                  >
                                     <Select
                                       inputId="notice"
                                       options={options}
@@ -160,7 +169,7 @@ export default function RequiresConfirmationController({
                                         });
                                         formMethods.setValue(
                                           "metadata.requiresConfirmationThreshold.unit",
-                                          opt?.value as UnitTypeLongPlural
+                                          opt?.value as UnitTypeLongPlural,
                                         );
                                       }}
                                       defaultValue={defaultValue}

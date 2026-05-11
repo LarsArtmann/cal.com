@@ -55,7 +55,10 @@ export const getHandler = async ({ ctx, input }: GetOptions) => {
       ],
     },
     cancelled: {
-      OR: [{ status: { equals: BookingStatus.CANCELLED } }, { status: { equals: BookingStatus.REJECTED } }],
+      OR: [
+        { status: { equals: BookingStatus.CANCELLED } },
+        { status: { equals: BookingStatus.REJECTED } },
+      ],
     },
     unconfirmed: {
       endTime: { gte: new Date() },
@@ -354,7 +357,7 @@ async function getBookings({
 
   const recurringInfo = recurringInfoBasic.map(
     (
-      info: (typeof recurringInfoBasic)[number]
+      info: (typeof recurringInfoBasic)[number],
     ): {
       recurringEventId: string | null;
       count: number;
@@ -372,7 +375,7 @@ async function getBookings({
         },
         { ACCEPTED: [], CANCELLED: [], REJECTED: [], PENDING: [] } as {
           [key in BookingStatus]: Date[];
-        }
+        },
       );
       return {
         recurringEventId: info.recurringEventId,
@@ -380,7 +383,7 @@ async function getBookings({
         firstDate: info._min.startTime,
         bookings,
       };
-    }
+    },
   );
 
   const plainBookings = getUniqueBookings(
@@ -388,7 +391,7 @@ async function getBookings({
     bookingsQueryUserId
       .concat(bookingsQueryAttendees)
       .concat(bookingsQueryTeamMember)
-      .concat(bookingsQuerySeatReference)
+      .concat(bookingsQuerySeatReference),
   );
 
   // Now enrich bookings with relation data. We could have queried the relation data along with the bookings, but that would cause unnecessary queries to the database.

@@ -25,9 +25,13 @@ export const ResponseEmail = ({
             lineHeight: "0px",
             textAlign: "left",
             color: "#3e3e3e",
-          }}>
+          }}
+        >
           <p style={{ fontWeight: 400, lineHeight: "24px" }}>
-            <a href={`${WEBAPP_URL}/routing-forms/form-edit/${form.id}`} style={{ color: "#3e3e3e" }}>
+            <a
+              href={`${WEBAPP_URL}/routing-forms/form-edit/${form.id}`}
+              style={{ color: "#3e3e3e" }}
+            >
               <>Manage this form</>
             </a>
           </p>
@@ -35,7 +39,8 @@ export const ResponseEmail = ({
       }
       title={form.name}
       subtitle="New Response Received"
-      {...props}>
+      {...props}
+    >
       {orderedResponses.map((fieldResponse, index) => {
         return (
           <Info
@@ -43,7 +48,9 @@ export const ResponseEmail = ({
             key={index}
             label={fieldResponse.label}
             description={
-              fieldResponse.value instanceof Array ? fieldResponse.value.join(",") : fieldResponse.value
+              fieldResponse.value instanceof Array
+                ? fieldResponse.value.join(",")
+                : fieldResponse.value
             }
           />
         );

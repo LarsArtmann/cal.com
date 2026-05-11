@@ -50,7 +50,8 @@ const o365Auth = async (credential: CredentialPayload) => {
   if (typeof appKeys.client_id === "string") client_id = appKeys.client_id;
   if (typeof appKeys.client_secret === "string") client_secret = appKeys.client_secret;
   if (!client_id) throw new HttpError({ statusCode: 400, message: "MS teams client_id missing." });
-  if (!client_secret) throw new HttpError({ statusCode: 400, message: "MS teams client_secret missing." });
+  if (!client_secret)
+    throw new HttpError({ statusCode: 400, message: "MS teams client_secret missing." });
 
   const isExpired = (expiryDate: number) => expiryDate < Math.round(+new Date());
 
@@ -72,7 +73,10 @@ const o365Auth = async (credential: CredentialPayload) => {
 
     if (responseBody?.error) {
       console.error(responseBody);
-      throw new HttpError({ statusCode: 500, message: `Error contacting MS Teams: ${responseBody.error}` });
+      throw new HttpError({
+        statusCode: 500,
+        message: `Error contacting MS Teams: ${responseBody.error}`,
+      });
     }
     // set expiry date as offset from current time.
     responseBody.expiry_date = Math.round(Date.now() + (responseBody?.expires_in || 0) * 1000);

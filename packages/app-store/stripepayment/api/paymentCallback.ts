@@ -20,7 +20,8 @@ const querySchema = z.object({
 // It handles premium user payment success/failure
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   const { callbackUrl, checkoutSessionId } = querySchema.parse(req.query);
-  const { stripeCustomer, checkoutSession } = await getCustomerAndCheckoutSession(checkoutSessionId);
+  const { stripeCustomer, checkoutSession } =
+    await getCustomerAndCheckoutSession(checkoutSessionId);
 
   if (!stripeCustomer) return { message: "Stripe customer not found or deleted" };
 

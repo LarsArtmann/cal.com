@@ -42,37 +42,37 @@ import { ssrInit } from "@server/lib/ssr";
 
 // These can't really be moved into calcom/ui due to the fact they use infered getserverside props typings;
 const EventSetupTab = dynamic(() =>
-  import("@components/eventtype/EventSetupTab").then((mod) => mod.EventSetupTab)
+  import("@components/eventtype/EventSetupTab").then((mod) => mod.EventSetupTab),
 );
 
 const EventAvailabilityTab = dynamic(() =>
-  import("@components/eventtype/EventAvailabilityTab").then((mod) => mod.EventAvailabilityTab)
+  import("@components/eventtype/EventAvailabilityTab").then((mod) => mod.EventAvailabilityTab),
 );
 
 const EventTeamTab = dynamic(() =>
-  import("@components/eventtype/EventTeamTab").then((mod) => mod.EventTeamTab)
+  import("@components/eventtype/EventTeamTab").then((mod) => mod.EventTeamTab),
 );
 
 const EventLimitsTab = dynamic(() =>
-  import("@components/eventtype/EventLimitsTab").then((mod) => mod.EventLimitsTab)
+  import("@components/eventtype/EventLimitsTab").then((mod) => mod.EventLimitsTab),
 );
 
 const EventAdvancedTab = dynamic(() =>
-  import("@components/eventtype/EventAdvancedTab").then((mod) => mod.EventAdvancedTab)
+  import("@components/eventtype/EventAdvancedTab").then((mod) => mod.EventAdvancedTab),
 );
 
 const EventRecurringTab = dynamic(() =>
-  import("@components/eventtype/EventRecurringTab").then((mod) => mod.EventRecurringTab)
+  import("@components/eventtype/EventRecurringTab").then((mod) => mod.EventRecurringTab),
 );
 
 const EventAppsTab = dynamic(() =>
-  import("@components/eventtype/EventAppsTab").then((mod) => mod.EventAppsTab)
+  import("@components/eventtype/EventAppsTab").then((mod) => mod.EventAppsTab),
 );
 
 const EventWorkflowsTab = dynamic(() => import("@components/eventtype/EventWorkfowsTab"));
 
 const EventWebhooksTab = dynamic(() =>
-  import("@components/eventtype/EventWebhooksTab").then((mod) => mod.EventWebhooksTab)
+  import("@components/eventtype/EventWebhooksTab").then((mod) => mod.EventWebhooksTab),
 );
 
 const ManagedEventTypeDialog = dynamic(() => import("@components/eventtype/ManagedEventDialog"));
@@ -172,7 +172,14 @@ const EventTypePage = (props: EventTypeSetupProps) => {
     onlyInstalled: true,
   });
 
-  const { eventType, locationOptions, team, teamMembers, currentUserMembership, destinationCalendar } = props;
+  const {
+    eventType,
+    locationOptions,
+    team,
+    teamMembers,
+    currentUserMembership,
+    destinationCalendar,
+  } = props;
   const [animationParentRef] = useAutoAnimate<HTMLDivElement>();
 
   const updateMutation = trpc.viewer.eventTypes.update.useMutation({
@@ -182,7 +189,7 @@ const EventTypePage = (props: EventTypeSetupProps) => {
         formMethods.getValues().children.map((child) => ({
           ...child,
           created: true,
-        }))
+        })),
       );
       showToast(t("event_type_updated_successfully"), "success");
     },
@@ -290,10 +297,11 @@ const EventTypePage = (props: EventTypeSetupProps) => {
             .string()
             .refine(
               (val) =>
-                validateCustomEventName(val, t("invalid_event_name_variables"), bookingFields) === true,
+                validateCustomEventName(val, t("invalid_event_name_variables"), bookingFields) ===
+                true,
               {
                 message: t("invalid_event_name_variables"),
-              }
+              },
             )
             .optional(),
           length: z.union([z.string().transform((val) => +val), z.number()]).optional(),
@@ -301,7 +309,7 @@ const EventTypePage = (props: EventTypeSetupProps) => {
           bookingFields: eventTypeBookingFields,
         })
         // TODO: Add schema for other fields later.
-        .passthrough()
+        .passthrough(),
     ),
   });
 
@@ -320,7 +328,7 @@ const EventTypePage = (props: EventTypeSetupProps) => {
   if (appsMetadata) {
     numberOfActiveApps = Object.entries(appsMetadata).filter(
       ([appId, appData]) =>
-        eventTypeApps?.items.find((app) => app.slug === appId)?.isInstalled && appData.enabled
+        eventTypeApps?.items.find((app) => app.slug === appId)?.isInstalled && appData.enabled,
     ).length;
   }
 
@@ -435,7 +443,9 @@ const EventTypePage = (props: EventTypeSetupProps) => {
     });
   };
 
-  const [slugExistsChildrenDialogOpen, setSlugExistsChildrenDialogOpen] = useState<ChildrenEventType[]>([]);
+  const [slugExistsChildrenDialogOpen, setSlugExistsChildrenDialogOpen] = useState<
+    ChildrenEventType[]
+  >([]);
   const slug = formMethods.watch("slug") ?? eventType.slug;
 
   return (
@@ -451,7 +461,8 @@ const EventTypePage = (props: EventTypeSetupProps) => {
         formMethods={formMethods}
         disableBorder={tabName === "apps" || tabName === "workflows" || tabName === "webhooks"}
         currentUserMembership={currentUserMembership}
-        isUserOrganizationAdmin={props.isUserOrganizationAdmin}>
+        isUserOrganizationAdmin={props.isUserOrganizationAdmin}
+      >
         <Form
           form={formMethods}
           id="event-type-form"
@@ -524,7 +535,8 @@ const EventTypePage = (props: EventTypeSetupProps) => {
               metadata,
               customInputs,
             });
-          }}>
+          }}
+        >
           <div ref={animationParentRef}>{tabMap[tabName]}</div>
         </Form>
       </EventTypeSingleLayout>

@@ -41,5 +41,3 @@ declare global {
     getEmbedTheme: () => EmbedThemeConfig | null;
   }
 }
-
-

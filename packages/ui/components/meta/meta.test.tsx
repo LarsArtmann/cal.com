@@ -41,7 +41,9 @@ describe("Meta Component", () => {
       meta: { title: "", description: "", backButton: false, CTA: null },
     });
 
-    const { rerender, getByText } = render(<Meta title="Page Title" description="Page Description" />);
+    const { rerender, getByText } = render(
+      <Meta title="Page Title" description="Page Description" />,
+    );
 
     expect(getByText("Page Title")).toBeInTheDocument();
     expect(getByText("Page Description")).toBeInTheDocument();

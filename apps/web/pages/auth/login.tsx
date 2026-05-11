@@ -114,7 +114,8 @@ export default function Login({
           setErrorMessage(null);
         }}
         StartIcon={ArrowLeft}
-        color="minimal">
+        color="minimal"
+      >
         {t("go_back")}
       </Button>
       {!twoFactorLostAccess ? (
@@ -125,7 +126,8 @@ export default function Login({
             methods.setValue("totpCode", "");
           }}
           StartIcon={Lock}
-          color="minimal">
+          color="minimal"
+        >
           {t("lost_access")}
         </Button>
       ) : null}
@@ -137,7 +139,8 @@ export default function Login({
       onClick={() => {
         window.location.replace("/");
       }}
-      color="minimal">
+      color="minimal"
+    >
       {t("cancel")}
     </Button>
   );
@@ -154,7 +157,8 @@ export default function Login({
     // we're logged in! let's do a hard refresh to the desired url
     else if (!res.error) router.push(callbackUrl);
     else if (res.error === ErrorCode.SecondFactorRequired) setTwoFactorRequired(true);
-    else if (res.error === ErrorCode.IncorrectBackupCode) setErrorMessage(t("incorrect_backup_code"));
+    else if (res.error === ErrorCode.IncorrectBackupCode)
+      setErrorMessage(t("incorrect_backup_code"));
     else if (res.error === ErrorCode.MissingBackupCodes) setErrorMessage(t("missing_backup_codes"));
     // fallback if error not found
     else setErrorMessage(errorMessages[res.error] || t("something_went_wrong"));
@@ -169,7 +173,8 @@ export default function Login({
           "--cal-brand-text": "white",
           "--cal-brand-subtle": "#9CA3AF",
         } as CSSProperties
-      }>
+      }
+    >
       <AuthContainer
         title={t("login")}
         description={t("login")}
@@ -181,13 +186,19 @@ export default function Login({
               ? TwoFactorFooter
               : ExternalTotpFooter
             : process.env.NEXT_PUBLIC_DISABLE_SIGNUP !== "true"
-            ? LoginFooter
-            : null
-        }>
+              ? LoginFooter
+              : null
+        }
+      >
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)} noValidate data-testid="login-form">
             <div>
-              <input defaultValue={csrfToken || undefined} type="hidden" hidden {...register("csrfToken")} />
+              <input
+                defaultValue={csrfToken || undefined}
+                type="hidden"
+                hidden
+                {...register("csrfToken")}
+              />
             </div>
             <div className="space-y-6">
               <div className={classNames("space-y-6", { hidden: twoFactorRequired })}>
@@ -211,28 +222,38 @@ export default function Login({
                     <Link
                       href="/auth/forgot-password"
                       tabIndex={-1}
-                      className="text-default text-sm font-medium">
+                      className="text-default text-sm font-medium"
+                    >
                       {t("forgot")}
                     </Link>
                   </div>
                 </div>
               </div>
 
-              {twoFactorRequired ? !twoFactorLostAccess ? <TwoFactor center /> : <BackupCode center /> : null}
+              {twoFactorRequired ? (
+                !twoFactorLostAccess ? (
+                  <TwoFactor center />
+                ) : (
+                  <BackupCode center />
+                )
+              ) : null}
 
               {errorMessage && <Alert severity="error" title={errorMessage} />}
               <Button
                 type="submit"
                 color="primary"
                 disabled={formState.isSubmitting}
-                className="w-full justify-center">
+                className="w-full justify-center"
+              >
                 {twoFactorRequired ? t("submit") : t("sign_in")}
               </Button>
             </div>
           </form>
           {!twoFactorRequired && (
             <>
-              {(isGoogleLoginEnabled || isSAMLLoginEnabled) && <hr className="border-subtle my-8" />}
+              {(isGoogleLoginEnabled || isSAMLLoginEnabled) && (
+                <hr className="border-subtle my-8" />
+              )}
               <div className="space-y-3">
                 {isGoogleLoginEnabled && (
                   <Button
@@ -243,7 +264,8 @@ export default function Login({
                     onClick={async (e) => {
                       e.preventDefault();
                       await signIn("google");
-                    }}>
+                    }}
+                  >
                     {t("signin_with_google")}
                   </Button>
                 )}

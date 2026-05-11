@@ -98,11 +98,14 @@ export default function ForgotPassword({ csrfToken }: { csrfToken: string }) {
             </Link>
           </>
         )
-      }>
+      }
+    >
       {success && <Success />}
       {!success && (
         <>
-          <div className="space-y-6">{error && <p className="text-red-600">{error.message}</p>}</div>
+          <div className="space-y-6">
+            {error && <p className="text-red-600">{error.message}</p>}
+          </div>
           <form
             className="space-y-6"
             onSubmit={handleSubmit}
@@ -114,7 +117,8 @@ export default function ForgotPassword({ csrfToken }: { csrfToken: string }) {
                 "--cal-brand-text": "white",
                 "--cal-brand-subtle": "#9CA3AF",
               } as CSSProperties
-            }>
+            }
+          >
             <input name="csrfToken" type="hidden" defaultValue={csrfToken} hidden />
             <EmailField
               onChange={handleChange}
@@ -130,7 +134,8 @@ export default function ForgotPassword({ csrfToken }: { csrfToken: string }) {
                 type="submit"
                 disabled={loading}
                 aria-label={t("request_password_reset")}
-                loading={loading}>
+                loading={loading}
+              >
                 {t("request_password_reset")}
               </Button>
             </div>

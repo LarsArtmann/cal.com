@@ -50,14 +50,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const vitalClient = await initVitalClient();
 
     if (!vitalClient || !vitalEnv)
-      return res.status(400).json({ message: "Missing vital client, try calling `initVitalClient`" });
+      return res
+        .status(400)
+        .json({ message: "Missing vital client, try calling `initVitalClient`" });
 
     const payload = JSON.stringify(req.body);
 
     const event: EventType = vitalClient.Webhooks.constructWebhookEvent(
       payload,
       req.headers as Record<string, string>,
-      vitalEnv.webhook_secret as string
+      vitalEnv.webhook_secret as string,
     ) as EventType;
 
     if (event.event_type == "daily.data.sleep.created") {
@@ -91,7 +93,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           let parameterFilter = "";
           const userMetadata = userWithMetadata?.metadata as Prisma.JsonObject;
           const vitalSettings =
-            ((userWithMetadata?.metadata as Prisma.JsonObject)?.vitalSettings as Prisma.JsonObject) || {};
+            ((userWithMetadata?.metadata as Prisma.JsonObject)
+              ?.vitalSettings as Prisma.JsonObject) || {};
           if (!!userMetadata && !!vitalSettings) {
             minimumSleepTime = vitalSettings.sleepValue as number;
             parameterFilter = vitalSettings.parameter as string;
@@ -106,7 +109,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           }
           const totalHoursSleep = Number(event.data[parameterFilter]) / 60 / 60;
 
-          if (minimumSleepTime > 0 && parameterFilter !== "" && totalHoursSleep <= minimumSleepTime) {
+          if (
+            minimumSleepTime > 0 &&
+            parameterFilter !== "" &&
+            totalHoursSleep <= minimumSleepTime
+          ) {
             // Trigger reschedule
             try {
               const todayDate = dayjs();
@@ -137,7 +144,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 todayBookings.forEach((booking) =>
                   q.push(() => {
                     return Reschedule(booking.uid, "");
-                  })
+                  }),
                 );
               }
               await q.start();

@@ -46,7 +46,7 @@ export default class ExchangeCalendarService implements Calendar {
     this.log = logger.getChildLogger({ prefix: [`[[lib] ${this.integrationName}`] });
 
     const decryptedCredential = JSON.parse(
-      symmetricDecrypt(credential.key?.toString() || "", process.env.CALENDSO_ENCRYPTION_KEY || "")
+      symmetricDecrypt(credential.key?.toString() || "", process.env.CALENDSO_ENCRYPTION_KEY || ""),
     );
     const username = decryptedCredential.username;
     const url = decryptedCredential.url;
@@ -102,7 +102,7 @@ export default class ExchangeCalendarService implements Calendar {
       const appointment = await Appointment.Bind(
         this.getExchangeService(),
         new ItemId(uid),
-        new PropertySet()
+        new PropertySet(),
       );
       appointment.Subject = event.title;
       appointment.Start = DateTime.Parse(event.startTime); // moment string
@@ -119,7 +119,7 @@ export default class ExchangeCalendarService implements Calendar {
       }
       appointment.Update(
         ConflictResolutionMode.AlwaysOverwrite,
-        SendInvitationsOrCancellationsMode.SendToAllAndSaveCopy
+        SendInvitationsOrCancellationsMode.SendToAllAndSaveCopy,
       );
     } catch (reason) {
       this.log.error(reason);
@@ -132,7 +132,7 @@ export default class ExchangeCalendarService implements Calendar {
       const appointment = await Appointment.Bind(
         this.getExchangeService(),
         new ItemId(uid),
-        new PropertySet()
+        new PropertySet(),
       );
       // Delete the appointment. Note that the item ID will change when the item is moved to the Deleted Items folder.
       appointment.Delete(DeleteMode.MoveToDeletedItems);
@@ -142,7 +142,11 @@ export default class ExchangeCalendarService implements Calendar {
     }
   }
 
-  async getAvailability(dateFrom: string, dateTo: string, selectedCalendars: IntegrationCalendar[]) {
+  async getAvailability(
+    dateFrom: string,
+    dateTo: string,
+    selectedCalendars: IntegrationCalendar[],
+  ) {
     try {
       const externalCalendars = await this.listCalendars();
       const calendarsToGetAppointmentsFrom = [];
@@ -161,7 +165,7 @@ export default class ExchangeCalendarService implements Calendar {
         const localReturn = await this.getExchangeService()
           .FindAppointments(
             calendarFolderId,
-            new CalendarView(DateTime.Parse(dateFrom), DateTime.Parse(dateTo))
+            new CalendarView(DateTime.Parse(dateFrom), DateTime.Parse(dateTo)),
           )
           .then(function (params) {
             const ret: EventBusyDate[] = [];

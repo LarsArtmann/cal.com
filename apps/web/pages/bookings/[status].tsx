@@ -91,7 +91,7 @@ export default function Bookings() {
       // first render has status `undefined`
       enabled: true,
       getNextPageParam: (lastPage) => lastPage.nextCursor,
-    }
+    },
   );
 
   // Animate page (tab) tranistions to look smoothing
@@ -130,10 +130,10 @@ export default function Bookings() {
     query.data?.pages.map((page) =>
       page.bookings.filter((booking: BookingOutput) => {
         recurringInfoToday = page.recurringInfo.find(
-          (info) => info.recurringEventId === booking.recurringEventId
+          (info) => info.recurringEventId === booking.recurringEventId,
         );
         return new Date(booking.startTime).toDateString() === new Date().toDateString();
-      })
+      }),
     )[0] || [];
 
   const [animationParentRef] = useAutoAnimate<HTMLDivElement>();
@@ -150,7 +150,11 @@ export default function Bookings() {
         <main className="w-full">
           <div className="flex w-full flex-col" ref={animationParentRef}>
             {query.status === "error" && (
-              <Alert severity="error" title={t("something_went_wrong")} message={query.error.message} />
+              <Alert
+                severity="error"
+                title={t("something_went_wrong")}
+                message={query.error.message}
+              />
             )}
             {(query.status === "loading" || query.isPaused) && <SkeletonLoader />}
             {query.status === "success" && !isEmpty && (
@@ -158,10 +162,15 @@ export default function Bookings() {
                 {!!bookingsToday.length && status === "upcoming" && (
                   <div className="mb-6 pt-2 xl:pt-0">
                     <WipeMyCalActionButton bookingStatus={status} bookingsEmpty={isEmpty} />
-                    <p className="text-subtle mb-2 text-xs font-medium uppercase leading-4">{t("today")}</p>
+                    <p className="text-subtle mb-2 text-xs font-medium uppercase leading-4">
+                      {t("today")}
+                    </p>
                     <div className="border-subtle overflow-hidden rounded-md border">
                       <table className="w-full max-w-full table-fixed">
-                        <tbody className="bg-default divide-subtle divide-y" data-testid="today-bookings">
+                        <tbody
+                          className="bg-default divide-subtle divide-y"
+                          data-testid="today-bookings"
+                        >
                           <Fragment>
                             {bookingsToday.map((booking: BookingOutput) => (
                               <BookingListItem
@@ -179,13 +188,16 @@ export default function Bookings() {
                 )}
                 <div className="pt-2 xl:pt-0">
                   <div className="border-subtle overflow-hidden rounded-md border">
-                    <table data-testid={`${status}-bookings`} className="w-full max-w-full table-fixed">
+                    <table
+                      data-testid={`${status}-bookings`}
+                      className="w-full max-w-full table-fixed"
+                    >
                       <tbody className="bg-default divide-subtle divide-y" data-testid="bookings">
                         {query.data.pages.map((page, index) => (
                           <Fragment key={index}>
                             {page.bookings.filter(filterBookings).map((booking: BookingOutput) => {
                               const recurringInfo = page.recurringInfo.find(
-                                (info) => info.recurringEventId === booking.recurringEventId
+                                (info) => info.recurringEventId === booking.recurringEventId,
                               );
                               return (
                                 <BookingListItem
@@ -206,7 +218,8 @@ export default function Bookings() {
                       color="minimal"
                       loading={query.isFetchingNextPage}
                       disabled={!query.hasNextPage}
-                      onClick={() => query.fetchNextPage()}>
+                      onClick={() => query.fetchNextPage()}
+                    >
                       {query.hasNextPage ? t("load_more_results") : t("no_more_results")}
                     </Button>
                   </div>

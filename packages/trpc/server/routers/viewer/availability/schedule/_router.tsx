@@ -37,7 +37,9 @@ export const scheduleRouter = router({
 
   create: authedProcedure.input(ZCreateInputSchema).mutation(async ({ input, ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.create) {
-      UNSTABLE_HANDLER_CACHE.create = await import("./create.handler").then((mod) => mod.createHandler);
+      UNSTABLE_HANDLER_CACHE.create = await import("./create.handler").then(
+        (mod) => mod.createHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -53,7 +55,9 @@ export const scheduleRouter = router({
 
   delete: authedProcedure.input(ZDeleteInputSchema).mutation(async ({ input, ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.delete) {
-      UNSTABLE_HANDLER_CACHE.delete = await import("./delete.handler").then((mod) => mod.deleteHandler);
+      UNSTABLE_HANDLER_CACHE.delete = await import("./delete.handler").then(
+        (mod) => mod.deleteHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -69,7 +73,9 @@ export const scheduleRouter = router({
 
   update: authedProcedure.input(ZUpdateInputSchema).mutation(async ({ input, ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.update) {
-      UNSTABLE_HANDLER_CACHE.update = await import("./update.handler").then((mod) => mod.updateHandler);
+      UNSTABLE_HANDLER_CACHE.update = await import("./update.handler").then(
+        (mod) => mod.updateHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -86,7 +92,7 @@ export const scheduleRouter = router({
   duplicate: authedProcedure.input(ZScheduleDuplicateSchema).mutation(async ({ input, ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.duplicate) {
       UNSTABLE_HANDLER_CACHE.duplicate = await import("./duplicate.handler").then(
-        (mod) => mod.duplicateHandler
+        (mod) => mod.duplicateHandler,
       );
     }
 
@@ -101,21 +107,24 @@ export const scheduleRouter = router({
     });
   }),
 
-  getScheduleByUserId: authedProcedure.input(ZGetByUserIdInputSchema).query(async ({ input, ctx }) => {
-    if (!UNSTABLE_HANDLER_CACHE.getScheduleByUserId) {
-      UNSTABLE_HANDLER_CACHE.getScheduleByUserId = await import("./getScheduleByUserId.handler").then(
-        (mod) => mod.getScheduleByUserIdHandler
-      );
-    }
+  getScheduleByUserId: authedProcedure
+    .input(ZGetByUserIdInputSchema)
+    .query(async ({ input, ctx }) => {
+      if (!UNSTABLE_HANDLER_CACHE.getScheduleByUserId) {
+        UNSTABLE_HANDLER_CACHE.getScheduleByUserId =
+          await import("./getScheduleByUserId.handler").then(
+            (mod) => mod.getScheduleByUserIdHandler,
+          );
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.getScheduleByUserId) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.getScheduleByUserId) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.getScheduleByUserId({
-      ctx,
-      input,
-    });
-  }),
+      return UNSTABLE_HANDLER_CACHE.getScheduleByUserId({
+        ctx,
+        input,
+      });
+    }),
 });

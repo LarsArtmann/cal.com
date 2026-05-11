@@ -55,7 +55,7 @@ export class PaymentService implements IAbstractPaymentService {
     bookerEmail: string,
     paymentOption: PaymentOption,
     eventTitle?: string,
-    bookingTitle?: string
+    bookingTitle?: string,
   ) {
     try {
       // Ensure that the payment service can support the passed payment option
@@ -75,7 +75,7 @@ export class PaymentService implements IAbstractPaymentService {
 
       const customer = await retrieveOrCreateStripeCustomerByEmail(
         bookerEmail,
-        this.credentials.stripe_user_id
+        this.credentials.stripe_user_id,
       );
 
       const params: Stripe.PaymentIntentCreateParams = {
@@ -139,7 +139,7 @@ export class PaymentService implements IAbstractPaymentService {
     payment: Pick<Prisma.PaymentUncheckedCreateInput, "amount" | "currency">,
     bookingId: Booking["id"],
     bookerEmail: string,
-    paymentOption: PaymentOption
+    paymentOption: PaymentOption,
   ): Promise<Payment> {
     try {
       // Ensure that the payment service can support the passed payment option
@@ -159,7 +159,7 @@ export class PaymentService implements IAbstractPaymentService {
 
       const customer = await retrieveOrCreateStripeCustomerByEmail(
         bookerEmail,
-        this.credentials.stripe_user_id
+        this.credentials.stripe_user_id,
       );
 
       const params = {
@@ -196,7 +196,7 @@ export class PaymentService implements IAbstractPaymentService {
               setupIntent,
               stripe_publishable_key: this.credentials.stripe_publishable_key,
               stripeAccount: this.credentials.stripe_user_id,
-            }
+            },
           ) as unknown as Prisma.InputJsonValue,
           fee: 0,
           refunded: false,
@@ -228,7 +228,9 @@ export class PaymentService implements IAbstractPaymentService {
       const setupIntent = paymentObject.setupIntent;
 
       // Parse keys with zod
-      const { payment_fee_fixed, payment_fee_percentage } = stripeAppKeysSchema.parse(stripeAppKeys?.keys);
+      const { payment_fee_fixed, payment_fee_percentage } = stripeAppKeysSchema.parse(
+        stripeAppKeys?.keys,
+      );
 
       const paymentFee = Math.round(payment.amount * payment_fee_percentage + payment_fee_fixed);
 
@@ -236,9 +238,12 @@ export class PaymentService implements IAbstractPaymentService {
       const customer = await this.stripe.customers.retrieve(setupIntent.customer as string, {
         stripeAccount: this.credentials.stripe_user_id,
       });
-      const paymentMethod = await this.stripe.paymentMethods.retrieve(setupIntent.payment_method as string, {
-        stripeAccount: this.credentials.stripe_user_id,
-      });
+      const paymentMethod = await this.stripe.paymentMethods.retrieve(
+        setupIntent.payment_method as string,
+        {
+          stripeAccount: this.credentials.stripe_user_id,
+        },
+      );
 
       if (!customer) {
         throw new Error(`Stripe customer does not exist for setupIntent ${setupIntent.id}`);
@@ -301,7 +306,7 @@ export class PaymentService implements IAbstractPaymentService {
         {
           payment_intent: payment.externalId,
         },
-        { stripeAccount: (payment.data as unknown as StripePaymentData)["stripeAccount"] }
+        { stripeAccount: (payment.data as unknown as StripePaymentData)["stripeAccount"] },
       );
 
       if (!refund || refund.status === "failed") {
@@ -331,7 +336,7 @@ export class PaymentService implements IAbstractPaymentService {
       startTime: { toISOString: () => string };
       uid: string;
     },
-    paymentData: Payment
+    paymentData: Payment,
   ): Promise<void> {
     await sendAwaitingPaymentEmail({
       ...event,
@@ -364,7 +369,7 @@ export class PaymentService implements IAbstractPaymentService {
         {
           payment_intent: payment.externalId,
         },
-        { stripeAccount }
+        { stripeAccount },
       );
       for (const session of sessions.data) {
         await this.stripe.checkout.sessions.expire(session.id, { stripeAccount });

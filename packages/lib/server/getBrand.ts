@@ -1,4 +1,7 @@
-import { subdomainSuffix, getOrgFullDomain } from "@calcom/features/ee/organizations/lib/orgDomains";
+import {
+  subdomainSuffix,
+  getOrgFullDomain,
+} from "@calcom/features/ee/organizations/lib/orgDomains";
 import { prisma } from "@calcom/prisma";
 import { teamMetadataSchema } from "@calcom/prisma/zod-utils";
 

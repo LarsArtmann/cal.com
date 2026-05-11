@@ -1,10 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "private": true,
   "name": "@calcom/whereby",
   "version": "0.0.0",
-  "main": "./index.ts",
+  "private": true,
   "description": "Whereby makes it super simple for collaborating teams to jump on a video call.",
+  "main": "./index.ts",
   "dependencies": {
     "@calcom/lib": "*"
   },

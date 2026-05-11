@@ -17,7 +17,10 @@ export function EditUserSheet({ state, dispatch }: { state: State; dispatch: Dis
   const { t } = useLocale();
   const { user: selectedUser } = state.editSheet;
   const orgBranding = useOrgBranding();
-  const [editMode, setEditMode] = useEditMode((state) => [state.editMode, state.setEditMode], shallow);
+  const [editMode, setEditMode] = useEditMode(
+    (state) => [state.editMode, state.setEditMode],
+    shallow,
+  );
   const { data: loadedUser, isLoading } = trpc.viewer.organizations.getUser.useQuery({
     userId: selectedUser?.id,
   });
@@ -26,7 +29,8 @@ export function EditUserSheet({ state, dispatch }: { state: State; dispatch: Dis
 
   const schedulesNames = loadedUser?.schedules && loadedUser?.schedules.map((s) => s.name);
   const teamNames =
-    loadedUser?.teams && loadedUser?.teams.map((t) => `${t.name} ${!t.accepted ? "(pending)" : ""}`);
+    loadedUser?.teams &&
+    loadedUser?.teams.map((t) => `${t.name} ${!t.accepted ? "(pending)" : ""}`);
 
   return (
     <Sheet
@@ -34,7 +38,8 @@ export function EditUserSheet({ state, dispatch }: { state: State; dispatch: Dis
       onOpenChange={() => {
         setEditMode(false);
         dispatch({ type: "CLOSE_MODAL" });
-      }}>
+      }}
+    >
       <SheetContent position="right" size="default">
         {!isLoading && loadedUser ? (
           <div className="flex h-full flex-col">
@@ -67,7 +72,12 @@ export function EditUserSheet({ state, dispatch }: { state: State; dispatch: Dis
                     badgeColor="gray"
                     value={loadedUser?.bio ? loadedUser?.bio : t("user_has_no_bio")}
                   />
-                  <DisplayInfo label={t("role")} value={loadedUser?.role ?? ""} asBadge badgeColor="blue" />
+                  <DisplayInfo
+                    label={t("role")}
+                    value={loadedUser?.role ?? ""}
+                    asBadge
+                    badgeColor="blue"
+                  />
                   <DisplayInfo label={t("timezone")} value={loadedUser?.timeZone ?? ""} />
                   <div className="flex flex-col">
                     <Label className="text-subtle mb-1 text-xs font-semibold uppercase leading-none">
@@ -78,7 +88,8 @@ export function EditUserSheet({ state, dispatch }: { state: State; dispatch: Dis
                         ? schedulesNames.map((scheduleName) => (
                             <span
                               key={scheduleName}
-                              className="text-emphasis inline-flex items-center gap-1 text-sm font-normal leading-5">
+                              className="text-emphasis inline-flex items-center gap-1 text-sm font-normal leading-5"
+                            >
                               {scheduleName}
                             </span>
                           ))
@@ -90,7 +101,9 @@ export function EditUserSheet({ state, dispatch }: { state: State; dispatch: Dis
                     label={t("teams")}
                     displayCount={teamNames?.length ?? 0}
                     value={
-                      teamNames && teamNames?.length === 0 ? [t("user_isnt_in_any_teams")] : teamNames ?? "" // TS wtf
+                      teamNames && teamNames?.length === 0
+                        ? [t("user_isnt_in_any_teams")]
+                        : (teamNames ?? "") // TS wtf
                     }
                     asBadge={teamNames && teamNames?.length > 0}
                   />

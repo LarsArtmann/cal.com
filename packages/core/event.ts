@@ -28,7 +28,10 @@ export function getEventName(eventNameObj: EventNameObjectType, forAttendeeView 
   let eventName = eventNameObj.eventName;
   let locationString = eventNameObj.location || "";
 
-  if (eventNameObj.eventName.includes("{Location}") || eventNameObj.eventName.includes("{LOCATION}")) {
+  if (
+    eventNameObj.eventName.includes("{Location}") ||
+    eventNameObj.eventName.includes("{LOCATION}")
+  ) {
     const eventLocationType = guessEventLocationType(eventNameObj.location);
     if (eventLocationType) {
       locationString = eventLocationType.label;
@@ -57,7 +60,8 @@ export function getEventName(eventNameObj: EventNameObjectType, forAttendeeView 
         if (variable === bookingField) {
           let fieldValue;
           if (eventNameObj.bookingFields) {
-            const field = eventNameObj.bookingFields[bookingField as keyof typeof eventNameObj.bookingFields];
+            const field =
+              eventNameObj.bookingFields[bookingField as keyof typeof eventNameObj.bookingFields];
             if (field && typeof field === "object" && "value" in field) {
               fieldValue = field?.value?.toString();
             } else {
@@ -76,7 +80,7 @@ export function getEventName(eventNameObj: EventNameObjectType, forAttendeeView 
 export const validateCustomEventName = (
   value: string,
   message: string,
-  bookingFields?: Prisma.JsonObject
+  bookingFields?: Prisma.JsonObject,
 ) => {
   let customInputVariables: string[] = [];
   if (bookingFields) {

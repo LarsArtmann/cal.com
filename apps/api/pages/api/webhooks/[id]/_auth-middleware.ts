@@ -11,7 +11,11 @@ async function authMiddleware(req: NextApiRequest) {
   if (isAdmin) return;
   // Check if the current user can access the webhook
   const webhook = await prisma.webhook.findFirst({
-    where: { id, appId: null, OR: [{ userId }, { eventType: { team: { members: { some: { userId } } } } }] },
+    where: {
+      id,
+      appId: null,
+      OR: [{ userId }, { eventType: { team: { members: { some: { userId } } } } }],
+    },
   });
   if (!webhook) throw new HttpError({ statusCode: 403, message: "Forbidden" });
 }

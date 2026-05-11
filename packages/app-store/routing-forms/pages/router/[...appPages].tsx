@@ -43,7 +43,7 @@ const querySchema = z
 
 export const getServerSideProps = async function getServerSideProps(
   context: AppGetServerSidePropsContext,
-  prisma: AppPrisma
+  prisma: AppPrisma,
 ) {
   const queryParsed = querySchema.safeParse(context.query);
   if (!queryParsed.success) {
@@ -60,7 +60,8 @@ export const getServerSideProps = async function getServerSideProps(
     where: {
       id: formId,
       user: {
-        organization: isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
+        organization:
+          isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
       },
     },
   });

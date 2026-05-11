@@ -28,12 +28,20 @@ const AppCategoryNavigation = ({
   useQueryParam?: boolean;
 }) => {
   const [animationRef] = useAutoAnimate<HTMLDivElement>();
-  const appCategories = useMemo(() => getAppCategories(baseURL, useQueryParam), [baseURL, useQueryParam]);
+  const appCategories = useMemo(
+    () => getAppCategories(baseURL, useQueryParam),
+    [baseURL, useQueryParam],
+  );
 
   return (
     <div className={cs("flex flex-col gap-x-6 md:p-0 xl:flex-row", classNames?.root ?? className)}>
       <div className="hidden xl:block">
-        <VerticalTabs tabs={appCategories} sticky linkShallow itemClassname={classNames?.verticalTabsItem} />
+        <VerticalTabs
+          tabs={appCategories}
+          sticky
+          linkShallow
+          itemClassname={classNames?.verticalTabsItem}
+        />
       </div>
       <div className="block overflow-x-scroll xl:hidden">
         <HorizontalTabs tabs={appCategories} linkShallow />

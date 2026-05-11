@@ -10,7 +10,7 @@ const log = logger.getChildLogger({ prefix: [`[[LarkAppCredential]`] });
 function makePoolingPromise<T>(
   promiseCreator: () => Promise<T | null>,
   times = 24,
-  delay = 5 * 1000
+  delay = 5 * 1000,
 ): Promise<T | null> {
   return new Promise((resolve, reject) => {
     promiseCreator()

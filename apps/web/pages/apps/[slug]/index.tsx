@@ -30,7 +30,7 @@ const sourceSchema = z.object({
           z.object({
             iframe: z.object({ src: z.string() }),
           }),
-        ])
+        ]),
       )
       .optional(),
   }),
@@ -139,7 +139,12 @@ export const getStaticProps = async (ctx: GetStaticPropsContext) => {
 
   const isTemplate = appMeta.isTemplate;
   const appDirname = path.join(isTemplate ? "templates" : "", appFromDb.dirName);
-  const README_PATH = path.join(process.cwd(), "..", "..", `packages/app-store/${appDirname}/DESCRIPTION.md`);
+  const README_PATH = path.join(
+    process.cwd(),
+    "..",
+    "..",
+    `packages/app-store/${appDirname}/DESCRIPTION.md`,
+  );
   const postFilePath = path.join(README_PATH);
   let source = "";
 

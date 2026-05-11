@@ -39,7 +39,7 @@ export const POST = async (request: NextRequest) => {
   } catch (error) {
     return new NextResponse(
       (error as Error).message || "Something went wrong. Please try again or reach out for help.",
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

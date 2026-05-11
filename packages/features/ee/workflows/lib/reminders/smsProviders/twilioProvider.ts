@@ -15,7 +15,9 @@ if (process.env.NODE_ENV !== "production") {
   globalThis.twilio = twilio;
 }
 
-function assertTwilio(twilio: TwilioClient.Twilio | undefined): asserts twilio is TwilioClient.Twilio {
+function assertTwilio(
+  twilio: TwilioClient.Twilio | undefined,
+): asserts twilio is TwilioClient.Twilio {
   if (!twilio) throw new Error("Twilio credentials are missing from the .env file");
 }
 
@@ -31,7 +33,12 @@ function getSMSNumber(phone: string, whatsapp = false) {
   return whatsapp ? `whatsapp:${phone}` : phone;
 }
 
-export const sendSMS = async (phoneNumber: string, body: string, sender: string, whatsapp = false) => {
+export const sendSMS = async (
+  phoneNumber: string,
+  body: string,
+  sender: string,
+  whatsapp = false,
+) => {
   assertTwilio(twilio);
   const response = await twilio.messages.create({
     body: body,
@@ -48,7 +55,7 @@ export const scheduleSMS = async (
   body: string,
   scheduledDate: Date,
   sender: string,
-  whatsapp = false
+  whatsapp = false,
 ) => {
   assertTwilio(twilio);
   const response = await twilio.messages.create({

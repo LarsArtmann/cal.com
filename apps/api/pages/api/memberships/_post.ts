@@ -47,7 +47,8 @@ async function checkPermissions(req: NextApiRequest) {
   const membership = await prisma.membership.findFirst({
     where: { userId, teamId: body.teamId, role: { in: ["ADMIN", "OWNER"] } },
   });
-  if (!membership) throw new HttpError({ statusCode: 403, message: "You can't add members to this team" });
+  if (!membership)
+    throw new HttpError({ statusCode: 403, message: "You can't add members to this team" });
 }
 
 export default defaultResponder(postHandler);

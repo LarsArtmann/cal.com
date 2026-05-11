@@ -60,7 +60,9 @@ export async function addSubscription({
 
     return createSubscription;
   } catch (error) {
-    log.error(`Error creating subscription for user ${appApiKey.userId} and appId ${appApiKey.appId}.`);
+    log.error(
+      `Error creating subscription for user ${appApiKey.userId} and appId ${appApiKey.appId}.`,
+    );
   }
 }
 
@@ -94,7 +96,7 @@ export async function deleteSubscription({
       });
       for (const booking of bookingsWithScheduledJobs) {
         const updatedScheduledJobs = booking.scheduledJobs.filter(
-          (scheduledJob) => scheduledJob !== `${appId}_${webhook.id}`
+          (scheduledJob) => scheduledJob !== `${appId}_${webhook.id}`,
         );
         await prisma.booking.update({
           where: {
@@ -118,7 +120,7 @@ export async function deleteSubscription({
     return deleteWebhook;
   } catch (err) {
     log.error(
-      `Error deleting subscription for user ${appApiKey.userId}, webhookId ${webhookId}, appId ${appId}`
+      `Error deleting subscription for user ${appApiKey.userId}, webhookId ${webhookId}, appId ${appId}`,
     );
   }
 }
@@ -197,17 +199,22 @@ export async function listBookings(appApiKey: ApiKey) {
 
     return updatedBookings;
   } catch (err) {
-    log.error(`Error retrieving list of bookings for user ${appApiKey.userId} and appId ${appApiKey.appId}.`);
+    log.error(
+      `Error retrieving list of bookings for user ${appApiKey.userId} and appId ${appApiKey.appId}.`,
+    );
   }
 }
 
 export async function scheduleTrigger(
   booking: { id: number; endTime: Date; scheduledJobs: string[] },
   subscriberUrl: string,
-  subscriber: { id: string; appId: string | null }
+  subscriber: { id: string; appId: string | null },
 ) {
   try {
-    const payload = JSON.stringify({ triggerEvent: WebhookTriggerEvents.MEETING_ENDED, ...booking });
+    const payload = JSON.stringify({
+      triggerEvent: WebhookTriggerEvents.MEETING_ENDED,
+      ...booking,
+    });
     const jobName = `${subscriber.appId}_${subscriber.id}`;
 
     // add scheduled job to database
@@ -241,7 +248,7 @@ export async function scheduleTrigger(
 export async function cancelScheduledJobs(
   booking: { uid: string; scheduledJobs?: string[] },
   appId?: string | null,
-  isReschedule?: boolean
+  isReschedule?: boolean,
 ) {
   if (!booking.scheduledJobs) return;
 

@@ -22,7 +22,7 @@ type AvailableTimesProps = {
     time: string,
     attendees: number,
     seatsPerTimeSlot?: number | null,
-    bookingUid?: string
+    bookingUid?: string,
   ) => void;
   seatsPerTimeSlot?: number | null;
   showAvailableSeatsCount?: boolean | null;
@@ -58,8 +58,9 @@ export const AvailableTimes = ({
         <span
           className={classNames(
             isColumnView && "w-full text-center",
-            isColumnView ? "text-subtle text-xs uppercase" : "text-emphasis font-semibold"
-          )}>
+            isColumnView ? "text-subtle text-xs uppercase" : "text-emphasis font-semibold",
+          )}
+        >
           <span className={classNames(isToday && "!text-default")}>
             {nameOfDay(i18n.language, Number(date.format("d")), "short")}
           </span>
@@ -67,8 +68,9 @@ export const AvailableTimes = ({
             className={classNames(
               isColumnView && isToday && "bg-brand-default text-brand ml-2",
               "inline-flex items-center justify-center rounded-3xl px-1 pt-0.5 font-medium",
-              isMonthView ? "text-default text-sm" : "text-xs"
-            )}>
+              isMonthView ? "text-default text-sm" : "text-xs",
+            )}
+          >
             {date.format("DD")}
             {availableMonth && `, ${availableMonth}`}
           </span>
@@ -84,19 +86,33 @@ export const AvailableTimes = ({
         {!slots.length && (
           <div className="bg-subtle border-subtle flex h-full flex-col items-center rounded-md border p-6 dark:bg-transparent">
             <CalendarX2 className="text-muted mb-2 h-4 w-4" />
-            <p className={classNames("text-muted", showTimeFormatToggle ? "-mt-1 text-lg" : "text-sm")}>
+            <p
+              className={classNames(
+                "text-muted",
+                showTimeFormatToggle ? "-mt-1 text-lg" : "text-sm",
+              )}
+            >
               {t("all_booked_today")}
             </p>
           </div>
         )}
 
         {slots.map((slot) => {
-          const bookingFull = !!(hasTimeSlots && slot.attendees && slot.attendees >= seatsPerTimeSlot);
-          const isHalfFull = slot.attendees && seatsPerTimeSlot && slot.attendees / seatsPerTimeSlot >= 0.5;
+          const bookingFull = !!(
+            hasTimeSlots &&
+            slot.attendees &&
+            slot.attendees >= seatsPerTimeSlot
+          );
+          const isHalfFull =
+            slot.attendees && seatsPerTimeSlot && slot.attendees / seatsPerTimeSlot >= 0.5;
           const isNearlyFull =
             slot.attendees && seatsPerTimeSlot && slot.attendees / seatsPerTimeSlot >= 0.83;
 
-          const colorClass = isNearlyFull ? "bg-rose-600" : isHalfFull ? "bg-yellow-500" : "bg-emerald-400";
+          const colorClass = isNearlyFull
+            ? "bg-rose-600"
+            : isHalfFull
+              ? "bg-yellow-500"
+              : "bg-emerald-400";
           return (
             <Button
               key={slot.time}
@@ -104,12 +120,15 @@ export const AvailableTimes = ({
               data-testid="time"
               data-disabled={bookingFull}
               data-time={slot.time}
-              onClick={() => onTimeSelect(slot.time, slot?.attendees || 0, seatsPerTimeSlot, slot.bookingUid)}
+              onClick={() =>
+                onTimeSelect(slot.time, slot?.attendees || 0, seatsPerTimeSlot, slot.bookingUid)
+              }
               className={classNames(
                 "min-h-9 hover:border-brand-default mb-2 flex h-auto w-full flex-col justify-center py-2",
-                selectedSlots?.includes(slot.time) && "border-brand-default"
+                selectedSlots?.includes(slot.time) && "border-brand-default",
               )}
-              color="secondary">
+              color="secondary"
+            >
               {dayjs.utc(slot.time).tz(timezone).format(timeFormat)}
               {bookingFull && <p className="text-sm">{t("booking_full")}</p>}
               {hasTimeSlots && !bookingFull && (

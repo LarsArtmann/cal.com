@@ -53,7 +53,8 @@ bookingReferenceMiddleware(prismaWithoutClientExtensions);
 
 const prismaWithClientExtensions = prismaWithoutClientExtensions;
 
-export const prisma = (globalThis.prisma as typeof prismaWithClientExtensions) || prismaWithClientExtensions;
+export const prisma =
+  (globalThis.prisma as typeof prismaWithClientExtensions) || prismaWithClientExtensions;
 
 if (process.env.NODE_ENV !== "production") {
   globalThis.prisma = prisma;

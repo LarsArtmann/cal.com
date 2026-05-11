@@ -24,7 +24,7 @@ const ConnectedCalendars = (props: IConnectCalendarsProps) => {
   });
 
   const firstCalendar = queryConnectedCalendars.data?.connectedCalendars.find(
-    (item) => item.calendars && item.calendars?.length > 0
+    (item) => item.calendars && item.calendars?.length > 0,
   );
   const disabledNextButton = firstCalendar === undefined;
   const destinationCalendar = queryConnectedCalendars.data?.destinationCalendar;
@@ -58,23 +58,25 @@ const ConnectedCalendars = (props: IConnectCalendarsProps) => {
         )}
 
       {/* Connect calendars list */}
-      {firstCalendar === undefined && queryIntegrations.data && queryIntegrations.data.items.length > 0 && (
-        <List className="bg-default divide-subtle border-subtle mx-1 divide-y rounded-md border p-0 dark:bg-black sm:mx-0">
-          {queryIntegrations.data &&
-            queryIntegrations.data.items.map((item) => (
-              <li key={item.title}>
-                {item.title && item.logo && (
-                  <AppConnectionItem
-                    type={item.type}
-                    title={item.title}
-                    description={item.description}
-                    logo={item.logo}
-                  />
-                )}
-              </li>
-            ))}
-        </List>
-      )}
+      {firstCalendar === undefined &&
+        queryIntegrations.data &&
+        queryIntegrations.data.items.length > 0 && (
+          <List className="bg-default divide-subtle border-subtle mx-1 divide-y rounded-md border p-0 dark:bg-black sm:mx-0">
+            {queryIntegrations.data &&
+              queryIntegrations.data.items.map((item) => (
+                <li key={item.title}>
+                  {item.title && item.logo && (
+                    <AppConnectionItem
+                      type={item.type}
+                      title={item.title}
+                      description={item.description}
+                      logo={item.logo}
+                    />
+                  )}
+                </li>
+              ))}
+          </List>
+        )}
 
       {queryIntegrations.isLoading && <StepConnectionLoader />}
 
@@ -83,10 +85,11 @@ const ConnectedCalendars = (props: IConnectCalendarsProps) => {
         data-testid="save-calendar-button"
         className={classNames(
           "text-inverted mt-8 flex w-full flex-row justify-center rounded-md border border-black bg-black p-2 text-center text-sm",
-          disabledNextButton ? "cursor-not-allowed opacity-20" : ""
+          disabledNextButton ? "cursor-not-allowed opacity-20" : "",
         )}
         onClick={() => nextStep()}
-        disabled={disabledNextButton}>
+        disabled={disabledNextButton}
+      >
         {firstCalendar ? `${t("continue")}` : `${t("next_step_text")}`}
         <ArrowRight className="ml-2 h-4 w-4 self-center" aria-hidden="true" />
       </button>

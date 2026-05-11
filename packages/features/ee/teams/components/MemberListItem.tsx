@@ -84,7 +84,9 @@ export default function MemberListItem(props: Props) {
 
   const ownersInTeam = () => {
     const { members } = props.team;
-    const owners = members.filter((member) => member["role"] === MembershipRole.OWNER && member["accepted"]);
+    const owners = members.filter(
+      (member) => member["role"] === MembershipRole.OWNER && member["accepted"],
+    );
     return owners.length;
   };
 
@@ -109,7 +111,8 @@ export default function MemberListItem(props: Props) {
       (props.member.role !== MembershipRole.OWNER ||
         ownersInTeam() > 1 ||
         props.member.id !== currentUserId)) ||
-    (props.team.membership?.role === MembershipRole.ADMIN && props.member.role !== MembershipRole.OWNER);
+    (props.team.membership?.role === MembershipRole.ADMIN &&
+      props.member.role !== MembershipRole.OWNER);
   const impersonationMode =
     editMode &&
     !props.member.disableImpersonation &&
@@ -119,7 +122,8 @@ export default function MemberListItem(props: Props) {
 
   const bookerUrl = useBookerUrl();
   const bookerUrlWithoutProtocol = bookerUrl.replace(/^https?:\/\//, "");
-  const bookingLink = !!props.member.username && `${bookerUrlWithoutProtocol}/${props.member.username}`;
+  const bookingLink =
+    !!props.member.username && `${bookerUrlWithoutProtocol}/${props.member.username}`;
   const isAdmin = props.team && ["ADMIN", "OWNER"].includes(props.team.membership?.role);
   const appList = props.member.connectedApps.map(({ logo, name, externalId }) => {
     return logo ? (
@@ -156,7 +160,11 @@ export default function MemberListItem(props: Props) {
                 {props.member.role && <TeamRole role={props.member.role} />}
               </div>
               <div className="text-default flex items-center">
-                <span className=" block text-sm" data-testid="member-email" data-email={props.member.email}>
+                <span
+                  className=" block text-sm"
+                  data-testid="member-email"
+                  data-email={props.member.email}
+                >
                   {props.member.email}
                 </span>
                 {bookingLink && (
@@ -165,7 +173,8 @@ export default function MemberListItem(props: Props) {
                     <a
                       target="_blank"
                       href={`${bookerUrl}/${props.member.username}`}
-                      className="text-default block text-sm">
+                      className="text-default block text-sm"
+                    >
                       {bookingLink}
                     </a>
                   </>
@@ -218,7 +227,8 @@ export default function MemberListItem(props: Props) {
                       <DropdownItem
                         type="button"
                         onClick={() => setShowChangeMemberRoleModal(true)}
-                        StartIcon={Edit2}>
+                        StartIcon={Edit2}
+                      >
                         {t("edit")}
                       </DropdownItem>
                     </DropdownMenuItem>
@@ -228,7 +238,8 @@ export default function MemberListItem(props: Props) {
                           <DropdownItem
                             type="button"
                             onClick={() => setShowImpersonateModal(true)}
-                            StartIcon={Lock}>
+                            StartIcon={Lock}
+                          >
                             {t("impersonate")}
                           </DropdownItem>
                         </DropdownMenuItem>
@@ -246,7 +257,8 @@ export default function MemberListItem(props: Props) {
                               language: i18n.language,
                             });
                           }}
-                          StartIcon={SendIcon}>
+                          StartIcon={SendIcon}
+                        >
                           {t("resend_invitation")}
                         </DropdownItem>
                       </DropdownMenuItem>
@@ -256,7 +268,8 @@ export default function MemberListItem(props: Props) {
                         type="button"
                         onClick={() => setShowDeleteModal(true)}
                         color="destructive"
-                        StartIcon={UserX}>
+                        StartIcon={UserX}
+                      >
                         {t("remove")}
                       </DropdownItem>
                     </DropdownMenuItem>
@@ -276,7 +289,8 @@ export default function MemberListItem(props: Props) {
                       href={!props.member.accepted ? undefined : "/" + props.member.username}
                       target="_blank"
                       type="button"
-                      StartIcon={ExternalLink}>
+                      StartIcon={ExternalLink}
+                    >
                       {t("view_public_page")}
                     </DropdownItem>
                   </DropdownMenuItem>
@@ -286,7 +300,8 @@ export default function MemberListItem(props: Props) {
                         <DropdownItem
                           type="button"
                           onClick={() => setShowChangeMemberRoleModal(true)}
-                          StartIcon={Edit2}>
+                          StartIcon={Edit2}
+                        >
                           {t("edit")}
                         </DropdownItem>
                       </DropdownMenuItem>
@@ -295,7 +310,8 @@ export default function MemberListItem(props: Props) {
                           type="button"
                           color="destructive"
                           onClick={() => setShowDeleteModal(true)}
-                          StartIcon={UserX}>
+                          StartIcon={UserX}
+                        >
                           {t("remove")}
                         </DropdownItem>
                       </DropdownMenuItem>
@@ -314,7 +330,8 @@ export default function MemberListItem(props: Props) {
             variety="danger"
             title={t("remove_member")}
             confirmBtnText={t("confirm_remove_member")}
-            onConfirm={removeMember}>
+            onConfirm={removeMember}
+          >
             {t("remove_member_confirmation_message")}
           </ConfirmationDialogContent>
         </Dialog>
@@ -322,7 +339,11 @@ export default function MemberListItem(props: Props) {
 
       {showImpersonateModal && props.member.username && (
         <Dialog open={showImpersonateModal} onOpenChange={() => setShowImpersonateModal(false)}>
-          <DialogContent type="creation" title={t("impersonate")} description={t("impersonation_user_tip")}>
+          <DialogContent
+            type="creation"
+            title={t("impersonate")}
+            description={t("impersonation_user_tip")}
+          >
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -331,7 +352,8 @@ export default function MemberListItem(props: Props) {
                   teamId: props.team.id,
                 });
                 setShowImpersonateModal(false);
-              }}>
+              }}
+            >
               <DialogFooter showDivider className="mt-8">
                 <DialogClose color="secondary">{t("cancel")}</DialogClose>
                 <Button color="primary" type="submit">
@@ -354,7 +376,10 @@ export default function MemberListItem(props: Props) {
         />
       )}
       {showTeamAvailabilityModal && (
-        <Dialog open={showTeamAvailabilityModal} onOpenChange={() => setShowTeamAvailabilityModal(false)}>
+        <Dialog
+          open={showTeamAvailabilityModal}
+          onOpenChange={() => setShowTeamAvailabilityModal(false)}
+        >
           <DialogContent type="creation" size="md">
             <TeamAvailabilityModal team={props.team} member={props.member} />
             <DialogFooter>

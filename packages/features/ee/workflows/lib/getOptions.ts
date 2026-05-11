@@ -15,7 +15,11 @@ import {
   WORKFLOW_TRIGGER_EVENTS,
 } from "./constants";
 
-export function getWorkflowActionOptions(t: TFunction, isTeamsPlan?: boolean, isKYCVerified?: boolean) {
+export function getWorkflowActionOptions(
+  t: TFunction,
+  isTeamsPlan?: boolean,
+  isKYCVerified?: boolean,
+) {
   return WORKFLOW_ACTIONS.filter((action) => action !== WorkflowActions.EMAIL_ADDRESS) //removing EMAIL_ADDRESS for now due to abuse episode
     .map((action) => {
       const actionString = t(`${action.toLowerCase()}_action`);
@@ -33,7 +37,10 @@ export function getWorkflowTriggerOptions(t: TFunction) {
   return WORKFLOW_TRIGGER_EVENTS.map((triggerEvent) => {
     const triggerString = t(`${triggerEvent.toLowerCase()}_trigger`);
 
-    return { label: triggerString.charAt(0).toUpperCase() + triggerString.slice(1), value: triggerEvent };
+    return {
+      label: triggerString.charAt(0).toUpperCase() + triggerString.slice(1),
+      value: triggerEvent,
+    };
   });
 }
 

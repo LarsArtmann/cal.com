@@ -29,7 +29,14 @@ function WizardForm<T extends DefaultStep>(props: {
   stepLabel?: React.ComponentProps<typeof Steps>["stepLabel"];
 }) {
   const searchParams = useSearchParams();
-  const { href, steps, nextLabel = "Next", finishLabel = "Finish", prevLabel = "Back", stepLabel } = props;
+  const {
+    href,
+    steps,
+    nextLabel = "Next",
+    finishLabel = "Finish",
+    prevLabel = "Back",
+    stepLabel,
+  } = props;
   const router = useRouter();
   const step = parseInt((searchParams?.get("step") as string) || "1");
   const currentStep = steps[step - 1];
@@ -44,7 +51,9 @@ function WizardForm<T extends DefaultStep>(props: {
 
   return (
     <div className="mx-auto mt-4 print:w-full" data-testid="wizard-form">
-      <div className={classNames("overflow-hidden  md:mb-2 md:w-[700px]", props.containerClassname)}>
+      <div
+        className={classNames("overflow-hidden  md:mb-2 md:w-[700px]", props.containerClassname)}
+      >
         <div className="px-6 py-5 sm:px-14">
           <h1 className="font-cal text-emphasis text-2xl" data-testid="step-title">
             {currentStep.title}
@@ -64,7 +73,12 @@ function WizardForm<T extends DefaultStep>(props: {
         </div>
       </div>
       <div className={classNames("mb-8 overflow-hidden md:w-[700px]", props.containerClassname)}>
-        <div className={classNames("print:p-none max-w-3xl px-8 py-5 sm:p-6", currentStep.contentClassname)}>
+        <div
+          className={classNames(
+            "print:p-none max-w-3xl px-8 py-5 sm:p-6",
+            currentStep.contentClassname,
+          )}
+        >
           {typeof currentStep.content === "function"
             ? currentStep.content(setCurrentStepIsLoading)
             : currentStep.content}
@@ -76,7 +90,8 @@ function WizardForm<T extends DefaultStep>(props: {
                 color="secondary"
                 onClick={() => {
                   setStep(step - 1);
-                }}>
+                }}
+              >
                 {prevLabel}
               </Button>
             )}
@@ -88,7 +103,8 @@ function WizardForm<T extends DefaultStep>(props: {
               color="primary"
               form={`wizard-step-${step}`}
               disabled={currentStep.isEnabled === false}
-              className="relative ml-2">
+              className="relative ml-2"
+            >
               {step < steps.length ? nextLabel : finishLabel}
             </Button>
           </div>

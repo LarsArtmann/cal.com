@@ -74,7 +74,10 @@ import { schemaQueryIdParseInt } from "~/lib/validations/shared/queryIdTransform
 export async function getHandler(req: NextApiRequest) {
   const { prisma, query } = req;
   const { id } = schemaQueryIdParseInt.parse(query);
-  const data = await prisma.schedule.findUniqueOrThrow({ where: { id }, include: { availability: true } });
+  const data = await prisma.schedule.findUniqueOrThrow({
+    where: { id },
+    include: { availability: true },
+  });
   return { schedule: schemaSchedulePublic.parse(data) };
 }
 

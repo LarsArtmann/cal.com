@@ -11,9 +11,19 @@ import { KPICard } from "./KPICard";
 export const BookingKPICards = () => {
   const { t } = useLocale();
   const { filter } = useFilterContext();
-  const { dateRange, selectedEventTypeId, selectedUserId, selectedMemberUserId, isAll, initialConfig } =
-    filter;
-  const initialConfigIsReady = !!(initialConfig?.teamId || initialConfig?.userId || initialConfig?.isAll);
+  const {
+    dateRange,
+    selectedEventTypeId,
+    selectedUserId,
+    selectedMemberUserId,
+    isAll,
+    initialConfig,
+  } = filter;
+  const initialConfigIsReady = !!(
+    initialConfig?.teamId ||
+    initialConfig?.userId ||
+    initialConfig?.isAll
+  );
   const [startDate, endDate] = dateRange;
 
   const { selectedTeamId: teamId } = filter;
@@ -34,7 +44,7 @@ export const BookingKPICards = () => {
         context: { skipBatch: true },
       },
       enabled: initialConfigIsReady,
-    }
+    },
   );
 
   const categories: {

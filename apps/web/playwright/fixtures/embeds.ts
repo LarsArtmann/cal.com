@@ -60,7 +60,7 @@ export const createEmbedsFixture = (page: Page) => {
           });
         });
       },
-      { calNamespace }
+      { calNamespace },
     );
   };
 };
@@ -74,7 +74,7 @@ export const createGetActionFiredDetails = (page: Page) => {
           //@ts-ignore
           return window.eventsFiredStoreForPlaywright[`${actionType}-${calNamespace}`];
         },
-        { actionType, calNamespace }
+        { actionType, calNamespace },
       );
     }
   };

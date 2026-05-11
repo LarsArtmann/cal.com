@@ -28,11 +28,18 @@ export const KPICard = ({
       </Flex>
       <Flex className="mt-4 justify-start space-x-2">
         <BadgeDelta
-          deltaType={calculateDeltaType(previousMetricData.deltaPrevious - previousMetricData.count)}
+          deltaType={calculateDeltaType(
+            previousMetricData.deltaPrevious - previousMetricData.count,
+          )}
         />
         <Flex className="justify-start space-x-1 truncate">
           <Text
-            color={colors[calculateDeltaType(previousMetricData.deltaPrevious - previousMetricData.count)]}>
+            color={
+              colors[
+                calculateDeltaType(previousMetricData.deltaPrevious - previousMetricData.count)
+              ]
+            }
+          >
             {Number(previousMetricData.deltaPrevious).toFixed(0)}%
           </Text>
 
@@ -40,7 +47,8 @@ export const KPICard = ({
             content={t("from_to_date_period", {
               startDate: previousDateRange.startDate,
               endDate: previousDateRange.endDate,
-            })}>
+            })}
+          >
             <small className="text-default relative top-px cursor-pointer text-xs">
               {t("from_last_period")}
             </small>

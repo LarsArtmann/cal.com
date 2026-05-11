@@ -93,7 +93,10 @@ async function checkPermissions(req: NextApiRequest) {
     where: { userId, id: data.scheduleId },
   });
   if (!schedule)
-    throw new HttpError({ statusCode: 401, message: "You can't add availabilities to this schedule" });
+    throw new HttpError({
+      statusCode: 401,
+      message: "You can't add availabilities to this schedule",
+    });
 }
 
 export default defaultResponder(postHandler);

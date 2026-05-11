@@ -10,7 +10,11 @@ import { DEFAULT_SCHEDULE, getAvailabilityFromSchedule } from "@calcom/lib/avail
 import { prisma } from "@calcom/prisma";
 import { MembershipRole, SchedulingType } from "@calcom/prisma/enums";
 
-import { selectFirstAvailableTimeSlotNextMonth, teamEventSlug, teamEventTitle } from "../lib/testUtils";
+import {
+  selectFirstAvailableTimeSlotNextMonth,
+  teamEventSlug,
+  teamEventTitle,
+} from "../lib/testUtils";
 import type { TimeZoneEnum } from "./types";
 
 // Don't import hashPassword from app as that ends up importing next-auth and initializing it before NEXTAUTH_URL can be updated during tests.
@@ -45,7 +49,7 @@ const createTeamEventType = async (
     schedulingType?: SchedulingType;
     teamEventTitle?: string;
     teamEventSlug?: string;
-  }
+  },
 ) => {
   return await prisma.eventType.create({
     data: {
@@ -84,7 +88,7 @@ const createTeamAndAddUser = async (
     isOrg?: boolean;
     hasSubteam?: true;
   },
-  workerInfo: WorkerInfo
+  workerInfo: WorkerInfo,
 ) => {
   const slug = `${isOrg ? "org" : "team"}-${workerInfo.workerIndex}-${Date.now()}`;
   const data: PrismaType.TeamCreateInput = {
@@ -133,7 +137,7 @@ export const createUsersFixture = (page: Page, emails: API | undefined, workerIn
         isOrg?: boolean;
         hasSubteam?: true;
         isUnpublished?: true;
-      } = {}
+      } = {},
     ) => {
       const _user = await prisma.user.create({
         data: createUser(workerInfo, opts),
@@ -283,7 +287,7 @@ export const createUsersFixture = (page: Page, emails: API | undefined, workerIn
             isOrg: scenario.isOrg,
             hasSubteam: scenario.hasSubteam,
           },
-          workerInfo
+          workerInfo,
         );
         const teamEvent = await createTeamEventType(user, team, scenario);
         if (scenario.teammates) {
@@ -317,7 +321,7 @@ export const createUsersFixture = (page: Page, emails: API | undefined, workerIn
                 where: { id: teamUser.id },
                 include: userIncludes,
               }),
-              store.page
+              store.page,
             );
             store.users.push(teammateFixture);
           }
@@ -438,7 +442,13 @@ const createUserFixture = (user: UserWithIncludes, page: Page) => {
 type SupportedTestEventTypes = PrismaType.EventTypeCreateInput & {
   _bookings?: PrismaType.BookingCreateInput[];
 };
-type CustomUserOptsKeys = "username" | "password" | "completedOnboarding" | "locale" | "name" | "email";
+type CustomUserOptsKeys =
+  | "username"
+  | "password"
+  | "completedOnboarding"
+  | "locale"
+  | "name"
+  | "email";
 type CustomUserOpts = Partial<Pick<Prisma.User, CustomUserOptsKeys>> & {
   timeZone?: TimeZoneEnum;
   eventTypes?: SupportedTestEventTypes[];
@@ -447,7 +457,10 @@ type CustomUserOpts = Partial<Pick<Prisma.User, CustomUserOptsKeys>> & {
 };
 
 // creates the actual user in the db.
-const createUser = (workerInfo: WorkerInfo, opts?: CustomUserOpts | null): PrismaType.UserCreateInput => {
+const createUser = (
+  workerInfo: WorkerInfo,
+  opts?: CustomUserOpts | null,
+): PrismaType.UserCreateInput => {
   // build a unique name for our user
   const uname =
     opts?.useExactUsername && opts?.username
@@ -464,7 +477,7 @@ const createUser = (workerInfo: WorkerInfo, opts?: CustomUserOpts | null): Prism
     timeZone: opts?.timeZone ?? dayjs.tz.guess(),
     locale: opts?.locale ?? "en",
     schedules:
-      opts?.completedOnboarding ?? true
+      (opts?.completedOnboarding ?? true)
         ? {
             create: {
               name: "Working Hours",
@@ -493,7 +506,7 @@ async function confirmPendingPayment(page: Page) {
   const payload = JSON.stringify(
     { type: "payment_intent.succeeded", data: { object: { id } }, account: "e2e_test" },
     null,
-    2
+    2,
   );
 
   const signature = stripe.webhooks.generateTestHeaderString({
@@ -506,13 +519,14 @@ async function confirmPendingPayment(page: Page) {
     headers: { "stripe-signature": signature },
   });
 
-  if (response.status() !== 200) throw new Error(`Failed to confirm payment. Response: ${response.text()}`);
+  if (response.status() !== 200)
+    throw new Error(`Failed to confirm payment. Response: ${response.text()}`);
 }
 
 // login using a replay of an E2E routine.
 export async function login(
   user: Pick<Prisma.User, "username"> & Partial<Pick<Prisma.User, "password" | "email">>,
-  page: Page
+  page: Page,
 ) {
   // get locators
   const loginLocator = page.locator("[data-testid=login-form]");
@@ -533,7 +547,7 @@ export async function login(
 
 export async function apiLogin(
   user: Pick<Prisma.User, "username"> & Partial<Pick<Prisma.User, "password" | "email">>,
-  page: Page
+  page: Page,
 ) {
   const csrfToken = await page
     .context()
@@ -563,7 +577,7 @@ export async function setupEventWithPrice(eventType: Pick<Prisma.EventType, "id"
 export async function bookAndPayEvent(
   user: Pick<Prisma.User, "username">,
   eventType: Pick<Prisma.EventType, "slug">,
-  page: Page
+  page: Page,
 ) {
   // booking process with stripe integration
   await page.goto(`${user.username}/${eventType?.slug}`);

@@ -3,7 +3,16 @@ import { Controller, useForm } from "react-hook-form";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { trpc } from "@calcom/trpc";
-import { Button, Dialog, DialogContent, DialogFooter, Form, Label, Select, showToast } from "@calcom/ui";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  Form,
+  Label,
+  Select,
+  showToast,
+} from "@calcom/ui";
 
 type InvitationLinkSettingsModalProps = {
   isOpen: boolean;
@@ -68,7 +77,8 @@ export default function InviteLinkSettingsModal(props: InvitationLinkSettingsMod
       onOpenChange={() => {
         props.onExit();
         linkSettingsFormMethods.reset();
-      }}>
+      }}
+    >
       <DialogContent type="creation" title="Invite link settings">
         <Form form={linkSettingsFormMethods} handleSubmit={handleSubmit}>
           <Controller
@@ -81,7 +91,9 @@ export default function InviteLinkSettingsModal(props: InvitationLinkSettingsMod
                 </Label>
                 <Select
                   options={expiresInDaysOption}
-                  defaultValue={expiresInDaysOption.find((option) => option.value === props.expiresInDays)}
+                  defaultValue={expiresInDaysOption.find(
+                    (option) => option.value === props.expiresInDays,
+                  )}
                   className="w-full"
                   onChange={(val) => onChange(val?.value)}
                 />
@@ -94,7 +106,8 @@ export default function InviteLinkSettingsModal(props: InvitationLinkSettingsMod
               color="secondary"
               onClick={() => deleteInviteMutation.mutate({ token: props.token })}
               className="mr-auto"
-              data-testid="copy-invite-link-button">
+              data-testid="copy-invite-link-button"
+            >
               {t("delete")}
             </Button>
             <Button type="button" color="minimal" onClick={props.onExit}>
@@ -104,7 +117,8 @@ export default function InviteLinkSettingsModal(props: InvitationLinkSettingsMod
               type="submit"
               color="primary"
               className="me-2 ms-2"
-              data-testid="invite-new-member-button">
+              data-testid="invite-new-member-button"
+            >
               {t("save")}
             </Button>
           </DialogFooter>

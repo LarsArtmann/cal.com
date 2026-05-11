@@ -13,14 +13,18 @@ const querySchema = z.object({
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const parsedQuery = querySchema.safeParse(req.query);
 
-  if (!parsedQuery.success) throw new HttpError({ statusCode: 400, message: parsedQuery.error.message });
+  if (!parsedQuery.success)
+    throw new HttpError({ statusCode: 400, message: parsedQuery.error.message });
 
   const {
     data: { org: slug },
   } = parsedQuery;
   if (!slug) return res.status(400).json({ message: "Org is needed" });
 
-  const org = await prisma.team.findFirst({ where: { slug }, select: { children: true, metadata: true } });
+  const org = await prisma.team.findFirst({
+    where: { slug },
+    select: { children: true, metadata: true },
+  });
 
   if (!org) return res.status(400).json({ message: "Org doesn't exist" });
 

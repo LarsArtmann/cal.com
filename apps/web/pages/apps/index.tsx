@@ -82,7 +82,8 @@ export default function Apps({
         </div>
       )}
       headerClassName="sm:hidden lg:block hidden"
-      emptyStore={!appStore.length}>
+      emptyStore={!appStore.length}
+    >
       <div className="flex flex-col gap-y-8">
         {!searchText && (
           <>
@@ -124,12 +125,15 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   const categoryQuery = appStore.map(({ categories }) => ({
     categories: categories || [],
   }));
-  const categories = categoryQuery.reduce((c, app) => {
-    for (const category of app.categories) {
-      c[category] = c[category] ? c[category] + 1 : 1;
-    }
-    return c;
-  }, {} as Record<string, number>);
+  const categories = categoryQuery.reduce(
+    (c, app) => {
+      for (const category of app.categories) {
+        c[category] = c[category] ? c[category] + 1 : 1;
+      }
+      return c;
+    },
+    {} as Record<string, number>,
+  );
 
   return {
     props: {

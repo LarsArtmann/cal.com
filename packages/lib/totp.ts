@@ -15,7 +15,7 @@ import { keyDecoder, keyEncoder } from "@otplib/plugin-thirty-two";
 export const totpAuthenticatorCheck = (
   token: string,
   secret: string,
-  opts: Partial<AuthenticatorOptions> = {}
+  opts: Partial<AuthenticatorOptions> = {},
 ) => {
   const { window = [1, 0], ...rest } = opts;
   const authenticator = new Authenticator({

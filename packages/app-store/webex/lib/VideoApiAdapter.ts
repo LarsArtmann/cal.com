@@ -84,7 +84,9 @@ const webexAuth = (credential: CredentialPayload) => {
       return Promise.reject(new Error("Invalid refreshed tokens were returned"));
     }
     const newTokens = parsedToken.data;
-    const oldCredential = await prisma.credential.findUniqueOrThrow({ where: { id: credential.id } });
+    const oldCredential = await prisma.credential.findUniqueOrThrow({
+      where: { id: credential.id },
+    });
     const parsedKey = webexTokenSchema.safeParse(oldCredential.key);
     if (!parsedKey.success) {
       return Promise.reject(new Error("Invalid credentials were saved in the DB"));
@@ -226,7 +228,10 @@ const WebexVideoApiAdapter = (credential: CredentialPayload): VideoApiAdapter =>
         return Promise.reject(new Error("Failed to delete meeting"));
       }
     },
-    updateMeeting: async (bookingRef: PartialReference, event: CalendarEvent): Promise<VideoCallData> => {
+    updateMeeting: async (
+      bookingRef: PartialReference,
+      event: CalendarEvent,
+    ): Promise<VideoCallData> => {
       /** @link https://developer.webex.com/docs/api/v1/meetings/update-a-meeting */
       try {
         const response = await fetchWebexApi(`meetings/${bookingRef.uid}`, {

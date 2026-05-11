@@ -33,7 +33,9 @@ test.describe("Availablity tests", () => {
     });
 
     await test.step("Date override is displayed in troubleshooter", async () => {
-      const response = await page.waitForResponse("**/api/trpc/availability/schedule.update?batch=1");
+      const response = await page.waitForResponse(
+        "**/api/trpc/availability/schedule.update?batch=1",
+      );
       const json = await response.json();
       // @ts-expect-error trust me bro
       const date = json[0].result.data.json.schedule.availability.find((a) => !!a.date);
@@ -48,11 +50,17 @@ test.describe("Availablity tests", () => {
       await page.locator('[data-testid="new-schedule"]').click();
       await page.locator('[id="name"]').fill("More working hours");
       page.locator('[type="submit"]').click();
-      await expect(page.locator("[data-testid=availablity-title]")).toHaveValue("More working hours");
+      await expect(page.locator("[data-testid=availablity-title]")).toHaveValue(
+        "More working hours",
+      );
     });
     await test.step("Can delete a schedule", async () => {
       await page.getByRole("button", { name: /Go Back/i }).click();
-      await page.locator('[data-testid="schedules"] > li').nth(1).getByTestId("schedule-more").click();
+      await page
+        .locator('[data-testid="schedules"] > li')
+        .nth(1)
+        .getByTestId("schedule-more")
+        .click();
       await page.locator('[data-testid="delete-schedule"]').click();
       const toast = await page.waitForSelector('[data-testid="toast-success"]');
       expect(toast).toBeTruthy();
@@ -60,7 +68,11 @@ test.describe("Availablity tests", () => {
       await expect(page.locator('[data-testid="schedules"] > li').nth(1)).toHaveCount(0);
     });
     await test.step("Cannot delete a schedule if a single schedule is present", async () => {
-      await page.locator('[data-testid="schedules"] > li').nth(0).getByTestId("schedule-more").click();
+      await page
+        .locator('[data-testid="schedules"] > li')
+        .nth(0)
+        .getByTestId("schedule-more")
+        .click();
       await page.locator('[data-testid="delete-schedule"]').click();
       const toast = await page.waitForSelector('[data-testid="toast-error"]');
       expect(toast).toBeTruthy();

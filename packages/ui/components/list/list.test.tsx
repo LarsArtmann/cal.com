@@ -39,7 +39,7 @@ describe("Tests for ListLinkItem component", () => {
     render(
       <ListLinkItem href="https://custom.link" heading="Go" subHeading="There">
         Alright
-      </ListLinkItem>
+      </ListLinkItem>,
     );
 
     const listLinkItemElement = screen.getByTestId("list-link-item");
@@ -61,7 +61,7 @@ describe("Tests for ListLinkItem component", () => {
     render(
       <ListLinkItem href="https://custom.link" heading="Go" subHeading="There" disabled={true}>
         Alright
-      </ListLinkItem>
+      </ListLinkItem>,
     );
 
     const badge = screen.getByTestId("badge");
@@ -70,9 +70,14 @@ describe("Tests for ListLinkItem component", () => {
 
   test("Should apply some actions", () => {
     render(
-      <ListLinkItem href="https://custom.link" heading="Go" subHeading="There" actions={<div>cta</div>}>
+      <ListLinkItem
+        href="https://custom.link"
+        heading="Go"
+        subHeading="There"
+        actions={<div>cta</div>}
+      >
         Alright
-      </ListLinkItem>
+      </ListLinkItem>,
     );
 
     const action = screen.getByText("cta");

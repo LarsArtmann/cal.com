@@ -139,7 +139,7 @@ describe("Invite Member Utils", () => {
       const invalidEmail = "invalid-email";
       expect(() => checkInputEmailIsValid(invalidEmail)).toThrow(TRPCError);
       expect(() => checkInputEmailIsValid(invalidEmail)).toThrowError(
-        "Invite failed because invalid-email is not a valid email address"
+        "Invite failed because invalid-email is not a valid email address",
       );
     });
 
@@ -289,7 +289,9 @@ describe("Invite Member Utils", () => {
         ...mockedTeam,
         parentId: 2,
       };
-      expect(() => throwIfInviteIsToOrgAndUserExists(inviteeWithOrg, teamWithOrg, isOrg)).not.toThrow();
+      expect(() =>
+        throwIfInviteIsToOrgAndUserExists(inviteeWithOrg, teamWithOrg, isOrg),
+      ).not.toThrow();
     });
     it("should throw a TRPCError with code FORBIDDEN if the invitee is already a member of another organization", () => {
       const inviteeWithOrg: User = {
@@ -300,12 +302,16 @@ describe("Invite Member Utils", () => {
         ...mockedTeam,
         parentId: 3,
       };
-      expect(() => throwIfInviteIsToOrgAndUserExists(inviteeWithOrg, teamWithOrg, isOrg)).toThrow(TRPCError);
+      expect(() => throwIfInviteIsToOrgAndUserExists(inviteeWithOrg, teamWithOrg, isOrg)).toThrow(
+        TRPCError,
+      );
     });
 
     it("should throw a TRPCError with code FORBIDDEN if the invitee already exists in Cal.com and is being invited to an organization", () => {
       const isOrg = true;
-      expect(() => throwIfInviteIsToOrgAndUserExists(invitee, mockedTeam, isOrg)).toThrow(TRPCError);
+      expect(() => throwIfInviteIsToOrgAndUserExists(invitee, mockedTeam, isOrg)).toThrow(
+        TRPCError,
+      );
     });
 
     it("should not throw an error if the invitee does not already belong to another organization and is not being invited to an organization", () => {

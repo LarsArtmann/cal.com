@@ -30,7 +30,8 @@ export default function SelectGifInput(props: ISelectGifInput) {
             type="button"
             StartIcon={Edit}
             onClick={() => setShowDialog(true)}
-            disabled={props.disabled}>
+            disabled={props.disabled}
+          >
             Change
           </Button>
         ) : (
@@ -39,7 +40,8 @@ export default function SelectGifInput(props: ISelectGifInput) {
             type="button"
             StartIcon={Plus}
             onClick={() => setShowDialog(true)}
-            disabled={props.disabled}>
+            disabled={props.disabled}
+          >
             Add from Giphy
           </Button>
         )}
@@ -53,7 +55,8 @@ export default function SelectGifInput(props: ISelectGifInput) {
               setSelectedGif("");
               props.onChange("");
             }}
-            disabled={props.disabled}>
+            disabled={props.disabled}
+          >
             {t("remove")}
           </Button>
         )}

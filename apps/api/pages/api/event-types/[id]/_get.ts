@@ -82,7 +82,7 @@ type BaseEventTypeCheckPermissions = {
 
 async function checkPermissions<T extends BaseEventTypeCheckPermissions>(
   req: NextApiRequest,
-  eventType: (T & Partial<Omit<T, keyof BaseEventTypeCheckPermissions>>) | null
+  eventType: (T & Partial<Omit<T, keyof BaseEventTypeCheckPermissions>>) | null,
 ) {
   if (req.isAdmin) return true;
   if (eventType?.teamId) {

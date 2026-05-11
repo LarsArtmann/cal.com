@@ -51,12 +51,12 @@ async function getHandler(req: NextApiRequest) {
   // this really should return [], but backwards compatibility..
   if (data.length === 0) new HttpError({ statusCode: 404, message: "No event types were found" });
   return {
-    event_types: (await defaultScheduleId<(typeof data)[number]>({ eventTypes: data, prisma, userIds })).map(
-      (eventType) => {
-        const link = getCalLink(eventType);
-        return schemaEventTypeReadPublic.parse({ ...eventType, link });
-      }
-    ),
+    event_types: (
+      await defaultScheduleId<(typeof data)[number]>({ eventTypes: data, prisma, userIds })
+    ).map((eventType) => {
+      const link = getCalLink(eventType);
+      return schemaEventTypeReadPublic.parse({ ...eventType, link });
+    }),
   };
 }
 // TODO: Extract & reuse.
@@ -103,10 +103,13 @@ async function defaultScheduleId<T extends DefaultScheduleIdEventTypeBase>({
     return eventTypes;
   }
 
-  const defaultScheduleIds = users.reduce((result, user) => {
-    result[user.id] = user.defaultScheduleId;
-    return result;
-  }, {} as { [x: number]: number | null });
+  const defaultScheduleIds = users.reduce(
+    (result, user) => {
+      result[user.id] = user.defaultScheduleId;
+      return result;
+    },
+    {} as { [x: number]: number | null },
+  );
 
   return eventTypes.map((eventType) => {
     // realistically never happens, userId should't be null on personal event types.

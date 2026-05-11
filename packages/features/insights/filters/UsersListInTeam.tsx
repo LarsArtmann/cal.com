@@ -68,14 +68,18 @@ export const UserListInTeam = () => {
             icon={
               <Avatar
                 alt={`${member?.value} avatar`}
-                imageSrc={member.username ? `${bookerUrl}/${member.username}/avatar.png` : undefined}
+                imageSrc={
+                  member.username ? `${bookerUrl}/${member.username}/avatar.png` : undefined
+                }
                 size="xs"
               />
             }
           />
         ))}
         {userListOptions?.length === 0 && (
-          <h2 className="text-default px-4 py-2 text-sm font-medium">{t("no_options_available")}</h2>
+          <h2 className="text-default px-4 py-2 text-sm font-medium">
+            {t("no_options_available")}
+          </h2>
         )}
       </FilterCheckboxFieldsContainer>
     </AnimatedPopover>

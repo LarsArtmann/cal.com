@@ -28,7 +28,8 @@ const TwoFactorAuthSection = ({ twoFactorEnabled }: { twoFactorEnabled: boolean 
           <Button
             type="submit"
             color="secondary"
-            onClick={() => (enabled ? setDisableModalOpen(true) : setEnableModalOpen(true))}>
+            onClick={() => (enabled ? setDisableModalOpen(true) : setEnableModalOpen(true))}
+          >
             {enabled ? t("disable") : t("enable")}
           </Button>
         </div>

@@ -116,14 +116,14 @@ export default class Sendgrid {
           if (index >= 0) {
             this.log.debug(
               "sync:sendgrid:getCustomFieldsIds:customField:existed",
-              allFields.custom_fields[index].id
+              allFields.custom_fields[index].id,
             );
             return allFields.custom_fields[index].id;
           } else {
             throw Error("Couldn't find the field index");
           }
         }
-      })
+      }),
     );
   }
 }

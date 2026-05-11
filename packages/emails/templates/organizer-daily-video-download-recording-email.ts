@@ -23,7 +23,10 @@ export default class OrganizerDailyVideoDownloadRecordingEmail extends BaseEmail
     return {
       to: `${this.calEvent.organizer.email}>`,
       from: `${APP_NAME} <${this.getMailerOptions().from}>`,
-      replyTo: [...this.calEvent.attendees.map(({ email }) => email), this.calEvent.organizer.email],
+      replyTo: [
+        ...this.calEvent.attendees.map(({ email }) => email),
+        this.calEvent.organizer.email,
+      ],
       subject: `${this.t("download_recording_subject", {
         title: this.calEvent.title,
         date: this.getFormattedDate(),
@@ -53,9 +56,9 @@ export default class OrganizerDailyVideoDownloadRecordingEmail extends BaseEmail
   protected getFormattedDate() {
     const organizerTimeFormat = this.calEvent.organizer.timeFormat || TimeFormat.TWELVE_HOUR;
     return `${this.getOrganizerStart(organizerTimeFormat)} - ${this.getOrganizerEnd(
-      organizerTimeFormat
+      organizerTimeFormat,
     )}, ${this.t(this.getOrganizerStart("dddd").toLowerCase())}, ${this.t(
-      this.getOrganizerStart("MMMM").toLowerCase()
+      this.getOrganizerStart("MMMM").toLowerCase(),
     )} ${this.getOrganizerStart("D, YYYY")}`;
   }
 }

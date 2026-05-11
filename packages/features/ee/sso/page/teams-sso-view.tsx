@@ -23,7 +23,7 @@ const SAMLSSO = () => {
       onError: () => {
         router.push("/settings");
       },
-    }
+    },
   );
 
   useEffect(() => {

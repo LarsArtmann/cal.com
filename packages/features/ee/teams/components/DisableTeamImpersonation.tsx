@@ -34,12 +34,18 @@ const DisableTeamImpersonation = ({
             <h2
               className={classNames(
                 "font-cal mb-0.5 text-sm font-semibold leading-6",
-                disabled ? "text-muted " : "text-emphasis "
-              )}>
+                disabled ? "text-muted " : "text-emphasis ",
+              )}
+            >
               {t("user_impersonation_heading")}
             </h2>
           </div>
-          <p className={classNames("text-sm leading-5 ", disabled ? "text-gray-300" : "text-default")}>
+          <p
+            className={classNames(
+              "text-sm leading-5 ",
+              disabled ? "text-gray-300" : "text-default",
+            )}
+          >
             {t("team_impersonation_description")}
           </p>
         </div>

@@ -29,7 +29,7 @@ export function getAvailabilityFromSchedule(schedule: Schedule): Availability[] 
         days: [day],
         startTime: time.start,
         endTime: time.end,
-      } as Availability);
+      }) as Availability;
 
     const filteredTimes = times.filter((time) => {
       let idx;
@@ -37,7 +37,7 @@ export function getAvailabilityFromSchedule(schedule: Schedule): Availability[] 
         (idx = availability.findIndex(
           (schedule) =>
             schedule.startTime.toString() === time.start.toString() &&
-            schedule.endTime.toString() === time.end.toString()
+            schedule.endTime.toString() === time.end.toString(),
         )) !== -1
       ) {
         availability[idx].days.push(day);
@@ -64,7 +64,12 @@ export function getWorkingHours(
     timeZone?: string;
     utcOffset?: number;
   },
-  availability: { userId?: number | null; days: number[]; startTime: ConfigType; endTime: ConfigType }[]
+  availability: {
+    userId?: number | null;
+    days: number[];
+    startTime: ConfigType;
+    endTime: ConfigType;
+  }[],
 ) {
   if (!availability.length) {
     return [];
@@ -82,7 +87,9 @@ export function getWorkingHours(
       dayjs.utc(schedule.startTime).get("minute") -
       utcOffset;
     const endTime =
-      dayjs.utc(schedule.endTime).get("hour") * 60 + dayjs.utc(schedule.endTime).get("minute") - utcOffset;
+      dayjs.utc(schedule.endTime).get("hour") * 60 +
+      dayjs.utc(schedule.endTime).get("minute") -
+      utcOffset;
     // add to working hours, keeping startTime and endTimes between bounds (0-1439)
     const sameDayStartTime = Math.max(MINUTES_DAY_START, Math.min(MINUTES_DAY_END, startTime));
     const sameDayEndTime = Math.max(MINUTES_DAY_START, Math.min(MINUTES_DAY_END, endTime));
@@ -129,7 +136,7 @@ export function getWorkingHours(
 
 export function availabilityAsString(
   availability: Availability,
-  { locale, hour12 }: { locale?: string; hour12?: boolean }
+  { locale, hour12 }: { locale?: string; hour12?: boolean },
 ) {
   const weekSpan = (availability: Availability) => {
     const days = availability.days.slice(1).reduce(
@@ -146,7 +153,7 @@ export function availabilityAsString(
         }
         return days;
       },
-      [[availability.days[0]]] as number[][]
+      [[availability.days[0]]] as number[][],
     );
     return days
       .map((dayRange) => dayRange.map((day) => nameOfDay(locale, day, "short")).join(" - "))
@@ -156,11 +163,11 @@ export function availabilityAsString(
   const timeSpan = (availability: Availability) => {
     return (
       new Intl.DateTimeFormat(locale, { hour: "numeric", minute: "numeric", hour12 }).format(
-        new Date(availability.startTime.toISOString().slice(0, -1))
+        new Date(availability.startTime.toISOString().slice(0, -1)),
       ) +
       " - " +
       new Intl.DateTimeFormat(locale, { hour: "numeric", minute: "numeric", hour12 }).format(
-        new Date(availability.endTime.toISOString().slice(0, -1))
+        new Date(availability.endTime.toISOString().slice(0, -1)),
       )
     );
   };

@@ -3,7 +3,9 @@ import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { Tooltip } from "../tooltip";
 import { Badge } from "./Badge";
 
-export const KYCVerificationBadge = function KYCVerificationBadge(props: { verifyTeamAction?: () => void }) {
+export const KYCVerificationBadge = function KYCVerificationBadge(props: {
+  verifyTeamAction?: () => void;
+}) {
   const { verifyTeamAction } = props;
   const { t } = useLocale();
   if (!verifyTeamAction) return <></>;

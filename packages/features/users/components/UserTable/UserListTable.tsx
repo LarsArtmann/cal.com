@@ -122,10 +122,11 @@ export function UserListTable() {
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
         keepPreviousData: true,
-      }
+      },
     );
 
-  const adminOrOwner = currentMembership?.user.role === "ADMIN" || currentMembership?.user.role === "OWNER";
+  const adminOrOwner =
+    currentMembership?.user.role === "ADMIN" || currentMembership?.user.role === "OWNER";
   const domain = orgBranding?.fullDomain ?? WEBAPP_URL;
 
   const memorisedColumns = useMemo(() => {
@@ -164,7 +165,11 @@ export function UserListTable() {
           const { username, email } = row.original;
           return (
             <div className="flex items-center gap-2">
-              <Avatar size="sm" alt={username || email} imageSrc={domain + "/" + username + "/avatar.png"} />
+              <Avatar
+                size="sm"
+                alt={username || email}
+                imageSrc={domain + "/" + username + "/avatar.png"}
+              />
               <div className="">
                 <div className="text-emphasis text-sm font-medium leading-none">
                   {username || "No username"}
@@ -191,7 +196,8 @@ export function UserListTable() {
               variant={role === "MEMBER" ? "gray" : "blue"}
               onClick={() => {
                 table.getColumn("role")?.setFilterValue([role]);
-              }}>
+              }}
+            >
               {role}
             </Badge>
           );
@@ -263,12 +269,16 @@ export function UserListTable() {
       if (containerRefElement) {
         const { scrollHeight, scrollTop, clientHeight } = containerRefElement;
         //once the user has scrolled within 300px of the bottom of the table, fetch more data if there is any
-        if (scrollHeight - scrollTop - clientHeight < 300 && !isFetching && totalFetched < totalDBRowCount) {
+        if (
+          scrollHeight - scrollTop - clientHeight < 300 &&
+          !isFetching &&
+          totalFetched < totalDBRowCount
+        ) {
           fetchNextPage();
         }
       }
     },
-    [fetchNextPage, isFetching, totalFetched, totalDBRowCount]
+    [fetchNextPage, isFetching, totalFetched, totalDBRowCount],
   );
 
   useEffect(() => {
@@ -287,7 +297,9 @@ export function UserListTable() {
           {
             type: "render",
             render: (table) => (
-              <DeleteBulkUsers users={table.getSelectedRowModel().flatRows.map((row) => row.original)} />
+              <DeleteBulkUsers
+                users={table.getSelectedRowModel().flatRows.map((row) => row.original)}
+              />
             ),
           },
         ]}
@@ -308,7 +320,8 @@ export function UserListTable() {
                   },
                 })
               }
-              data-testid="new-organization-member-button">
+              data-testid="new-organization-member-button"
+            >
               {t("add")}
             </Button>
           )
@@ -332,8 +345,12 @@ export function UserListTable() {
 
       {state.deleteMember.showModal && <DeleteMemberModal state={state} dispatch={dispatch} />}
       {state.inviteMember.showModal && <InviteMemberModal dispatch={dispatch} />}
-      {state.impersonateMember.showModal && <ImpersonationMemberModal dispatch={dispatch} state={state} />}
-      {state.changeMemberRole.showModal && <ChangeUserRoleModal dispatch={dispatch} state={state} />}
+      {state.impersonateMember.showModal && (
+        <ImpersonationMemberModal dispatch={dispatch} state={state} />
+      )}
+      {state.changeMemberRole.showModal && (
+        <ChangeUserRoleModal dispatch={dispatch} state={state} />
+      )}
       {state.editSheet.showModal && <EditUserSheet dispatch={dispatch} state={state} />}
     </>
   );

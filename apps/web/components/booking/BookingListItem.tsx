@@ -30,7 +30,16 @@ import {
   TableActions,
   TextAreaField,
 } from "@calcom/ui";
-import { Check, Clock, MapPin, RefreshCcw, Send, Ban, X, CreditCard } from "@calcom/ui/components/icon";
+import {
+  Check,
+  Clock,
+  MapPin,
+  RefreshCcw,
+  Send,
+  Ban,
+  X,
+  CreditCard,
+} from "@calcom/ui/components/icon";
 
 import useMeQuery from "@lib/hooks/useMeQuery";
 
@@ -131,7 +140,8 @@ function BookingListItem(booking: BookingItemProps) {
       ? [
           {
             id: "confirm",
-            label: (isTabRecurring || isTabUnconfirmed) && isRecurring ? t("confirm_all") : t("confirm"),
+            label:
+              (isTabRecurring || isTabUnconfirmed) && isRecurring ? t("confirm_all") : t("confirm"),
             onClick: () => {
               bookingConfirm(true);
             },
@@ -243,7 +253,7 @@ function BookingListItem(booking: BookingItemProps) {
     newLocationType: EventLocationType["type"],
     details: {
       [key: string]: string;
-    }
+    },
   ) => {
     let newLocation = newLocationType as string;
     const eventLocationType = getEventLocationType(newLocationType);
@@ -272,7 +282,9 @@ function BookingListItem(booking: BookingItemProps) {
   // const showRecordingsButtons = booking.isRecorded && isPast && isConfirmed;
 
   const showRecordingsButtons =
-    (booking.location === "integrations:daily" || booking?.location?.trim() === "") && isPast && isConfirmed;
+    (booking.location === "integrations:daily" || booking?.location?.trim() === "") &&
+    isPast &&
+    isConfirmed;
 
   return (
     <>
@@ -307,7 +319,10 @@ function BookingListItem(booking: BookingItemProps) {
       )}
       {/* NOTE: Should refactor this dialog component as is being rendered multiple times */}
       <Dialog open={rejectionDialogIsOpen} onOpenChange={setRejectionDialogIsOpen}>
-        <DialogContent title={t("rejection_reason_title")} description={t("rejection_reason_description")}>
+        <DialogContent
+          title={t("rejection_reason_title")}
+          description={t("rejection_reason_description")}
+        >
           <div>
             <TextAreaField
               name="rejectionReason"
@@ -329,7 +344,8 @@ function BookingListItem(booking: BookingItemProps) {
               data-testid="rejection-confirm"
               onClick={() => {
                 bookingConfirm(false);
-              }}>
+              }}
+            >
               {t("rejection_confirmation")}
             </Button>
           </DialogFooter>
@@ -339,7 +355,8 @@ function BookingListItem(booking: BookingItemProps) {
       <tr data-testid="booking-item" className="hover:bg-muted group flex flex-col sm:flex-row">
         <td
           className="hidden align-top ltr:pl-6 rtl:pr-6 sm:table-cell sm:min-w-[12rem]"
-          onClick={onClickTableData}>
+          onClick={onClickTableData}
+        >
           <div className="cursor-pointer py-4">
             <div className="text-emphasis text-sm leading-6">{startTime}</div>
             <div className="text-subtle text-sm">
@@ -379,7 +396,10 @@ function BookingListItem(booking: BookingItemProps) {
             )}
           </div>
         </td>
-        <td className={"w-full px-4" + (isRejected ? " line-through" : "")} onClick={onClickTableData}>
+        <td
+          className={"w-full px-4" + (isRejected ? " line-through" : "")}
+          onClick={onClickTableData}
+        >
           {/* Time and Badges for mobile */}
           <div className="w-full pb-2 pt-4 sm:hidden">
             <div className="flex w-full items-center justify-between sm:hidden">
@@ -424,8 +444,9 @@ function BookingListItem(booking: BookingItemProps) {
               title={title}
               className={classNames(
                 "max-w-10/12 sm:max-w-56 text-emphasis text-sm font-medium leading-6 md:max-w-full",
-                isCancelled ? "line-through" : ""
-              )}>
+                isCancelled ? "line-through" : "",
+              )}
+            >
               {title}
               <span> </span>
 
@@ -438,7 +459,8 @@ function BookingListItem(booking: BookingItemProps) {
             {booking.description && (
               <div
                 className="max-w-10/12 sm:max-w-32 md:max-w-52 xl:max-w-80 text-default truncate text-sm"
-                title={booking.description}>
+                title={booking.description}
+              >
                 &quot;{booking.description}&quot;
               </div>
             )}
@@ -459,7 +481,9 @@ function BookingListItem(booking: BookingItemProps) {
         <td className="flex w-full justify-end py-4 pl-4 text-right text-sm font-medium ltr:pr-4 rtl:pl-4 sm:pl-0">
           {isUpcoming && !isCancelled ? (
             <>
-              {isPending && user?.id === booking.user?.id && <TableActions actions={pendingActions} />}
+              {isPending && user?.id === booking.user?.id && (
+                <TableActions actions={pendingActions} />
+              )}
               {isConfirmed && <TableActions actions={bookedActions} />}
               {isRejected && <div className="text-subtle text-sm">{t("rejected")}</div>}
             </>
@@ -471,11 +495,13 @@ function BookingListItem(booking: BookingItemProps) {
               <RequestSentMessage />
             </div>
           )}
-          {booking.status === "ACCEPTED" && booking.paid && booking.payment[0]?.paymentOption === "HOLD" && (
-            <div className="ml-2">
-              <TableActions actions={chargeCardActions} />
-            </div>
-          )}
+          {booking.status === "ACCEPTED" &&
+            booking.paid &&
+            booking.payment[0]?.paymentOption === "HOLD" && (
+              <div className="ml-2">
+                <TableActions actions={chargeCardActions} />
+              </div>
+            )}
         </td>
       </tr>
     </>
@@ -527,7 +553,8 @@ const RecurringBookingsTooltip = ({ booking, recurringDates }: RecurringBookings
                     {dayjs(aDate).locale(language).format("D MMMM YYYY")}
                   </p>
                 );
-              })}>
+              })}
+            >
               <div className="text-default">
                 <RefreshCcw
                   strokeWidth="3"
@@ -574,7 +601,8 @@ const FirstAttendee = ({
       key={user.email}
       className=" hover:text-blue-500"
       href={"mailto:" + user.email}
-      onClick={(e) => e.stopPropagation()}>
+      onClick={(e) => e.stopPropagation()}
+    >
       {user.name}
     </a>
   );
@@ -587,7 +615,11 @@ type AttendeeProps = {
 
 const Attendee = ({ email, name }: AttendeeProps) => {
   return (
-    <a className="hover:text-blue-500" href={"mailto:" + email} onClick={(e) => e.stopPropagation()}>
+    <a
+      className="hover:text-blue-500"
+      href={"mailto:" + email}
+      onClick={(e) => e.stopPropagation()}
+    >
       {name || email}
     </a>
   );
@@ -617,7 +649,8 @@ const DisplayAttendees = ({
                 <p key={attendee.email}>
                   <Attendee {...attendee} />
                 </p>
-              ))}>
+              ))}
+            >
               <div className="inline-block">{t("plus_more", { count: attendees.length - 1 })}</div>
             </Tooltip>
           ) : (

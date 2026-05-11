@@ -7,7 +7,13 @@ import { Dialog, ConfirmationDialogContent, showToast } from "@calcom/ui";
 
 import type { State, Action } from "./UserListTable";
 
-export function DeleteMemberModal({ state, dispatch }: { state: State; dispatch: Dispatch<Action> }) {
+export function DeleteMemberModal({
+  state,
+  dispatch,
+}: {
+  state: State;
+  dispatch: Dispatch<Action>;
+}) {
   const { t } = useLocale();
   const { data: session } = useSession();
   const utils = trpc.useContext();
@@ -33,7 +39,8 @@ export function DeleteMemberModal({ state, dispatch }: { state: State; dispatch:
         dispatch({
           type: "CLOSE_MODAL",
         })
-      }>
+      }
+    >
       <ConfirmationDialogContent
         variety="danger"
         title={t("remove_member")}
@@ -47,7 +54,8 @@ export function DeleteMemberModal({ state, dispatch }: { state: State; dispatch:
             memberId: state?.deleteMember?.user.id,
             isOrg: true,
           });
-        }}>
+        }}
+      >
         {t("remove_member_confirmation_message")}
       </ConfirmationDialogContent>
     </Dialog>

@@ -6,7 +6,8 @@ import hasKeyInMetadata from "../hasKeyInMetadata";
 export function useHasPaidPlan() {
   if (IS_SELF_HOSTED) return { isLoading: false, hasPaidPlan: true };
 
-  const { data: hasTeamPlan, isLoading: isLoadingTeamQuery } = trpc.viewer.teams.hasTeamPlan.useQuery();
+  const { data: hasTeamPlan, isLoading: isLoadingTeamQuery } =
+    trpc.viewer.teams.hasTeamPlan.useQuery();
 
   const { data: user, isLoading: isLoadingUserQuery } = trpc.viewer.me.useQuery();
 

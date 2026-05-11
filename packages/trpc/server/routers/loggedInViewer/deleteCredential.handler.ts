@@ -82,7 +82,9 @@ export const deleteCredentialHandler = async ({ ctx, input }: DeleteCredentialOp
 
         // Look for integration name from app slug
         const integrationQuery =
-          credential.app?.slug === "msteams" ? "office365_video" : credential.app?.slug.split("-")[0];
+          credential.app?.slug === "msteams"
+            ? "office365_video"
+            : credential.app?.slug.split("-")[0];
 
         // Check if the event type uses the deleted integration
 
@@ -285,15 +287,15 @@ export const deleteCredentialHandler = async ({ ctx, input }: DeleteCredentialOp
                 destinationCalendar: booking.destinationCalendar
                   ? [booking.destinationCalendar]
                   : booking.user?.destinationCalendar
-                  ? [booking.user?.destinationCalendar]
-                  : [],
+                    ? [booking.user?.destinationCalendar]
+                    : [],
                 cancellationReason: "Payment method removed by organizer",
                 seatsPerTimeSlot: booking.eventType?.seatsPerTimeSlot,
                 seatsShowAttendees: booking.eventType?.seatsShowAttendees,
               },
               {
                 eventName: booking?.eventType?.eventName,
-              }
+              },
             );
           }
         });
@@ -365,11 +367,11 @@ export const deleteCredentialHandler = async ({ ctx, input }: DeleteCredentialOp
             .catch((error) => {
               if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") {
                 console.log(
-                  `Error deleting selected calendars for user ${user.id} and calendar ${credential.appId}. Could not find selected calendar.`
+                  `Error deleting selected calendars for user ${user.id} and calendar ${credential.appId}. Could not find selected calendar.`,
                 );
               }
               console.log(
-                `Error deleting selected calendars for user ${user.id} and calendar ${credential.appId} with error: ${error}`
+                `Error deleting selected calendars for user ${user.id} and calendar ${credential.appId} with error: ${error}`,
               );
             });
         });

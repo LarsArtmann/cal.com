@@ -95,7 +95,7 @@
 
 @layer base {
   * {
-    @apply border-default 
+    @apply border-default;
   }
 }
 

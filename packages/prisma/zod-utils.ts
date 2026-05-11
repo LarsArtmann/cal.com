@@ -68,7 +68,10 @@ export const defaultBookerLayoutSettings = {
 
 export type BookerLayoutSettings = z.infer<typeof bookerLayouts>;
 
-export const RequiresConfirmationThresholdUnits: z.ZodType<UnitTypeLongPlural> = z.enum(["hours", "minutes"]);
+export const RequiresConfirmationThresholdUnits: z.ZodType<UnitTypeLongPlural> = z.enum([
+  "hours",
+  "minutes",
+]);
 
 export const EventTypeMetaDataSchema = z
   .object({
@@ -91,7 +94,9 @@ export const EventTypeMetaDataSchema = z
       .optional(),
     managedEventConfig: z
       .object({
-        unlockedFields: z.custom<{ [k in keyof Omit<Prisma.EventTypeSelect, "id">]: true }>().optional(),
+        unlockedFields: z
+          .custom<{ [k in keyof Omit<Prisma.EventTypeSelect, "id">]: true }>()
+          .optional(),
       })
       .optional(),
     requiresConfirmationThreshold: z
@@ -150,7 +155,7 @@ export const eventTypeLocations = z.array(
     hostPhoneNumber: z.string().optional(),
     credentialId: z.number().optional(),
     teamName: z.string().optional(),
-  })
+  }),
 );
 
 // Matching RRule.Options: rrule/dist/esm/src/types.d.ts
@@ -215,7 +220,9 @@ export const bookingCreateBodySchema = z.object({
   rescheduleUid: z.string().optional(),
   recurringEventId: z.string().optional(),
   start: z.string(),
-  timeZone: z.string().refine((value: string) => isSupportedTimeZone(value), { message: "Invalid timezone" }),
+  timeZone: z
+    .string()
+    .refine((value: string) => isSupportedTimeZone(value), { message: "Invalid timezone" }),
   user: z.union([z.string(), z.array(z.string())]).optional(),
   language: z.string(),
   bookingUid: z.string().optional(),
@@ -257,10 +264,10 @@ export const extendedBookingCreateBody = bookingCreateBodySchema.merge(
           type: z.string(),
           errors: z.string().array(),
           warnings: z.string().array().optional(),
-        })
+        }),
       )
       .optional(),
-  })
+  }),
 );
 
 // It has only the legacy props that are part of `responses` now. The API can still hit old props
@@ -277,7 +284,7 @@ export const bookingCreateSchemaLegacyPropsForApi = z.object({
 
 // This is the schema that is used for the API. It has all the legacy props that are part of `responses` now.
 export const bookingCreateBodySchemaForApi = extendedBookingCreateBody.merge(
-  bookingCreateSchemaLegacyPropsForApi.partial()
+  bookingCreateSchemaLegacyPropsForApi.partial(),
 );
 
 export const schemaBookingCancelParams = z.object({
@@ -345,7 +352,7 @@ export const customInputOptionSchema = z.array(
   z.object({
     label: z.string(),
     type: z.string(),
-  })
+  }),
 );
 
 export const customInputSchema = z.object({
@@ -425,7 +432,9 @@ export const DeploymentTheme = z
   })
   .optional();
 
-export type ZodDenullish<T extends ZodTypeAny> = T extends ZodNullable<infer U> | ZodOptional<infer U>
+export type ZodDenullish<T extends ZodTypeAny> = T extends
+  | ZodNullable<infer U>
+  | ZodOptional<infer U>
   ? ZodDenullish<U>
   : T;
 
@@ -448,9 +457,9 @@ export function denullishShape<
   UnknownKeys extends UnknownKeysParam = "strip",
   Catchall extends ZodTypeAny = ZodTypeAny,
   Output = objectOutputType<T, Catchall>,
-  Input = objectInputType<T, Catchall>
+  Input = objectInputType<T, Catchall>,
 >(
-  obj: ZodObject<T, UnknownKeys, Catchall, Output, Input>
+  obj: ZodObject<T, UnknownKeys, Catchall, Output, Input>,
 ): ZodObject<ZodDenullishShape<T>, UnknownKeys, Catchall> {
   const a = entries(obj.shape).map(([field, schema]) => [field, denullish(schema)] as const) as {
     [K in keyof T]: [K, ZodDenullish<T[K]>];
@@ -468,7 +477,7 @@ export function denullishShape<
  * @see https://github.com/3x071c/lsg-remix/blob/e2a9592ba3ec5103556f2cf307c32f08aeaee32d/app/lib/util/entries.ts
  */
 export const entries = <O extends Record<string, unknown>>(
-  obj: O
+  obj: O,
 ): {
   readonly [K in keyof O]: [K, O[K]];
 }[keyof O][] => {
@@ -480,13 +489,14 @@ export const entries = <O extends Record<string, unknown>>(
 /**
  * Returns a type with all readonly notations removed (traverses recursively on an object)
  */
-type DeepWriteable<T> = T extends Readonly<{
-  -readonly [K in keyof T]: T[K];
-}>
-  ? {
-      -readonly [K in keyof T]: DeepWriteable<T[K]>;
-    }
-  : T; /* Make it work with readonly types (this is not strictly necessary) */
+type DeepWriteable<T> =
+  T extends Readonly<{
+    -readonly [K in keyof T]: T[K];
+  }>
+    ? {
+        -readonly [K in keyof T]: DeepWriteable<T[K]>;
+      }
+    : T; /* Make it work with readonly types (this is not strictly necessary) */
 
 type FromEntries<T> = T extends [infer Keys, unknown][]
   ? { [K in Keys & PropertyKey]: Extract<T[number], [K, unknown]>[1] }
@@ -499,9 +509,9 @@ type FromEntries<T> = T extends [infer Keys, unknown][]
  * @see https://github.com/3x071c/lsg-remix/blob/e2a9592ba3ec5103556f2cf307c32f08aeaee32d/app/lib/util/fromEntries.ts
  */
 export const fromEntries = <
-  E extends [PropertyKey, unknown][] | ReadonlyArray<readonly [PropertyKey, unknown]>
+  E extends [PropertyKey, unknown][] | ReadonlyArray<readonly [PropertyKey, unknown]>,
 >(
-  entries: E
+  entries: E,
 ): FromEntries<DeepWriteable<E>> => {
   return Object.fromEntries(entries) as FromEntries<DeepWriteable<E>>;
 };

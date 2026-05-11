@@ -85,17 +85,19 @@ export const EventWebhooksTab = ({ eventType }: Pick<EventTypeSetupProps, "event
         color="secondary"
         data-testid="new_webhook"
         StartIcon={Plus}
-        onClick={() => setCreateModalOpen(true)}>
+        onClick={() => setCreateModalOpen(true)}
+      >
         {t("new_webhook")}
       </Button>
     );
   };
 
-  const { shouldLockDisableProps, isChildrenManagedEventType, isManagedEventType } = useLockedFieldsManager(
-    eventType,
-    t("locked_fields_admin_description"),
-    t("locked_fields_member_description")
-  );
+  const { shouldLockDisableProps, isChildrenManagedEventType, isManagedEventType } =
+    useLockedFieldsManager(
+      eventType,
+      t("locked_fields_admin_description"),
+      t("locked_fields_member_description"),
+    );
   const webhookLockedStatus = shouldLockDisableProps("webhooks");
 
   return (
@@ -154,11 +156,15 @@ export const EventWebhooksTab = ({ eventType }: Pick<EventTypeSetupProps, "event
           </div>
 
           {/* New webhook dialog */}
-          <Dialog open={createModalOpen} onOpenChange={(isOpen) => !isOpen && setCreateModalOpen(false)}>
+          <Dialog
+            open={createModalOpen}
+            onOpenChange={(isOpen) => !isOpen && setCreateModalOpen(false)}
+          >
             <DialogContent
               enableOverflow
               title={t("create_webhook")}
-              description={t("create_webhook_team_event_type")}>
+              description={t("create_webhook_team_event_type")}
+            >
               <WebhookForm
                 noRoutingFormTriggers={true}
                 onSubmit={onCreateWebhook}
@@ -168,7 +174,10 @@ export const EventWebhooksTab = ({ eventType }: Pick<EventTypeSetupProps, "event
             </DialogContent>
           </Dialog>
           {/* Edit webhook dialog */}
-          <Dialog open={editModalOpen} onOpenChange={(isOpen) => !isOpen && setEditModalOpen(false)}>
+          <Dialog
+            open={editModalOpen}
+            onOpenChange={(isOpen) => !isOpen && setEditModalOpen(false)}
+          >
             <DialogContent enableOverflow title={t("edit_webhook")}>
               <WebhookForm
                 noRoutingFormTriggers={true}

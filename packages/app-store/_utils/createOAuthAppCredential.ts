@@ -18,7 +18,7 @@ import { throwIfNotHaveAdminAccessToTeam } from "./throwIfNotHaveAdminAccessToTe
 const createOAuthAppCredential = async (
   appData: { type: string; appId: string },
   key: unknown,
-  req: NextApiRequest
+  req: NextApiRequest,
 ) => {
   const userId = req.session?.user.id;
   if (!userId) {

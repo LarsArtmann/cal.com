@@ -9,7 +9,7 @@ import { Check } from "../../icon";
 export const InputComponent = <
   Option,
   IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>
+  Group extends GroupBase<Option> = GroupBase<Option>,
 >({
   inputClassName,
   ...props
@@ -19,7 +19,7 @@ export const InputComponent = <
       // disables our default form focus hightlight on the react-select input element
       inputClassName={classNames(
         "focus:ring-0 focus:ring-offset-0 dark:!text-darkgray-900 !text-emphasis",
-        inputClassName
+        inputClassName,
       )}
       {...props}
     />
@@ -37,7 +37,7 @@ type ExtendedOption = {
 export const OptionComponent = <
   Option,
   IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>
+  Group extends GroupBase<Option> = GroupBase<Option>,
 >({
   ...props
 }: OptionProps<Option, IsMulti, Group>) => {
@@ -45,7 +45,10 @@ export const OptionComponent = <
     // This gets styled in the select classNames prop now - handles overrides with styles vs className here doesnt
     <reactSelectComponents.Option {...props}>
       <div className="flex">
-        <span className="mr-auto" data-testid={`select-option-${(props as unknown as ExtendedOption).value}`}>
+        <span
+          className="mr-auto"
+          data-testid={`select-option-${(props as unknown as ExtendedOption).value}`}
+        >
           {props.label || <>&nbsp;</>}
         </span>
         {(props.data as unknown as ExtendedOption).needsUpgrade ? (

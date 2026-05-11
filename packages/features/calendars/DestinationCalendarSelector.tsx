@@ -87,7 +87,7 @@ const DestinationCalendarSelector = ({
 
     if (selected) {
       const selectedIntegration = query.data?.connectedCalendars.find((integration) =>
-        integration.calendars?.some((calendar) => calendar.externalId === selected.externalId)
+        integration.calendars?.some((calendar) => calendar.externalId === selected.externalId),
       );
 
       setSelectedOption({
@@ -155,7 +155,7 @@ const DestinationCalendarSelector = ({
         }}
         isSearchable={false}
         className={classNames(
-          "border-default mb-2 mt-1 block w-full min-w-0 flex-1 rounded-none rounded-r-sm text-sm"
+          "border-default mb-2 mt-1 block w-full min-w-0 flex-1 rounded-none rounded-r-sm text-sm",
         )}
         onChange={(newValue) => {
           setSelectedOption(newValue);

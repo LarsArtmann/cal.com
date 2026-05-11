@@ -1,10 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "private": true,
   "name": "@calcom/weather_in_your_calendar",
   "version": "0.0.0",
-  "main": "./index.ts",
+  "private": true,
   "description": "Get the local weather forecast with icons in your calendar\r\r",
+  "main": "./index.ts",
   "dependencies": {
     "@calcom/lib": "*"
   },

@@ -28,7 +28,11 @@ export default function SetupInformation(props: InferGetStaticPropsType<typeof g
   return (
     <>
       {/* So that the set up page does not get indexed by search engines */}
-      <HeadSeo nextSeoProps={{ noindex: true, nofollow: true }} title={`${slug} | Cal.com`} description="" />
+      <HeadSeo
+        nextSeoProps={{ noindex: true, nofollow: true }}
+        title={`${slug} | Cal.com`}
+        description=""
+      />
       <AppSetupPage slug={slug} {...props} />
     </>
   );

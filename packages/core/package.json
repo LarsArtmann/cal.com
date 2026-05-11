@@ -1,10 +1,10 @@
 {
   "name": "@calcom/core",
-  "sideEffects": false,
-  "description": "Cal.com core functionality",
   "version": "0.0.0",
   "private": true,
+  "description": "Cal.com core functionality",
   "license": "MIT",
+  "sideEffects": false,
   "main": "./index.ts",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules"

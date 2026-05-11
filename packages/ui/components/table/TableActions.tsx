@@ -23,7 +23,11 @@ export type ActionType = {
   color?: ButtonBaseProps["color"];
 } & (
   | { href: string; onClick?: never; actions?: never }
-  | { href?: never; onClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void; actions?: never }
+  | {
+      href?: never;
+      onClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+      actions?: never;
+    }
   | { actions?: ActionType[]; href?: never; onClick?: never }
 );
 
@@ -61,7 +65,8 @@ export const DropdownActions = ({
                 data-testid={action.id}
                 StartIcon={action.icon}
                 href={action.href}
-                onClick={action.onClick || defaultAction}>
+                onClick={action.onClick || defaultAction}
+              >
                 {action.label}
               </DropdownItem>
             </DropdownMenuItem>
@@ -87,14 +92,17 @@ export const TableActions: FC<Props> = ({ actions }) => {
               StartIcon={action.icon}
               {...(action?.actions ? { EndIcon: ChevronDown } : null)}
               disabled={action.disabled}
-              color={action.color || "secondary"}>
+              color={action.color || "secondary"}
+            >
               {action.label}
             </Button>
           );
           if (!action.actions) {
             return button;
           }
-          return <DropdownActions key={action.id} actions={action.actions} actionTrigger={button} />;
+          return (
+            <DropdownActions key={action.id} actions={action.actions} actionTrigger={button} />
+          );
         })}
       </div>
     </>

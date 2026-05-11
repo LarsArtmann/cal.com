@@ -53,7 +53,7 @@ export const AvailableTimeSlots = ({
     time: string,
     attendees: number,
     seatsPerTimeSlot?: number | null,
-    bookingUid?: string
+    bookingUid?: string,
   ) => {
     setSelectedTimeslot(time);
 
@@ -79,7 +79,7 @@ export const AvailableTimeSlots = ({
   });
   const nonEmptyScheduleDays = useNonEmptyScheduleDays(schedule?.data?.slots);
   const nonEmptyScheduleDaysFromSelectedDate = nonEmptyScheduleDays.filter(
-    (slot) => dayjs(selectedDate).diff(slot, "day") <= 0
+    (slot) => dayjs(selectedDate).diff(slot, "day") <= 0,
   );
 
   // Creates an array of dates to fetch slots for.
@@ -87,8 +87,8 @@ export const AvailableTimeSlots = ({
   const dates = !extraDays
     ? [date]
     : nonEmptyScheduleDaysFromSelectedDate.length > 0
-    ? nonEmptyScheduleDaysFromSelectedDate.slice(0, extraDays)
-    : [];
+      ? nonEmptyScheduleDaysFromSelectedDate.slice(0, extraDays)
+      : [];
 
   const slotsPerDay = useSlotsForAvailableDates(dates, schedule?.data?.slots);
 
@@ -104,11 +104,14 @@ export const AvailableTimeSlots = ({
       ref={containerRef}
       className={classNames(
         limitHeight && "flex-grow md:h-[400px]",
-        !limitHeight && "flex h-full w-full flex-row gap-4"
-      )}>
+        !limitHeight && "flex h-full w-full flex-row gap-4",
+      )}
+    >
       {schedule.isLoading
         ? // Shows exact amount of days as skeleton.
-          Array.from({ length: 1 + (extraDays ?? 0) }).map((_, i) => <AvailableTimesSkeleton key={i} />)
+          Array.from({ length: 1 + (extraDays ?? 0) }).map((_, i) => (
+            <AvailableTimesSkeleton key={i} />
+          ))
         : slotsPerDay.length > 0 &&
           slotsPerDay.map((slots) => (
             <AvailableTimes

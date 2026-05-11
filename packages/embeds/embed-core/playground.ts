@@ -84,7 +84,7 @@ if (only === "all" || only === "ns:second") {
         },
         theme: "auto",
       },
-    }
+    },
   );
   Cal.ns.second("on", {
     action: "*",
@@ -136,7 +136,7 @@ if (only === "all" || only === "ns:third") {
           },
         },
       },
-    ]
+    ],
   );
   Cal.ns.third("on", {
     action: "*",
@@ -180,7 +180,7 @@ if (only === "all" || only === "ns:fourth") {
           },
         },
       },
-    ]
+    ],
   );
   Cal.ns.fourth("on", {
     action: "*",
@@ -269,7 +269,7 @@ if (only === "all" || only === "hideEventTypeDetails") {
       {
         hideEventTypeDetails: true,
       },
-    ]
+    ],
   );
 }
 
@@ -395,7 +395,7 @@ if (only === "all" || only == "ns:monthView") {
         },
         layout: "month_view",
       },
-    }
+    },
   );
   Cal.ns.monthView("on", {
     action: "*",
@@ -423,7 +423,7 @@ if (only === "all" || only == "ns:weekView") {
         },
         layout: "week_view",
       },
-    }
+    },
   );
   Cal.ns.weekView("on", {
     action: "*",
@@ -451,7 +451,7 @@ if (only === "all" || only == "ns:columnView") {
         },
         layout: "column_view",
       },
-    }
+    },
   );
   Cal.ns.columnView("on", {
     action: "*",

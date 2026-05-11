@@ -1,14 +1,14 @@
 {
   "name": "@calcom/tsconfig",
-  "sideEffects": false,
   "version": "0.0.0",
   "private": true,
-  "main": "index.js",
   "files": [
     "base.json",
     "nextjs.json",
     "react-library.json"
   ],
+  "sideEffects": false,
+  "main": "index.js",
   "devDependencies": {
     "tsconfig-paths": "^4.2.0"
   }

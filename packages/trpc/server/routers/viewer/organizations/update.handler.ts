@@ -24,7 +24,8 @@ export const updateHandler = async ({ ctx, input }: UpdateOptions) => {
   // A user can only have one org so we pass in their currentOrgId here
   const currentOrgId = ctx.user?.organization?.id || input.orgId;
 
-  const isUserOrganizationAdmin = currentOrgId && (await isOrganisationAdmin(ctx.user?.id, currentOrgId));
+  const isUserOrganizationAdmin =
+    currentOrgId && (await isOrganisationAdmin(ctx.user?.id, currentOrgId));
   const isUserRoleAdmin = ctx.user.role === UserPermissionRole.ADMIN;
 
   const isUserAuthorizedToUpdate = !!(isUserOrganizationAdmin || isUserRoleAdmin);
@@ -55,8 +56,12 @@ export const updateHandler = async ({ ctx, input }: UpdateOptions) => {
     },
   });
 
-  if (!prevOrganisation) throw new TRPCError({ code: "NOT_FOUND", message: "Organisation not found." });
-  const { mergeMetadata } = getMetadataHelpers(teamMetadataSchema.unwrap(), prevOrganisation.metadata);
+  if (!prevOrganisation)
+    throw new TRPCError({ code: "NOT_FOUND", message: "Organisation not found." });
+  const { mergeMetadata } = getMetadataHelpers(
+    teamMetadataSchema.unwrap(),
+    prevOrganisation.metadata,
+  );
 
   const data: Prisma.TeamUpdateArgs["data"] = {
     name: input.name,

@@ -115,7 +115,8 @@ const OnboardingPage = () => {
           "--cal-brand-subtle": "#9CA3AF",
         } as CSSProperties
       }
-      key={pathname}>
+      key={pathname}
+    >
       <Head>
         <title>{`${APP_NAME} - ${t("getting_started")}`}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -136,16 +137,24 @@ const OnboardingPage = () => {
                   </p>
                 ))}
               </header>
-              <Steps maxSteps={steps.length} currentStep={currentStepIndex + 1} navigateToStep={goToIndex} />
+              <Steps
+                maxSteps={steps.length}
+                currentStep={currentStepIndex + 1}
+                navigateToStep={goToIndex}
+              />
             </div>
             <StepCard>
               <Suspense fallback={<Loader />}>
                 {currentStep === "user-settings" && (
                   <UserSettings nextStep={() => goToIndex(1)} hideUsername={from === "signup"} />
                 )}
-                {currentStep === "connected-calendar" && <ConnectedCalendars nextStep={() => goToIndex(2)} />}
+                {currentStep === "connected-calendar" && (
+                  <ConnectedCalendars nextStep={() => goToIndex(2)} />
+                )}
 
-                {currentStep === "connected-video" && <ConnectedVideoStep nextStep={() => goToIndex(3)} />}
+                {currentStep === "connected-video" && (
+                  <ConnectedVideoStep nextStep={() => goToIndex(3)} />
+                )}
 
                 {currentStep === "setup-availability" && (
                   <SetupAvailability
@@ -166,7 +175,8 @@ const OnboardingPage = () => {
                     event.preventDefault();
                     goToIndex(currentStepIndex + 1);
                   }}
-                  className="mt-8 cursor-pointer px-4 py-2 font-sans text-sm font-medium">
+                  className="mt-8 cursor-pointer px-4 py-2 font-sans text-sm font-medium"
+                >
                   {headers[currentStepIndex]?.skipText}
                 </Button>
               </div>

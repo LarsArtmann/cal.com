@@ -11,7 +11,7 @@ export const SlugReplacementEmail = (
     name: string;
     teamName: string;
     t: TFunction;
-  } & Partial<React.ComponentProps<typeof BaseEmailHtml>>
+  } & Partial<React.ComponentProps<typeof BaseEmailHtml>>,
 ) => {
   const { slug, name, teamName, t } = props;
 
@@ -19,7 +19,8 @@ export const SlugReplacementEmail = (
     <BaseEmailHtml
       subject={t("email_subject_slug_replacement", { slug: slug })}
       headerType="teamCircle"
-      title={t("event_replaced_notice")}>
+      title={t("event_replaced_notice")}
+    >
       <>
         <Trans i18nKey="hi_user_name" name={name}>
           <p style={{ fontWeight: 400, lineHeight: "24px", display: "inline-block" }}>Hi {name}</p>
@@ -33,15 +34,16 @@ export const SlugReplacementEmail = (
         </Trans>
         <Trans i18nKey="email_body_slug_replacement_info">
           <p style={{ fontWeight: 400, lineHeight: "24px" }}>
-            Your link will continue to work but some settings for it may have changed. You can review it in
-            event types.
+            Your link will continue to work but some settings for it may have changed. You can
+            review it in event types.
           </p>
         </Trans>
         <table
           role="presentation"
           border={0}
           style={{ verticalAlign: "top", marginTop: "25px" }}
-          width="100%">
+          width="100%"
+        >
           <tbody>
             <tr>
               <td align="center">

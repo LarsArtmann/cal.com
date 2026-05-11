@@ -77,7 +77,9 @@ export default class ZohoCrmCalendarService implements Calendar {
 
   private createContacts = async (attendees: Person[]) => {
     const contacts = attendees.map((attendee) => {
-      const [firstname, lastname] = !!attendee.name ? attendee.name.split(" ") : [attendee.email, "-"];
+      const [firstname, lastname] = !!attendee.name
+        ? attendee.name.split(" ")
+        : [attendee.email, "-"];
       return {
         First_Name: firstname,
         Last_Name: lastname || "-",
@@ -97,7 +99,9 @@ export default class ZohoCrmCalendarService implements Calendar {
 
   private contactSearch = async (event: CalendarEvent) => {
     const searchCriteria =
-      "(" + event.attendees.map((attendee) => `(Email:equals:${encodeURI(attendee.email)})`).join("or") + ")";
+      "(" +
+      event.attendees.map((attendee) => `(Email:equals:${encodeURI(attendee.email)})`).join("or") +
+      ")";
 
     return await axios({
       method: "get",
@@ -179,12 +183,14 @@ export default class ZohoCrmCalendarService implements Calendar {
     const appKeys = await getAppKeysFromSlug("zohocrm");
     if (typeof appKeys.client_id === "string") this.client_id = appKeys.client_id;
     if (typeof appKeys.client_secret === "string") this.client_secret = appKeys.client_secret;
-    if (!this.client_id) throw new HttpError({ statusCode: 400, message: "Zoho CRM client_id missing." });
+    if (!this.client_id)
+      throw new HttpError({ statusCode: 400, message: "Zoho CRM client_id missing." });
     if (!this.client_secret)
       throw new HttpError({ statusCode: 400, message: "Zoho CRM client_secret missing." });
     const credentialKey = credential.key as unknown as ZohoToken;
     const isTokenValid = (token: ZohoToken) => {
-      const isValid = token && token.access_token && token.expiryDate && token.expiryDate < Date.now();
+      const isValid =
+        token && token.access_token && token.expiryDate && token.expiryDate < Date.now();
       if (isValid) {
         this.accessToken = token.access_token;
       }
@@ -235,13 +241,18 @@ export default class ZohoCrmCalendarService implements Calendar {
     };
 
     return {
-      getToken: () => (isTokenValid(credentialKey) ? Promise.resolve() : refreshAccessToken(credentialKey)),
+      getToken: () =>
+        isTokenValid(credentialKey) ? Promise.resolve() : refreshAccessToken(credentialKey),
     };
   };
 
   async handleEventCreation(event: CalendarEvent, contacts: CalendarEvent["attendees"]) {
     const meetingEvent = await this.createZohoEvent(event);
-    if (meetingEvent.data && meetingEvent.data.length && meetingEvent.data[0].status === "success") {
+    if (
+      meetingEvent.data &&
+      meetingEvent.data.length &&
+      meetingEvent.data[0].status === "success"
+    ) {
       this.log.debug("event:creation:ok", { meetingEvent });
       return Promise.resolve({
         uid: meetingEvent.data[0].details.id,
@@ -273,7 +284,7 @@ export default class ZohoCrmCalendarService implements Calendar {
         this.log.debug("contact:filter:existing", { existingContacts });
         // Get non existing contacts filtering out existing from attendees
         const nonExistingContacts: Person[] = event.attendees.filter(
-          (attendee) => !existingContacts.includes(attendee.email)
+          (attendee) => !existingContacts.includes(attendee.email),
         );
         this.log.debug("contact:filter:nonExisting", { nonExistingContacts });
         // Only create contacts in ZohoCRM that were not present in the previous contact search
@@ -318,7 +329,7 @@ export default class ZohoCrmCalendarService implements Calendar {
   async getAvailability(
     _dateFrom: string,
     _dateTo: string,
-    _selectedCalendars: IntegrationCalendar[]
+    _selectedCalendars: IntegrationCalendar[],
   ): Promise<EventBusyDate[]> {
     return Promise.resolve([]);
   }

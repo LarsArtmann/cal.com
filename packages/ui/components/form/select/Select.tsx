@@ -12,13 +12,13 @@ import { getReactSelectProps } from "./selectTheme";
 export type SelectProps<
   Option,
   IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>
+  Group extends GroupBase<Option> = GroupBase<Option>,
 > = Props<Option, IsMulti, Group> & { variant?: "default" | "checkbox" };
 
 export const Select = <
   Option,
   IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>
+  Group extends GroupBase<Option> = GroupBase<Option>,
 >({
   components,
   menuPlacement,
@@ -46,9 +46,10 @@ export const Select = <
             state.isFocused && "bg-subtle",
             state.isDisabled && "bg-muted",
             state.isSelected && "bg-emphasis text-default",
-            props.classNames?.option
+            props.classNames?.option,
           ),
-        placeholder: (state) => cx("text-muted", state.isFocused && variant !== "checkbox" && "hidden"),
+        placeholder: (state) =>
+          cx("text-muted", state.isFocused && variant !== "checkbox" && "hidden"),
         dropdownIndicator: () => "text-default",
         control: (state) =>
           cx(
@@ -57,34 +58,36 @@ export const Select = <
               ? variant === "checkbox"
                 ? "px-3 py-2 h-fit"
                 : state.hasValue
-                ? "p-1 h-fit"
-                : "px-3 py-2 h-fit"
+                  ? "p-1 h-fit"
+                  : "px-3 py-2 h-fit"
               : "py-2 px-3 h-fit",
             props.isDisabled && "bg-subtle",
-            props.classNames?.control
+            props.classNames?.control,
           ),
-        singleValue: () => cx("text-emphasis placeholder:text-muted", props.classNames?.singleValue),
+        singleValue: () =>
+          cx("text-emphasis placeholder:text-muted", props.classNames?.singleValue),
         valueContainer: () =>
           cx("text-emphasis placeholder:text-muted flex gap-1", props.classNames?.valueContainer),
         multiValue: () =>
           cx(
             "bg-subtle text-default rounded-md py-1.5 px-2 flex items-center text-sm leading-none",
-            props.classNames?.multiValue
+            props.classNames?.multiValue,
           ),
         menu: () =>
           cx(
             "rounded-md bg-default text-sm leading-4 text-default mt-1 border border-subtle",
-            props.classNames?.menu
+            props.classNames?.menu,
           ),
         groupHeading: () => "leading-none text-xs uppercase text-default pl-2.5 pt-4 pb-2",
-        menuList: () => cx("scroll-bar scrollbar-track-w-20 rounded-md", props.classNames?.menuList),
+        menuList: () =>
+          cx("scroll-bar scrollbar-track-w-20 rounded-md", props.classNames?.menuList),
         indicatorsContainer: (state) =>
           cx(
             state.selectProps.menuIsOpen
               ? state.isMulti
                 ? "[&>*:last-child]:rotate-180 [&>*:last-child]:transition-transform"
                 : "rotate-180 transition-transform"
-              : "text-default" // Woo it adds another SVG here on multi for some reason
+              : "text-default", // Woo it adds another SVG here on multi for some reason
           ),
         multiValueRemove: () => "text-default py-auto ml-2",
         ...classNames,
@@ -97,7 +100,7 @@ export const Select = <
 export const SelectField = function SelectField<
   Option,
   IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>
+  Group extends GroupBase<Option> = GroupBase<Option>,
 >(
   props: {
     required?: boolean;
@@ -107,10 +110,16 @@ export const SelectField = function SelectField<
     labelProps?: React.ComponentProps<typeof Label>;
     className?: string;
     error?: string;
-  } & SelectProps<Option, IsMulti, Group>
+  } & SelectProps<Option, IsMulti, Group>,
 ) {
   const { t } = useLocale();
-  const { label = t(props.name || ""), containerClassName, labelProps, className, ...passThrough } = props;
+  const {
+    label = t(props.name || ""),
+    containerClassName,
+    labelProps,
+    className,
+    ...passThrough
+  } = props;
   const id = useId();
   return (
     <div className={cx(containerClassName)}>
@@ -132,7 +141,7 @@ export const SelectField = function SelectField<
 export function SelectWithValidation<
   Option extends { label: string; value: string },
   IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>
+  Group extends GroupBase<Option> = GroupBase<Option>,
 >({
   required = false,
   onChange,
@@ -146,15 +155,18 @@ export function SelectWithValidation<
     return value.value || "";
   });
 
-  const setHiddenInputValue = React.useCallback((value: MultiValue<Option> | SingleValue<Option>) => {
-    let hiddenInputValue = "";
-    if (value instanceof Array) {
-      hiddenInputValue = value.map((val) => val.value).join(",");
-    } else {
-      hiddenInputValue = value?.value || "";
-    }
-    _setHiddenInputValue(hiddenInputValue);
-  }, []);
+  const setHiddenInputValue = React.useCallback(
+    (value: MultiValue<Option> | SingleValue<Option>) => {
+      let hiddenInputValue = "";
+      if (value instanceof Array) {
+        hiddenInputValue = value.map((val) => val.value).join(",");
+      } else {
+        hiddenInputValue = value?.value || "";
+      }
+      _setHiddenInputValue(hiddenInputValue);
+    },
+    [],
+  );
 
   React.useEffect(() => {
     if (!value) {

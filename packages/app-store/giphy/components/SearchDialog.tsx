@@ -89,13 +89,14 @@ export const SearchDialog = (props: ISearchDialog) => {
     <div
       className={classNames(
         "flex cursor-pointer items-center border-b-2 p-2 text-sm ",
-        selectedMode === mode ? "text-default border-emphasis" : "text-subtle border-transparent"
+        selectedMode === mode ? "text-default border-emphasis" : "text-subtle border-transparent",
       )}
       onClick={() => {
         setKeyword("");
         setGifImage("");
         setSelectedMode(mode);
-      }}>
+      }}
+    >
       <Icon className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
       {text}
     </div>
@@ -124,7 +125,8 @@ export const SearchDialog = (props: ISearchDialog) => {
         </div>
         <form
           className="flex w-full justify-center space-x-2 space-y-2 rtl:space-x-reverse"
-          onSubmit={handleFormSubmit}>
+          onSubmit={handleFormSubmit}
+        >
           <div className="relative block w-full pt-2">
             <Input
               type="text"
@@ -149,10 +151,14 @@ export const SearchDialog = (props: ISearchDialog) => {
               {isLoading ? (
                 <div className="flex h-[200px] w-full items-center justify-center bg-gray-400 pb-3 pt-3">
                   <svg
-                    className={classNames("mx-4 h-5 w-5 animate-spin", "text-inverted dark:text-emphasis")}
+                    className={classNames(
+                      "mx-4 h-5 w-5 animate-spin",
+                      "text-inverted dark:text-emphasis",
+                    )}
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
-                    viewBox="0 0 24 24">
+                    viewBox="0 0 24 24"
+                  >
                     <circle
                       className="opacity-25"
                       cx="12"
@@ -169,7 +175,11 @@ export const SearchDialog = (props: ISearchDialog) => {
                   </svg>
                 </div>
               ) : (
-                <img className="h-[200px] pb-3 pt-3" src={gifImage} alt={`Gif from Giphy for ${keyword}`} />
+                <img
+                  className="h-[200px] pb-3 pt-3"
+                  src={gifImage}
+                  alt={`Gif from Giphy for ${keyword}`}
+                />
               )}
             </div>
           </div>
@@ -183,7 +193,8 @@ export const SearchDialog = (props: ISearchDialog) => {
               color="secondary"
               type="button"
               loading={isLoading}
-              onClick={() => searchGiphy(keyword, nextOffset)}>
+              onClick={() => searchGiphy(keyword, nextOffset)}
+            >
               Shuffle
             </Button>
           </div>
@@ -194,7 +205,8 @@ export const SearchDialog = (props: ISearchDialog) => {
             tabIndex={-1}
             onClick={() => {
               props.setIsOpenDialog(false);
-            }}>
+            }}
+          >
             {t("cancel")}
           </DialogClose>
 
@@ -208,7 +220,8 @@ export const SearchDialog = (props: ISearchDialog) => {
               setGifImage("");
               setKeyword("");
               return false;
-            }}>
+            }}
+          >
             {t("add_gif")}
           </Button>
         </DialogFooter>

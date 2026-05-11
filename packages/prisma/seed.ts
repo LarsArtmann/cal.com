@@ -15,7 +15,7 @@ import type { teamMetadataSchema } from "./zod-utils";
 
 async function createTeamAndAddUsers(
   teamInput: Prisma.TeamCreateInput,
-  users: { id: number; username: string; role?: MembershipRole }[] = []
+  users: { id: number; username: string; role?: MembershipRole }[] = [],
 ) {
   const checkUnpublishedTeam = async (slug: string) => {
     return await prisma.team.findFirst({
@@ -42,7 +42,10 @@ async function createTeamAndAddUsers(
         },
       });
     } catch (_err) {
-      if (_err instanceof Error && _err.message.indexOf("Unique constraint failed on the fields") !== -1) {
+      if (
+        _err instanceof Error &&
+        _err.message.indexOf("Unique constraint failed on the fields") !== -1
+      ) {
         console.log(`Team '${team.name}' already exists, skipping.`);
         return;
       }
@@ -56,7 +59,7 @@ async function createTeamAndAddUsers(
   }
 
   console.log(
-    `🏢 Created team '${teamInput.name}' - ${process.env.NEXT_PUBLIC_WEBAPP_URL}/team/${team.slug}`
+    `🏢 Created team '${teamInput.name}' - ${process.env.NEXT_PUBLIC_WEBAPP_URL}/team/${team.slug}`,
   );
 
   for (const user of users) {
@@ -501,7 +504,7 @@ async function main() {
         id: pro4UserTeam.id,
         username: pro4UserTeam.name || "Unknown",
       },
-    ]
+    ],
   );
 }
 

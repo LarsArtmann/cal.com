@@ -84,8 +84,9 @@ export default function TeamInviteListItem(props: Props) {
       <div
         className={classNames(
           "flex items-center  justify-between",
-          !isInvitee && "group hover:bg-neutral-50"
-        )}>
+          !isInvitee && "group hover:bg-neutral-50",
+        )}
+      >
         {teamInfo}
         <div>
           <>
@@ -119,7 +120,12 @@ export default function TeamInviteListItem(props: Props) {
                     </DropdownItem>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <DropdownItem color="destructive" type="button" StartIcon={X} onClick={declineInvite}>
+                    <DropdownItem
+                      color="destructive"
+                      type="button"
+                      StartIcon={X}
+                      onClick={declineInvite}
+                    >
                       {t("reject")}
                     </DropdownItem>
                   </DropdownMenuItem>

@@ -34,7 +34,10 @@ function VerifyEmailPage() {
             dashedBorder={false}
             Icon={MailOpenIcon}
             headline={t("check_your_email")}
-            description={t("verify_email_page_body", { email: session?.user?.email, appName: APP_NAME })}
+            description={t("verify_email_page_body", {
+              email: session?.user?.email,
+              appName: APP_NAME,
+            })}
             className="bg-default"
             buttonRaw={
               <Button
@@ -44,7 +47,8 @@ function VerifyEmailPage() {
                 onClick={() => {
                   showToast("Send email", "success");
                   mutation.mutate();
-                }}>
+                }}
+              >
                 Resend Email
               </Button>
             }

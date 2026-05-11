@@ -30,13 +30,14 @@ export const isVerifiedHandler = async ({ ctx }: IsKYCVerifiedOptions) => {
     },
   });
 
-  let isKYCVerified = user && hasKeyInMetadata(user, "kycVerified") ? !!user.metadata.kycVerified : false;
+  let isKYCVerified =
+    user && hasKeyInMetadata(user, "kycVerified") ? !!user.metadata.kycVerified : false;
 
   if (!isKYCVerified) {
     //check if user is part of a team that is KYC verified
     isKYCVerified = !!memberships.find(
       (membership) =>
-        hasKeyInMetadata(membership.team, "kycVerified") && !!membership.team.metadata.kycVerified
+        hasKeyInMetadata(membership.team, "kycVerified") && !!membership.team.metadata.kycVerified,
     );
   }
 

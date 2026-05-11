@@ -38,7 +38,9 @@ export const inviteMemberHandler = async ({ ctx, input }: InviteMemberOptions) =
   await checkPermissions({
     userId: ctx.user.id,
     teamId:
-      ctx.user.organization.id && ctx.user.organization.isOrgAdmin ? ctx.user.organization.id : input.teamId,
+      ctx.user.organization.id && ctx.user.organization.isOrgAdmin
+        ? ctx.user.organization.id
+        : input.teamId,
     isOrg: input.isOrg,
   });
 
@@ -72,7 +74,14 @@ export const inviteMemberHandler = async ({ ctx, input }: InviteMemberOptions) =
         parentId: team.parentId,
       });
 
-      await sendVerificationEmail({ usernameOrEmail, team, translation, ctx, input, connectionInfo });
+      await sendVerificationEmail({
+        usernameOrEmail,
+        team,
+        translation,
+        ctx,
+        input,
+        connectionInfo,
+      });
     } else {
       throwIfInviteIsToOrgAndUserExists(invitee, team, input.isOrg);
 
@@ -107,7 +116,11 @@ export const inviteMemberHandler = async ({ ctx, input }: InviteMemberOptions) =
          * Here we want to redirect to a different place if onboarding has been completed or not. This prevents the flash of going to teams -> Then to onboarding - also show a different email template.
          * This only changes if the user is a CAL user and has not completed onboarding and has no password
          */
-        if (!invitee.completedOnboarding && !invitee.password && invitee.identityProvider === "CAL") {
+        if (
+          !invitee.completedOnboarding &&
+          !invitee.password &&
+          invitee.identityProvider === "CAL"
+        ) {
           const token = randomBytes(32).toString("hex");
           await prisma.verificationToken.create({
             data: {

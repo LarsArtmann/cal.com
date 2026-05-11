@@ -86,7 +86,8 @@ export function createNextApiHandler(router: AnyRouter, isPublic = false, namesp
 
           // We must set cdn-cache-control as well to ensure that Vercel doesn't strip stale-while-revalidate
           // https://vercel.com/docs/concepts/edge-network/caching#:~:text=If%20you%20set,in%20the%20response.
-          defaultHeaders.headers["cache-control"] = defaultHeaders.headers["cdn-cache-control"] = cacheRule;
+          defaultHeaders.headers["cache-control"] = defaultHeaders.headers["cdn-cache-control"] =
+            cacheRule;
         }
       }
 

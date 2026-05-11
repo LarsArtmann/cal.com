@@ -87,8 +87,8 @@ export const editLocationHandler = async ({ ctx, input }: EditLocationOptions) =
       destinationCalendar: booking?.destinationCalendar
         ? [booking?.destinationCalendar]
         : booking?.user?.destinationCalendar
-        ? [booking?.user?.destinationCalendar]
-        : [],
+          ? [booking?.user?.destinationCalendar]
+          : [],
       seatsPerTimeSlot: booking.eventType?.seatsPerTimeSlot,
       seatsShowAttendees: booking.eventType?.seatsShowAttendees,
     };

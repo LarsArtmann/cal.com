@@ -59,7 +59,7 @@ export const deleteMeHandler = async ({ ctx, input }: DeleteMeOptions) => {
     const secret = symmetricDecrypt(user.twoFactorSecret, process.env.CALENDSO_ENCRYPTION_KEY);
     if (secret.length !== 32) {
       console.error(
-        `Two factor secret decryption failed. Expected key with length 32 but got ${secret.length}`
+        `Two factor secret decryption failed. Expected key with length 32 but got ${secret.length}`,
       );
       throw new Error(ErrorCode.InternalServerError);
     }

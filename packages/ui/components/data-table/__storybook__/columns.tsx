@@ -45,7 +45,8 @@ export const columns: ColumnDef<DataTableUserStorybook>[] = [
           color={BadgeColor}
           onClick={() => {
             table.getColumn("role")?.setFilterValue(user.role);
-          }}>
+          }}
+        >
           {user.role}
         </Badge>
       );

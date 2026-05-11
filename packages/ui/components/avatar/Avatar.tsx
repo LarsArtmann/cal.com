@@ -42,8 +42,9 @@ export function Avatar(props: AvatarProps) {
         "bg-emphasis item-center relative inline-flex aspect-square justify-center rounded-full",
         indicator ? "overflow-visible" : "overflow-hidden",
         props.className,
-        sizesPropsBySize[size]
-      )}>
+        sizesPropsBySize[size],
+      )}
+    >
       <>
         <AvatarPrimitive.Image
           src={imageSrc ?? undefined}
@@ -53,9 +54,14 @@ export function Avatar(props: AvatarProps) {
         <AvatarPrimitive.Fallback
           delayMs={600}
           asChild={props.asChild}
-          className="flex h-full items-center justify-center">
+          className="flex h-full items-center justify-center"
+        >
           <>
-            {props.fallback ? props.fallback : <img src={AVATAR_FALLBACK} alt={alt} className={rootClass} />}
+            {props.fallback ? (
+              props.fallback
+            ) : (
+              <img src={AVATAR_FALLBACK} alt={alt} className={rootClass} />
+            )}
           </>
         </AvatarPrimitive.Fallback>
         {indicator}

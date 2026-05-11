@@ -52,7 +52,7 @@ const locationFormSchema = z.array(
       .refine((val) => isValidPhoneNumber(val))
       .optional(),
     locationLink: z.string().url().optional(), // URL validates as new URL() - which requires HTTPS:// In the input field
-  })
+  }),
 );
 
 const querySchema = z.object({
@@ -152,17 +152,20 @@ export default function CreateEventTypeDialog({
         "length",
         "slug",
         "locations",
-      ]}>
+      ]}
+    >
       <DialogContent
         type="creation"
         enableOverflow
         title={teamId ? t("add_new_team_event_type") : t("add_new_event_type")}
-        description={t("new_event_type_to_book_description")}>
+        description={t("new_event_type_to_book_description")}
+      >
         <Form
           form={form}
           handleSubmit={(values) => {
             createMutation.mutate(values);
-          }}>
+          }}
+        >
           <div className="mt-3 space-y-6 pb-11">
             {teamId && (
               <TextField
@@ -197,7 +200,9 @@ export default function CreateEventTypeDialog({
                 />
 
                 {isManagedEventType && (
-                  <p className="mt-2 text-sm text-gray-600">{t("managed_event_url_clarification")}</p>
+                  <p className="mt-2 text-sm text-gray-600">
+                    {t("managed_event_url_clarification")}
+                  </p>
                 )}
               </div>
             ) : (
@@ -213,7 +218,9 @@ export default function CreateEventTypeDialog({
                   {...register("slug")}
                 />
                 {isManagedEventType && (
-                  <p className="mt-2 text-sm text-gray-600">{t("managed_event_url_clarification")}</p>
+                  <p className="mt-2 text-sm text-gray-600">
+                    {t("managed_event_url_clarification")}
+                  </p>
                 )}
               </div>
             )}
@@ -261,13 +268,15 @@ export default function CreateEventTypeDialog({
                   }}
                   className={classNames(
                     "mt-1 flex gap-4",
-                    isAdmin && flags["managed-event-types"] && "flex-col"
-                  )}>
+                    isAdmin && flags["managed-event-types"] && "flex-col",
+                  )}
+                >
                   <RadioArea.Item
                     {...register("schedulingType")}
                     value={SchedulingType.COLLECTIVE}
                     className={classNames("w-full text-sm", !isAdmin && "w-1/2")}
-                    classNames={{ container: classNames(isAdmin && "w-full") }}>
+                    classNames={{ container: classNames(isAdmin && "w-full") }}
+                  >
                     <strong className="mb-1 block">{t("collective")}</strong>
                     <p>{t("collective_description")}</p>
                   </RadioArea.Item>
@@ -275,7 +284,8 @@ export default function CreateEventTypeDialog({
                     {...register("schedulingType")}
                     value={SchedulingType.ROUND_ROBIN}
                     className={classNames("text-sm", !isAdmin && "w-1/2")}
-                    classNames={{ container: classNames(isAdmin && "w-full") }}>
+                    classNames={{ container: classNames(isAdmin && "w-full") }}
+                  >
                     <strong className="mb-1 block">{t("round_robin")}</strong>
                     <p>{t("round_robin_description")}</p>
                   </RadioArea.Item>
@@ -285,7 +295,8 @@ export default function CreateEventTypeDialog({
                         {...register("schedulingType")}
                         value={SchedulingType.MANAGED}
                         className={classNames("text-sm", !isAdmin && "w-1/2")}
-                        classNames={{ container: classNames(isAdmin && "w-full") }}>
+                        classNames={{ container: classNames(isAdmin && "w-full") }}
+                      >
                         <strong className="mb-1 block">{t("managed_event")}</strong>
                         <p>{t("managed_event_description")}</p>
                       </RadioArea.Item>

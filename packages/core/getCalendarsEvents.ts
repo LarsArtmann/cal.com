@@ -9,13 +9,15 @@ const getCalendarsEvents = async (
   withCredentials: CredentialPayload[],
   dateFrom: string,
   dateTo: string,
-  selectedCalendars: SelectedCalendar[]
+  selectedCalendars: SelectedCalendar[],
 ): Promise<EventBusyDate[][]> => {
   const calendarCredentials = withCredentials
     .filter((credential) => credential.type.endsWith("_calendar"))
     // filter out invalid credentials - these won't work.
     .filter((credential) => !credential.invalid);
-  const calendars = await Promise.all(calendarCredentials.map((credential) => getCalendar(credential)));
+  const calendars = await Promise.all(
+    calendarCredentials.map((credential) => getCalendar(credential)),
+  );
   performance.mark("getBusyCalendarTimesStart");
   const results = calendars.map(async (c, i) => {
     /** Filter out nulls */
@@ -36,7 +38,7 @@ const getCalendarsEvents = async (
     performance.measure(
       `[getAvailability for ${selectedCalendarIds.join(", ")}][$1]'`,
       "eventBusyDatesStart",
-      "eventBusyDatesEnd"
+      "eventBusyDatesEnd",
     );
 
     return eventBusyDates.map((a) => ({ ...a, source: `${appId}` }));
@@ -46,7 +48,7 @@ const getCalendarsEvents = async (
   performance.measure(
     `getBusyCalendarTimes took $1 for creds ${calendarCredentials.map((cred) => cred.id)}`,
     "getBusyCalendarTimesStart",
-    "getBusyCalendarTimesEnd"
+    "getBusyCalendarTimesEnd",
   );
   return awaitedResults;
 };

@@ -61,22 +61,28 @@ const OrgProfileView = () => {
     },
   });
 
-  const { data: currentOrganisation, isLoading } = trpc.viewer.organizations.listCurrent.useQuery(undefined, {
-    onError: () => {
-      router.push("/settings");
-    },
-    onSuccess: (org) => {
-      if (org) {
-        form.setValue("name", org.name || "");
-        form.setValue("slug", org.slug || org.metadata?.requestedSlug || "");
-        form.setValue("logo", org.logo || "");
-        form.setValue("bio", org.bio || "");
-        if (org.slug === null && (org?.metadata as Prisma.JsonObject)?.requestedSlug) {
-          form.setValue("slug", ((org?.metadata as Prisma.JsonObject)?.requestedSlug as string) || "");
+  const { data: currentOrganisation, isLoading } = trpc.viewer.organizations.listCurrent.useQuery(
+    undefined,
+    {
+      onError: () => {
+        router.push("/settings");
+      },
+      onSuccess: (org) => {
+        if (org) {
+          form.setValue("name", org.name || "");
+          form.setValue("slug", org.slug || org.metadata?.requestedSlug || "");
+          form.setValue("logo", org.logo || "");
+          form.setValue("bio", org.bio || "");
+          if (org.slug === null && (org?.metadata as Prisma.JsonObject)?.requestedSlug) {
+            form.setValue(
+              "slug",
+              ((org?.metadata as Prisma.JsonObject)?.requestedSlug as string) || "",
+            );
+          }
         }
-      }
+      },
     },
-  });
+  );
 
   const isOrgAdminOrOwner =
     currentOrganisation &&
@@ -109,7 +115,8 @@ const OrgProfileView = () => {
 
                   mutation.mutate(variables);
                 }
-              }}>
+              }}
+            >
               <div className="flex items-center">
                 <Controller
                   control={form.control}
@@ -209,7 +216,8 @@ const OrgProfileView = () => {
                   onClick={() => {
                     navigator.clipboard.writeText(orgBranding.fullDomain);
                     showToast("Copied to clipboard", "success");
-                  }}>
+                  }}
+                >
                   {t("copy_link_org")}
                 </LinkIconButton>
               </div>

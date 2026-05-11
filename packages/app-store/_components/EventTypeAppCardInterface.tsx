@@ -8,7 +8,9 @@ import type { EventTypeAppCardComponentProps, CredentialOwner } from "../types";
 import { DynamicComponent } from "./DynamicComponent";
 
 export const EventTypeAppCard = (props: {
-  app: RouterOutputs["viewer"]["integrations"]["items"][number] & { credentialOwner?: CredentialOwner };
+  app: RouterOutputs["viewer"]["integrations"]["items"][number] & {
+    credentialOwner?: CredentialOwner;
+  };
   eventType: EventTypeAppCardComponentProps["eventType"];
   getAppData: GetAppData;
   setAppData: SetAppData;

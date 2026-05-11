@@ -26,7 +26,11 @@ interface DataTableFilter<TData, TValue> {
     icon?: LucideIcon;
   }[];
 }
-export function DataTableFilter<TData, TValue>({ column, title, options }: DataTableFilter<TData, TValue>) {
+export function DataTableFilter<TData, TValue>({
+  column,
+  title,
+  options,
+}: DataTableFilter<TData, TValue>) {
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = new Set(column?.getFilterValue() as string[]);
 
@@ -47,7 +51,11 @@ export function DataTableFilter<TData, TValue>({ column, title, options }: DataT
                   options
                     .filter((option) => selectedValues.has(option.value))
                     .map((option) => (
-                      <Badge color="gray" key={option.value} className="rounded-sm px-1 font-normal">
+                      <Badge
+                        color="gray"
+                        key={option.value}
+                        className="rounded-sm px-1 font-normal"
+                      >
                         {option.label}
                       </Badge>
                     ))
@@ -77,12 +85,14 @@ export function DataTableFilter<TData, TValue>({ column, title, options }: DataT
                       }
                       const filterValues = Array.from(selectedValues);
                       column?.setFilterValue(filterValues.length ? filterValues : undefined);
-                    }}>
+                    }}
+                  >
                     <div
                       className={classNames(
                         "border-subtle mr-2 flex h-4 w-4 items-center justify-center rounded-sm border",
-                        isSelected ? "text-emphasis" : "opacity-50 [&_svg]:invisible"
-                      )}>
+                        isSelected ? "text-emphasis" : "opacity-50 [&_svg]:invisible",
+                      )}
+                    >
                       <Check className={classNames("h-4 w-4")} />
                     </div>
                     {option.icon && <option.icon className="text-muted mr-2 h-4 w-4" />}
@@ -102,7 +112,8 @@ export function DataTableFilter<TData, TValue>({ column, title, options }: DataT
                 <CommandGroup>
                   <CommandItem
                     onSelect={() => column?.setFilterValue(undefined)}
-                    className="justify-center text-center">
+                    className="justify-center text-center"
+                  >
                     Clear filters
                   </CommandItem>
                 </CommandGroup>

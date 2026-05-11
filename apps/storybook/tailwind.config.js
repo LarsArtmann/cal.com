@@ -3,5 +3,9 @@ const base = require("@calcom/config/tailwind-preset");
 module.exports = {
   ...base,
   darkMode: ["class", '[data-mode="dark"]'],
-  content: [...base.content, "../../packages/ui/**/*.{js,ts,jsx,tsx,mdx}", "./stories/**/*.{js,ts,tsx,jsx}"],
+  content: [
+    ...base.content,
+    "../../packages/ui/**/*.{js,ts,jsx,tsx,mdx}",
+    "./stories/**/*.{js,ts,tsx,jsx}",
+  ],
 };

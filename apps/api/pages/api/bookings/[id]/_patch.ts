@@ -107,7 +107,10 @@ export async function patchHandler(req: NextApiRequest) {
   return { booking: schemaBookingReadPublic.parse(booking) };
 }
 
-async function checkPermissions(req: NextApiRequest, body: z.infer<typeof schemaBookingEditBodyParams>) {
+async function checkPermissions(
+  req: NextApiRequest,
+  body: z.infer<typeof schemaBookingEditBodyParams>,
+) {
   const { isAdmin } = req;
   if (body.userId && !isAdmin) {
     // Organizer has to be a cal user and we can't allow a booking to be transfered to some other cal user's name

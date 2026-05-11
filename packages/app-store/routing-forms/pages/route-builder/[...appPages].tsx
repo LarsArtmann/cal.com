@@ -124,7 +124,11 @@ const Route = ({
     });
   });
 
-  const onChange = (route: Route, immutableTree: ImmutableTree, config: QueryBuilderUpdatedConfig) => {
+  const onChange = (
+    route: Route,
+    immutableTree: ImmutableTree,
+    config: QueryBuilderUpdatedConfig,
+  ) => {
     const jsonTree = QbUtils.getTree(immutableTree);
     setRoute(route.id, {
       state: { tree: immutableTree, config: config },
@@ -140,7 +144,7 @@ const Route = ({
         </div>
       </div>
     ),
-    []
+    [],
   );
 
   if (isRouter(route)) {
@@ -161,7 +165,8 @@ const Route = ({
               <span className="mr-2">{`Route ${index + 1}`}</span>
             </div>
           }
-          className="mb-6">
+          className="mb-6"
+        >
           <div className="-mt-3">
             <Link href={`${appUrl}/route-builder/${route.id}`}>
               <Badge variant="gray">
@@ -169,7 +174,8 @@ const Route = ({
               </Badge>
             </Link>
             <p className="text-subtle mt-2 text-sm">
-              Fields available in <span className="font-bold">{route.name}</span> will be added to this form.
+              Fields available in <span className="font-bold">{route.name}</span> will be added to
+              this form.
             </p>
           </div>
         </FormCard>
@@ -189,7 +195,8 @@ const Route = ({
           const newRoutes = routes.filter((r) => r.id !== route.id);
           setRoutes(newRoutes);
         },
-      }}>
+      }}
+    >
       <div className="-mx-4 mb-4 flex w-full items-center sm:mx-0">
         <div className="cal-query-builder w-full ">
           <div>
@@ -260,7 +267,9 @@ const Route = ({
                         }
                         setRoute(route.id, { action: { ...route.action, value: option.value } });
                       }}
-                      value={eventOptions.find((eventOption) => eventOption.value === route.action.value)}
+                      value={eventOptions.find(
+                        (eventOption) => eventOption.value === route.action.value,
+                      )}
                     />
                   </div>
                 )
@@ -289,7 +298,7 @@ const Route = ({
 
 const deserializeRoute = (
   route: Exclude<SerializableRoute, GlobalRoute>,
-  config: QueryBuilderUpdatedConfig
+  config: QueryBuilderUpdatedConfig,
 ): Route => {
   return {
     ...route,
@@ -390,7 +399,7 @@ const Routes = ({
         r.isDisabled = true;
       }
       return r;
-    })
+    }),
   );
 
   const [animationRef] = useAutoAnimate<HTMLDivElement>();

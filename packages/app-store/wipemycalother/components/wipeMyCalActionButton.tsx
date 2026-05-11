@@ -21,7 +21,9 @@ const WipeMyCalActionButton = (props: IWipeMyCalActionButtonProps) => {
   if (bookingStatus !== "upcoming" || bookingsEmpty) {
     return <></>;
   }
-  const wipeMyCalCredentials = data?.items.find((item: { type: string }) => item.type === "wipemycal_other");
+  const wipeMyCalCredentials = data?.items.find(
+    (item: { type: string }) => item.type === "wipemycal_other",
+  );
 
   const [credentialId] = wipeMyCalCredentials?.userCredentialIds || [false];
 
@@ -30,7 +32,11 @@ const WipeMyCalActionButton = (props: IWipeMyCalActionButtonProps) => {
       {data && isSuccess && !isLoading && credentialId && (
         <div className="mb-4">
           <ConfirmDialog isOpenDialog={openDialog} setIsOpenDialog={setOpenDialog} />
-          <Button color="primary" onClick={() => setOpenDialog(true)} data-testid="wipe-today-button">
+          <Button
+            color="primary"
+            onClick={() => setOpenDialog(true)}
+            data-testid="wipe-today-button"
+          >
             Wipe Today
           </Button>
         </div>

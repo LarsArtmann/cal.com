@@ -18,7 +18,11 @@ test.describe.configure({ mode: "parallel" });
 test.afterEach(({ users }) => users.deleteAll());
 
 test.describe("Reschedule Tests", async () => {
-  test("Should do a booking request reschedule from /bookings", async ({ page, users, bookings }) => {
+  test("Should do a booking request reschedule from /bookings", async ({
+    page,
+    users,
+    bookings,
+  }) => {
     const user = await users.create();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const booking = await bookings.create(user.id, user.username, user.eventTypes[0].id!, {
@@ -45,7 +49,11 @@ test.describe("Reschedule Tests", async () => {
     await booking.delete();
   });
 
-  test("Should display former time when rescheduling availability", async ({ page, users, bookings }) => {
+  test("Should display former time when rescheduling availability", async ({
+    page,
+    users,
+    bookings,
+  }) => {
     const user = await users.create();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const booking = await bookings.create(user.id, user.username, user.eventTypes[0].id!, {
@@ -62,7 +70,11 @@ test.describe("Reschedule Tests", async () => {
     await booking.delete();
   });
 
-  test("Should display request reschedule send on bookings/cancelled", async ({ page, users, bookings }) => {
+  test("Should display request reschedule send on bookings/cancelled", async ({
+    page,
+    users,
+    bookings,
+  }) => {
     const user = await users.create();
     const booking = await bookings.create(user.id, user.username, user.eventTypes[0].id, {
       status: BookingStatus.CANCELLED,
@@ -72,7 +84,9 @@ test.describe("Reschedule Tests", async () => {
     await user.apiLogin();
     await page.goto("/bookings/cancelled");
 
-    const requestRescheduleSentElement = page.locator('[data-testid="request_reschedule_sent"]').nth(1);
+    const requestRescheduleSentElement = page
+      .locator('[data-testid="request_reschedule_sent"]')
+      .nth(1);
     await expect(requestRescheduleSentElement).toBeVisible();
     await booking.delete();
   });
@@ -98,8 +112,12 @@ test.describe("Reschedule Tests", async () => {
 
     await expect(page.locator("[data-testid=success-page]")).toBeVisible();
 
-    const newBooking = await prisma.booking.findFirstOrThrow({ where: { fromReschedule: booking.uid } });
-    const rescheduledBooking = await prisma.booking.findFirstOrThrow({ where: { uid: booking.uid } });
+    const newBooking = await prisma.booking.findFirstOrThrow({
+      where: { fromReschedule: booking.uid },
+    });
+    const rescheduledBooking = await prisma.booking.findFirstOrThrow({
+      where: { uid: booking.uid },
+    });
 
     expect(newBooking).not.toBeNull();
     expect(rescheduledBooking.status).toBe(BookingStatus.CANCELLED);
@@ -113,7 +131,12 @@ test.describe("Reschedule Tests", async () => {
     });
   });
 
-  test("Unpaid rescheduling should go to payment page", async ({ page, users, bookings, payments }) => {
+  test("Unpaid rescheduling should go to payment page", async ({
+    page,
+    users,
+    bookings,
+    payments,
+  }) => {
     // eslint-disable-next-line playwright/no-skipped-test
     test.skip(!IS_STRIPE_ENABLED, "Skipped as Stripe is not installed");
     const user = await users.create();
@@ -156,7 +179,12 @@ test.describe("Reschedule Tests", async () => {
     await expect(page).toHaveURL(/.*payment/);
   });
 
-  test("Paid rescheduling should go to success page", async ({ page, users, bookings, payments }) => {
+  test("Paid rescheduling should go to success page", async ({
+    page,
+    users,
+    bookings,
+    payments,
+  }) => {
     const user = await users.create();
     await user.apiLogin();
     await user.getPaymentCredential();
@@ -179,7 +207,11 @@ test.describe("Reschedule Tests", async () => {
     await expect(page).toHaveURL(/.*booking/);
   });
 
-  test("Opt in event should be PENDING when rescheduled by USER", async ({ page, users, bookings }) => {
+  test("Opt in event should be PENDING when rescheduled by USER", async ({
+    page,
+    users,
+    bookings,
+  }) => {
     const user = await users.create();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const eventType = user.eventTypes.find((e) => e.slug === "opt-in")!;
@@ -200,7 +232,11 @@ test.describe("Reschedule Tests", async () => {
     expect(newBooking?.status).toBe(BookingStatus.PENDING);
   });
 
-  test("Opt in event should be ACCEPTED when rescheduled by OWNER", async ({ page, users, bookings }) => {
+  test("Opt in event should be ACCEPTED when rescheduled by OWNER", async ({
+    page,
+    users,
+    bookings,
+  }) => {
     const user = await users.create();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const eventType = user.eventTypes.find((e) => e.slug === "opt-in")!;
@@ -260,7 +296,14 @@ test.describe("Reschedule Tests", async () => {
     const startTime = firstOfNextMonth.set("hour", 9).set("minute", 0).toDate();
     const endTime = firstOfNextMonth.set("hour", 9).set("minute", 30).toDate();
 
-    const booking = await bookings.create(user.id, user.username, eventType.id, {}, startTime, endTime);
+    const booking = await bookings.create(
+      user.id,
+      user.username,
+      eventType.id,
+      {},
+      startTime,
+      endTime,
+    );
 
     await page.goto(`/reschedule/${booking.uid}`);
 

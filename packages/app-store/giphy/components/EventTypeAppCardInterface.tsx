@@ -22,7 +22,8 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
         setShowGifSelection(e);
       }}
       switchChecked={showGifSelection}
-      teamId={eventType.team?.id || undefined}>
+      teamId={eventType.team?.id || undefined}
+    >
       {showGifSelection && (
         <SelectGifInput
           defaultValue={thankYouPage}

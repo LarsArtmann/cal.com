@@ -1,10 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "private": true,
   "name": "@calcom/googlevideo",
   "version": "0.0.0",
-  "main": "./index.ts",
+  "private": true,
   "description": "Google Meet is Google's web-based video conferencing platform, designed to compete with major conferencing platforms.",
+  "main": "./index.ts",
   "dependencies": {
     "@calcom/prisma": "*",
     "googleapis": "^171.4.0"

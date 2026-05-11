@@ -34,7 +34,10 @@ export const projectHandler = async ({ ctx }: ProjectsHandlerOptions) => {
   const url = `${credentialKey.account.href}/projects.json`;
 
   const resp = await fetch(url, {
-    headers: { "User-Agent": user_agent as string, Authorization: `Bearer ${credentialKey.access_token}` },
+    headers: {
+      "User-Agent": user_agent as string,
+      Authorization: `Bearer ${credentialKey.access_token}`,
+    },
   });
   const projects = await resp.json();
   return { currentProject: credentialKey.projectId, projects };

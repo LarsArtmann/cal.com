@@ -18,7 +18,7 @@ export default function SSOConfiguration({ teamId }: { teamId: number | null }) 
       onError: (err) => {
         setErrorMessage(err.message);
       },
-    }
+    },
   );
 
   if (isLoading) {

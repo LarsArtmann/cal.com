@@ -36,7 +36,7 @@ export function TeamListBulkAction({ table }: Props) {
     onSuccess: (res) => {
       showToast(
         `${res.invitedTotalUsers} Users invited to ${Array.from(selectedValues).length} teams`,
-        "success"
+        "success",
       );
       // Optimistically update the data from query trpc cache listMembers
       // We may need to set this data instread of invalidating. Will see how performance handles it
@@ -89,13 +89,15 @@ export function TeamListBulkAction({ table }: Props) {
                           } else {
                             removeValue(option.id);
                           }
-                        }}>
+                        }}
+                      >
                         <span>{option.name}</span>
                         <div
                           className={classNames(
                             "border-subtle ml-auto flex h-4 w-4 items-center justify-center rounded-sm border",
-                            isSelected ? "text-emphasis" : "opacity-50 [&_svg]:invisible"
-                          )}>
+                            isSelected ? "text-emphasis" : "opacity-50 [&_svg]:invisible",
+                          )}
+                        >
                           <Check className={classNames("h-4 w-4")} />
                         </div>
                       </CommandItem>
@@ -110,12 +112,15 @@ export function TeamListBulkAction({ table }: Props) {
               className="ml-auto mr-1.5 rounded-md"
               size="sm"
               onClick={async () => {
-                const selectedRows = table.getSelectedRowModel().flatRows.map((row) => row.original);
+                const selectedRows = table
+                  .getSelectedRowModel()
+                  .flatRows.map((row) => row.original);
                 mutation.mutateAsync({
                   userIds: selectedRows.map((row) => row.id),
                   teamIds: Array.from(selectedValues),
                 });
-              }}>
+              }}
+            >
               {t("apply")}
             </Button>
           </div>

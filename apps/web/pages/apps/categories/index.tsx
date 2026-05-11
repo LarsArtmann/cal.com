@@ -21,7 +21,8 @@ export default function Apps({ categories }: inferSSRProps<typeof getServerSideP
       <div className="text-md flex items-center gap-1 px-4 pb-3 pt-3 font-normal md:px-8 lg:px-0 lg:pt-0">
         <Link
           href="/apps"
-          className="text-emphasis inline-flex items-center justify-start gap-1 rounded-sm py-2">
+          className="text-emphasis inline-flex items-center justify-start gap-1 rounded-sm py-2"
+        >
           <ArrowLeft className="h-4 w-4" />
           {isLocaleReady ? t("app_store") : <SkeletonText className="h-6 w-24" />}{" "}
         </Link>
@@ -33,7 +34,8 @@ export default function Apps({ categories }: inferSSRProps<typeof getServerSideP
               key={category.name}
               href={"/apps/categories/" + category.name}
               data-testid={`app-store-category-${category.name}`}
-              className="bg-subtle relative flex rounded-sm px-6 py-4 sm:block">
+              className="bg-subtle relative flex rounded-sm px-6 py-4 sm:block"
+            >
               <div className="self-center">
                 <h3 className="font-medium capitalize">{category.name}</h3>
                 <p className="text-subtle text-sm">
@@ -65,12 +67,15 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     appStore = await getAppRegistry();
   }
 
-  const categories = appStore.reduce((c, app) => {
-    for (const category of app.categories) {
-      c[category] = c[category] ? c[category] + 1 : 1;
-    }
-    return c;
-  }, {} as Record<string, number>);
+  const categories = appStore.reduce(
+    (c, app) => {
+      for (const category of app.categories) {
+        c[category] = c[category] ? c[category] + 1 : 1;
+      }
+      return c;
+    },
+    {} as Record<string, number>,
+  );
 
   return {
     props: {

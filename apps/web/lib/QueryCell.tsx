@@ -10,7 +10,11 @@ import type { ReactNode } from "react";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import type { TRPCClientErrorLike } from "@calcom/trpc/client";
 import type { DecorateProcedure } from "@calcom/trpc/react/shared";
-import type { AnyQueryProcedure, inferProcedureInput, inferProcedureOutput } from "@calcom/trpc/server";
+import type {
+  AnyQueryProcedure,
+  inferProcedureInput,
+  inferProcedureOutput,
+} from "@calcom/trpc/server";
 import type { AppRouter } from "@calcom/trpc/server/routers/_app";
 import { Alert, Loader } from "@calcom/ui";
 
@@ -25,18 +29,24 @@ interface QueryCellOptionsBase<TData, TError extends ErrorLike> {
   query: UseQueryResult<TData, TError>;
   customLoader?: ReactNode;
   error?: (
-    query: QueryObserverLoadingErrorResult<TData, TError> | QueryObserverRefetchErrorResult<TData, TError>
+    query:
+      | QueryObserverLoadingErrorResult<TData, TError>
+      | QueryObserverRefetchErrorResult<TData, TError>,
   ) => JSXElementOrNull;
   loading?: (query: QueryObserverLoadingResult<TData, TError> | null) => JSXElementOrNull;
 }
 
-interface QueryCellOptionsNoEmpty<TData, TError extends ErrorLike>
-  extends QueryCellOptionsBase<TData, TError> {
+interface QueryCellOptionsNoEmpty<TData, TError extends ErrorLike> extends QueryCellOptionsBase<
+  TData,
+  TError
+> {
   success: (query: QueryObserverSuccessResult<TData, TError>) => JSXElementOrNull;
 }
 
-interface QueryCellOptionsWithEmpty<TData, TError extends ErrorLike>
-  extends QueryCellOptionsBase<TData, TError> {
+interface QueryCellOptionsWithEmpty<TData, TError extends ErrorLike> extends QueryCellOptionsBase<
+  TData,
+  TError
+> {
   success: (query: QueryObserverSuccessResult<NonNullable<TData>, TError>) => JSXElementOrNull;
   /**
    * If there's no data (`null`, `undefined`, or `[]`), render this component
@@ -45,14 +55,14 @@ interface QueryCellOptionsWithEmpty<TData, TError extends ErrorLike>
 }
 
 export function QueryCell<TData, TError extends ErrorLike>(
-  opts: QueryCellOptionsWithEmpty<TData, TError>
+  opts: QueryCellOptionsWithEmpty<TData, TError>,
 ): JSXElementOrNull;
 export function QueryCell<TData, TError extends ErrorLike>(
-  opts: QueryCellOptionsNoEmpty<TData, TError>
+  opts: QueryCellOptionsNoEmpty<TData, TError>,
 ): JSXElementOrNull;
 /** @deprecated Use `trpc.useQuery` instead. */
 export function QueryCell<TData, TError extends ErrorLike>(
-  opts: QueryCellOptionsNoEmpty<TData, TError> | QueryCellOptionsWithEmpty<TData, TError>
+  opts: QueryCellOptionsNoEmpty<TData, TError> | QueryCellOptionsWithEmpty<TData, TError>,
 ) {
   const { query } = opts;
   const { isLocaleReady } = useLocale();
@@ -63,7 +73,10 @@ export function QueryCell<TData, TError extends ErrorLike>(
   }
 
   if (query.status === "success") {
-    if ("empty" in opts && (query.data == null || (Array.isArray(query.data) && query.data.length === 0))) {
+    if (
+      "empty" in opts &&
+      (query.data == null || (Array.isArray(query.data) && query.data.length === 0))
+    ) {
       return opts.empty(query);
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -87,18 +100,23 @@ type TError = TRPCClientErrorLike<AppRouter>;
 const withQuery = <
   TQuery extends AnyQueryProcedure,
   TInput = inferProcedureInput<TQuery>,
-  TOutput = inferProcedureOutput<TQuery>
+  TOutput = inferProcedureOutput<TQuery>,
 >(
-  queryProcedure: DecorateProcedure<TQuery, inferProcedureInput<TQuery>, inferProcedureOutput<TQuery>>,
+  queryProcedure: DecorateProcedure<
+    TQuery,
+    inferProcedureInput<TQuery>,
+    inferProcedureOutput<TQuery>
+  >,
 
   input?: TInput,
-  params?: UseTRPCQueryOptions<TQuery, TInput, TOutput, TOutput, TError>
+  params?: UseTRPCQueryOptions<TQuery, TInput, TOutput, TOutput, TError>,
 ) => {
   return function WithQuery(
     opts: Omit<
-      Partial<QueryCellOptionsWithEmpty<TOutput, TError>> & QueryCellOptionsNoEmpty<TOutput, TError>,
+      Partial<QueryCellOptionsWithEmpty<TOutput, TError>> &
+        QueryCellOptionsNoEmpty<TOutput, TError>,
       "query"
-    >
+    >,
   ) {
     const query = queryProcedure.useQuery(input, params);
     return <QueryCell query={query} {...opts} />;

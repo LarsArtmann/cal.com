@@ -13,7 +13,7 @@ export type VitalSettingsResponse = {
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ): Promise<VitalSettingsResponse | NextApiResponse | void> => {
   if (req.method === "PUT" && req.session && req.session.user.id) {
     const userId = req.session.user.id;
@@ -30,7 +30,8 @@ const handler = async (
       });
       const userMetadata = userWithMetadata?.metadata as Prisma.JsonObject;
       const vitalSettings =
-        ((userWithMetadata?.metadata as Prisma.JsonObject)?.vitalSettings as Prisma.JsonObject) || {};
+        ((userWithMetadata?.metadata as Prisma.JsonObject)?.vitalSettings as Prisma.JsonObject) ||
+        {};
       await prisma.user.update({
         where: {
           id: userId,
@@ -63,8 +64,8 @@ const handler = async (
 function validate(
   handler: (
     req: NextApiRequest,
-    res: NextApiResponse
-  ) => Promise<VitalSettingsResponse | NextApiResponse | void>
+    res: NextApiResponse,
+  ) => Promise<VitalSettingsResponse | NextApiResponse | void>,
 ) {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST" || req.method === "PUT") {

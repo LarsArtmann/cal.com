@@ -29,7 +29,13 @@ export const getBookingResponsesPartialSchema = ({
 // Should be used when we know that not all fields responses are present
 // - Can happen when we are parsing the prefill query string
 // - Can happen when we are parsing a booking's responses (which was created before we added a new required field)
-export default function getBookingResponsesSchema({ eventType, view }: { eventType: EventType; view: View }) {
+export default function getBookingResponsesSchema({
+  eventType,
+  view,
+}: {
+  eventType: EventType;
+  view: View;
+}) {
   const schema = bookingResponses.and(z.record(z.any()));
   return preprocess({ schema, eventType, isPartialSchema: false, view });
 }
@@ -66,7 +72,11 @@ function preprocess<T extends z.ZodType>({
         }
         const views = field.views;
         const isFieldApplicableToCurrentView =
-          currentView === "ALL_VIEWS" ? true : views ? views.find((view) => view.id === currentView) : true;
+          currentView === "ALL_VIEWS"
+            ? true
+            : views
+              ? views.find((view) => view.id === currentView)
+              : true;
         if (!isFieldApplicableToCurrentView) {
           // If the field is not applicable in the current view, then we don't need to do any processing
           return;
@@ -86,7 +96,11 @@ function preprocess<T extends z.ZodType>({
           newResponses[field.name] = value === "true" || value === true;
         }
         // Make sure that the value is an array
-        else if (field.type === "multiemail" || field.type === "checkbox" || field.type === "multiselect") {
+        else if (
+          field.type === "multiemail" ||
+          field.type === "checkbox" ||
+          field.type === "multiselect"
+        ) {
           newResponses[field.name] = value instanceof Array ? value : [value];
         }
         // Parse JSON
@@ -124,14 +138,22 @@ function preprocess<T extends z.ZodType>({
         const m = (message: string) => `{${bookingField.name}}${message}`;
         const views = bookingField.views;
         const isFieldApplicableToCurrentView =
-          currentView === "ALL_VIEWS" ? true : views ? views.find((view) => view.id === currentView) : true;
+          currentView === "ALL_VIEWS"
+            ? true
+            : views
+              ? views.find((view) => view.id === currentView)
+              : true;
         let hidden = bookingField.hidden;
         const numOptions = bookingField.options?.length ?? 0;
         if (bookingField.hideWhenJustOneOption) {
           hidden = hidden || numOptions <= 1;
         }
         // If the field is hidden, then it can never be required
-        const isRequired = hidden ? false : isFieldApplicableToCurrentView ? bookingField.required : false;
+        const isRequired = hidden
+          ? false
+          : isFieldApplicableToCurrentView
+            ? bookingField.required
+            : false;
 
         if ((isPartialSchema || !isRequired) && value === undefined) {
           continue;
@@ -151,7 +173,8 @@ function preprocess<T extends z.ZodType>({
           continue;
         }
 
-        const fieldTypeSchema = fieldTypesSchemaMap[bookingField.type as keyof typeof fieldTypesSchemaMap];
+        const fieldTypeSchema =
+          fieldTypesSchemaMap[bookingField.type as keyof typeof fieldTypesSchemaMap];
 
         if (fieldTypeSchema) {
           fieldTypeSchema.superRefine({
@@ -240,7 +263,9 @@ function preprocess<T extends z.ZodType>({
 
         // Use fieldTypeConfig.propsType to validate for propsType=="text" or propsType=="select" as in those cases, the response would be a string.
         // If say we want to do special validation for 'address' that can be added to `fieldTypesSchemaMap`
-        if (["address", "text", "select", "number", "radio", "textarea"].includes(bookingField.type)) {
+        if (
+          ["address", "text", "select", "number", "radio", "textarea"].includes(bookingField.type)
+        ) {
           const schema = stringSchema;
           if (!schema.safeParse(value).success) {
             ctx.addIssue({ code: z.ZodIssueCode.custom, message: m("Invalid string") });
@@ -250,7 +275,7 @@ function preprocess<T extends z.ZodType>({
 
         throw new Error(`Can't parse unknown booking field type: ${bookingField.type}`);
       }
-    })
+    }),
   );
   if (isPartialSchema) {
     // Query Params can be completely invalid, try to preprocess as much of it in correct format but in worst case simply don't prefill instead of crashing

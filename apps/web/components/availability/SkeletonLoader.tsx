@@ -44,8 +44,9 @@ export const SelectSkeletonLoader = ({ className }: { className?: string }) => {
     <li
       className={classNames(
         "border-subtle group flex w-full items-center justify-between rounded-sm border px-[10px] py-3",
-        className
-      )}>
+        className,
+      )}
+    >
       <div className="flex-grow truncate text-sm">
         <div className="flex justify-between">
           <SkeletonText className="h-4 w-32" />

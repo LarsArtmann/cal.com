@@ -66,7 +66,10 @@ const ScheduleDay = <TFieldValues extends FieldValues>({
                 defaultChecked={watchDayRange && watchDayRange.length > 0}
                 checked={watchDayRange && !!watchDayRange.length}
                 onCheckedChange={(isChecked) => {
-                  setValue(name, (isChecked ? [DEFAULT_DAY_RANGE] : []) as TFieldValues[typeof name]);
+                  setValue(
+                    name,
+                    (isChecked ? [DEFAULT_DAY_RANGE] : []) as TFieldValues[typeof name],
+                  );
                 }}
               />
             </div>
@@ -105,7 +108,7 @@ const CopyButton = ({
         <Button
           className={classNames(
             "text-default",
-            open && "ring-brand-500 !bg-subtle outline-none ring-2 ring-offset-1"
+            open && "ring-brand-500 !bg-subtle outline-none ring-2 ring-offset-1",
           )}
           type="button"
           tooltip={t("copy_times_to_tooltip")}
@@ -119,7 +122,9 @@ const CopyButton = ({
           weekStart={weekStart}
           disabled={parseInt(getValuesFromDayRange.replace(fieldArrayName + ".", ""), 10)}
           onClick={(selected) => {
-            selected.forEach((day) => setValue(`${fieldArrayName}.${day}`, getValues(getValuesFromDayRange)));
+            selected.forEach((day) =>
+              setValue(`${fieldArrayName}.${day}`, getValues(getValuesFromDayRange)),
+            );
             setOpen(false);
           }}
           onCancel={() => setOpen(false)}
@@ -131,7 +136,7 @@ const CopyButton = ({
 
 const Schedule = <
   TFieldValues extends FieldValues,
-  TPath extends FieldPathByValue<TFieldValues, TimeRange[][]>
+  TPath extends FieldPathByValue<TFieldValues, TimeRange[][]>,
 >({
   name,
   control,
@@ -188,7 +193,10 @@ export const DayRanges = <TFieldValues extends FieldValues>({
       {fields.map((field, index: number) => (
         <Fragment key={field.id}>
           <div className="mb-2 flex last:mb-0">
-            <Controller name={`${name}.${index}`} render={({ field }) => <TimeRangeField {...field} />} />
+            <Controller
+              name={`${name}.${index}`}
+              render={({ field }) => <TimeRangeField {...field} />}
+            />
             {index === 0 && (
               <Button
                 disabled={disabled}
@@ -202,7 +210,7 @@ export const DayRanges = <TFieldValues extends FieldValues>({
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   const slotRange: any = getDateSlotRange(
                     getValues(`${name}.${fields.length - 1}`),
-                    getValues(`${name}.0`)
+                    getValues(`${name}.0`),
                   );
 
                   if (slotRange?.append) {
@@ -216,7 +224,11 @@ export const DayRanges = <TFieldValues extends FieldValues>({
               />
             )}
             {index !== 0 && (
-              <RemoveTimeButton index={index} remove={remove} className="text-default mx-2 border-none" />
+              <RemoveTimeButton
+                index={index}
+                remove={remove}
+                className="text-default mx-2 border-none"
+              />
             )}
           </div>
         </Fragment>
@@ -360,19 +372,29 @@ const useOptions = () => {
   }, [timeFormat]);
 
   const filter = useCallback(
-    ({ offset, limit, current }: { offset?: ConfigType; limit?: ConfigType; current?: ConfigType }) => {
+    ({
+      offset,
+      limit,
+      current,
+    }: {
+      offset?: ConfigType;
+      limit?: ConfigType;
+      current?: ConfigType;
+    }) => {
       if (current) {
-        const currentOption = options.find((option) => option.value === dayjs(current).toDate().valueOf());
+        const currentOption = options.find(
+          (option) => option.value === dayjs(current).toDate().valueOf(),
+        );
         if (currentOption) setFilteredOptions([currentOption]);
       } else
         setFilteredOptions(
           options.filter((option) => {
             const time = dayjs(option.value);
             return (!limit || time.isBefore(limit)) && (!offset || time.isAfter(offset));
-          })
+          }),
         );
     },
-    [options]
+    [options],
   );
 
   return { options: filteredOptions, filter };
@@ -403,7 +425,9 @@ const getDateSlotRange = (endField?: FieldArrayWithId, startField?: FieldArrayWi
   if (!timezoneStartRange.isSame(startOfDay)) {
     return {
       prepend: {
-        start: previousRangeStart.isBefore(startOfDay) ? startOfDay.toDate() : previousRangeStart.toDate(),
+        start: previousRangeStart.isBefore(startOfDay)
+          ? startOfDay.toDate()
+          : previousRangeStart.toDate(),
         end: timezoneStartRange.toDate(),
       },
     };
@@ -433,7 +457,10 @@ const CopyTimes = ({
   const handleKeyDown = (event: KeyboardEvent) => {
     const itteratables = itteratablesByKeyRef.current;
     const isActionRequired =
-      event.key === "Tab" || event.key === "ArrowUp" || event.key === "ArrowDown" || event.key === "Enter";
+      event.key === "Tab" ||
+      event.key === "ArrowUp" ||
+      event.key === "ArrowDown" ||
+      event.key === "Enter";
     if (!isActionRequired || !itteratables.length) return;
     event.preventDefault();
     const currentFocused = document.activeElement as HTMLInputElement | HTMLButtonElement;
@@ -459,7 +486,9 @@ const CopyTimes = ({
   return (
     <div className="space-y-2 py-2">
       <div className="p-2">
-        <p className="h6 text-emphasis pb-3 pl-1 text-xs font-medium uppercase">{t("copy_times_to")}</p>
+        <p className="h6 text-emphasis pb-3 pl-1 text-xs font-medium uppercase">
+          {t("copy_times_to")}
+        </p>
         <ol className="space-y-2">
           <li key="select all">
             <label className="text-default flex w-full items-center justify-between">
@@ -523,7 +552,8 @@ const CopyTimes = ({
             if (ref) {
               itteratablesByKeyRef.current.push(ref as HTMLButtonElement);
             }
-          }}>
+          }}
+        >
           {t("cancel")}
         </Button>
         <Button
@@ -533,7 +563,8 @@ const CopyTimes = ({
             if (ref) {
               itteratablesByKeyRef.current.push(ref as HTMLButtonElement);
             }
-          }}>
+          }}
+        >
           {t("apply")}
         </Button>
       </div>

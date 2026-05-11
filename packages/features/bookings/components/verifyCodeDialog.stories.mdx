@@ -36,16 +36,26 @@ This component contains an input form to capture a 6-digit verification code, er
       },
     }}
     argTypes={{
-      isOpenDialog: { control: "boolean", description: "Indicates whether the dialog is open or not." },
-      setIsOpenDialog: { action: "setIsOpenDialog", description: "Function to set the dialog state." },
+      isOpenDialog: {
+        control: "boolean",
+        description: "Indicates whether the dialog is open or not.",
+      },
+      setIsOpenDialog: {
+        action: "setIsOpenDialog",
+        description: "Function to set the dialog state.",
+      },
       email: { control: "text", description: "Email to which the verification code was sent." },
-      onSuccess: { action: "onSuccess", description: "Callback function when verification succeeds." },
+      onSuccess: {
+        action: "onSuccess",
+        description: "Callback function when verification succeeds.",
+      },
       onError: { action: "onError", description: "Callback function when verification fails." },
       isUserSessionRequiredToVerify: {
         control: "boolean",
         description: "Indicates if user session is required for verification.",
       },
-    }}>
+    }}
+  >
     {(args) => (
       <StorybookTrpcProvider>
         <VerifyCodeDialog {...args} />

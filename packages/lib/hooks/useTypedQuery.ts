@@ -58,7 +58,7 @@ export function useTypedQuery<T extends z.AnyZodObject>(schema: T) {
       router.replace(`${pathname}?${search.toString()}`);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [parsedQuery, router]
+    [parsedQuery, router],
   );
 
   // Delete a key from the query
@@ -82,7 +82,10 @@ export function useTypedQuery<T extends z.AnyZodObject>(schema: T) {
   }
 
   // Remove item by key and value
-  function removeItemByKeyAndValue<J extends ArrayOutputKeys>(key: J, value: ArrayOutput[J][number]) {
+  function removeItemByKeyAndValue<J extends ArrayOutputKeys>(
+    key: J,
+    value: ArrayOutput[J][number],
+  ) {
     const existingValue = parsedQuery[key];
     if (Array.isArray(existingValue) && existingValue.length > 1) {
       // @ts-expect-error this is too much for TS it seems

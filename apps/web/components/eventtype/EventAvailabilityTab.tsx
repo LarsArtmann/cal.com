@@ -88,10 +88,13 @@ const EventTypeScheduleDetails = memo(
     const { isLoading, data: schedule } = trpc.viewer.availability.schedule.get.useQuery(
       {
         scheduleId:
-          scheduleId || loggedInUser?.defaultScheduleId || selectedScheduleValue?.value || undefined,
+          scheduleId ||
+          loggedInUser?.defaultScheduleId ||
+          selectedScheduleValue?.value ||
+          undefined,
         isManagedEventType,
       },
-      { enabled: !!scheduleId || !!loggedInUser?.defaultScheduleId || !!selectedScheduleValue }
+      { enabled: !!scheduleId || !!loggedInUser?.defaultScheduleId || !!selectedScheduleValue },
     );
 
     const filterDays = (dayNum: number) =>
@@ -107,8 +110,9 @@ const EventTypeScheduleDetails = memo(
                 <span
                   className={classNames(
                     "w-20 font-medium sm:w-32 ",
-                    !isAvailable ? "text-subtle line-through" : "text-default"
-                  )}>
+                    !isAvailable ? "text-subtle line-through" : "text-default",
+                  )}
+                >
                   {day}
                 </span>
                 {isLoading ? (
@@ -121,7 +125,9 @@ const EventTypeScheduleDetails = memo(
                           {format(dayRange.startTime, timeFormat === 12)}
                         </span>
                         <span className="ms-4">-</span>
-                        <div className="ml-6 sm:w-28">{format(dayRange.endTime, timeFormat === 12)}</div>
+                        <div className="ml-6 sm:w-28">
+                          {format(dayRange.endTime, timeFormat === 12)}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -145,25 +151,27 @@ const EventTypeScheduleDetails = memo(
               color="minimal"
               EndIcon={ExternalLink}
               target="_blank"
-              rel="noopener noreferrer">
+              rel="noopener noreferrer"
+            >
               {t("edit_availability")}
             </Button>
           )}
         </div>
       </div>
     );
-  }
+  },
 );
 
 EventTypeScheduleDetails.displayName = "EventTypeScheduleDetails";
 
 const EventTypeSchedule = ({ eventType }: { eventType: EventTypeSetup }) => {
   const { t } = useLocale();
-  const { shouldLockIndicator, isManagedEventType, isChildrenManagedEventType } = useLockedFieldsManager(
-    eventType,
-    t("locked_fields_admin_description"),
-    t("locked_fields_member_description")
-  );
+  const { shouldLockIndicator, isManagedEventType, isChildrenManagedEventType } =
+    useLockedFieldsManager(
+      eventType,
+      t("locked_fields_admin_description"),
+      t("locked_fields_member_description"),
+    );
   const { watch } = useFormContext<FormValues>();
   const watchSchedule = watch("schedule");
   const formMethods = useFormContext<FormValues>();
@@ -203,7 +211,10 @@ const EventTypeSchedule = ({ eventType }: { eventType: EventTypeSetup }) => {
         });
       }
       // We push the selected schedule from the event type if it's not part of the list response. This happens if the user is an admin but not the schedule owner.
-      else if (eventType.schedule && !schedules.find((schedule) => schedule.id === eventType.schedule)) {
+      else if (
+        eventType.schedule &&
+        !schedules.find((schedule) => schedule.id === eventType.schedule)
+      ) {
         options.push({
           value: eventType.schedule,
           label: eventType.scheduleName ?? t("default_schedule_name"),
@@ -219,8 +230,8 @@ const EventTypeSchedule = ({ eventType }: { eventType: EventTypeSetup }) => {
         scheduleId
           ? option.value === scheduleId
           : isManagedEventType
-          ? option.value === 0
-          : option.value === schedules.find((schedule) => schedule.isDefault)?.id
+            ? option.value === 0
+            : option.value === schedules.find((schedule) => schedule.isDefault)?.id,
       );
 
       formMethods.setValue("availability", value);
@@ -232,7 +243,10 @@ const EventTypeSchedule = ({ eventType }: { eventType: EventTypeSetup }) => {
   return (
     <div className="space-y-4">
       <div>
-        <label htmlFor="availability" className="text-default mb-2 block text-sm font-medium leading-none">
+        <label
+          htmlFor="availability"
+          className="text-default mb-2 block text-sm font-medium leading-none"
+        >
           {t("availability")}
           {shouldLockIndicator("availability")}
         </label>
@@ -267,7 +281,9 @@ const EventTypeSchedule = ({ eventType }: { eventType: EventTypeSetup }) => {
         />
       ) : (
         isManagedEventType && (
-          <p className="!mt-2 ml-1 text-sm text-gray-600">{t("members_default_schedule_description")}</p>
+          <p className="!mt-2 ml-1 text-sm text-gray-600">
+            {t("members_default_schedule_description")}
+          </p>
         )
       )}
     </div>
@@ -292,7 +308,8 @@ const UseCommonScheduleSettingsToggle = ({ eventType }: { eventType: EventTypeSe
             }
           }}
           title={t("choose_common_schedule_team_event")}
-          description={t("choose_common_schedule_team_event_description")}>
+          description={t("choose_common_schedule_team_event_description")}
+        >
           <EventTypeSchedule eventType={eventType} />
         </SettingsToggle>
       )}

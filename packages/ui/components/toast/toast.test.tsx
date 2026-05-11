@@ -9,7 +9,9 @@ describe("Tests for Toast Components", () => {
     const toastId = "some-id";
 
     const onCloseMock = vi.fn();
-    render(<Component message={message} toastVisible={true} onClose={onCloseMock} toastId={toastId} />);
+    render(
+      <Component message={message} toastVisible={true} onClose={onCloseMock} toastId={toastId} />,
+    );
 
     const toast = screen.getByTestId(toastTestId);
     expect(toast).toBeInTheDocument();
@@ -27,7 +29,10 @@ describe("Tests for Toast Components", () => {
     ["DefaultToast", DefaultToast, "toast-default"],
   ];
 
-  test.each(toastComponents)("Should render and close %s component", (_, ToastComponent, expectedClass) => {
-    testToastComponent(ToastComponent, expectedClass);
-  });
+  test.each(toastComponents)(
+    "Should render and close %s component",
+    (_, ToastComponent, expectedClass) => {
+      testToastComponent(ToastComponent, expectedClass);
+    },
+  );
 });

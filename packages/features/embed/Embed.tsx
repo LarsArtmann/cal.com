@@ -87,7 +87,10 @@ const getQueryParam = (queryParam: string) => {
   return params.get(queryParam);
 };
 
-const ThemeSelectControl = ({ children, ...props }: ControlProps<{ value: Theme; label: string }, false>) => {
+const ThemeSelectControl = ({
+  children,
+  ...props
+}: ControlProps<{ value: Theme; label: string }, false>) => {
   return (
     <components.Control {...props}>
       <Sun className="text-subtle mr-2 h-4 w-4" />
@@ -102,11 +105,16 @@ const ChooseEmbedTypesDialogContent = ({ types }: { types: EmbedTypes }) => {
   return (
     <DialogContent className="rounded-lg p-10" type="creation" size="lg">
       <div className="mb-2">
-        <h3 className="font-cal text-emphasis mb-2 text-2xl font-bold leading-none" id="modal-title">
+        <h3
+          className="font-cal text-emphasis mb-2 text-2xl font-bold leading-none"
+          id="modal-title"
+        >
           {t("how_you_want_add_cal_site", { appName: APP_NAME })}
         </h3>
         <div>
-          <p className="text-subtle text-sm">{t("choose_ways_put_cal_site", { appName: APP_NAME })}</p>
+          <p className="text-subtle text-sm">
+            {t("choose_ways_put_cal_site", { appName: APP_NAME })}
+          </p>
         </div>
       </div>
       <div className="items-start space-y-2 md:flex md:space-y-0">
@@ -119,7 +127,8 @@ const ChooseEmbedTypesDialogContent = ({ types }: { types: EmbedTypes }) => {
               goto({
                 embedType: embed.type,
               });
-            }}>
+            }}
+          >
             <div className="bg-default order-none box-border flex-none rounded-md border border-solid dark:bg-transparent dark:invert">
               {embed.illustration}
             </div>
@@ -146,7 +155,7 @@ const EmailEmbed = ({ eventType, username }: { eventType?: EventType; username: 
 
   const [month, selectedDate, selectedDatesAndTimes] = useBookerStore(
     (state) => [state.month, state.selectedDate, state.selectedDatesAndTimes],
-    shallow
+    shallow,
   );
   const [setSelectedDate, setMonth, setSelectedDatesAndTimes, setSelectedTimeslot] = useBookerStore(
     (state) => [
@@ -155,7 +164,7 @@ const EmailEmbed = ({ eventType, username }: { eventType?: EventType; username: 
       state.setSelectedDatesAndTimes,
       state.setSelectedTimeslot,
     ],
-    shallow
+    shallow,
   );
   const event = useEvent();
   const schedule = useScheduleForEvent();
@@ -325,7 +334,8 @@ const EmailEmbedPreview = ({
             overflowY: "auto",
             backgroundColor: "white",
           }}
-          ref={emailContentRef}>
+          ref={emailContentRef}
+        >
           <div
             style={{
               fontStyle: "normal",
@@ -334,7 +344,8 @@ const EmailEmbedPreview = ({
               lineHeight: "19px",
               marginTop: "15px",
               marginBottom: "15px",
-            }}>
+            }}
+          >
             <b style={{ color: "black" }}> {eventType.title}</b>
           </div>
           <div
@@ -344,7 +355,8 @@ const EmailEmbedPreview = ({
               fontSize: "14px",
               lineHeight: "17px",
               color: "#333333",
-            }}>
+            }}
+          >
             {t("duration")}: <b style={{ color: "black" }}>{eventType.length} mins</b>
           </div>
           <div>
@@ -356,7 +368,8 @@ const EmailEmbedPreview = ({
                   fontSize: "14px",
                   lineHeight: "17px",
                   color: "#333333",
-                }}>
+                }}
+              >
                 {t("timezone")}: <b style={{ color: "black" }}>{timezone}</b>
               </span>
             </b>
@@ -376,7 +389,8 @@ const EmailEmbedPreview = ({
                           textAlign: "left",
                           borderCollapse: "collapse",
                           borderSpacing: "0px",
-                        }}>
+                        }}
+                      >
                         <tbody>
                           <tr>
                             <td style={{ textAlign: "left", marginTop: "16px" }}>
@@ -387,7 +401,8 @@ const EmailEmbedPreview = ({
                                   paddingBottom: "8px",
                                   color: "rgb(26, 26, 26)",
                                   fontWeight: "bold",
-                                }}>
+                                }}
+                              >
                                 {date.toLocaleDateString("en-US", {
                                   weekday: "long",
                                   month: "long",
@@ -400,7 +415,9 @@ const EmailEmbedPreview = ({
                           </tr>
                           <tr>
                             <td>
-                              <table style={{ borderCollapse: "separate", borderSpacing: "0px 4px" }}>
+                              <table
+                                style={{ borderCollapse: "separate", borderSpacing: "0px 4px" }}
+                              >
                                 <tbody>
                                   <tr style={{ height: "25px" }}>
                                     {selectedDateAndTime[key]?.length > 0 &&
@@ -418,7 +435,8 @@ const EmailEmbedPreview = ({
                                               height: "24px",
                                               border: "1px solid #111827",
                                               borderRadius: "3px",
-                                            }}>
+                                            }}
+                                          >
                                             <table style={{ height: "21px" }}>
                                               <tbody>
                                                 <tr style={{ height: "21px" }}>
@@ -428,7 +446,8 @@ const EmailEmbedPreview = ({
                                                       width: "50px",
                                                       textAlign: "center",
                                                       marginRight: "1px",
-                                                    }}>
+                                                    }}
+                                                  >
                                                     <a
                                                       href={bookingURL}
                                                       className="spot"
@@ -439,13 +458,18 @@ const EmailEmbedPreview = ({
                                                         color: "#111827",
                                                         fontSize: "12px",
                                                         lineHeight: "16px",
-                                                      }}>
+                                                      }}
+                                                    >
                                                       <b
                                                         style={{
                                                           fontWeight: "normal",
                                                           textDecoration: "none",
-                                                        }}>
-                                                        {dayjs.utc(time).tz(timezone).format(timeFormat)}
+                                                        }}
+                                                      >
+                                                        {dayjs
+                                                          .utc(time)
+                                                          .tz(timezone)
+                                                          .format(timeFormat)}
                                                         &nbsp;
                                                       </b>
                                                     </a>
@@ -473,7 +497,8 @@ const EmailEmbedPreview = ({
                     textDecoration: "none",
                     cursor: "pointer",
                     color: "black",
-                  }}>
+                  }}
+                >
                   {t("see_all_available_times")}
                 </a>
               </div>
@@ -485,7 +510,8 @@ const EmailEmbedPreview = ({
               borderTop: "1px solid #CCCCCC",
               marginTop: "8px",
               paddingTop: "8px",
-            }}>
+            }}
+          >
             <span>{t("powered_by")}</span>{" "}
             <b style={{ color: "black" }}>
               <span> Cal.com</span>
@@ -523,13 +549,13 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
   const { data } = useSession();
   const [month, selectedDatesAndTimes] = useBookerStore(
     (state) => [state.month, state.selectedDatesAndTimes],
-    shallow
+    shallow,
   );
   const eventId = getQueryParam("eventId");
   const calLink = decodeURIComponent(embedUrl);
   const { data: eventTypeData } = trpc.viewer.eventTypes.get.useQuery(
     { id: parseInt(eventId as string) },
-    { enabled: !!eventId && embedType === "email", refetchOnWindowFocus: false }
+    { enabled: !!eventId && embedType === "email", refetchOnWindowFocus: false },
   );
 
   const s = (href: string) => {
@@ -601,7 +627,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
         type: "instruction",
         instruction,
       },
-      "*"
+      "*",
     );
   };
 
@@ -615,7 +641,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
           height: getDimension(height),
         },
       },
-      "*"
+      "*",
     );
   };
 
@@ -697,30 +723,39 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
       enableOverflow
       ref={dialogContentRef}
       className="rounded-lg p-0.5 sm:max-w-[80rem]"
-      type="creation">
+      type="creation"
+    >
       <div className="flex">
         <div className="bg-muted flex h-[90vh] w-1/3 flex-col overflow-y-auto p-8">
           <h3
             className="text-emphasis mb-2.5 flex items-center text-xl font-semibold leading-5"
-            id="modal-title">
+            id="modal-title"
+          >
             <button
               className="h-6 w-6"
               onClick={() => {
                 removeQueryParams(["embedType", "embedTabName"]);
-              }}>
+              }}
+            >
               <ArrowLeft className="mr-4 w-4" />
             </button>
             {embed.title}
           </h3>
           <h4 className="text-subtle mb-6 text-sm font-normal">{embed.subtitle}</h4>
           {eventTypeData?.eventType && embedType === "email" ? (
-            <EmailEmbed eventType={eventTypeData?.eventType} username={data?.user.username as string} />
+            <EmailEmbed
+              eventType={eventTypeData?.eventType}
+              username={data?.user.username as string}
+            />
           ) : (
             <div className="flex flex-col">
-              <div className={classNames("font-medium", embedType === "element-click" ? "hidden" : "")}>
+              <div
+                className={classNames("font-medium", embedType === "element-click" ? "hidden" : "")}
+              >
                 <Collapsible
                   open={isEmbedCustomizationOpen}
-                  onOpenChange={() => setIsEmbedCustomizationOpen((val) => !val)}>
+                  onOpenChange={() => setIsEmbedCustomizationOpen((val) => !val)}
+                >
                   <CollapsibleContent className="text-sm">
                     <div className={classNames(embedType === "inline" ? "block" : "hidden")}>
                       {/*TODO: Add Auto/Fixed toggle from Figma */}
@@ -774,8 +809,9 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                     <div
                       className={classNames(
                         "items-center justify-between",
-                        embedType === "floating-popup" ? "text-emphasis" : "hidden"
-                      )}>
+                        embedType === "floating-popup" ? "text-emphasis" : "hidden",
+                      )}
+                    >
                       <div className="mb-2 text-sm">Button text</div>
                       {/* Default Values should come from preview iframe */}
                       <TextField
@@ -800,8 +836,9 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                         "mt-4 flex items-center justify-start",
                         embedType === "floating-popup"
                           ? "text-emphasis space-x-2 rtl:space-x-reverse"
-                          : "hidden"
-                      )}>
+                          : "hidden",
+                      )}
+                    >
                       <Switch
                         defaultChecked={true}
                         onCheckedChange={(checked) => {
@@ -821,8 +858,9 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                     <div
                       className={classNames(
                         "mt-4 items-center justify-between",
-                        embedType === "floating-popup" ? "text-emphasis" : "hidden"
-                      )}>
+                        embedType === "floating-popup" ? "text-emphasis" : "hidden",
+                      )}
+                    >
                       <div className="mb-2">Position of button</div>
                       <Select
                         onChange={(position) => {
@@ -841,7 +879,12 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                       />
                     </div>
                     <div className="mt-3 flex flex-col xl:flex-row xl:justify-between">
-                      <div className={classNames("mt-4", embedType === "floating-popup" ? "" : "hidden")}>
+                      <div
+                        className={classNames(
+                          "mt-4",
+                          embedType === "floating-popup" ? "" : "hidden",
+                        )}
+                      >
                         <div className="whitespace-nowrap">Button color</div>
                         <div className="mt-2 w-40 xl:mt-0 xl:w-full">
                           <ColorPicker
@@ -863,7 +906,12 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                           />
                         </div>
                       </div>
-                      <div className={classNames("mt-4", embedType === "floating-popup" ? "" : "hidden")}>
+                      <div
+                        className={classNames(
+                          "mt-4",
+                          embedType === "floating-popup" ? "" : "hidden",
+                        )}
+                      >
                         <div className="whitespace-nowrap">Text color</div>
                         <div className="mb-6 mt-2 w-40 xl:mt-0 xl:w-full">
                           <ColorPicker
@@ -892,7 +940,8 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
               <div className="font-medium">
                 <Collapsible
                   open={isBookingCustomizationOpen}
-                  onOpenChange={() => setIsBookingCustomizationOpen((val) => !val)}>
+                  onOpenChange={() => setIsBookingCustomizationOpen((val) => !val)}
+                >
                   <CollapsibleContent>
                     <div className="text-sm">
                       <Label className="mb-6">
@@ -996,7 +1045,11 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
         <div className="flex w-2/3 flex-col px-8 pt-8">
           <HorizontalTabs
             data-testid="embed-tabs"
-            tabs={embedType === "email" ? parsedTabs.filter((tab) => tab.name === "Preview") : parsedTabs}
+            tabs={
+              embedType === "email"
+                ? parsedTabs.filter((tab) => tab.name === "Preview")
+                : parsedTabs
+            }
             linkShallow
           />
           {tabs.map((tab) => {
@@ -1007,8 +1060,9 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                   className={classNames(
                     searchParams?.get("embedTabName") === tab.href.split("=")[1]
                       ? "flex flex-grow flex-col"
-                      : "hidden"
-                  )}>
+                      : "hidden",
+                  )}
+                >
                   <div className="flex h-[55vh] flex-grow flex-col">
                     {tab.type === "code" ? (
                       <tab.Component
@@ -1028,7 +1082,9 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                   </div>
                   <div
                     className={
-                      searchParams?.get("embedTabName") === "embed-preview" ? "mt-2 block" : "hidden"
+                      searchParams?.get("embedTabName") === "embed-preview"
+                        ? "mt-2 block"
+                        : "hidden"
                     }
                   />
                   <DialogFooter className="mt-10 flex-row-reverse gap-x-2" showDivider>
@@ -1043,7 +1099,8 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                           }
                           navigator.clipboard.writeText(currentTabCodeEl.value);
                           showToast(t("code_copied"), "success");
-                        }}>
+                        }}
+                      >
                         {t("copy_code")}
                       </Button>
                     ) : null}
@@ -1052,7 +1109,8 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
               );
             }
 
-            if (embedType === "email" && (tab.name !== "Preview" || !eventTypeData?.eventType)) return;
+            if (embedType === "email" && (tab.name !== "Preview" || !eventTypeData?.eventType))
+              return;
 
             return (
               <div key={tab.href} className={classNames("flex flex-grow flex-col")}>
@@ -1070,14 +1128,17 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                   />
                 </div>
                 <div
-                  className={searchParams?.get("embedTabName") === "embed-preview" ? "mt-2 block" : "hidden"}
+                  className={
+                    searchParams?.get("embedTabName") === "embed-preview" ? "mt-2 block" : "hidden"
+                  }
                 />
                 <DialogFooter className="mt-10 flex-row-reverse gap-x-2" showDivider>
                   <DialogClose />
                   <Button
                     onClick={() => {
                       handleCopyEmailText();
-                    }}>
+                    }}
+                  >
                     {embedType === "email" ? t("copy") : t("copy_code")}
                   </Button>
                 </DialogFooter>
@@ -1154,7 +1215,8 @@ export const EmbedButton = <T extends React.ElementType>({
       type="button"
       onClick={() => {
         openEmbedModal();
-      }}>
+      }}
+    >
       {children}
     </Component>
   );

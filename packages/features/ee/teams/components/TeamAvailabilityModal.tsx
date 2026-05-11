@@ -20,7 +20,7 @@ export default function TeamAvailabilityModal(props: Props) {
   const utils = trpc.useContext();
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [selectedTimeZone, setSelectedTimeZone] = useState<ITimezone>(
-    localStorage.getItem("timeOption.preferredTimeZone") || dayjs.tz.guess()
+    localStorage.getItem("timeOption.preferredTimeZone") || dayjs.tz.guess(),
   );
 
   const { t } = useLocale();
@@ -49,7 +49,9 @@ export default function TeamAvailabilityModal(props: Props) {
               </div>
             </div>
             <div>
-              <div className="text-brand-900 mb-5 mt-4 text-2xl font-semibold">{t("availability")}</div>
+              <div className="text-brand-900 mb-5 mt-4 text-2xl font-semibold">
+                {t("availability")}
+              </div>
               <DatePicker
                 minDate={new Date()}
                 date={selectedDate.toDate() || dayjs().toDate()}

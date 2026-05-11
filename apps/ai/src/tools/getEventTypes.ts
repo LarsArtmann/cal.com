@@ -40,7 +40,7 @@ const getEventTypesTool = (apiKey: string) => {
       return JSON.stringify(
         await fetchEventTypes({
           apiKey,
-        })
+        }),
       );
     },
     name: "getEventTypes",

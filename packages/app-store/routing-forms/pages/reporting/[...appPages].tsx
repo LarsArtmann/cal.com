@@ -29,24 +29,38 @@ export { getServerSideProps };
 
 type QueryBuilderUpdatedConfig = typeof QueryBuilderInitialConfig & { fields: Config["fields"] };
 
-const Result = ({ formId, jsonLogicQuery }: { formId: string; jsonLogicQuery: JsonLogicQuery | null }) => {
+const Result = ({
+  formId,
+  jsonLogicQuery,
+}: {
+  formId: string;
+  jsonLogicQuery: JsonLogicQuery | null;
+}) => {
   const { t } = useLocale();
 
-  const { isLoading, status, data, isFetching, error, isFetchingNextPage, hasNextPage, fetchNextPage } =
-    trpc.viewer.appRoutingForms.report.useInfiniteQuery(
-      {
-        formId: formId,
-        // Send jsonLogicQuery only if it's a valid logic, otherwise send a logic with no query.
-        jsonLogicQuery: jsonLogicQuery?.logic
-          ? jsonLogicQuery
-          : {
-              logic: {},
-            },
-      },
-      {
-        getNextPageParam: (lastPage) => lastPage.nextCursor,
-      }
-    );
+  const {
+    isLoading,
+    status,
+    data,
+    isFetching,
+    error,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = trpc.viewer.appRoutingForms.report.useInfiniteQuery(
+    {
+      formId: formId,
+      // Send jsonLogicQuery only if it's a valid logic, otherwise send a logic with no query.
+      jsonLogicQuery: jsonLogicQuery?.logic
+        ? jsonLogicQuery
+        : {
+            logic: {},
+          },
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    },
+  );
   const buttonInView = useInViewObserver(() => {
     if (!isFetching && hasNextPage && status === "success") {
       fetchNextPage();
@@ -64,17 +78,20 @@ const Result = ({ formId, jsonLogicQuery }: { formId: string; jsonLogicQuery: Js
     <div className="w-full max-w-[2000px] overflow-x-scroll">
       <table
         data-testid="reporting-table"
-        className="border-default bg-subtle mx-3 mb-4 table-fixed border-separate border-spacing-0 overflow-hidden rounded-md border">
+        className="border-default bg-subtle mx-3 mb-4 table-fixed border-separate border-spacing-0 overflow-hidden rounded-md border"
+      >
         <tr
           data-testid="reporting-header"
-          className="border-default text-default bg-emphasis rounded-md border-b">
+          className="border-default text-default bg-emphasis rounded-md border-b"
+        >
           {headers.current?.map((header, index) => (
             <th
               className={classNames(
                 "border-default border-b px-2 py-3  text-left text-base font-medium",
-                index !== (headers.current?.length || 0) - 1 ? "border-r" : ""
+                index !== (headers.current?.length || 0) - 1 ? "border-r" : "",
               )}
-              key={index}>
+              key={index}
+            >
               {header}
             </th>
           ))}
@@ -90,8 +107,9 @@ const Result = ({ formId, jsonLogicQuery }: { formId: string; jsonLogicQuery: Js
                   className={classNames(
                     "text-center text-sm",
                     rowIndex % 2 ? "" : "bg-default",
-                    isLastRow ? "" : "border-b"
-                  )}>
+                    isLastRow ? "" : "border-b",
+                  )}
+                >
                   {responses.map((r, columnIndex) => {
                     const isLastColumn = columnIndex === responses.length - 1;
                     return (
@@ -99,9 +117,10 @@ const Result = ({ formId, jsonLogicQuery }: { formId: string; jsonLogicQuery: Js
                         className={classNames(
                           "border-default overflow-x-hidden px-2 py-3 text-left",
                           isLastRow ? "" : "border-b",
-                          isLastColumn ? "" : "border-r"
+                          isLastColumn ? "" : "border-r",
                         )}
-                        key={columnIndex}>
+                        key={columnIndex}
+                      >
                         {r}
                       </td>
                     );
@@ -119,7 +138,8 @@ const Result = ({ formId, jsonLogicQuery }: { formId: string; jsonLogicQuery: Js
           ref={buttonInView.ref}
           loading={isFetchingNextPage}
           disabled={!hasNextPage}
-          onClick={() => fetchNextPage()}>
+          onClick={() => fetchNextPage()}
+        >
           {hasNextPage ? t("load_more_results") : t("no_more_results")}
         </Button>
       )}
@@ -161,7 +181,7 @@ const Reporter = ({ form }: { form: inferSSRProps<typeof getServerSideProps>["fo
         </div>
       </div>
     ),
-    []
+    [],
   );
   return (
     <div className="flex flex-col-reverse md:flex-row">

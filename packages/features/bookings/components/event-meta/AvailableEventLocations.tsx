@@ -23,7 +23,7 @@ function RenderIcon({
       src={eventLocationType.iconUrl}
       className={classNames(
         eventLocationType?.iconUrl?.includes("-dark") && "dark:invert",
-        "me-[10px] h-4 w-4"
+        "me-[10px] h-4 w-4",
       )}
       alt={`${eventLocationType.label} icon`}
     />
@@ -40,7 +40,7 @@ function RenderLocationTooltip({ locations }: { locations: LocationObject[] }) {
         (
           location: Pick<Partial<LocationObject>, "link" | "address"> &
             Omit<LocationObject, "link" | "address">,
-          index: number
+          index: number,
         ) => {
           const eventLocationType = getEventLocationType(location.type);
           if (!eventLocationType) {
@@ -53,7 +53,7 @@ function RenderLocationTooltip({ locations }: { locations: LocationObject[] }) {
               <p className="line-clamp-1">{translatedLocation}</p>
             </div>
           );
-        }
+        },
       )}
     </div>
   );
@@ -64,8 +64,9 @@ export function AvailableEventLocations({ locations }: { locations: LocationObje
 
   const renderLocations = locations.map(
     (
-      location: Pick<Partial<LocationObject>, "link" | "address"> & Omit<LocationObject, "link" | "address">,
-      index: number
+      location: Pick<Partial<LocationObject>, "link" | "address"> &
+        Omit<LocationObject, "link" | "address">,
+      index: number,
     ) => {
       const eventLocationType = getEventLocationType(location.type);
       if (!eventLocationType) {
@@ -79,7 +80,10 @@ export function AvailableEventLocations({ locations }: { locations: LocationObje
       const translatedLocation = getTranslatedLocation(location, eventLocationType, t);
 
       return (
-        <div key={`${location.type}-${index}`} className="flex flex-row items-center text-sm font-medium">
+        <div
+          key={`${location.type}-${index}`}
+          className="flex flex-row items-center text-sm font-medium"
+        >
           {eventLocationType.iconUrl === "/link.svg" ? (
             <Link className="text-default ml-[2px] h-4 w-4  ltr:mr-[10px] rtl:ml-[10px] " />
           ) : (
@@ -90,7 +94,7 @@ export function AvailableEventLocations({ locations }: { locations: LocationObje
           </Tooltip>
         </div>
       );
-    }
+    },
   );
 
   const filteredLocations = renderLocations.filter(excludeNullValues) as JSX.Element[];

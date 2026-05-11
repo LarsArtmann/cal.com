@@ -124,7 +124,9 @@ export interface RecurringEvent {
 
 export type IntervalLimitUnit = "day" | "week" | "month" | "year";
 
-export type IntervalLimit = Partial<Record<`PER_${Uppercase<IntervalLimitUnit>}`, number | undefined>>;
+export type IntervalLimit = Partial<
+  Record<`PER_${Uppercase<IntervalLimitUnit>}`, number | undefined>
+>;
 
 export type AppsStatus = {
   appName: string;
@@ -225,15 +227,19 @@ export interface Calendar {
   updateEvent(
     uid: string,
     event: CalendarEvent,
-    externalCalendarId?: string | null
+    externalCalendarId?: string | null,
   ): Promise<NewCalendarEventType | NewCalendarEventType[]>;
 
-  deleteEvent(uid: string, event: CalendarEvent, externalCalendarId?: string | null): Promise<unknown>;
+  deleteEvent(
+    uid: string,
+    event: CalendarEvent,
+    externalCalendarId?: string | null,
+  ): Promise<unknown>;
 
   getAvailability(
     dateFrom: string,
     dateTo: string,
-    selectedCalendars: IntegrationCalendar[]
+    selectedCalendars: IntegrationCalendar[],
   ): Promise<EventBusyDate[]>;
 
   listCalendars(event?: CalendarEvent): Promise<IntegrationCalendar[]>;

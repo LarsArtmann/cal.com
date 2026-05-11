@@ -71,7 +71,9 @@ test.describe("Routing Forms", () => {
     });
 
     test.describe("F1<-F2 Relationship", () => {
-      test("Create relationship by adding F1 as route.Editing F1 should update F2", async ({ page }) => {
+      test("Create relationship by adding F1 as route.Editing F1 should update F2", async ({
+        page,
+      }) => {
         const form1Id = await addForm(page, { name: "F1" });
         const form2Id = await addForm(page, { name: "F2" });
 
@@ -106,7 +108,11 @@ test.describe("Routing Forms", () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         expect(await page.locator('[data-testid="field"]').count()).toBe(2);
-        await expectCurrentFormToHaveFields(page, { 1: { label: "F1 Field1", typeIndex: 1 } }, types);
+        await expectCurrentFormToHaveFields(
+          page,
+          { 1: { label: "F1 Field1", typeIndex: 1 } },
+          types,
+        );
         // Add 1 more field in F1
         await addOneFieldAndDescriptionAndSaveForm(form1Id, page, {
           field: {
@@ -119,7 +125,11 @@ test.describe("Routing Forms", () => {
         //FIXME: Figure out why this delay is required. Without it field count comes out to be 1 only
         await new Promise((resolve) => setTimeout(resolve, 1000));
         expect(await page.locator('[data-testid="field"]').count()).toBe(3);
-        await expectCurrentFormToHaveFields(page, { 2: { label: "F1 Field2", typeIndex: 1 } }, types);
+        await expectCurrentFormToHaveFields(
+          page,
+          { 2: { label: "F1 Field2", typeIndex: 1 } },
+          types,
+        );
       });
       todo("Create relationship by using duplicate with live connect");
     });
@@ -151,15 +161,19 @@ test.describe("Routing Forms", () => {
       await page.fill('[data-testid="form-field-Test Field Long Text"]', "manual-fill");
 
       expect(await page.locator(`[data-testid="form-field-firstField"]`).inputValue()).toBe("456");
-      expect(await page.locator(`[data-testid="form-field-Test Field Number"]`).inputValue()).toBe("456");
+      expect(await page.locator(`[data-testid="form-field-Test Field Number"]`).inputValue()).toBe(
+        "456",
+      );
 
       // TODO: Verify select and multiselect has prefilled values.
       // expect(await page.locator(`[data-testid="form-field-Test Field Select"]`).inputValue()).toBe("456");
       // expect(await page.locator(`[data-testid="form-field-Test Field MultiSelect"]`).inputValue()).toBe("456");
 
-      expect(await page.locator(`[data-testid="form-field-Test Field Phone"]`).inputValue()).toBe("456");
+      expect(await page.locator(`[data-testid="form-field-Test Field Phone"]`).inputValue()).toBe(
+        "456",
+      );
       expect(await page.locator(`[data-testid="form-field-Test Field Email"]`).inputValue()).toBe(
-        "456@example.com"
+        "456@example.com",
       );
 
       await page.click('button[type="submit"]');
@@ -176,7 +190,10 @@ test.describe("Routing Forms", () => {
       expect(url.searchParams.get("Test Field Number")).toBe("456");
       expect(url.searchParams.get("Test Field Long Text")).toBe("manual-fill");
       expect(url.searchParams.get("Test Field Multiple Selection")).toBe("456");
-      expect(url.searchParams.getAll("Test Field Multiple Selection")).toMatchObject(["456", "789"]);
+      expect(url.searchParams.getAll("Test Field Multiple Selection")).toMatchObject([
+        "456",
+        "789",
+      ]);
       expect(url.searchParams.get("Test Field Phone")).toBe("456");
       expect(url.searchParams.get("Test Field Email")).toBe("456@example.com");
     });
@@ -187,7 +204,7 @@ test.describe("Routing Forms", () => {
         { username: "routing-forms" },
         {
           hasTeam: true,
-        }
+        },
       );
       await user.apiLogin();
       await page.goto(`/routing-forms/forms`);
@@ -206,10 +223,16 @@ test.describe("Routing Forms", () => {
       // This also delete forms on cascade
       await users.deleteAll();
     });
-    const createUserAndLogin = async function ({ users, page }: { users: Fixtures["users"]; page: Page }) {
+    const createUserAndLogin = async function ({
+      users,
+      page,
+    }: {
+      users: Fixtures["users"];
+      page: Page;
+    }) {
       const user = await users.create(
         { username: "routing-forms" },
-        { seedRoutingForms: true, hasTeam: true }
+        { seedRoutingForms: true, hasTeam: true },
       );
       await user.apiLogin();
       return user;
@@ -304,13 +327,17 @@ test.describe("Routing Forms", () => {
       await users.logout();
       page.goto(`/router?form=${routingForm.id}&Test field=event-routing`);
       await page.waitForURL((url) => {
-        return url.pathname.endsWith("/pro/30min") && url.searchParams.get("Test field") === "event-routing";
+        return (
+          url.pathname.endsWith("/pro/30min") &&
+          url.searchParams.get("Test field") === "event-routing"
+        );
       });
 
       page.goto(`/router?form=${routingForm.id}&Test field=external-redirect`);
       await page.waitForURL((url) => {
         return (
-          url.hostname.includes("google.com") && url.searchParams.get("Test field") === "external-redirect"
+          url.hostname.includes("google.com") &&
+          url.searchParams.get("Test field") === "external-redirect"
         );
       });
 
@@ -385,13 +412,13 @@ async function expectCurrentFormToHaveFields(
   fields: {
     [key: number]: { label: string; typeIndex: number };
   },
-  types: string[]
+  types: string[],
 ) {
   for (const [index, field] of Object.entries(fields)) {
     expect(await page.inputValue(`[data-testid="fields.${index}.label"]`)).toBe(field.label);
-    expect(await page.locator(".data-testid-field-type").nth(+index).locator("div").nth(1).innerText()).toBe(
-      types[field.typeIndex]
-    );
+    expect(
+      await page.locator(".data-testid-field-type").nth(+index).locator("div").nth(1).innerText(),
+    ).toBe(types[field.typeIndex]);
   }
 }
 
@@ -419,7 +446,7 @@ async function fillSeededForm(page: Page, routingFormId: string) {
 async function addAllTypesOfFieldsAndSaveForm(
   formId: string,
   page: Page,
-  form: { description: string; label: string }
+  form: { description: string; label: string },
 ) {
   await page.goto(`apps/routing-forms/form-edit/${formId}`);
   await page.click('[data-testid="add-field"]');
@@ -427,8 +454,16 @@ async function addAllTypesOfFieldsAndSaveForm(
 
   const { optionsInUi: fieldTypesList } = await verifySelectOptions(
     { selector: ".data-testid-field-type", nth: 0 },
-    ["Email", "Long Text", "Multiple Selection", "Number", "Phone", "Single Selection", "Short Text"],
-    page
+    [
+      "Email",
+      "Long Text",
+      "Multiple Selection",
+      "Number",
+      "Phone",
+      "Single Selection",
+      "Short Text",
+    ],
+    page,
   );
 
   const fields = [];
@@ -443,7 +478,10 @@ async function addAllTypesOfFieldsAndSaveForm(
       // Click on the field type dropdown.
       await page.locator(".data-testid-field-type").nth(nth).click();
       // Click on the dropdown option.
-      await page.locator(`[data-testid^="select-option-"]`).filter({ hasText: fieldTypeLabel }).click();
+      await page
+        .locator(`[data-testid^="select-option-"]`)
+        .filter({ hasText: fieldTypeLabel })
+        .click();
     } else {
       // Set the identifier manually for the first field to test out a case when identifier isn't computed from label automatically
       // First field type is by default selected. So, no need to choose from dropdown
@@ -500,7 +538,7 @@ async function verifyFieldOptionsInRule(options: string[], page: Page) {
       nth: 0,
     },
     options,
-    page
+    page,
   );
 }
 

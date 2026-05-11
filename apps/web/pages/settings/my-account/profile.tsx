@@ -206,7 +206,10 @@ const ProfileView = () => {
 
   if (isLoading || !user)
     return (
-      <SkeletonLoader title={t("profile")} description={t("profile_description", { appName: APP_NAME })} />
+      <SkeletonLoader
+        title={t("profile")}
+        description={t("profile_description", { appName: APP_NAME })}
+      />
     );
 
   const defaultValues = {
@@ -258,7 +261,12 @@ const ProfileView = () => {
       {/* Delete account Dialog */}
       <Dialog open={deleteAccountOpen} onOpenChange={setDeleteAccountOpen}>
         <DialogTrigger asChild>
-          <Button data-testid="delete-account" color="destructive" className="mt-1" StartIcon={Trash2}>
+          <Button
+            data-testid="delete-account"
+            color="destructive"
+            className="mt-1"
+            StartIcon={Trash2}
+          >
             {t("delete_account")}
           </Button>
         </DialogTrigger>
@@ -266,7 +274,8 @@ const ProfileView = () => {
           title={t("delete_account_modal_title")}
           description={t("confirm_delete_account_modal", { appName: APP_NAME })}
           type="creation"
-          Icon={AlertTriangle}>
+          Icon={AlertTriangle}
+        >
           <>
             <div className="mb-10">
               <p className="text-default mb-4">
@@ -297,7 +306,8 @@ const ProfileView = () => {
               <Button
                 color="primary"
                 data-testid="delete-account-confirm"
-                onClick={(e) => onConfirmButton(e)}>
+                onClick={(e) => onConfirmButton(e)}
+              >
                 {t("delete_my_account")}
               </Button>
             </DialogFooter>
@@ -311,7 +321,8 @@ const ProfileView = () => {
           title={t("confirm_password")}
           description={t("confirm_password_change_email")}
           type="creation"
-          Icon={AlertTriangle}>
+          Icon={AlertTriangle}
+        >
           <div className="mb-10">
             <PasswordField
               data-testid="password"
@@ -323,13 +334,16 @@ const ProfileView = () => {
               ref={passwordRef}
             />
 
-            {confirmPasswordErrorMessage && <Alert severity="error" title={confirmPasswordErrorMessage} />}
+            {confirmPasswordErrorMessage && (
+              <Alert severity="error" title={confirmPasswordErrorMessage} />
+            )}
           </div>
           <DialogFooter showDivider>
             <Button
               color="primary"
               loading={confirmPasswordMutation.isLoading}
-              onClick={(e) => onConfirmPassword(e)}>
+              onClick={(e) => onConfirmPassword(e)}
+            >
               {t("confirm")}
             </Button>
             <DialogClose />
@@ -340,17 +354,20 @@ const ProfileView = () => {
       {/* If changing email from !CAL Login */}
       <Dialog
         open={confirmAuthEmailChangeWarningDialogOpen}
-        onOpenChange={setConfirmAuthEmailChangeWarningDialogOpen}>
+        onOpenChange={setConfirmAuthEmailChangeWarningDialogOpen}
+      >
         <DialogContent
           title={t("confirm_auth_change")}
           description={t("confirm_auth_email_change")}
           type="creation"
-          Icon={AlertTriangle}>
+          Icon={AlertTriangle}
+        >
           <DialogFooter>
             <Button
               color="primary"
               loading={updateProfileMutation.isLoading}
-              onClick={(e) => onConfirmAuthEmailChange(e)}>
+              onClick={(e) => onConfirmAuthEmailChange(e)}
+            >
               {t("confirm")}
             </Button>
             <DialogClose />
@@ -436,7 +453,11 @@ const ProfileForm = ({
         <TextField label={t("full_name")} {...formMethods.register("name")} />
       </div>
       <div className="mt-8">
-        <TextField label={t("email")} hint={t("change_email_hint")} {...formMethods.register("email")} />
+        <TextField
+          label={t("email")}
+          hint={t("change_email_hint")}
+          {...formMethods.register("email")}
+        />
       </div>
       <div className="mt-8">
         <Label>{t("about")}</Label>
@@ -451,7 +472,13 @@ const ProfileForm = ({
           setFirstRender={setFirstRender}
         />
       </div>
-      <Button loading={isLoading} disabled={isDisabled} color="primary" className="mt-8" type="submit">
+      <Button
+        loading={isLoading}
+        disabled={isDisabled}
+        color="primary"
+        className="mt-8"
+        type="submit"
+      >
         {t("update")}
       </Button>
     </Form>

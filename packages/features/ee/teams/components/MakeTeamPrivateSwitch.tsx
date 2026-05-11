@@ -34,12 +34,18 @@ const MakeTeamPrivateSwitch = ({
             <h2
               className={classNames(
                 "font-cal mb-0.5 text-sm font-semibold leading-6",
-                disabled ? "text-muted " : "text-emphasis "
-              )}>
+                disabled ? "text-muted " : "text-emphasis ",
+              )}
+            >
               {t("make_team_private")}
             </h2>
           </div>
-          <p className={classNames("text-sm leading-5 ", disabled ? "text-gray-300" : "text-default")}>
+          <p
+            className={classNames(
+              "text-sm leading-5 ",
+              disabled ? "text-gray-300" : "text-default",
+            )}
+          >
             {t("make_team_private_description")}
           </p>
         </div>

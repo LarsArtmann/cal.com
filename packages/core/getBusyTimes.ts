@@ -54,11 +54,13 @@ export async function getBusyTimes(params: {
   } = params;
 
   logger.silly(
-    `Checking Busy time from Cal Bookings in range ${startTime} to ${endTime} for input ${JSON.stringify({
-      userId,
-      eventTypeId,
-      status: BookingStatus.ACCEPTED,
-    })}`
+    `Checking Busy time from Cal Bookings in range ${startTime} to ${endTime} for input ${JSON.stringify(
+      {
+        userId,
+        eventTypeId,
+        status: BookingStatus.ACCEPTED,
+      },
+    )}`,
   );
 
   /**
@@ -78,7 +80,9 @@ export async function getBusyTimes(params: {
   performance.mark("prismaBookingGetStart");
 
   const startTimeDate =
-    rescheduleUid && duration ? dayjs(startTime).subtract(duration, "minute").toDate() : new Date(startTime);
+    rescheduleUid && duration
+      ? dayjs(startTime).subtract(duration, "minute").toDate()
+      : new Date(startTime);
   const endTimeDate =
     rescheduleUid && duration ? dayjs(endTime).add(duration, "minute").toDate() : new Date(endTime);
 
@@ -176,12 +180,16 @@ export async function getBusyTimes(params: {
       });
       return aggregate;
     },
-    []
+    [],
   );
 
   logger.silly(`Busy Time from Cal Bookings ${JSON.stringify(busyTimes)}`);
   performance.mark("prismaBookingGetEnd");
-  performance.measure(`prisma booking get took $1'`, "prismaBookingGetStart", "prismaBookingGetEnd");
+  performance.measure(
+    `prisma booking get took $1'`,
+    "prismaBookingGetStart",
+    "prismaBookingGetEnd",
+  );
   if (credentials?.length > 0) {
     const startConnectedCalendarsGet = performance.now();
     const calendarBusyTimes = await getBusyCalendarTimes(
@@ -189,13 +197,13 @@ export async function getBusyTimes(params: {
       credentials,
       startTime,
       endTime,
-      selectedCalendars
+      selectedCalendars,
     );
     const endConnectedCalendarsGet = performance.now();
     logger.debug(
       `Connected Calendars get took ${
         endConnectedCalendarsGet - startConnectedCalendarsGet
-      } ms for user ${username}`
+      } ms for user ${username}`,
     );
 
     const openSeatsDateRanges = Object.keys(bookingSeatCountMap).map((key) => {
@@ -223,7 +231,7 @@ export async function getBusyTimes(params: {
         end: dayjs(value.end),
         start: dayjs(value.start),
       })),
-      openSeatsDateRanges
+      openSeatsDateRanges,
     );
 
     busyTimes.push(
@@ -231,7 +239,7 @@ export async function getBusyTimes(params: {
         ...busyTime,
         start: busyTime.start.subtract(afterEventBuffer || 0, "minute").toDate(),
         end: busyTime.end.add(beforeEventBuffer || 0, "minute").toDate(),
-      }))
+      })),
     );
 
     /*
@@ -256,7 +264,7 @@ export async function getBusyTimesForLimitChecks(params: {
       userId,
       eventTypeId,
       status: BookingStatus.ACCEPTED,
-    })}`
+    })}`,
   );
   performance.mark("getBusyTimesForLimitChecksStart");
 
@@ -293,12 +301,14 @@ export async function getBusyTimesForLimitChecks(params: {
     source: `eventType-${eventType?.id}-booking-${id}`,
   }));
 
-  logger.silly(`Fetch limit checks bookings for eventId: ${eventTypeId} ${JSON.stringify(busyTimes)}`);
+  logger.silly(
+    `Fetch limit checks bookings for eventId: ${eventTypeId} ${JSON.stringify(busyTimes)}`,
+  );
   performance.mark("getBusyTimesForLimitChecksEnd");
   performance.measure(
     `prisma booking get for limits took $1'`,
     "getBusyTimesForLimitChecksStart",
-    "getBusyTimesForLimitChecksEnd"
+    "getBusyTimesForLimitChecksEnd",
   );
   return busyTimes;
 }

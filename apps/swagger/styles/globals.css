@@ -2,8 +2,18 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
-    Droid Sans, Helvetica Neue, sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
 }
 
 a {
@@ -91,13 +101,29 @@ a {
   td.response-col_description > div > div > p {
     font-size: 12px;
   }
-  div.no-margin > div > div.responses-wrapper > div.responses-inner > div > div > table > tbody > tr {
+  div.no-margin
+    > div
+    > div.responses-wrapper
+    > div.responses-inner
+    > div
+    > div
+    > table
+    > tbody
+    > tr {
     display: flex;
     width: 100vw;
     flex-direction: column;
     font-size: 60%;
   }
-  div.no-margin > div > div.responses-wrapper > div.responses-inner > div > div > table > thead > tr {
+  div.no-margin
+    > div
+    > div.responses-wrapper
+    > div.responses-inner
+    > div
+    > div
+    > table
+    > thead
+    > tr {
     display: none;
   }
 }

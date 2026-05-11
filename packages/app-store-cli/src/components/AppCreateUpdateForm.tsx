@@ -39,7 +39,7 @@ export const AppForm = ({
   if ((givenSlug && action === "edit-template") || action === "edit")
     try {
       const config = JSON.parse(
-        fs.readFileSync(`${getAppDirPath(givenSlug, isTemplate)}/config.json`).toString()
+        fs.readFileSync(`${getAppDirPath(givenSlug, isTemplate)}/config.json`).toString(),
       ) as AppMeta;
       initialConfig = {
         ...config,
@@ -244,15 +244,15 @@ export const AppForm = ({
                 <Text>{email}</Text>
               </Box>
               <Text bold>
-                Next Step: Enable the app from http://localhost:3000/settings/admin/apps as admin user (Email:
-                admin@example.com, Pass: ADMINadmin2022!)
+                Next Step: Enable the app from http://localhost:3000/settings/admin/apps as admin
+                user (Email: admin@example.com, Pass: ADMINadmin2022!)
               </Text>
             </Box>
           </Box>
         )}
         <Text italic color="gray">
-          Note: You should not rename app directory manually. Use cli only to do that as it needs to be
-          updated in DB as well
+          Note: You should not rename app directory manually. Use cli only to do that as it needs to
+          be updated in DB as well
         </Text>
       </Box>
     );

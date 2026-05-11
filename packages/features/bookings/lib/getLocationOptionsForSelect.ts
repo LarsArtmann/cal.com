@@ -6,7 +6,7 @@ import notEmpty from "@calcom/lib/notEmpty";
 
 export default function getLocationsOptionsForSelect(
   locations: LocationObject[],
-  t: ReturnType<typeof useLocale>["t"]
+  t: ReturnType<typeof useLocale>["t"],
 ) {
   return locations
     .map((location) => {

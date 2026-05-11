@@ -26,7 +26,8 @@ export const tips = [
     thumbnailUrl: "https://img.youtube.com/vi/c7ZKFuLy1fg/0.jpg",
     mediaLink: "https://go.cal.com/routing-video",
     title: "Routing Forms, Workflows",
-    description: "Ask screening questions of potential bookers to connect them with the right person",
+    description:
+      "Ask screening questions of potential bookers to connect them with the right person",
     href: "https://cal.com/blog/cal-v-1-8",
   },
   {
@@ -125,7 +126,7 @@ function Tips() {
 
       localStorage.setItem(
         "removedTipsIds",
-        `${currentItems[itemToRemoveIndex].id.toString()}${items.length > 0 ? `,${items.split(",")}` : ""}`
+        `${currentItems[itemToRemoveIndex].id.toString()}${items.length > 0 ? `,${items.split(",")}` : ""}`,
       );
       currentItems.splice(itemToRemoveIndex, 1);
       return [...currentItems];
@@ -139,7 +140,8 @@ function Tips() {
       /* ref={animationRef} */
       style={{
         gridTemplateColumns: "1fr",
-      }}>
+      }}
+    >
       {list.map((tip) => {
         return (
           <div
@@ -148,14 +150,16 @@ function Tips() {
               gridRowStart: 1,
               gridColumnStart: 1,
             }}
-            key={tip.id}>
+            key={tip.id}
+          >
             <div
               className="relative"
               style={{
                 transform: `scale(${1 - baseOriginalList.indexOf(tip) / 20})`,
                 top: -baseOriginalList.indexOf(tip) * 10,
                 opacity: `${1 - baseOriginalList.indexOf(tip) / 7}`,
-              }}>
+              }}
+            >
               <Card
                 variant="SidebarCard"
                 thumbnailUrl={tip.thumbnailUrl}

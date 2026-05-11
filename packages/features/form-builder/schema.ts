@@ -77,7 +77,7 @@ const baseFieldSchema = z.object({
         type: z.enum(["address", "phone", "text"]),
         required: z.boolean().optional(),
         placeholder: z.string().optional(),
-      })
+      }),
     )
     .optional(),
 });
@@ -98,7 +98,7 @@ export const variantsConfigSchema = z.object({
           optionsInputs: true,
         })
         .array(),
-    })
+    }),
   ),
 });
 
@@ -155,9 +155,9 @@ export const fieldTypeConfigSchema = z
                  * Decides if a variant field's required property can be changed or not
                  */
                 canChangeRequirability: z.boolean().default(true).optional(),
-              })
+              }),
             ),
-          })
+          }),
         ),
         /**
          * This is the default configuration for the field.
@@ -211,10 +211,10 @@ export const fieldSchema = baseFieldSchema.merge(
           editUrl: z.string().optional(),
           // Mark if a field is required by this source or not. This allows us to set `field.required` based on all the sources' fieldRequired value
           fieldRequired: z.boolean().optional(),
-        })
+        }),
       )
       .optional(),
-  })
+  }),
 );
 
 export const fieldsSchema = z.array(fieldSchema);

@@ -38,17 +38,20 @@ const getApps = Object.values(appStoreMetadata).map(({ name, slug }) => ({
 const useEventTypesAction = () => {
   const router = useRouter();
   const { data } = trpc.viewer.eventTypes.getByViewer.useQuery();
-  const eventTypeActions = data?.eventTypeGroups.reduce<Action[]>((acc: Action[], group: EventTypeGroup) => {
-    const item: Action[] = group.eventTypes.map((item) => ({
-      id: `event-type-${item.id}`,
-      name: item.title,
-      section: "event_types_page_title",
-      keywords: "event types",
-      perform: () => router.push(`/event-types/${item.id}`),
-    }));
-    acc.push(...item);
-    return acc;
-  }, []);
+  const eventTypeActions = data?.eventTypeGroups.reduce<Action[]>(
+    (acc: Action[], group: EventTypeGroup) => {
+      const item: Action[] = group.eventTypes.map((item) => ({
+        id: `event-type-${item.id}`,
+        name: item.title,
+        section: "event_types_page_title",
+        keywords: "event types",
+        perform: () => router.push(`/event-types/${item.id}`),
+      }));
+      acc.push(...item);
+      return acc;
+    },
+    [],
+  );
 
   const actions = eventTypeActions?.length ? eventTypeActions : [];
 
@@ -273,7 +276,8 @@ export const KBarTrigger = () => {
         <button
           color="minimal"
           onClick={query.toggle}
-          className="text-default hover:bg-subtle lg:hover:bg-emphasis lg:hover:text-emphasis group flex rounded-md px-3 py-2 text-sm font-medium lg:px-2">
+          className="text-default hover:bg-subtle lg:hover:bg-emphasis lg:hover:text-emphasis group flex rounded-md px-3 py-2 text-sm font-medium lg:px-2"
+        >
           <Search className="h-4 w-4 flex-shrink-0 text-inherit" />
         </button>
       </Tooltip>
@@ -290,7 +294,8 @@ const DisplayShortcuts = (item: shortcutArrayType) => {
         return (
           <kbd
             key={shortcut}
-            className="bg-default hover:bg-subtle text-emphasis rounded-sm border px-2 py-1">
+            className="bg-default hover:bg-subtle text-emphasis rounded-sm border px-2 py-1"
+          >
             {shortcut}
           </kbd>
         );
@@ -317,7 +322,8 @@ function RenderResults() {
               borderLeft: active ? "2px solid var(--cal-border-default)" : "2px solid transparent",
               color: "var(--cal-text)",
             }}
-            className="flex items-center justify-between px-4 py-2.5 text-sm hover:cursor-pointer">
+            className="flex items-center justify-between px-4 py-2.5 text-sm hover:cursor-pointer"
+          >
             <span>{t(item.name)}</span>
             <DisplayShortcuts shortcuts={item.shortcut} />
           </div>

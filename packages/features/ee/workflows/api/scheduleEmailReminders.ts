@@ -43,29 +43,40 @@ function getiCalEventAsString(booking: Booking) {
 
   const uid = uuidv4();
 
-  const icsEvent = createEvent(({
-	uid,
-	startInputType: 'utc',
-	start: dayjs(booking.startTime.toISOString() || '').utc().toArray().slice(0, 6).map((v, i) => i === 1 ? v + 1 : v) as DateArray,
-	duration: { minutes: dayjs(booking.endTime.toISOString() || '').diff(dayjs(booking.startTime.toISOString() || ''), 'minute') },
-	title: booking.eventType?.title || '',
-	description: booking.description || '',
-	location: booking.location || '',
-	organizer: {
-		email: booking.user?.email || '',
-		name: booking.user?.name || ''
-	},
-	attendees: [{
-		name: booking.attendees[0].name,
-		email: booking.attendees[0].email,
-		partstat: 'ACCEPTED',
-		role: 'REQ-PARTICIPANT',
-		rsvp: true
-	}],
-	method: 'REQUEST',
-	recurrenceRule,
-	status: 'CONFIRMED'
-}));
+  const icsEvent = createEvent({
+    uid,
+    startInputType: "utc",
+    start: dayjs(booking.startTime.toISOString() || "")
+      .utc()
+      .toArray()
+      .slice(0, 6)
+      .map((v, i) => (i === 1 ? v + 1 : v)) as DateArray,
+    duration: {
+      minutes: dayjs(booking.endTime.toISOString() || "").diff(
+        dayjs(booking.startTime.toISOString() || ""),
+        "minute",
+      ),
+    },
+    title: booking.eventType?.title || "",
+    description: booking.description || "",
+    location: booking.location || "",
+    organizer: {
+      email: booking.user?.email || "",
+      name: booking.user?.name || "",
+    },
+    attendees: [
+      {
+        name: booking.attendees[0].name,
+        email: booking.attendees[0].email,
+        partstat: "ACCEPTED",
+        role: "REQ-PARTICIPANT",
+        rsvp: true,
+      },
+    ],
+    method: "REQUEST",
+    recurrenceRule,
+    status: "CONFIRMED",
+  });
 
   if (icsEvent.error) {
     throw icsEvent.error;
@@ -254,7 +265,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           variables,
           emailLocale,
           getTimeFormatStringFromUserTimeFormat(reminder.booking.user?.timeFormat),
-          !!reminder.booking.user?.hideBranding
+          !!reminder.booking.user?.hideBranding,
         ).text;
         emailContent.emailSubject = emailSubject;
         emailContent.emailBody = customTemplate(
@@ -262,7 +273,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           variables,
           emailLocale,
           getTimeFormatStringFromUserTimeFormat(reminder.booking.user?.timeFormat),
-          !!reminder.booking.user?.hideBranding
+          !!reminder.booking.user?.hideBranding,
         ).html;
 
         emailBodyEmpty =
@@ -270,7 +281,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             reminder.workflowStep.reminderBody || "",
             variables,
             emailLocale,
-            getTimeFormatStringFromUserTimeFormat(reminder.booking.user?.timeFormat)
+            getTimeFormatStringFromUserTimeFormat(reminder.booking.user?.timeFormat),
           ).text.length === 0;
       } else if (reminder.workflowStep.template === WorkflowTemplates.REMINDER) {
         emailContent = emailReminderTemplate(
@@ -283,7 +294,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           timeZone || "",
           attendeeName || "",
           name || "",
-          !!reminder.booking.user?.hideBranding
+          !!reminder.booking.user?.hideBranding,
         );
       }
 
@@ -315,7 +326,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             attachments: reminder.workflowStep.includeCalendarEvent
               ? [
                   {
-                    content: Buffer.from(getiCalEventAsString(reminder.booking) || "").toString("base64"),
+                    content: Buffer.from(getiCalEventAsString(reminder.booking) || "").toString(
+                      "base64",
+                    ),
                     filename: "event.ics",
                     type: "text/calendar; method=REQUEST",
                     disposition: "attachment",

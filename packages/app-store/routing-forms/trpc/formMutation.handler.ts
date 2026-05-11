@@ -25,7 +25,8 @@ interface FormMutationHandlerOptions {
 }
 export const formMutationHandler = async ({ ctx, input }: FormMutationHandlerOptions) => {
   const { user, prisma } = ctx;
-  const { name, id, description, settings, disabled, addFallback, duplicateFrom, shouldConnect } = input;
+  const { name, id, description, settings, disabled, addFallback, duplicateFrom, shouldConnect } =
+    input;
   let teamId = input.teamId;
   if (!(await isFormCreateEditAllowed({ userId: user.id, formId: id, targetTeamId: teamId }))) {
     throw new TRPCError({
@@ -68,7 +69,10 @@ export const formMutationHandler = async ({ ctx, input }: FormMutationHandlerOpt
     : null;
 
   if (duplicateFrom) {
-    ({ teamId, routes, fields } = await getRoutesAndFieldsForDuplication({ duplicateFrom, userId: user.id }));
+    ({ teamId, routes, fields } = await getRoutesAndFieldsForDuplication({
+      duplicateFrom,
+      userId: user.id,
+    }));
   } else {
     [fields, routes] = [inputFields, inputRoutes];
     if (dbSerializedForm) {
@@ -207,7 +211,7 @@ export const formMutationHandler = async ({ ctx, input }: FormMutationHandlerOpt
    */
   async function updateFieldsInConnectedForms(
     serializedForm: SerializableForm<App_RoutingForms_Form>,
-    inputFields: InputFields
+    inputFields: InputFields,
   ) {
     for (const [, connectedForm] of Object.entries(serializedForm.connectedForms)) {
       const connectedFormDb = await prisma.app_RoutingForms_Form.findFirst({
@@ -336,7 +340,7 @@ export const formMutationHandler = async ({ ctx, input }: FormMutationHandlerOpt
 
   function markMissingFieldsDeleted(
     serializedForm: SerializableForm<App_RoutingForms_Form>,
-    fields: InputFields
+    fields: InputFields,
   ) {
     // Find all fields that are in DB(including deleted) but not in the mutation
     // e.g. inputFields is [A,B,C]. DB is [A,B,C,D,E,F]. It means D,E,F got deleted
@@ -349,7 +353,7 @@ export const formMutationHandler = async ({ ctx, input }: FormMutationHandlerOpt
       deletedFields.map((f) => {
         f.deleted = true;
         return f;
-      })
+      }),
     );
     return fields;
   }

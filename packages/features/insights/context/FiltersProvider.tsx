@@ -117,7 +117,10 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
           } = newConfigFilters;
           const [startTime, endTime] = dateRange || [null, null];
           const newSearchParams = new URLSearchParams(searchParams);
-          function setParamsIfDefined(key: string, value: string | number | boolean | null | undefined) {
+          function setParamsIfDefined(
+            key: string,
+            value: string | number | boolean | null | undefined,
+          ) {
             if (value !== undefined && value !== null) newSearchParams.set(key, value.toString());
           }
           setParamsIfDefined("memberUserId", selectedMemberUserId);
@@ -154,7 +157,8 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
 
           router.push(`${pathname}?${newSearchParams.toString()}`);
         },
-      }}>
+      }}
+    >
       {children}
     </FilterProvider>
   );

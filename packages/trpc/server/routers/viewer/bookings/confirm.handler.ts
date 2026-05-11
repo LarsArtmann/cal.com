@@ -12,7 +12,12 @@ import { getTranslation } from "@calcom/lib/server";
 import { getUsersCredentials } from "@calcom/lib/server/getUsersCredentials";
 import { getTimeFormatStringFromUserTimeFormat } from "@calcom/lib/timeFormat";
 import { prisma } from "@calcom/prisma";
-import { BookingStatus, MembershipRole, SchedulingType, WebhookTriggerEvents } from "@calcom/prisma/enums";
+import {
+  BookingStatus,
+  MembershipRole,
+  SchedulingType,
+  WebhookTriggerEvents,
+} from "@calcom/prisma/enums";
 import type { CalendarEvent } from "@calcom/types/Calendar";
 import type { IAbstractPaymentService, PaymentApp } from "@calcom/types/PaymentService";
 
@@ -175,8 +180,8 @@ export const confirmHandler = async ({ ctx, input }: ConfirmOptions) => {
     destinationCalendar: booking?.destinationCalendar
       ? [booking.destinationCalendar]
       : user.destinationCalendar
-      ? [user.destinationCalendar]
-      : [],
+        ? [user.destinationCalendar]
+        : [],
     requiresConfirmation: booking?.eventType?.requiresConfirmation ?? false,
     eventTypeId: booking.eventType?.id,
   };
@@ -308,7 +313,9 @@ export const confirmHandler = async ({ ctx, input }: ConfirmOptions) => {
 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const PaymentService = paymentApp.lib.PaymentService as any;
-          const paymentInstance = new PaymentService(paymentAppCredential) as IAbstractPaymentService;
+          const paymentInstance = new PaymentService(
+            paymentAppCredential,
+          ) as IAbstractPaymentService;
           const paymentData = await paymentInstance.refund(successPayment.id);
           if (!paymentData.refunded) {
             throw new Error("Payment could not be refunded");

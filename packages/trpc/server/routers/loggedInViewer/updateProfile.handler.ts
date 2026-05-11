@@ -19,7 +19,10 @@ import type { TrpcSessionUser } from "@calcom/trpc/server/trpc";
 
 import { TRPCError } from "@trpc/server";
 
-import { updateUserMetadataAllowedKeys, type TUpdateProfileInputSchema } from "./updateProfile.schema";
+import {
+  updateUserMetadataAllowedKeys,
+  type TUpdateProfileInputSchema,
+} from "./updateProfile.schema";
 
 type UpdateProfileOptions = {
   ctx: {
@@ -85,7 +88,7 @@ export const updateProfileHandler = async ({ ctx, input }: UpdateProfileOptions)
     const isPremiumUsernameSubscriptionActive = stripeSubscriptions.data.some(
       (subscription) =>
         subscription.items.data[0].price.product === getPremiumPlanProductId() &&
-        subscription.status === "active"
+        subscription.status === "active",
     );
 
     if (!isPremiumUsernameSubscriptionActive) {
@@ -104,7 +107,8 @@ export const updateProfileHandler = async ({ ctx, input }: UpdateProfileOptions)
   // check if we are changing email and identity provider is not CAL
   const hasEmailChangedOnNonCalProvider =
     hasEmailBeenChanged && user.identityProvider !== IdentityProvider.CAL;
-  const hasEmailChangedOnCalProvider = hasEmailBeenChanged && user.identityProvider === IdentityProvider.CAL;
+  const hasEmailChangedOnCalProvider =
+    hasEmailBeenChanged && user.identityProvider === IdentityProvider.CAL;
 
   if (hasEmailChangedOnNonCalProvider) {
     // Only validate if we're changing email

@@ -34,45 +34,51 @@ export const bookingsRouter = router({
     });
   }),
 
-  requestReschedule: authedProcedure.input(ZRequestRescheduleInputSchema).mutation(async ({ input, ctx }) => {
-    if (!UNSTABLE_HANDLER_CACHE.requestReschedule) {
-      UNSTABLE_HANDLER_CACHE.requestReschedule = await import("./requestReschedule.handler").then(
-        (mod) => mod.requestRescheduleHandler
-      );
-    }
+  requestReschedule: authedProcedure
+    .input(ZRequestRescheduleInputSchema)
+    .mutation(async ({ input, ctx }) => {
+      if (!UNSTABLE_HANDLER_CACHE.requestReschedule) {
+        UNSTABLE_HANDLER_CACHE.requestReschedule = await import("./requestReschedule.handler").then(
+          (mod) => mod.requestRescheduleHandler,
+        );
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.requestReschedule) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.requestReschedule) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.requestReschedule({
-      ctx,
-      input,
-    });
-  }),
+      return UNSTABLE_HANDLER_CACHE.requestReschedule({
+        ctx,
+        input,
+      });
+    }),
 
-  editLocation: bookingsProcedure.input(ZEditLocationInputSchema).mutation(async ({ input, ctx }) => {
-    if (!UNSTABLE_HANDLER_CACHE.editLocation) {
-      UNSTABLE_HANDLER_CACHE.editLocation = await import("./editLocation.handler").then(
-        (mod) => mod.editLocationHandler
-      );
-    }
+  editLocation: bookingsProcedure
+    .input(ZEditLocationInputSchema)
+    .mutation(async ({ input, ctx }) => {
+      if (!UNSTABLE_HANDLER_CACHE.editLocation) {
+        UNSTABLE_HANDLER_CACHE.editLocation = await import("./editLocation.handler").then(
+          (mod) => mod.editLocationHandler,
+        );
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.editLocation) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.editLocation) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.editLocation({
-      ctx,
-      input,
-    });
-  }),
+      return UNSTABLE_HANDLER_CACHE.editLocation({
+        ctx,
+        input,
+      });
+    }),
 
   confirm: bookingsProcedure.input(ZConfirmInputSchema).mutation(async ({ input, ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.confirm) {
-      UNSTABLE_HANDLER_CACHE.confirm = await import("./confirm.handler").then((mod) => mod.confirmHandler);
+      UNSTABLE_HANDLER_CACHE.confirm = await import("./confirm.handler").then(
+        (mod) => mod.confirmHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -90,9 +96,10 @@ export const bookingsRouter = router({
     .input(ZGetBookingAttendeesInputSchema)
     .query(async ({ input, ctx }) => {
       if (!UNSTABLE_HANDLER_CACHE.getBookingAttendees) {
-        UNSTABLE_HANDLER_CACHE.getBookingAttendees = await import("./getBookingAttendees.handler").then(
-          (mod) => mod.getBookingAttendeesHandler
-        );
+        UNSTABLE_HANDLER_CACHE.getBookingAttendees =
+          await import("./getBookingAttendees.handler").then(
+            (mod) => mod.getBookingAttendeesHandler,
+          );
       }
 
       // Unreachable code but required for type safety

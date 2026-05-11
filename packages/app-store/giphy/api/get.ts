@@ -41,7 +41,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-function validate(handler: (req: NextApiRequest, res: NextApiResponse) => Promise<NextApiResponse | void>) {
+function validate(
+  handler: (req: NextApiRequest, res: NextApiResponse) => Promise<NextApiResponse | void>,
+) {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
       try {

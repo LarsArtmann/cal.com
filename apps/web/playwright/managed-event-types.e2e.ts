@@ -23,7 +23,9 @@ test.describe("Managed Event Types tests", () => {
       await page.locator("text=Continue").click();
       await page.waitForURL(/\/settings\/teams\/(\d+)\/onboard-members$/i);
       await page.getByTestId("new-member-button").click();
-      await page.locator('[placeholder="email\\@example\\.com"]').fill(`${memberUser.username}@example.com`);
+      await page
+        .locator('[placeholder="email\\@example\\.com"]')
+        .fill(`${memberUser.username}@example.com`);
       await page.getByTestId("invite-new-member-button").click();
       // wait for the second member to be added to the pending-member-list.
       await page.getByTestId("pending-member-list").locator("li:nth-child(2)").waitFor();

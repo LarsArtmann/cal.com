@@ -47,7 +47,10 @@ const BillingView = () => {
     <>
       <Meta title={t("billing")} description={t("manage_billing_description")} />
       <div className="space-y-6 text-sm sm:space-y-8">
-        <CtaRow title={t("view_and_manage_billing_details")} description={t("view_and_edit_billing_details")}>
+        <CtaRow
+          title={t("view_and_manage_billing_details")}
+          description={t("view_and_edit_billing_details")}
+        >
           <Button color="primary" href={billingHref} target="_blank" EndIcon={ExternalLink}>
             {t("billing_portal")}
           </Button>

@@ -14,10 +14,16 @@ export function getTranslatedText(text: string, language: { locale: string; t: T
     variables?.forEach((variable) => {
       const regex = new RegExp(`{${variable}}`, "g"); // .replaceAll is not available here for some reason
       let translatedVariable = DYNAMIC_TEXT_VARIABLES.includes(variable.toLowerCase())
-        ? language.t(variable.toLowerCase().concat("_variable")).replace(/ /g, "_").toLocaleUpperCase()
+        ? language
+            .t(variable.toLowerCase().concat("_variable"))
+            .replace(/ /g, "_")
+            .toLocaleUpperCase()
         : DYNAMIC_TEXT_VARIABLES.includes(variable.toLowerCase().concat("_name")) //for the old variables names (ORGANIZER_NAME, ATTENDEE_NAME)
-        ? language.t(variable.toLowerCase().concat("_name_variable")).replace(/ /g, "_").toLocaleUpperCase()
-        : variable;
+          ? language
+              .t(variable.toLowerCase().concat("_name_variable"))
+              .replace(/ /g, "_")
+              .toLocaleUpperCase()
+          : variable;
 
       // this takes care of translating formatted variables (e.g. {EVENT_DATE_DD MM YYYY})
       const formattedVarToTranslate = FORMATTED_DYNAMIC_TEXT_VARIABLES.map((formattedVar) => {
@@ -45,7 +51,10 @@ export function getTranslatedText(text: string, language: { locale: string; t: T
   return translatedText;
 }
 
-export function translateVariablesToEnglish(text: string, language: { locale: string; t: TFunction }) {
+export function translateVariablesToEnglish(
+  text: string,
+  language: { locale: string; t: TFunction },
+) {
   let newText = text;
 
   if (language.locale !== "en") {
@@ -63,14 +72,17 @@ export function translateVariablesToEnglish(text: string, language: { locale: st
         ) {
           newText = newText.replace(
             variable,
-            language.t(originalVariable, { lng: "en" }).replace(/ /g, "_").toUpperCase()
+            language.t(originalVariable, { lng: "en" }).replace(/ /g, "_").toUpperCase(),
           );
           return;
         }
       });
 
       FORMATTED_DYNAMIC_TEXT_VARIABLES.forEach((formattedVar) => {
-        const translatedVariable = language.t(`${formattedVar}variable`).replace(/ /g, "_").toUpperCase();
+        const translatedVariable = language
+          .t(`${formattedVar}variable`)
+          .replace(/ /g, "_")
+          .toUpperCase();
         if (variable.startsWith(translatedVariable)) {
           newText = newText.replace(translatedVariable, formattedVar.slice(0, -1).toUpperCase());
         }

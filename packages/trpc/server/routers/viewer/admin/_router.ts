@@ -16,7 +16,7 @@ export const adminRouter = router({
   listPaginated: authedAdminProcedure.input(ZListMembersSchema).query(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.listPaginated) {
       UNSTABLE_HANDLER_CACHE.listPaginated = await import("./listPaginated.handler").then(
-        (mod) => mod.listPaginatedHandler
+        (mod) => mod.listPaginatedHandler,
       );
     }
 
@@ -35,7 +35,7 @@ export const adminRouter = router({
     .mutation(async ({ ctx, input }) => {
       if (!UNSTABLE_HANDLER_CACHE.sendPasswordReset) {
         UNSTABLE_HANDLER_CACHE.sendPasswordReset = await import("./sendPasswordReset.handler").then(
-          (mod) => mod.sendPasswordResetHandler
+          (mod) => mod.sendPasswordResetHandler,
         );
       }
 

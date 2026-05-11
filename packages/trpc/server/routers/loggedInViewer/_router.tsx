@@ -116,20 +116,22 @@ export const loggedInViewerRouter = router({
     return UNSTABLE_HANDLER_CACHE.away({ ctx, input });
   }),
 
-  connectedCalendars: authedProcedure.input(ZConnectedCalendarsInputSchema).query(async ({ ctx, input }) => {
-    if (!UNSTABLE_HANDLER_CACHE.connectedCalendars) {
-      UNSTABLE_HANDLER_CACHE.connectedCalendars = (
-        await import("./connectedCalendars.handler")
-      ).connectedCalendarsHandler;
-    }
+  connectedCalendars: authedProcedure
+    .input(ZConnectedCalendarsInputSchema)
+    .query(async ({ ctx, input }) => {
+      if (!UNSTABLE_HANDLER_CACHE.connectedCalendars) {
+        UNSTABLE_HANDLER_CACHE.connectedCalendars = (
+          await import("./connectedCalendars.handler")
+        ).connectedCalendarsHandler;
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.connectedCalendars) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.connectedCalendars) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.connectedCalendars({ ctx, input });
-  }),
+      return UNSTABLE_HANDLER_CACHE.connectedCalendars({ ctx, input });
+    }),
 
   setDestinationCalendar: authedProcedure
     .input(ZSetDestinationCalendarInputSchema)
@@ -150,7 +152,9 @@ export const loggedInViewerRouter = router({
 
   integrations: authedProcedure.input(ZIntegrationsInputSchema).query(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.integrations) {
-      UNSTABLE_HANDLER_CACHE.integrations = (await import("./integrations.handler")).integrationsHandler;
+      UNSTABLE_HANDLER_CACHE.integrations = (
+        await import("./integrations.handler")
+      ).integrationsHandler;
     }
 
     // Unreachable code but required for type safety
@@ -206,107 +210,125 @@ export const loggedInViewerRouter = router({
     return UNSTABLE_HANDLER_CACHE.stripeCustomer({ ctx });
   }),
 
-  updateProfile: authedProcedure.input(ZUpdateProfileInputSchema).mutation(async ({ ctx, input }) => {
-    if (!UNSTABLE_HANDLER_CACHE.updateProfile) {
-      UNSTABLE_HANDLER_CACHE.updateProfile = (await import("./updateProfile.handler")).updateProfileHandler;
-    }
+  updateProfile: authedProcedure
+    .input(ZUpdateProfileInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      if (!UNSTABLE_HANDLER_CACHE.updateProfile) {
+        UNSTABLE_HANDLER_CACHE.updateProfile = (
+          await import("./updateProfile.handler")
+        ).updateProfileHandler;
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.updateProfile) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.updateProfile) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.updateProfile({ ctx, input });
-  }),
+      return UNSTABLE_HANDLER_CACHE.updateProfile({ ctx, input });
+    }),
 
-  eventTypeOrder: authedProcedure.input(ZEventTypeOrderInputSchema).mutation(async ({ ctx, input }) => {
-    if (!UNSTABLE_HANDLER_CACHE.eventTypeOrder) {
-      UNSTABLE_HANDLER_CACHE.eventTypeOrder = (
-        await import("./eventTypeOrder.handler")
-      ).eventTypeOrderHandler;
-    }
+  eventTypeOrder: authedProcedure
+    .input(ZEventTypeOrderInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      if (!UNSTABLE_HANDLER_CACHE.eventTypeOrder) {
+        UNSTABLE_HANDLER_CACHE.eventTypeOrder = (
+          await import("./eventTypeOrder.handler")
+        ).eventTypeOrderHandler;
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.eventTypeOrder) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.eventTypeOrder) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.eventTypeOrder({ ctx, input });
-  }),
+      return UNSTABLE_HANDLER_CACHE.eventTypeOrder({ ctx, input });
+    }),
 
-  routingFormOrder: authedProcedure.input(ZRoutingFormOrderInputSchema).mutation(async ({ ctx, input }) => {
-    if (!UNSTABLE_HANDLER_CACHE.routingFormOrder) {
-      UNSTABLE_HANDLER_CACHE.routingFormOrder = (
-        await import("./routingFormOrder.handler")
-      ).routingFormOrderHandler;
-    }
+  routingFormOrder: authedProcedure
+    .input(ZRoutingFormOrderInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      if (!UNSTABLE_HANDLER_CACHE.routingFormOrder) {
+        UNSTABLE_HANDLER_CACHE.routingFormOrder = (
+          await import("./routingFormOrder.handler")
+        ).routingFormOrderHandler;
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.routingFormOrder) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.routingFormOrder) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.routingFormOrder({ ctx, input });
-  }),
+      return UNSTABLE_HANDLER_CACHE.routingFormOrder({ ctx, input });
+    }),
 
-  workflowOrder: authedProcedure.input(ZWorkflowOrderInputSchema).mutation(async ({ ctx, input }) => {
-    if (!UNSTABLE_HANDLER_CACHE.workflowOrder) {
-      UNSTABLE_HANDLER_CACHE.workflowOrder = (await import("./workflowOrder.handler")).workflowOrderHandler;
-    }
+  workflowOrder: authedProcedure
+    .input(ZWorkflowOrderInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      if (!UNSTABLE_HANDLER_CACHE.workflowOrder) {
+        UNSTABLE_HANDLER_CACHE.workflowOrder = (
+          await import("./workflowOrder.handler")
+        ).workflowOrderHandler;
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.workflowOrder) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.workflowOrder) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.workflowOrder({ ctx, input });
-  }),
+      return UNSTABLE_HANDLER_CACHE.workflowOrder({ ctx, input });
+    }),
 
   //Comment for PR: eventTypePosition is not used anywhere
-  submitFeedback: authedProcedure.input(ZSubmitFeedbackInputSchema).mutation(async ({ ctx, input }) => {
-    if (!UNSTABLE_HANDLER_CACHE.submitFeedback) {
-      UNSTABLE_HANDLER_CACHE.submitFeedback = (
-        await import("./submitFeedback.handler")
-      ).submitFeedbackHandler;
-    }
+  submitFeedback: authedProcedure
+    .input(ZSubmitFeedbackInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      if (!UNSTABLE_HANDLER_CACHE.submitFeedback) {
+        UNSTABLE_HANDLER_CACHE.submitFeedback = (
+          await import("./submitFeedback.handler")
+        ).submitFeedbackHandler;
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.submitFeedback) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.submitFeedback) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.submitFeedback({ ctx, input });
-  }),
+      return UNSTABLE_HANDLER_CACHE.submitFeedback({ ctx, input });
+    }),
 
-  locationOptions: authedProcedure.input(ZLocationOptionsInputSchema).query(async ({ ctx, input }) => {
-    if (!UNSTABLE_HANDLER_CACHE.locationOptions) {
-      UNSTABLE_HANDLER_CACHE.locationOptions = (
-        await import("./locationOptions.handler")
-      ).locationOptionsHandler;
-    }
+  locationOptions: authedProcedure
+    .input(ZLocationOptionsInputSchema)
+    .query(async ({ ctx, input }) => {
+      if (!UNSTABLE_HANDLER_CACHE.locationOptions) {
+        UNSTABLE_HANDLER_CACHE.locationOptions = (
+          await import("./locationOptions.handler")
+        ).locationOptionsHandler;
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.locationOptions) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.locationOptions) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.locationOptions({ ctx, input });
-  }),
+      return UNSTABLE_HANDLER_CACHE.locationOptions({ ctx, input });
+    }),
 
-  deleteCredential: authedProcedure.input(ZDeleteCredentialInputSchema).mutation(async ({ ctx, input }) => {
-    if (!UNSTABLE_HANDLER_CACHE.deleteCredential) {
-      UNSTABLE_HANDLER_CACHE.deleteCredential = (
-        await import("./deleteCredential.handler")
-      ).deleteCredentialHandler;
-    }
+  deleteCredential: authedProcedure
+    .input(ZDeleteCredentialInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      if (!UNSTABLE_HANDLER_CACHE.deleteCredential) {
+        UNSTABLE_HANDLER_CACHE.deleteCredential = (
+          await import("./deleteCredential.handler")
+        ).deleteCredentialHandler;
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.deleteCredential) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.deleteCredential) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.deleteCredential({ ctx, input });
-  }),
+      return UNSTABLE_HANDLER_CACHE.deleteCredential({ ctx, input });
+    }),
 
   bookingUnconfirmedCount: authedProcedure.query(async ({ ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.bookingUnconfirmedCount) {

@@ -89,13 +89,16 @@ export function UserPage(props: InferGetServerSidePropsType<typeof getServerSide
         }}
       />
 
-      <div className={classNames(shouldAlignCentrally ? "mx-auto" : "", isEmbed ? "max-w-3xl" : "")}>
+      <div
+        className={classNames(shouldAlignCentrally ? "mx-auto" : "", isEmbed ? "max-w-3xl" : "")}
+      >
         <main
           className={classNames(
             shouldAlignCentrally ? "mx-auto" : "",
             isEmbed ? "border-booker border-booker-width  bg-default rounded-md border" : "",
-            "max-w-3xl px-4 py-24"
-          )}>
+            "max-w-3xl px-4 py-24",
+          )}
+        >
           <div className="mb-8 text-center">
             <OrganizationAvatar
               imageSrc={profile.image}
@@ -121,7 +124,8 @@ export function UserPage(props: InferGetServerSidePropsType<typeof getServerSide
 
           <div
             className={classNames("rounded-md ", !isEventListEmpty && "border-subtle border")}
-            data-testid="event-types">
+            data-testid="event-types"
+          >
             {user.away ? (
               <div className="overflow-hidden rounded-sm border ">
                 <div className="text-muted  p-8 text-center">
@@ -134,7 +138,8 @@ export function UserPage(props: InferGetServerSidePropsType<typeof getServerSide
                 <div
                   key={type.id}
                   style={{ display: "flex", ...eventTypeListItemEmbedStyles }}
-                  className="bg-default border-subtle dark:bg-muted dark:hover:bg-emphasis hover:bg-muted group relative border-b first:rounded-t-md last:rounded-b-md last:border-b-0">
+                  className="bg-default border-subtle dark:bg-muted dark:hover:bg-emphasis hover:bg-muted group relative border-b first:rounded-t-md last:rounded-b-md last:border-b-0"
+                >
                   <ArrowRight className="text-emphasis  absolute right-4 top-4 h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
                   {/* Don't prefetch till the time we drop the amount of javascript in [user][type] page which is impacting score for [user] page */}
                   <div className="block w-full p-5">
@@ -150,7 +155,8 @@ export function UserPage(props: InferGetServerSidePropsType<typeof getServerSide
                           eventType: type,
                         });
                       }}
-                      data-testid="event-type-link">
+                      data-testid="event-type-link"
+                    >
                       <div className="flex flex-wrap items-center">
                         <h2 className=" text-default pr-2 text-sm font-semibold">{type.title}</h2>
                       </div>
@@ -258,7 +264,7 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (cont
   const ssr = await ssrInit(context);
   const { currentOrgDomain, isValidOrgDomain } = orgDomainConfig(
     context.req.headers.host ?? "",
-    context.params?.orgSlug
+    context.params?.orgSlug,
   );
   const usernameList = getUsernameList(context.query.user as string);
   const dataFetchStart = Date.now();
@@ -267,7 +273,8 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (cont
       username: {
         in: usernameList,
       },
-      organization: isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
+      organization:
+        isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
     },
     select: {
       id: true,

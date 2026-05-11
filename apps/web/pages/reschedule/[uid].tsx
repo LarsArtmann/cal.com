@@ -67,8 +67,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     (eventType.team
       ? "team/" + eventType.team.slug
       : dynamicEventSlugRef
-      ? booking.dynamicGroupSlugRef
-      : booking.user?.username || "rick") /* This shouldn't happen */ +
+        ? booking.dynamicGroupSlugRef
+        : booking.user?.username || "rick") /* This shouldn't happen */ +
     "/" +
     eventType?.slug;
   const destinationUrl = new URLSearchParams();

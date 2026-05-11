@@ -30,7 +30,9 @@ import { schemaBookingReferenceReadPublic } from "~/lib/validations/booking-refe
  */
 async function getHandler(req: NextApiRequest) {
   const { userId, isAdmin, prisma } = req;
-  const args: Prisma.BookingReferenceFindManyArgs = isAdmin ? {} : { where: { booking: { userId } } };
+  const args: Prisma.BookingReferenceFindManyArgs = isAdmin
+    ? {}
+    : { where: { booking: { userId } } };
   const data = await prisma.bookingReference.findMany(args);
   return { booking_references: data.map((br) => schemaBookingReferenceReadPublic.parse(br)) };
 }

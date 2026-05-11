@@ -55,7 +55,10 @@ function RoutingForm({ form, profile, ...restProps }: Props) {
   // - like a network error
   // - or he abandoned booking flow in between
   const formFillerId = formFillerIdRef.current;
-  const decidedActionWithFormResponseRef = useRef<{ action: Route["action"]; response: Response }>();
+  const decidedActionWithFormResponseRef = useRef<{
+    action: Route["action"];
+    response: Response;
+  }>();
   const router = useRouter();
 
   const onSubmit = (response: Response) => {
@@ -93,7 +96,10 @@ function RoutingForm({ form, profile, ...restProps }: Props) {
       if (!fields) {
         throw new Error("Routing Form fields must exist here");
       }
-      const allURLSearchParams = getUrlSearchParamsToForward(decidedActionWithFormResponse.response, fields);
+      const allURLSearchParams = getUrlSearchParamsToForward(
+        decidedActionWithFormResponse.response,
+        fields,
+      );
       const decidedAction = decidedActionWithFormResponse.action;
 
       //TODO: Maybe take action after successful mutation
@@ -145,7 +151,9 @@ function RoutingForm({ form, profile, ...restProps }: Props) {
                         {form.name}
                       </h1>
                       {form.description ? (
-                        <p className="min-h-10 text-subtle text-sm ltr:mr-4 rtl:ml-4">{form.description}</p>
+                        <p className="min-h-10 text-subtle text-sm ltr:mr-4 rtl:ml-4">
+                          {form.description}
+                        </p>
                       ) : null}
                     </div>
                     <FormInputFields form={form} response={response} setResponse={setResponse} />
@@ -154,7 +162,8 @@ function RoutingForm({ form, profile, ...restProps }: Props) {
                         className="dark:bg-darkmodebrand dark:text-darkmodebrandcontrast dark:hover:border-darkmodebrandcontrast dark:border-transparent"
                         loading={responseMutation.isLoading}
                         type="submit"
-                        color="primary">
+                        color="primary"
+                      >
                         {t("submit")}
                       </Button>
                     </div>
@@ -177,7 +186,10 @@ function RoutingForm({ form, profile, ...restProps }: Props) {
   );
 }
 
-function getUrlSearchParamsToForward(response: Response, fields: NonNullable<Props["form"]["fields"]>) {
+function getUrlSearchParamsToForward(
+  response: Response,
+  fields: NonNullable<Props["form"]["fields"]>,
+) {
   type Params = Record<string, string | string[]>;
   const paramsFromResponse: Params = {};
   const paramsFromCurrentUrl: Params = {};
@@ -234,7 +246,7 @@ RoutingLink.isBookingPage = true;
 
 export const getServerSideProps = async function getServerSideProps(
   context: AppGetServerSidePropsContext,
-  prisma: AppPrisma
+  prisma: AppPrisma,
 ) {
   const { params } = context;
   if (!params) {

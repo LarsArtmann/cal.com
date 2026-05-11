@@ -39,7 +39,7 @@ export const getCalendarCredentials = (credentials: Array<CredentialPayload>) =>
 export const getConnectedCalendars = async (
   calendarCredentials: ReturnType<typeof getCalendarCredentials>,
   selectedCalendars: { externalId: string }[],
-  destinationCalendarExternalId?: string
+  destinationCalendarExternalId?: string,
 ) => {
   let destinationCalendar: IntegrationCalendar | undefined;
   const connectedCalendars = await Promise.all(
@@ -63,13 +63,16 @@ export const getConnectedCalendars = async (
               ...cal,
               readOnly: cal.readOnly || false,
               primary: cal.primary || null,
-              isSelected: selectedCalendars.some((selected) => selected.externalId === cal.externalId),
+              isSelected: selectedCalendars.some(
+                (selected) => selected.externalId === cal.externalId,
+              ),
               credentialId,
             };
           }),
-          ["primary"]
+          ["primary"],
         );
-        const primary = calendars.find((item) => item.primary) ?? calendars.find((cal) => cal !== undefined);
+        const primary =
+          calendars.find((item) => item.primary) ?? calendars.find((cal) => cal !== undefined);
         if (!primary) {
           return {
             integration,
@@ -110,7 +113,7 @@ export const getConnectedCalendars = async (
           },
         };
       }
-    })
+    }),
   );
 
   return { connectedCalendars, destinationCalendar };
@@ -125,7 +128,7 @@ const cleanIntegrationKeys = (
   appIntegration: ReturnType<typeof getCalendarCredentials>[number]["integration"] & {
     credentials?: Array<CredentialPayload>;
     credential: CredentialPayload;
-  }
+  },
 ) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { credentials, credential, ...rest } = appIntegration;
@@ -137,10 +140,14 @@ export const getCachedResults = async (
   withCredentials: CredentialPayload[],
   dateFrom: string,
   dateTo: string,
-  selectedCalendars: SelectedCalendar[]
+  selectedCalendars: SelectedCalendar[],
 ): Promise<EventBusyDate[][]> => {
-  const calendarCredentials = withCredentials.filter((credential) => credential.type.endsWith("_calendar"));
-  const calendars = await Promise.all(calendarCredentials.map((credential) => getCalendar(credential)));
+  const calendarCredentials = withCredentials.filter((credential) =>
+    credential.type.endsWith("_calendar"),
+  );
+  const calendars = await Promise.all(
+    calendarCredentials.map((credential) => getCalendar(credential)),
+  );
   performance.mark("getBusyCalendarTimesStart");
   const results = calendars.map(async (c, i) => {
     /** Filter out nulls */
@@ -161,7 +168,7 @@ export const getCachedResults = async (
     performance.measure(
       `[getAvailability for ${selectedCalendarIds.join(", ")}][$1]'`,
       "eventBusyDatesStart",
-      "eventBusyDatesEnd"
+      "eventBusyDatesEnd",
     );
 
     return eventBusyDates.map((a: object) => ({ ...a, source: `${appId}` }));
@@ -171,7 +178,7 @@ export const getCachedResults = async (
   performance.measure(
     `getBusyCalendarTimes took $1 for creds ${calendarCredentials.map((cred) => cred.id)}`,
     "getBusyCalendarTimesStart",
-    "getBusyCalendarTimesEnd"
+    "getBusyCalendarTimesEnd",
   );
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return awaitedResults as any;
@@ -199,7 +206,7 @@ export const getBusyCalendarTimes = async (
   withCredentials: CredentialPayload[],
   dateFrom: string,
   dateTo: string,
-  selectedCalendars: SelectedCalendar[]
+  selectedCalendars: SelectedCalendar[],
 ) => {
   let results: EventBusyDate[][] = [];
   const months = getMonths(dateFrom, dateTo);
@@ -218,7 +225,7 @@ export const getBusyCalendarTimes = async (
 export const createEvent = async (
   credential: CredentialPayload,
   calEvent: CalendarEvent,
-  externalId?: string
+  externalId?: string,
 ): Promise<EventResult<NewCalendarEventType>> => {
   const uid: string = getUid(calEvent);
   const calendar = await getCalendar(credential);
@@ -273,7 +280,7 @@ export const updateEvent = async (
   credential: CredentialPayload,
   calEvent: CalendarEvent,
   bookingRefUid: string | null,
-  externalCalendarId: string | null
+  externalCalendarId: string | null,
 ): Promise<EventResult<NewCalendarEventType>> => {
   const uid = getUid(calEvent);
   const calendar = await getCalendar(credential);
@@ -325,7 +332,7 @@ export const updateEvent = async (
 export const deleteEvent = async (
   credential: CredentialPayload,
   uid: string,
-  event: CalendarEvent
+  event: CalendarEvent,
 ): Promise<unknown> => {
   const calendar = await getCalendar(credential);
   if (calendar) {

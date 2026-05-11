@@ -1,6 +1,11 @@
 import { z } from "zod";
 
-import { _BookingModel as Booking, _AttendeeModel, _UserModel, _PaymentModel } from "@calcom/prisma/zod";
+import {
+  _BookingModel as Booking,
+  _AttendeeModel,
+  _UserModel,
+  _PaymentModel,
+} from "@calcom/prisma/zod";
 import { extendedBookingCreateBody, iso8601 } from "@calcom/prisma/zod-utils";
 
 import { schemaQueryUserId } from "./shared/queryUserId";
@@ -16,7 +21,9 @@ const schemaBookingBaseBodyParams = Booking.pick({
   status: true,
 }).partial();
 
-export const schemaBookingCreateBodyParams = extendedBookingCreateBody.merge(schemaQueryUserId.partial());
+export const schemaBookingCreateBodyParams = extendedBookingCreateBody.merge(
+  schemaQueryUserId.partial(),
+);
 
 const schemaBookingEditParams = z
   .object({
@@ -28,7 +35,8 @@ const schemaBookingEditParams = z
   })
   .strict();
 
-export const schemaBookingEditBodyParams = schemaBookingBaseBodyParams.merge(schemaBookingEditParams);
+export const schemaBookingEditBodyParams =
+  schemaBookingBaseBodyParams.merge(schemaBookingEditParams);
 
 export const schemaBookingReadPublic = Booking.extend({
   attendees: z
@@ -38,7 +46,7 @@ export const schemaBookingReadPublic = Booking.extend({
         name: true,
         timeZone: true,
         locale: true,
-      })
+      }),
     )
     .optional(),
   user: _UserModel
@@ -55,7 +63,7 @@ export const schemaBookingReadPublic = Booking.extend({
         id: true,
         success: true,
         paymentOption: true,
-      })
+      }),
     )
     .optional(),
   responses: z.record(z.any()),

@@ -23,7 +23,9 @@ describe("Tests for Card component", () => {
     const variant = "ProfileCard";
     const structure = "card";
 
-    render(<Card title={title} description={description} variant={variant} structure={structure} />);
+    render(
+      <Card title={title} description={description} variant={variant} structure={structure} />,
+    );
 
     const cardTitle = screen.getByText(title);
     const cardDescription = screen.getByText(description);
@@ -36,7 +38,9 @@ describe("Tests for Card component", () => {
     const variant = "SidebarCard";
     const structure = "title";
 
-    render(<Card title={title} description={description} variant={variant} structure={structure} />);
+    render(
+      <Card title={title} description={description} variant={variant} structure={structure} />,
+    );
 
     const cardTitle = screen.getByText(title);
     const cardDescription = screen.getByText(description);
@@ -47,7 +51,12 @@ describe("Tests for Card component", () => {
 
   test("Should render button click", () => {
     render(
-      <Card title={title} description={description} variant="basic" actionButton={{ child: "Button" }} />
+      <Card
+        title={title}
+        description={description}
+        variant="basic"
+        actionButton={{ child: "Button" }}
+      />,
     );
 
     const buttonElement = screen.getByRole("button", { name: "Button" });
@@ -66,7 +75,7 @@ describe("Tests for Card component", () => {
           text: "Learn More",
         }}
         actionButton={{ child: "Button" }}
-      />
+      />,
     );
 
     const linkElement = screen.getByRole("button", { name: "Button" });
@@ -83,7 +92,7 @@ describe("Tests for Card component", () => {
         description={description}
         variant="SidebarCard"
         learnMore={{ href: "http://example.com", text: "Learn More" }}
-      />
+      />,
     );
 
     const cardContainer = screen.getByTestId("card-container");

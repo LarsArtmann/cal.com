@@ -266,7 +266,7 @@ export default class CloseCom {
   public customActivity = {
     type: {
       create: async (
-        data: CloseComCustomActivityTypeCreate
+        data: CloseComCustomActivityTypeCreate,
       ): Promise<CloseComCustomActivityTypeGet["data"][number]> => {
         return this._post({
           urlPath: "/custom_activity",
@@ -282,7 +282,7 @@ export default class CloseCom {
   public customField = {
     activity: {
       create: async (
-        data: CloseComCustomActivityFieldCreate
+        data: CloseComCustomActivityFieldCreate,
       ): Promise<CloseComCustomActivityFieldGet["data"][number]> => {
         return this._post({ urlPath: "/custom_field/activity/", data });
       },
@@ -292,7 +292,7 @@ export default class CloseCom {
     },
     contact: {
       create: async (
-        data: CloseComCustomContactFieldCreate
+        data: CloseComCustomContactFieldCreate,
       ): Promise<CloseComCustomContactFieldGet["data"][number]> => {
         return this._post({ urlPath: "/custom_field/contact/", data });
       },
@@ -310,7 +310,7 @@ export default class CloseCom {
   public activity = {
     custom: {
       create: async (
-        data: CloseComCustomActivityCreate
+        data: CloseComCustomActivityCreate,
       ): Promise<CloseComCustomActivityTypeGet["data"][number]> => {
         return this._post({ urlPath: "/activity/custom/", data });
       },
@@ -319,7 +319,7 @@ export default class CloseCom {
       },
       update: async (
         uuid: string,
-        data: Partial<CloseComCustomActivityCreate>
+        data: Partial<CloseComCustomActivityCreate>,
       ): Promise<CloseComCustomActivityTypeGet["data"][number]> => {
         return this._put({ urlPath: `/activity/custom/${uuid}/`, data });
       },
@@ -431,7 +431,14 @@ export const closeComQueries = {
         emails: [{ email: data.person.email, type: "office" }],
       };
     },
-    update({ person, leadId, ...rest }: { person: { name: string; email: string }; leadId?: string }) {
+    update({
+      person,
+      leadId,
+      ...rest
+    }: {
+      person: { name: string; email: string };
+      leadId?: string;
+    }) {
       return {
         ...(leadId && { lead_id: leadId }),
         name: person.name ?? person.email,

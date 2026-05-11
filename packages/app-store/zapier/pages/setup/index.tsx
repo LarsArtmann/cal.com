@@ -29,9 +29,8 @@ export default function ZapierSetup(props: IZapierSetupProps) {
       utils.viewer.apiKeys.findKeyOfType.invalidate();
     },
   });
-  const zapierCredentials: { userCredentialIds: number[] } | undefined = integrations.data?.items.find(
-    (item: { type: string }) => item.type === "zapier_automation"
-  );
+  const zapierCredentials: { userCredentialIds: number[] } | undefined =
+    integrations.data?.items.find((item: { type: string }) => item.type === "zapier_automation");
   const [credentialId] = zapierCredentials?.userCredentialIds || [false];
   const showContent = integrations.data && integrations.isSuccess && credentialId;
   const isCalDev = process.env.NEXT_PUBLIC_WEBAPP_URL === "https://app.cal.dev";
@@ -85,7 +84,11 @@ export default function ZapierSetup(props: IZapierSetupProps) {
                   <>
                     <div className="mt-8 text-sm font-semibold">Your event types:</div>
                     {!newApiKeys[""] ? (
-                      <Button color="secondary" onClick={() => generateApiKey()} className="mb-4 mt-2">
+                      <Button
+                        color="secondary"
+                        onClick={() => generateApiKey()}
+                        className="mb-4 mt-2"
+                      >
                         {t("generate_api_key")}
                       </Button>
                     ) : (
@@ -99,7 +102,8 @@ export default function ZapierSetup(props: IZapierSetupProps) {
                             <Button
                               color="secondary"
                               onClick={() => generateApiKey(team.id)}
-                              className="mb-4 mt-2">
+                              className="mb-4 mt-2"
+                            >
                               {t("generate_api_key")}
                             </Button>
                           ) : (
@@ -165,7 +169,8 @@ const CopyApiKey = ({ apiKey }: { apiKey: string }) => {
               showToast(t("api_key_copied"), "success");
             }}
             type="button"
-            className="mt-4 text-base sm:mt-0 sm:rounded-l-none">
+            className="mt-4 text-base sm:mt-0 sm:rounded-l-none"
+          >
             <Clipboard className="h-4 w-4 ltr:mr-2 rtl:ml-2" />
             {t("copy")}
           </Button>

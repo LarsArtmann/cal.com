@@ -1,10 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "private": true,
   "name": "@calcom/plausible",
   "version": "0.0.0",
-  "main": "./index.ts",
+  "private": true,
   "description": "Simple, privacy-friendly Google Analytics alternative.",
+  "main": "./index.ts",
   "dependencies": {
     "@calcom/lib": "*"
   },

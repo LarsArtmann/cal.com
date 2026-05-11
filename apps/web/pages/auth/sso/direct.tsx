@@ -11,7 +11,10 @@ import PageWrapper from "@components/PageWrapper";
 
 // This page is used to initiate the SAML authentication flow by redirecting to the SAML provider.
 // Accessible only on self-hosted Cal.com instances.
-export default function Page({ samlTenantID, samlProductID }: inferSSRProps<typeof getServerSideProps>) {
+export default function Page({
+  samlTenantID,
+  samlProductID,
+}: inferSSRProps<typeof getServerSideProps>) {
   const router = useRouter();
 
   useEffect(() => {
@@ -28,7 +31,7 @@ export default function Page({ samlTenantID, samlProductID }: inferSSRProps<type
       {
         callbackUrl: "/",
       },
-      { tenant: samlTenantID, product: samlProductID }
+      { tenant: samlTenantID, product: samlProductID },
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -8,8 +8,15 @@ import GoogleProvider from "next-auth/providers/google";
 
 import checkLicense from "@calcom/features/ee/common/server/checkLicense";
 import ImpersonationProvider from "@calcom/features/ee/impersonation/lib/ImpersonationProvider";
-import { getOrgFullDomain, subdomainSuffix } from "@calcom/features/ee/organizations/lib/orgDomains";
-import { clientSecretVerifier, hostedCal, isSAMLLoginEnabled } from "@calcom/features/ee/sso/lib/saml";
+import {
+  getOrgFullDomain,
+  subdomainSuffix,
+} from "@calcom/features/ee/organizations/lib/orgDomains";
+import {
+  clientSecretVerifier,
+  hostedCal,
+  isSAMLLoginEnabled,
+} from "@calcom/features/ee/sso/lib/saml";
 import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
 import { IS_TEAM_BILLING_ENABLED, WEBAPP_URL } from "@calcom/lib/constants";
 import { symmetricDecrypt, symmetricEncrypt } from "@calcom/lib/crypto";
@@ -30,7 +37,11 @@ const GOOGLE_API_CREDENTIALS = process.env.GOOGLE_API_CREDENTIALS || "{}";
 const { client_id: GOOGLE_CLIENT_ID, client_secret: GOOGLE_CLIENT_SECRET } =
   JSON.parse(GOOGLE_API_CREDENTIALS)?.web || {};
 const GOOGLE_LOGIN_ENABLED = process.env.GOOGLE_LOGIN_ENABLED === "true";
-const IS_GOOGLE_LOGIN_ENABLED = !!(GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET && GOOGLE_LOGIN_ENABLED);
+const IS_GOOGLE_LOGIN_ENABLED = !!(
+  GOOGLE_CLIENT_ID &&
+  GOOGLE_CLIENT_SECRET &&
+  GOOGLE_LOGIN_ENABLED
+);
 const ORGANIZATIONS_AUTOLINK =
   process.env.ORGANIZATIONS_AUTOLINK === "1" || process.env.ORGANIZATIONS_AUTOLINK === "true";
 
@@ -91,7 +102,11 @@ const providers: Provider[] = [
     credentials: {
       email: { label: "Email Address", type: "email", placeholder: "john.doe@example.com" },
       password: { label: "Password", type: "password", placeholder: "Your super secure password" },
-      totpCode: { label: "Two-factor Code", type: "input", placeholder: "Code from authenticator app" },
+      totpCode: {
+        label: "Two-factor Code",
+        type: "input",
+        placeholder: "Code from authenticator app",
+      },
       backupCode: { label: "Backup Code", type: "input", placeholder: "Two-factor backup code" },
     },
     async authorize(credentials) {
@@ -146,7 +161,11 @@ const providers: Provider[] = [
       if (!user.password && user.identityProvider == IdentityProvider.CAL) {
         throw new Error(ErrorCode.IncorrectEmailPassword);
       }
-      if (!user.password && user.identityProvider !== IdentityProvider.CAL && !credentials.totpCode) {
+      if (
+        !user.password &&
+        user.identityProvider !== IdentityProvider.CAL &&
+        !credentials.totpCode
+      ) {
         throw new Error(ErrorCode.IncorrectEmailPassword);
       }
 
@@ -169,7 +188,7 @@ const providers: Provider[] = [
         if (!user.backupCodes) throw new Error(ErrorCode.MissingBackupCodes);
 
         const backupCodes = JSON.parse(
-          symmetricDecrypt(user.backupCodes, process.env.CALENDSO_ENCRYPTION_KEY)
+          symmetricDecrypt(user.backupCodes, process.env.CALENDSO_ENCRYPTION_KEY),
         );
 
         // check if user-supplied code matches one
@@ -183,7 +202,10 @@ const providers: Provider[] = [
             id: user.id,
           },
           data: {
-            backupCodes: symmetricEncrypt(JSON.stringify(backupCodes), process.env.CALENDSO_ENCRYPTION_KEY),
+            backupCodes: symmetricEncrypt(
+              JSON.stringify(backupCodes),
+              process.env.CALENDSO_ENCRYPTION_KEY,
+            ),
           },
         });
       } else if (user.twoFactorEnabled) {
@@ -204,14 +226,14 @@ const providers: Provider[] = [
         const secret = symmetricDecrypt(user.twoFactorSecret, process.env.CALENDSO_ENCRYPTION_KEY);
         if (secret.length !== 32) {
           console.error(
-            `Two factor secret decryption failed. Expected key with length 32 but got ${secret.length}`
+            `Two factor secret decryption failed. Expected key with length 32 but got ${secret.length}`,
           );
           throw new Error(ErrorCode.InternalServerError);
         }
 
         const isValidToken = (await import("@calcom/lib/totp")).totpAuthenticatorCheck(
           credentials.totpCode,
-          secret
+          secret,
         );
         if (!isValidToken) {
           throw new Error(ErrorCode.IncorrectTwoFactorCode);
@@ -227,7 +249,8 @@ const providers: Provider[] = [
         // User's identity provider is not "CAL"
         if (user.identityProvider !== IdentityProvider.CAL) return role;
         // User's password is valid and two-factor authentication is enabled
-        if (isPasswordValid(credentials.password, false, true) && user.twoFactorEnabled) return role;
+        if (isPasswordValid(credentials.password, false, true) && user.twoFactorEnabled)
+          return role;
         // Code is running in a development environment
         if (isENVDev) return role;
         // By this point it is an ADMIN without valid security conditions
@@ -255,7 +278,7 @@ if (IS_GOOGLE_LOGIN_ENABLED) {
       clientId: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
       allowDangerousEmailAccountLinking: true,
-    })
+    }),
   );
 }
 
@@ -316,7 +339,9 @@ if (isSAMLLoginEnabled) {
           return null;
         }
 
-        const { oauthController } = await (await import("@calcom/features/ee/sso/lib/jackson")).default();
+        const { oauthController } = await (
+          await import("@calcom/features/ee/sso/lib/jackson")
+        ).default();
 
         // Fetch access token
         const { access_token } = await oauthController.token({
@@ -349,7 +374,7 @@ if (isSAMLLoginEnabled) {
           email_verified: true,
         };
       },
-    })
+    }),
   );
 }
 
@@ -358,8 +383,9 @@ providers.push(
     type: "email",
     maxAge: 10 * 60 * 60, // Magic links are valid for 10 min only
     // Here we setup the sendVerificationRequest that calls the email template with the identifier (email) and token to verify.
-    sendVerificationRequest: async (props) => (await import("./sendVerificationRequest")).default(props),
-  })
+    sendVerificationRequest: async (props) =>
+      (await import("./sendVerificationRequest")).default(props),
+  }),
 );
 
 function isNumber(n: string) {
@@ -471,7 +497,9 @@ export const AUTH_OPTIONS: AuthOptions = {
                 id: organization.id,
                 name: organization.name,
                 slug: organization.slug ?? parsedOrgMetadata?.requestedSlug ?? "",
-                fullDomain: getOrgFullDomain(organization.slug ?? parsedOrgMetadata?.requestedSlug ?? ""),
+                fullDomain: getOrgFullDomain(
+                  organization.slug ?? parsedOrgMetadata?.requestedSlug ?? "",
+                ),
                 domainSuffix: subdomainSuffix(),
               }
             : undefined,
@@ -672,7 +700,10 @@ export const AUTH_OPTIONS: AuthOptions = {
           });
 
           if (!userWithNewEmail) {
-            await prisma.user.update({ where: { id: existingUser.id }, data: { email: user.email } });
+            await prisma.user.update({
+              where: { id: existingUser.id },
+              data: { email: user.email },
+            });
             if (existingUser.twoFactorEnabled) {
               return loginWithTotp(existingUser);
             } else {
@@ -783,7 +814,11 @@ export const AUTH_OPTIONS: AuthOptions = {
               verified: true,
               organization: { connect: { id: orgId } },
               teams: {
-                create: { role: MembershipRole.MEMBER, accepted: true, team: { connect: { id: orgId } } },
+                create: {
+                  role: MembershipRole.MEMBER,
+                  accepted: true,
+                  team: { connect: { id: orgId } },
+                },
               },
             }),
           },

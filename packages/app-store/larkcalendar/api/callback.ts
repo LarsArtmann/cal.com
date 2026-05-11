@@ -91,7 +91,7 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
 
     res.redirect(
       getSafeRedirectUrl(state?.returnTo) ??
-        getInstalledAppPath({ variant: "calendar", slug: "lark-calendar" })
+        getInstalledAppPath({ variant: "calendar", slug: "lark-calendar" }),
     );
   } catch (error) {
     log.error("handle callback error", error);

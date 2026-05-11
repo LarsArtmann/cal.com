@@ -48,15 +48,17 @@ export async function getAppRegistry() {
     apps.push({
       ...app,
       category: app.category || "other",
-      installed:
-        true /* All apps from DB are considered installed by default. @TODO: Add and filter our by `enabled` property */,
+      installed: true /* All apps from DB are considered installed by default. @TODO: Add and filter our by `enabled` property */,
       installCount: installCountPerApp[dbapp.slug] || 0,
     });
   }
   return apps;
 }
 
-export async function getAppRegistryWithCredentials(userId: number, userAdminTeams: UserAdminTeams = []) {
+export async function getAppRegistryWithCredentials(
+  userId: number,
+  userAdminTeams: UserAdminTeams = [],
+) {
   // Get teamIds to grab existing credentials
   const teamIds = [];
   for (const team of userAdminTeams) {
@@ -109,7 +111,7 @@ export async function getAppRegistryWithCredentials(userId: number, userAdminTea
     if (app.dependencies) {
       dependencyData = app.dependencies.map((dependency) => {
         const dependencyInstalled = dbApps.some(
-          (dbAppIterator) => dbAppIterator.credentials.length && dbAppIterator.slug === dependency
+          (dbAppIterator) => dbAppIterator.credentials.length && dbAppIterator.slug === dependency,
         );
         // If the app marked as dependency is simply deleted from the codebase, we can have the situation where App is marked installed in DB but we couldn't get the app.
         const dependencyName = getAppFromSlug(dependency)?.name;

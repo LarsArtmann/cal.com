@@ -45,7 +45,7 @@ export const projectMutationHandler = async ({ ctx, input }: ProjectMutationHand
         "User-Agent": user_agent as string,
         Authorization: `Bearer ${credentialKey.access_token}`,
       },
-    }
+    },
   );
   const scheduleJson = await scheduleResponse.json();
   const scheduleId = scheduleJson.dock.find((dock: any) => dock.name === "schedule").id;

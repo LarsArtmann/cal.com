@@ -29,7 +29,9 @@ import { schemaEventTypeCustomInputPublic } from "~/lib/validations/event-type-c
  */
 async function getHandler(req: NextApiRequest) {
   const { userId, isAdmin, prisma } = req;
-  const args: Prisma.EventTypeCustomInputFindManyArgs = isAdmin ? {} : { where: { eventType: { userId } } };
+  const args: Prisma.EventTypeCustomInputFindManyArgs = isAdmin
+    ? {}
+    : { where: { eventType: { userId } } };
   const data = await prisma.eventTypeCustomInput.findMany(args);
   return { event_type_custom_inputs: data.map((v) => schemaEventTypeCustomInputPublic.parse(v)) };
 }

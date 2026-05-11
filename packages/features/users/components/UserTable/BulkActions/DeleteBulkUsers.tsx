@@ -37,7 +37,8 @@ export function DeleteBulkUsers({ users }: Props) {
           deleteMutation.mutateAsync({
             userIds: selectedRows.map((user) => user.id),
           });
-        }}>
+        }}
+      >
         <p className="mt-5">
           {t("remove_users_from_org_confirm", {
             userCount: selectedRows.length,

@@ -31,7 +31,7 @@ test.describe("Wipe my Cal App Test", () => {
       eventType.id,
       {},
       dayjs().endOf("day").subtract(29, "minutes").toDate(),
-      dayjs().endOf("day").toDate()
+      dayjs().endOf("day").toDate(),
     );
     await bookings.create(pro.id, pro.username, eventType.id, {});
     await bookings.create(pro.id, pro.username, eventType.id, {});

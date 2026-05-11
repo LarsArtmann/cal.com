@@ -1,7 +1,11 @@
 import prisma from "@calcom/prisma";
 import { teamMetadataSchema } from "@calcom/prisma/zod-utils";
 
-export const validateUsername = async (username: string, email: string, organizationId?: number) => {
+export const validateUsername = async (
+  username: string,
+  email: string,
+  organizationId?: number,
+) => {
   // There is an existingUser if, within an org context or not, the username matches
   // OR if the email matches AND either the email is verified
   // or both username and password are set

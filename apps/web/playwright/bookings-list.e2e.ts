@@ -54,11 +54,11 @@ test.describe("Bookings", () => {
       const secondUpcomingBooking = upcomingBookings.locator('[data-testid="booking-item"]').nth(1);
       await expect(
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        firstUpcomingBooking.locator(`text=${bookingWhereFirstUserIsAttendee!.title}`)
+        firstUpcomingBooking.locator(`text=${bookingWhereFirstUserIsAttendee!.title}`),
       ).toBeVisible();
       await expect(
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        secondUpcomingBooking.locator(`text=${bookingWhereFirstUserIsOrganizer!.title}`)
+        secondUpcomingBooking.locator(`text=${bookingWhereFirstUserIsOrganizer!.title}`),
       ).toBeVisible();
     });
   });

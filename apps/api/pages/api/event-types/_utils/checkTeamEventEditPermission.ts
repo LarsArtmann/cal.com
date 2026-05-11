@@ -7,7 +7,7 @@ import type { schemaEventTypeBaseBodyParams } from "~/lib/validations/event-type
 
 export default async function checkTeamEventEditPermission(
   req: NextApiRequest,
-  body: Pick<z.infer<typeof schemaEventTypeBaseBodyParams>, "teamId">
+  body: Pick<z.infer<typeof schemaEventTypeBaseBodyParams>, "teamId">,
 ) {
   const { prisma, userId } = req;
   if (body.teamId) {

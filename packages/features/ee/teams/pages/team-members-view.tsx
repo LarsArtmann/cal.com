@@ -91,7 +91,7 @@ const MembersView = () => {
       },
       {
         enabled: searchParams !== null,
-      }
+      },
     );
 
   const { data: team, isLoading: isTeamsLoading } = trpc.viewer.teams.get.useQuery(
@@ -100,7 +100,7 @@ const MembersView = () => {
       onError: () => {
         router.push("/settings");
       },
-    }
+    },
   );
 
   const isLoading = isOrgListLoading || isTeamsLoading;
@@ -110,11 +110,14 @@ const MembersView = () => {
   const isInviteOpen = !team?.membership.accepted;
 
   const isAdmin =
-    team && (team.membership.role === MembershipRole.OWNER || team.membership.role === MembershipRole.ADMIN);
+    team &&
+    (team.membership.role === MembershipRole.OWNER ||
+      team.membership.role === MembershipRole.ADMIN);
 
   const isOrgAdminOrOwner =
     currentOrg &&
-    (currentOrg.user.role === MembershipRole.OWNER || currentOrg.user.role === MembershipRole.ADMIN);
+    (currentOrg.user.role === MembershipRole.OWNER ||
+      currentOrg.user.role === MembershipRole.ADMIN);
 
   return (
     <>
@@ -129,7 +132,8 @@ const MembersView = () => {
               StartIcon={Plus}
               className="ml-auto"
               onClick={() => setShowMemberInvitationModal(true)}
-              data-testid="new-member-button">
+              data-testid="new-member-button"
+            >
               {t("add")}
             </Button>
           ) : (
@@ -177,7 +181,11 @@ const MembersView = () => {
             {team && (isAdmin || isOrgAdminOrOwner) && (
               <>
                 <hr className="border-subtle my-8" />
-                <MakeTeamPrivateSwitch teamId={team.id} isPrivate={team.isPrivate} disabled={isInviteOpen} />
+                <MakeTeamPrivateSwitch
+                  teamId={team.id}
+                  isPrivate={team.isPrivate}
+                  disabled={isInviteOpen}
+                />
               </>
             )}
           </div>
@@ -209,7 +217,7 @@ const MembersView = () => {
                             t("email_invite_team_bulk", {
                               userCount: data.usernameOrEmail.length,
                             }),
-                            "success"
+                            "success",
                           );
                           resetFields();
                         } else {
@@ -217,7 +225,7 @@ const MembersView = () => {
                             t("email_invite_team", {
                               email: data.usernameOrEmail,
                             }),
-                            "success"
+                            "success",
                           );
                         }
                       }
@@ -225,7 +233,7 @@ const MembersView = () => {
                     onError: (error) => {
                       showToast(error.message, "error");
                     },
-                  }
+                  },
                 );
               }}
               onSettingsOpen={() => {

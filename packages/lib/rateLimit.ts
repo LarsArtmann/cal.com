@@ -42,11 +42,12 @@ function logOnce(message: string) {
 }
 
 export function rateLimiter() {
-  const UPSATCH_ENV_FOUND = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN;
+  const UPSATCH_ENV_FOUND =
+    process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN;
 
   if (!UPSATCH_ENV_FOUND) {
     logOnce("Disabled due to not finding UPSTASH env variables");
-    return () => ({ success: true, limit: 10, remaining: 999, reset: 0 } as RatelimitResponse);
+    return () => ({ success: true, limit: 10, remaining: 999, reset: 0 }) as RatelimitResponse;
   }
 
   const redis = Redis.fromEnv();

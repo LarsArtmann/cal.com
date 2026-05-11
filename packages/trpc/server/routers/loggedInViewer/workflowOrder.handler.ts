@@ -94,7 +94,7 @@ export const workflowOrderHandler = async ({ ctx, input }: RoutingFormOrderOptio
           position,
         },
       });
-    })
+    }),
   );
 };
 
@@ -102,7 +102,7 @@ export function getPrismaWhereFromFilters(
   user: {
     id: number;
   },
-  filters: NonNullable<TFormSchema>["filters"]
+  filters: NonNullable<TFormSchema>["filters"],
 ) {
   const where = {
     OR: [] as Prisma.App_RoutingForms_FormWhereInput[],

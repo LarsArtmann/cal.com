@@ -17,7 +17,9 @@ export const KYCVerificationDialog = (props: {
 
   return (
     <Dialog open={isOpenDialog} onOpenChange={setIsOpenDialog}>
-      <DialogContent title={t("verify_team_or_account", { teamOrAccount: isTeamString || "account" })}>
+      <DialogContent
+        title={t("verify_team_or_account", { teamOrAccount: isTeamString || "account" })}
+      >
         <div>
           <div className="mb-4">
             <Trans
@@ -36,7 +38,9 @@ export const KYCVerificationDialog = (props: {
               }}
               values={{
                 supportEmail:
-                  SUPPORT_MAIL_ADDRESS === "help@cal.com" ? "support@cal.com" : SUPPORT_MAIL_ADDRESS,
+                  SUPPORT_MAIL_ADDRESS === "help@cal.com"
+                    ? "support@cal.com"
+                    : SUPPORT_MAIL_ADDRESS,
                 teamOrAccount: isTeamString || "account",
               }}
             />

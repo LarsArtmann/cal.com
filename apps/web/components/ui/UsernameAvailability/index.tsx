@@ -18,8 +18,12 @@ interface UsernameAvailabilityFieldProps {
 
 export const getUsernameAvailabilityComponent = (isPremium: boolean) => {
   if (isPremium)
-    return dynamic(() => import("./PremiumTextfield").then((m) => m.PremiumTextfield), { ssr: false });
-  return dynamic(() => import("./UsernameTextfield").then((m) => m.UsernameTextfield), { ssr: false });
+    return dynamic(() => import("./PremiumTextfield").then((m) => m.PremiumTextfield), {
+      ssr: false,
+    });
+  return dynamic(() => import("./UsernameTextfield").then((m) => m.UsernameTextfield), {
+    ssr: false,
+  });
 };
 
 export const UsernameAvailabilityField = ({
@@ -29,7 +33,8 @@ export const UsernameAvailabilityField = ({
   const searchParams = useSearchParams();
   const [user] = trpc.viewer.me.useSuspenseQuery();
   const [currentUsernameState, setCurrentUsernameState] = useState(user.username || "");
-  const { username: usernameFromQuery, setQuery: setUsernameFromQuery } = useRouterQuery("username");
+  const { username: usernameFromQuery, setQuery: setUsernameFromQuery } =
+    useRouterQuery("username");
   const { username: currentUsername, setQuery: setCurrentUsername } =
     searchParams?.get("username") && user.username === null
       ? { username: usernameFromQuery, setQuery: setUsernameFromQuery }
@@ -40,7 +45,9 @@ export const UsernameAvailabilityField = ({
     },
   });
 
-  const UsernameAvailability = getUsernameAvailabilityComponent(!IS_SELF_HOSTED && !user.organization?.id);
+  const UsernameAvailability = getUsernameAvailabilityComponent(
+    !IS_SELF_HOSTED && !user.organization?.id,
+  );
   const orgBranding = useOrgBranding();
 
   const usernamePrefix = orgBranding

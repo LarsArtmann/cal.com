@@ -27,7 +27,8 @@ export default function HelpscoutMenuItem(props: HelpscoutMenuItemProps) {
     <>
       <button
         onClick={handleClick}
-        className="hover:bg-subtle hover:text-emphasis text-default flex w-full px-5 py-2 pr-4 text-sm font-medium">
+        className="hover:bg-subtle hover:text-emphasis text-default flex w-full px-5 py-2 pr-4 text-sm font-medium"
+      >
         {t("contact_support")}
       </button>
 

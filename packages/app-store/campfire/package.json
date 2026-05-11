@@ -1,10 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "private": true,
   "name": "@calcom/campfire",
   "version": "0.0.0",
-  "main": "./index.ts",
+  "private": true,
   "description": "Feel connected with your remote team. Team events, new hire onboardings, coffee chats, all on Campfire. No more awkward Zoom calls.\r\r",
+  "main": "./index.ts",
   "dependencies": {
     "@calcom/lib": "*"
   },

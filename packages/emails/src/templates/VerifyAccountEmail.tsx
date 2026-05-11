@@ -14,7 +14,7 @@ export type EmailVerifyLink = {
 };
 
 export const VerifyAccountEmail = (
-  props: EmailVerifyLink & Partial<React.ComponentProps<typeof BaseEmailHtml>>
+  props: EmailVerifyLink & Partial<React.ComponentProps<typeof BaseEmailHtml>>,
 ) => {
   return (
     <BaseEmailHtml subject={props.language("verify_email_subject", { appName: APP_NAME })}>
@@ -23,7 +23,8 @@ export const VerifyAccountEmail = (
           fontWeight: 600,
           fontSize: "32px",
           lineHeight: "38px",
-        }}>
+        }}
+      >
         <>{props.language("verify_email_email_header")}</>
       </p>
       <p style={{ fontWeight: 400 }}>
@@ -32,7 +33,10 @@ export const VerifyAccountEmail = (
       <p style={{ fontWeight: 400, lineHeight: "24px" }}>
         <>{props.language("verify_email_email_body", { appName: APP_NAME })}</>
       </p>
-      <CallToAction label={props.language("verify_email_email_button")} href={props.verificationEmailLink} />
+      <CallToAction
+        label={props.language("verify_email_email_button")}
+        href={props.verificationEmailLink}
+      />
 
       <div style={{ lineHeight: "6px" }}>
         <p style={{ fontWeight: 400, lineHeight: "24px" }}>
@@ -49,7 +53,8 @@ export const VerifyAccountEmail = (
               href={`mailto:${SUPPORT_MAIL_ADDRESS}`}
               style={{ color: "#3E3E3E" }}
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               <>{props.language("the_calcom_team", { companyName: SENDER_NAME })}</>
             </a>
           </>

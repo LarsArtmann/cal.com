@@ -65,7 +65,8 @@ export const SetPasswordForm = () => {
             setServerErrorMessage(null);
             setPasswordMutation.mutate({ newPassword: v.password });
           }
-        }}>
+        }}
+      >
         <div>
           {serverErrorMessage && (
             <div className="mb-4">
@@ -97,11 +98,14 @@ export const SetPasswordForm = () => {
 
         <div className="flex">
           <Button
-            disabled={setPasswordFormMethods.formState.isSubmitting || setPasswordMutation.isLoading}
+            disabled={
+              setPasswordFormMethods.formState.isSubmitting || setPasswordMutation.isLoading
+            }
             color="primary"
             EndIcon={ArrowRight}
             type="submit"
-            className="w-full justify-center">
+            className="w-full justify-center"
+          >
             {t("continue")}
           </Button>
         </div>

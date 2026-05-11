@@ -7,7 +7,13 @@ import { Message } from "../components/Message";
 import { BaseAppFork, generateAppFiles } from "../core";
 import { getApp } from "../utils/getApp";
 
-export default function DeleteForm({ slug, action }: { slug: string; action: "delete" | "delete-template" }) {
+export default function DeleteForm({
+  slug,
+  action,
+}: {
+  slug: string;
+  action: "delete" | "delete-template";
+}) {
   const [confirmedAppSlug, setConfirmedAppSlug] = useState("");
   const [state, setState] = useState<
     | "INITIALIZED"

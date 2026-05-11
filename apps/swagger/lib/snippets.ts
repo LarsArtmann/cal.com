@@ -104,8 +104,8 @@ export const SnippedGenerator = {
                     let snippet;
                     try {
                       // set request snippet content
-                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets).snippets[0]
-                        .content;
+                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets)
+                        .snippets[0].content;
                     } catch (err) {
                       // set to error in case it happens the npm package has some flaws
                       snippet = JSON.stringify(snippet);
@@ -113,7 +113,7 @@ export const SnippedGenerator = {
                     // return stringified snipped
                     return snippet;
                   },
-                })
+                }),
               )
               .set(
                 // key
@@ -132,8 +132,8 @@ export const SnippedGenerator = {
                     let snippet;
                     try {
                       // set request snippet content
-                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets).snippets[0]
-                        .content;
+                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets)
+                        .snippets[0].content;
                     } catch (err) {
                       // set to error in case it happens the npm package has some flaws
                       snippet = JSON.stringify(snippet);
@@ -141,7 +141,7 @@ export const SnippedGenerator = {
                     // return stringified snipped
                     return snippet;
                   },
-                })
+                }),
               )
               .set(
                 // key
@@ -160,8 +160,8 @@ export const SnippedGenerator = {
                     let snippet;
                     try {
                       // set request snippet content
-                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets).snippets[0]
-                        .content;
+                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets)
+                        .snippets[0].content;
                     } catch (err) {
                       // set to error in case it happens the npm package has some flaws
                       snippet = JSON.stringify(snippet);
@@ -169,7 +169,7 @@ export const SnippedGenerator = {
                     // return stringified snipped
                     return snippet;
                   },
-                })
+                }),
               )
               .set(
                 // key
@@ -188,8 +188,8 @@ export const SnippedGenerator = {
                     let snippet;
                     try {
                       // set request snippet content
-                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets).snippets[0]
-                        .content;
+                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets)
+                        .snippets[0].content;
                     } catch (err) {
                       // set to error in case it happens the npm package has some flaws
                       snippet = JSON.stringify(snippet);
@@ -197,8 +197,9 @@ export const SnippedGenerator = {
                     // return stringified snipped
                     return snippet;
                   },
-                })
+                }),
               )
+
               //   .set(
               //     // key
               //     "java",
@@ -280,8 +281,8 @@ export const SnippedGenerator = {
                     let snippet;
                     try {
                       // set request snippet content
-                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets).snippets[0]
-                        .content;
+                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets)
+                        .snippets[0].content;
                     } catch (err) {
                       // set to error in case it happens the npm package has some flaws
                       snippet = JSON.stringify(snippet);
@@ -289,7 +290,7 @@ export const SnippedGenerator = {
                     // return stringified snipped
                     return snippet;
                   },
-                })
+                }),
               )
               .set(
                 // key
@@ -308,8 +309,8 @@ export const SnippedGenerator = {
                     let snippet;
                     try {
                       // set request snippet content
-                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets).snippets[0]
-                        .content;
+                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets)
+                        .snippets[0].content;
                     } catch (err) {
                       // set to error in case it happens the npm package has some flaws
                       snippet = JSON.stringify(snippet);
@@ -317,7 +318,7 @@ export const SnippedGenerator = {
                     // return stringified snipped
                     return snippet;
                   },
-                })
+                }),
               )
               .set(
                 // key
@@ -336,8 +337,8 @@ export const SnippedGenerator = {
                     let snippet;
                     try {
                       // set request snippet content
-                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets).snippets[0]
-                        .content;
+                      snippet = OpenAPISnippet.getEndpointSnippets(spec, path, method, targets)
+                        .snippets[0].content;
                     } catch (err) {
                       // set to error in case it happens the npm package has some flaws
                       snippet = JSON.stringify(snippet);
@@ -345,7 +346,7 @@ export const SnippedGenerator = {
                     // return stringified snipped
                     return snippet;
                   },
-                })
+                }),
               ),
       },
     },

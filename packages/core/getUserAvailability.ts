@@ -37,7 +37,10 @@ const availabilitySchema = z
     duration: z.number().optional(),
     withSource: z.boolean().optional(),
   })
-  .refine((data) => !!data.username || !!data.userId, "Either username or userId should be filled in.");
+  .refine(
+    (data) => !!data.username || !!data.userId,
+    "Either username or userId should be filled in.",
+  );
 
 const getEventType = async (id: number) => {
   const eventType = await prisma.eventType.findUnique({
@@ -114,163 +117,182 @@ export const getCurrentSeats = (eventTypeId: number, dateFrom: Dayjs, dateTo: Da
 export type CurrentSeats = Awaited<ReturnType<typeof getCurrentSeats>>;
 
 /** This should be called getUsersWorkingHoursAndBusySlots (...and remaining seats, and final timezone) */
-export const getUserAvailability = async function getUsersWorkingHoursLifeTheUniverseAndEverythingElse(
-  query: {
-    withSource?: boolean;
-    username?: string;
-    userId?: number;
-    dateFrom: string;
-    dateTo: string;
-    eventTypeId?: number;
-    afterEventBuffer?: number;
-    beforeEventBuffer?: number;
-    duration?: number;
-  },
-  initialData?: {
-    user?: User;
-    eventType?: EventType;
-    currentSeats?: CurrentSeats;
-    rescheduleUid?: string | null;
-    currentBookings?: (Pick<Booking, "id" | "uid" | "userId" | "startTime" | "endTime" | "title"> & {
-      eventType: Pick<
-        PrismaEventType,
-        "id" | "beforeEventBuffer" | "afterEventBuffer" | "seatsPerTimeSlot"
-      > | null;
-      _count?: {
-        seatsReferences: number;
-      };
-    })[];
-  }
-) {
-  const { username, userId, dateFrom, dateTo, eventTypeId, afterEventBuffer, beforeEventBuffer, duration } =
-    availabilitySchema.parse(query);
+export const getUserAvailability =
+  async function getUsersWorkingHoursLifeTheUniverseAndEverythingElse(
+    query: {
+      withSource?: boolean;
+      username?: string;
+      userId?: number;
+      dateFrom: string;
+      dateTo: string;
+      eventTypeId?: number;
+      afterEventBuffer?: number;
+      beforeEventBuffer?: number;
+      duration?: number;
+    },
+    initialData?: {
+      user?: User;
+      eventType?: EventType;
+      currentSeats?: CurrentSeats;
+      rescheduleUid?: string | null;
+      currentBookings?: (Pick<
+        Booking,
+        "id" | "uid" | "userId" | "startTime" | "endTime" | "title"
+      > & {
+        eventType: Pick<
+          PrismaEventType,
+          "id" | "beforeEventBuffer" | "afterEventBuffer" | "seatsPerTimeSlot"
+        > | null;
+        _count?: {
+          seatsReferences: number;
+        };
+      })[];
+    },
+  ) {
+    const {
+      username,
+      userId,
+      dateFrom,
+      dateTo,
+      eventTypeId,
+      afterEventBuffer,
+      beforeEventBuffer,
+      duration,
+    } = availabilitySchema.parse(query);
 
-  if (!dateFrom.isValid() || !dateTo.isValid()) {
-    throw new HttpError({ statusCode: 400, message: "Invalid time range given." });
-  }
+    if (!dateFrom.isValid() || !dateTo.isValid()) {
+      throw new HttpError({ statusCode: 400, message: "Invalid time range given." });
+    }
 
-  const where: Prisma.UserWhereInput = {};
-  if (username) where.username = username;
-  if (userId) where.id = userId;
+    const where: Prisma.UserWhereInput = {};
+    if (username) where.username = username;
+    if (userId) where.id = userId;
 
-  const user = initialData?.user || (await getUser(where));
-  if (!user) throw new HttpError({ statusCode: 404, message: "No user found" });
+    const user = initialData?.user || (await getUser(where));
+    if (!user) throw new HttpError({ statusCode: 404, message: "No user found" });
 
-  let eventType: EventType | null = initialData?.eventType || null;
-  if (!eventType && eventTypeId) eventType = await getEventType(eventTypeId);
+    let eventType: EventType | null = initialData?.eventType || null;
+    if (!eventType && eventTypeId) eventType = await getEventType(eventTypeId);
 
-  /* Current logic is if a booking is in a time slot mark it as busy, but seats can have more than one attendee so grab
+    /* Current logic is if a booking is in a time slot mark it as busy, but seats can have more than one attendee so grab
     current bookings with a seats event type and display them on the calendar, even if they are full */
-  let currentSeats: CurrentSeats | null = initialData?.currentSeats || null;
-  if (!currentSeats && eventType?.seatsPerTimeSlot) {
-    currentSeats = await getCurrentSeats(eventType.id, dateFrom, dateTo);
-  }
+    let currentSeats: CurrentSeats | null = initialData?.currentSeats || null;
+    if (!currentSeats && eventType?.seatsPerTimeSlot) {
+      currentSeats = await getCurrentSeats(eventType.id, dateFrom, dateTo);
+    }
 
-  const bookingLimits = parseBookingLimit(eventType?.bookingLimits);
-  const durationLimits = parseDurationLimit(eventType?.durationLimits);
+    const bookingLimits = parseBookingLimit(eventType?.bookingLimits);
+    const durationLimits = parseDurationLimit(eventType?.durationLimits);
 
-  const busyTimesFromLimits =
-    eventType && (bookingLimits || durationLimits)
-      ? await getBusyTimesFromLimits(
-          bookingLimits,
-          durationLimits,
-          dateFrom,
-          dateTo,
-          duration,
-          eventType,
-          user.id
-        )
-      : [];
+    const busyTimesFromLimits =
+      eventType && (bookingLimits || durationLimits)
+        ? await getBusyTimesFromLimits(
+            bookingLimits,
+            durationLimits,
+            dateFrom,
+            dateTo,
+            duration,
+            eventType,
+            user.id,
+          )
+        : [];
 
-  // TODO: only query what we need after applying limits (shrink date range)
-  const getBusyTimesStart = dateFrom.toISOString();
-  const getBusyTimesEnd = dateTo.toISOString();
+    // TODO: only query what we need after applying limits (shrink date range)
+    const getBusyTimesStart = dateFrom.toISOString();
+    const getBusyTimesEnd = dateTo.toISOString();
 
-  const busyTimes = await getBusyTimes({
-    credentials: user.credentials,
-    startTime: getBusyTimesStart,
-    endTime: getBusyTimesEnd,
-    eventTypeId,
-    userId: user.id,
-    userEmail: user.email,
-    username: `${user.username}`,
-    beforeEventBuffer,
-    afterEventBuffer,
-    selectedCalendars: user.selectedCalendars,
-    seatedEvent: !!eventType?.seatsPerTimeSlot,
-    rescheduleUid: initialData?.rescheduleUid || null,
-    duration,
-    currentBookings: initialData?.currentBookings,
-  });
-
-  const detailedBusyTimes: EventBusyDetails[] = [
-    ...busyTimes.map((a) => ({
-      ...a,
-      start: dayjs(a.start).toISOString(),
-      end: dayjs(a.end).toISOString(),
-      title: a.title,
-      source: query.withSource ? a.source : undefined,
-    })),
-    ...busyTimesFromLimits,
-  ];
-
-  const userSchedule = user.schedules.filter(
-    (schedule) => !user?.defaultScheduleId || schedule.id === user?.defaultScheduleId
-  )[0];
-
-  const schedule =
-    !eventType?.metadata?.config?.useHostSchedulesForTeamEvent && eventType?.schedule
-      ? eventType.schedule
-      : userSchedule;
-
-  const startGetWorkingHours = performance.now();
-
-  const timeZone = schedule?.timeZone || eventType?.timeZone || user.timeZone;
-
-  const availability = (
-    schedule.availability || (eventType?.availability.length ? eventType.availability : user.availability)
-  ).map((a) => ({
-    ...a,
-    userId: user.id,
-  }));
-
-  const workingHours = getWorkingHours({ timeZone }, availability);
-
-  const endGetWorkingHours = performance.now();
-  logger.debug(`getWorkingHours took ${endGetWorkingHours - startGetWorkingHours}ms for userId ${userId}`);
-
-  const dateOverrides = availability
-    .filter((availability) => !!availability.date)
-    .map((override) => {
-      const startTime = dayjs.utc(override.startTime);
-      const endTime = dayjs.utc(override.endTime);
-      return {
-        start: dayjs.utc(override.date).hour(startTime.hour()).minute(startTime.minute()).toDate(),
-        end: dayjs.utc(override.date).hour(endTime.hour()).minute(endTime.minute()).toDate(),
-      };
+    const busyTimes = await getBusyTimes({
+      credentials: user.credentials,
+      startTime: getBusyTimesStart,
+      endTime: getBusyTimesEnd,
+      eventTypeId,
+      userId: user.id,
+      userEmail: user.email,
+      username: `${user.username}`,
+      beforeEventBuffer,
+      afterEventBuffer,
+      selectedCalendars: user.selectedCalendars,
+      seatedEvent: !!eventType?.seatsPerTimeSlot,
+      rescheduleUid: initialData?.rescheduleUid || null,
+      duration,
+      currentBookings: initialData?.currentBookings,
     });
 
-  const dateRanges = buildDateRanges({
-    dateFrom,
-    dateTo,
-    availability,
-    timeZone,
-  });
+    const detailedBusyTimes: EventBusyDetails[] = [
+      ...busyTimes.map((a) => ({
+        ...a,
+        start: dayjs(a.start).toISOString(),
+        end: dayjs(a.end).toISOString(),
+        title: a.title,
+        source: query.withSource ? a.source : undefined,
+      })),
+      ...busyTimesFromLimits,
+    ];
 
-  const formattedBusyTimes = detailedBusyTimes.map((busy) => ({
-    start: dayjs(busy.start),
-    end: dayjs(busy.end),
-  }));
+    const userSchedule = user.schedules.filter(
+      (schedule) => !user?.defaultScheduleId || schedule.id === user?.defaultScheduleId,
+    )[0];
 
-  return {
-    busy: detailedBusyTimes,
-    timeZone,
-    dateRanges: subtract(dateRanges, formattedBusyTimes),
-    workingHours,
-    dateOverrides,
-    currentSeats,
+    const schedule =
+      !eventType?.metadata?.config?.useHostSchedulesForTeamEvent && eventType?.schedule
+        ? eventType.schedule
+        : userSchedule;
+
+    const startGetWorkingHours = performance.now();
+
+    const timeZone = schedule?.timeZone || eventType?.timeZone || user.timeZone;
+
+    const availability = (
+      schedule.availability ||
+      (eventType?.availability.length ? eventType.availability : user.availability)
+    ).map((a) => ({
+      ...a,
+      userId: user.id,
+    }));
+
+    const workingHours = getWorkingHours({ timeZone }, availability);
+
+    const endGetWorkingHours = performance.now();
+    logger.debug(
+      `getWorkingHours took ${endGetWorkingHours - startGetWorkingHours}ms for userId ${userId}`,
+    );
+
+    const dateOverrides = availability
+      .filter((availability) => !!availability.date)
+      .map((override) => {
+        const startTime = dayjs.utc(override.startTime);
+        const endTime = dayjs.utc(override.endTime);
+        return {
+          start: dayjs
+            .utc(override.date)
+            .hour(startTime.hour())
+            .minute(startTime.minute())
+            .toDate(),
+          end: dayjs.utc(override.date).hour(endTime.hour()).minute(endTime.minute()).toDate(),
+        };
+      });
+
+    const dateRanges = buildDateRanges({
+      dateFrom,
+      dateTo,
+      availability,
+      timeZone,
+    });
+
+    const formattedBusyTimes = detailedBusyTimes.map((busy) => ({
+      start: dayjs(busy.start),
+      end: dayjs(busy.end),
+    }));
+
+    return {
+      busy: detailedBusyTimes,
+      timeZone,
+      dateRanges: subtract(dateRanges, formattedBusyTimes),
+      workingHours,
+      dateOverrides,
+      currentSeats,
+    };
   };
-};
 
 const getPeriodStartDatesBetween = (dateFrom: Dayjs, dateTo: Dayjs, period: IntervalLimitUnit) => {
   const dates = [];
@@ -351,7 +373,7 @@ const getBusyTimesFromLimits = async (
   dateTo: Dayjs,
   duration: number | undefined,
   eventType: NonNullable<EventType>,
-  userId: number
+  userId: number,
 ) => {
   performance.mark("limitsStart");
 
@@ -363,7 +385,10 @@ const getBusyTimesFromLimits = async (
 
   // expand date ranges by absolute minimum required to apply limits
   // (yearly limits are handled separately for performance)
-  for (const key of ["PER_MONTH", "PER_WEEK", "PER_DAY"] as Exclude<keyof IntervalLimit, "PER_YEAR">[]) {
+  for (const key of ["PER_MONTH", "PER_WEEK", "PER_DAY"] as Exclude<
+    keyof IntervalLimit,
+    "PER_YEAR"
+  >[]) {
     if (bookingLimits?.[key] || durationLimits?.[key]) {
       const unit = intervalLimitKeyToUnit(key);
       limitDateFrom = dayjs.min(limitDateFrom, dateFrom.startOf(unit));
@@ -388,10 +413,14 @@ const getBusyTimesFromLimits = async (
       dateFrom,
       dateTo,
       eventType.id,
-      limitManager
+      limitManager,
     );
     performance.mark("bookingLimitsEnd");
-    performance.measure(`checking booking limits took $1'`, "bookingLimitsStart", "bookingLimitsEnd");
+    performance.measure(
+      `checking booking limits took $1'`,
+      "bookingLimitsStart",
+      "bookingLimitsEnd",
+    );
   }
 
   // ..than adding up durations (especially for the whole year)
@@ -404,10 +433,14 @@ const getBusyTimesFromLimits = async (
       dateTo,
       duration,
       eventType,
-      limitManager
+      limitManager,
     );
     performance.mark("durationLimitsEnd");
-    performance.measure(`checking duration limits took $1'`, "durationLimitsStart", "durationLimitsEnd");
+    performance.measure(
+      `checking duration limits took $1'`,
+      "durationLimitsStart",
+      "durationLimitsEnd",
+    );
   }
 
   performance.mark("limitsEnd");
@@ -422,7 +455,7 @@ const getBusyTimesFromBookingLimits = async (
   dateFrom: Dayjs,
   dateTo: Dayjs,
   eventTypeId: number,
-  limitManager: LimitManager
+  limitManager: LimitManager,
 ) => {
   for (const key of descendingLimitKeys) {
     const limit = bookingLimits?.[key];
@@ -477,7 +510,7 @@ const getBusyTimesFromDurationLimits = async (
   dateTo: Dayjs,
   duration: number | undefined,
   eventType: NonNullable<EventType>,
-  limitManager: LimitManager
+  limitManager: LimitManager,
 ) => {
   for (const key of descendingLimitKeys) {
     const limit = durationLimits?.[key];

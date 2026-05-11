@@ -73,7 +73,7 @@ const useRecordingDownload = () => {
           window.location.href = data.download_link;
         }
       },
-    }
+    },
   );
 
   return {
@@ -92,7 +92,13 @@ const useRecordingDownload = () => {
   };
 };
 
-const ViewRecordingsList = ({ roomName, hasTeamPlan }: { roomName: string; hasTeamPlan: boolean }) => {
+const ViewRecordingsList = ({
+  roomName,
+  hasTeamPlan,
+}: {
+  roomName: string;
+  hasTeamPlan: boolean;
+}) => {
   const { t } = useLocale();
   const { setRecordingId, isFetching, recordingId } = useRecordingDownload();
   const router = useRouter();
@@ -101,7 +107,7 @@ const ViewRecordingsList = ({ roomName, hasTeamPlan }: { roomName: string; hasTe
     { roomName },
     {
       suspense: true,
-    }
+    },
   );
 
   const handleDownloadClick = async (recordingId: string) => {
@@ -117,26 +123,31 @@ const ViewRecordingsList = ({ roomName, hasTeamPlan }: { roomName: string; hasTe
             return (
               <div
                 className="border-subtle flex w-full items-center justify-between rounded-md border px-4 py-2"
-                key={recording.id}>
+                key={recording.id}
+              >
                 <div className="flex flex-col">
                   <h1 className="text-sm font-semibold">
                     {t("recording")} {index + 1}
                   </h1>
-                  <p className="text-subtle text-sm font-normal">{convertSecondsToMs(recording.duration)}</p>
+                  <p className="text-subtle text-sm font-normal">
+                    {convertSecondsToMs(recording.duration)}
+                  </p>
                 </div>
                 {hasTeamPlan ? (
                   <Button
                     StartIcon={Download}
                     className="ml-4 lg:ml-0"
                     loading={isFetching && recordingId === recording.id}
-                    onClick={() => handleDownloadClick(recording.id)}>
+                    onClick={() => handleDownloadClick(recording.id)}
+                  >
                     {t("download")}
                   </Button>
                 ) : (
                   <Button
                     tooltip={t("upgrade_to_access_recordings_description")}
                     className="ml-4 lg:ml-0"
-                    onClick={() => router.push("/teams")}>
+                    onClick={() => router.push("/teams")}
+                  >
                     {t("upgrade")}
                   </Button>
                 )}
@@ -145,7 +156,8 @@ const ViewRecordingsList = ({ roomName, hasTeamPlan }: { roomName: string; hasTe
           })}
         </div>
       ) : (
-        (!recordings || (recordings && "total_count" in recordings && recordings?.total_count === 0)) && (
+        (!recordings ||
+          (recordings && "total_count" in recordings && recordings?.total_count === 0)) && (
           <p className="font-semibold">{t("no_recordings_found")}</p>
         )
       )}
@@ -160,11 +172,11 @@ export const ViewRecordingsDialog = (props: IViewRecordingsDialog) => {
   const { hasTeamPlan, isLoading: isTeamPlanStatusLoading } = useHasTeamPlan();
 
   const roomName =
-    booking?.references?.find((reference: PartialReference) => reference.type === "daily_video")?.meetingId ??
-    undefined;
+    booking?.references?.find((reference: PartialReference) => reference.type === "daily_video")
+      ?.meetingId ?? undefined;
 
   const subtitle = `${booking?.title} - ${dayjs(booking?.startTime).format("ddd")} ${dayjs(
-    booking?.startTime
+    booking?.startTime,
   ).format("D")}, ${dayjs(booking?.startTime).format("MMM")} ${getTimeSpan({
     startTime: booking?.startTime,
     endTime: booking?.endTime,

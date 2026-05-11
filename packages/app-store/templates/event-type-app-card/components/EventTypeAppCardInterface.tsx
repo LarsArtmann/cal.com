@@ -24,15 +24,19 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
         }
       }}
       switchChecked={enabled}
-      teamId={eventType.team?.id || undefined}>
+      teamId={eventType.team?.id || undefined}
+    >
       <div className="mt-2 text-sm">
         <div className="flex">
-          <span className="ltr:mr-2 rtl:ml-2">{isSunrise ? <Sunrise /> : <Sunset />}</span>I am an AppCard for
-          Event with Title: {eventType.title}
+          <span className="ltr:mr-2 rtl:ml-2">{isSunrise ? <Sunrise /> : <Sunset />}</span>I am an
+          AppCard for Event with Title: {eventType.title}
         </div>{" "}
         <div className="mt-2">
-          Edit <span className="italic">packages/app-store/{app.slug}/EventTypeAppCardInterface.tsx</span> to
-          play with me
+          Edit{" "}
+          <span className="italic">
+            packages/app-store/{app.slug}/EventTypeAppCardInterface.tsx
+          </span>{" "}
+          to play with me
         </div>
       </div>
     </AppCard>

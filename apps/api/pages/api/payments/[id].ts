@@ -38,7 +38,7 @@ import {
  */
 export async function paymentById(
   { method, query, userId, prisma }: NextApiRequest,
-  res: NextApiResponse<PaymentResponse>
+  res: NextApiResponse<PaymentResponse>,
 ) {
   const safeQuery = schemaQueryIdParseInt.safeParse(query);
   if (safeQuery.success && method === "GET") {
@@ -60,7 +60,7 @@ export async function paymentById(
         res.status(404).json({
           message: `Payment with id: ${safeQuery.data.id} not found`,
           error,
-        })
+        }),
       );
   }
 }

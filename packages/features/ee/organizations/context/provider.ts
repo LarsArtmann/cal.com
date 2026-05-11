@@ -33,7 +33,8 @@ const OrganizationBrandingContext = createContext<{ orgBrand: OrganizationBrandi
  */
 export function useOrgBranding() {
   const orgBrandingContext = useContext(OrganizationBrandingContext);
-  if (!orgBrandingContext) throw new Error("Error: useOrgBranding was used outside of OrgBrandingProvider.");
+  if (!orgBrandingContext)
+    throw new Error("Error: useOrgBranding was used outside of OrgBrandingProvider.");
   return orgBrandingContext.orgBrand;
 }
 
@@ -64,5 +65,9 @@ export function OrgBrandingProvider<F extends { orgBrand: OrganizationBranding }
   value: F;
   children: React.ReactNode;
 }) {
-  return createElement(OrganizationBrandingContext.Provider, { value: props.value }, props.children);
+  return createElement(
+    OrganizationBrandingContext.Provider,
+    { value: props.value },
+    props.children,
+  );
 }

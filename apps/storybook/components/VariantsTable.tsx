@@ -21,8 +21,9 @@ export function VariantsTable({
       id="light-variant"
       className={classNames(
         isDark &&
-          "relative py-8 before:absolute before:left-0 before:top-0 before:block before:h-full before:w-screen before:bg-[#1C1C1C]"
-      )}>
+          "relative py-8 before:absolute before:left-0 before:top-0 before:block before:h-full before:w-screen before:bg-[#1C1C1C]",
+      )}
+    >
       <div className="z-1 relative mx-auto w-full max-w-[1200px] overflow-auto pr-8 pt-6">
         <table>
           <RowTitles titles={titles} />
@@ -30,7 +31,8 @@ export function VariantsTable({
             <tr className="p-2 pb-6 pr-6" key={column.props.variant}>
               <th
                 className="p-2 pb-6 pr-6 text-left text-sm font-normal text-[#8F8F8F]"
-                key={column.props.variant}>
+                key={column.props.variant}
+              >
                 {column.props.variant}
               </th>
               {React.Children.count(column.props.children) &&

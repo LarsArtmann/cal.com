@@ -10,7 +10,7 @@ const smsReminderTemplate = (
   eventName?: string,
   timeZone?: string,
   attendee?: string,
-  name?: string
+  name?: string,
 ) => {
   const currentTimeFormat = timeFormat || TimeFormat.TWELVE_HOUR;
 

@@ -9,7 +9,9 @@ import { Avatar } from "@calcom/ui";
 
 type TeamType = Omit<NonNullable<TeamWithMembers>, "inviteToken">;
 type MembersType = TeamType["members"];
-type MemberType = Pick<MembersType[number], "id" | "name" | "bio" | "username"> & { safeBio: string | null };
+type MemberType = Pick<MembersType[number], "id" | "name" | "bio" | "username"> & {
+  safeBio: string | null;
+};
 type TeamTypeWithSafeHtml = Omit<TeamType, "members" | "inviteToken"> & { members: MemberType[] };
 
 const Member = ({ member, teamName }: { member: MemberType; teamName: string | null }) => {
@@ -23,7 +25,11 @@ const Member = ({ member, teamName }: { member: MemberType; teamName: string | n
   return (
     <Link key={member.id} href={{ pathname: `/${member.username}`, query: queryParamsToForward }}>
       <div className="sm:min-w-80 sm:max-w-80 bg-default hover:bg-muted border-subtle group flex min-h-full flex-col space-y-2 rounded-md border p-4 hover:cursor-pointer">
-        <Avatar size="md" alt={member.name || ""} imageSrc={"/" + member.username + "/avatar.png"} />
+        <Avatar
+          size="md"
+          alt={member.name || ""}
+          imageSrc={"/" + member.username + "/avatar.png"}
+        />
         <section className="mt-2 line-clamp-4 w-full space-y-1">
           <p className="text-default font-medium">{member.name}</p>
           <div className="text-subtle line-clamp-3 overflow-ellipsis text-sm font-normal">
@@ -52,7 +58,9 @@ const Members = ({ members, teamName }: { members: MemberType[]; teamName: strin
   return (
     <section className="lg:min-w-lg mx-auto flex min-w-full max-w-5xl flex-wrap justify-center gap-x-6 gap-y-6">
       {members.map((member) => {
-        return member.username !== null && <Member key={member.id} member={member} teamName={teamName} />;
+        return (
+          member.username !== null && <Member key={member.id} member={member} teamName={teamName} />
+        );
       })}
     </section>
   );

@@ -38,7 +38,7 @@ async function leastRecentlyBookedUser<T extends Pick<User, "id" | "email">>({
       keyValuePair[user.id] = user.bookings[0]?.createdAt || new Date(0);
       return keyValuePair;
     },
-    {}
+    {},
   );
 
   const bookings = await prisma.booking.findMany({
@@ -72,15 +72,18 @@ async function leastRecentlyBookedUser<T extends Pick<User, "id" | "email">>({
     },
   });
 
-  const attendeeUserIdAndAtCreatedPair = bookings.reduce((aggregate: { [userId: number]: Date }, booking) => {
-    availableUsers.forEach((user) => {
-      if (aggregate[user.id]) return; // Bookings are ordered DESC, so if the reducer aggregate
-      // contains the user id, it's already got the most recent booking marked.
-      if (!booking.attendees.map((attendee) => attendee.email).includes(user.email)) return;
-      aggregate[user.id] = booking.createdAt;
-    });
-    return aggregate;
-  }, {});
+  const attendeeUserIdAndAtCreatedPair = bookings.reduce(
+    (aggregate: { [userId: number]: Date }, booking) => {
+      availableUsers.forEach((user) => {
+        if (aggregate[user.id]) return; // Bookings are ordered DESC, so if the reducer aggregate
+        // contains the user id, it's already got the most recent booking marked.
+        if (!booking.attendees.map((attendee) => attendee.email).includes(user.email)) return;
+        aggregate[user.id] = booking.createdAt;
+      });
+      return aggregate;
+    },
+    {},
+  );
 
   const userIdAndAtCreatedPair = {
     ...organizerIdAndAtCreatedPair,
@@ -105,7 +108,7 @@ async function leastRecentlyBookedUser<T extends Pick<User, "id" | "email">>({
 // TODO: Add 'MAXIMIZE_FAIRNESS' algorithm.
 export async function getLuckyUser<T extends Pick<User, "id" | "email">>(
   distributionAlgorithm: "MAXIMIZE_AVAILABILITY" = "MAXIMIZE_AVAILABILITY",
-  { availableUsers, eventTypeId }: { availableUsers: T[]; eventTypeId: number }
+  { availableUsers, eventTypeId }: { availableUsers: T[]; eventTypeId: number },
 ) {
   if (availableUsers.length === 1) {
     return availableUsers[0];

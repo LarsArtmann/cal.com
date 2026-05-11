@@ -4,10 +4,10 @@ import { SchedulingType } from "@calcom/prisma/enums";
 
 export const getAggregatedAvailability = (
   userAvailability: { dateRanges: DateRange[]; user?: { isFixed?: boolean } }[],
-  schedulingType: SchedulingType | null
+  schedulingType: SchedulingType | null,
 ): DateRange[] => {
   const fixedHosts = userAvailability.filter(
-    ({ user }) => !schedulingType || schedulingType === SchedulingType.COLLECTIVE || user?.isFixed
+    ({ user }) => !schedulingType || schedulingType === SchedulingType.COLLECTIVE || user?.isFixed,
   );
 
   const dateRangesToIntersect = fixedHosts.map((s) => s.dateRanges);
@@ -48,7 +48,8 @@ function mergeOverlappingDateRanges(dateRanges: DateRange[]) {
     ) {
       currentRange = {
         start: currentRange.start,
-        end: currentRange.end.valueOf() > nextRange.end.valueOf() ? currentRange.end : nextRange.end,
+        end:
+          currentRange.end.valueOf() > nextRange.end.valueOf() ? currentRange.end : nextRange.end,
       };
     } else {
       mergedDateRanges.push(currentRange);

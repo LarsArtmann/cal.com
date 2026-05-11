@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 export function useKeyPress(
   targetKey: string,
   ref?: RefObject<HTMLInputElement>,
-  handler?: () => void
+  handler?: () => void,
 ): boolean {
   // State for keeping track of whether key is pressed
   const [keyPressed, setKeyPressed] = useState(false);

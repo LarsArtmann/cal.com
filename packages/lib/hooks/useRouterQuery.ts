@@ -3,7 +3,9 @@ import { useSearchParams } from "next/navigation";
 /**
  * An alternative to Object.fromEntries that allows duplicate keys.
  */
-function fromEntriesWithDuplicateKeys(entries: ReturnType<ReturnType<typeof useSearchParams>["entries"]>) {
+function fromEntriesWithDuplicateKeys(
+  entries: ReturnType<ReturnType<typeof useSearchParams>["entries"]>,
+) {
   const result: Record<string, string | string[]> = {};
   // Consider setting atleast ES2015 as target
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

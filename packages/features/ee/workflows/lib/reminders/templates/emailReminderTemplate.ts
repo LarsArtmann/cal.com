@@ -13,7 +13,7 @@ const emailReminderTemplate = (
   timeZone?: string,
   otherPerson?: string,
   name?: string,
-  isBrandingDisabled?: boolean
+  isBrandingDisabled?: boolean,
 ) => {
   const currentTimeFormat = timeFormat || TimeFormat.TWELVE_HOUR;
   const dateTimeFormat = `ddd, MMM D, YYYY ${currentTimeFormat}`;
@@ -45,7 +45,8 @@ const emailReminderTemplate = (
 
   const attendeeHtml = `<div><strong class="editor-text-bold">Attendees: </strong></div>You & ${otherPerson}<br><br>`;
 
-  const branding = !isBrandingDisabled && !isEditingMode ? `<br><br>_<br><br>Scheduling by ${APP_NAME}` : "";
+  const branding =
+    !isBrandingDisabled && !isEditingMode ? `<br><br>_<br><br>Scheduling by ${APP_NAME}` : "";
 
   const endingHtml = `This reminder was triggered by a Workflow in Cal.${branding}</body>`;
 

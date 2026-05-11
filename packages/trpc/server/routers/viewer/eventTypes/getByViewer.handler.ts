@@ -191,7 +191,7 @@ export const getByViewerHandler = async ({ ctx, input }: GetByViewerOptions) => 
   let eventTypeGroups: EventTypeGroup[] = [];
 
   const unmanagedEventTypes = userEventTypes.filter(
-    (evType) => evType.schedulingType !== SchedulingType.MANAGED
+    (evType) => evType.schedulingType !== SchedulingType.MANAGED,
   );
 
   const image = user?.username ? `${CAL_URL}/${user.username}/avatar.png` : undefined;
@@ -232,7 +232,7 @@ export const getByViewerHandler = async ({ ctx, input }: GetByViewerOptions) => 
       })
       .map((membership) => {
         const orgMembership = teamMemberships.find(
-          (teamM) => teamM.teamId === membership.team.parentId
+          (teamM) => teamM.teamId === membership.team.parentId,
         )?.membershipRole;
         return {
           teamId: membership.team.id,
@@ -267,10 +267,10 @@ export const getByViewerHandler = async ({ ctx, input }: GetByViewerOptions) => 
             .filter((evType) =>
               membership.role === MembershipRole.MEMBER
                 ? evType.schedulingType !== SchedulingType.MANAGED
-                : true
+                : true,
             ),
         };
-      })
+      }),
   );
 
   const bookerUrl = await getBookerUrl(user);
@@ -289,7 +289,7 @@ export const getByViewerHandler = async ({ ctx, input }: GetByViewerOptions) => 
 
 export function getPrismaWhereUserIdFromFilter(
   userId: number,
-  filters: NonNullable<TEventTypeInputSchema>["filters"] | undefined
+  filters: NonNullable<TEventTypeInputSchema>["filters"] | undefined,
 ) {
   if (!filters || !hasFilter(filters)) {
     return userId;

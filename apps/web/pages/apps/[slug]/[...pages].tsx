@@ -39,7 +39,10 @@ const AppsRouting = {
 };
 
 function getRoute(appName: string, pages: string[]) {
-  const routingConfig = AppsRouting[appName as keyof typeof AppsRouting] as Record<string, AppPageType>;
+  const routingConfig = AppsRouting[appName as keyof typeof AppsRouting] as Record<
+    string,
+    AppPageType
+  >;
 
   if (!routingConfig) {
     return {
@@ -107,7 +110,7 @@ export async function getServerSideProps(
     slug: string;
     pages: string[];
     appPages?: string[];
-  }>
+  }>,
 ) {
   const { params, req, res } = context;
   if (!params) {
@@ -143,7 +146,7 @@ export async function getServerSideProps(
       }>,
       prisma,
       user,
-      ssrInit
+      ssrInit,
     );
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore

@@ -39,7 +39,11 @@ export default function SendgridSetup() {
       <div className="bg-default m-auto rounded p-5 md:w-[520px] md:p-10">
         <div className="flex flex-col space-y-5 md:flex-row md:space-x-5 md:space-y-0">
           <div>
-            <img src="/api/app-store/sendgrid/logo.png" alt="Sendgrid" className="h-12 w-12 max-w-2xl" />
+            <img
+              src="/api/app-store/sendgrid/logo.png"
+              alt="Sendgrid"
+              className="h-12 w-12 max-w-2xl"
+            />
           </div>
           <div>
             <h1 className="text-default">{t("provide_api_key")}</h1>
@@ -50,7 +54,8 @@ export default function SendgridSetup() {
                 className="text-indigo-400"
                 href="https://app.sendgrid.com/settings/api_keys"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 Sendgrid
               </a>
               . {t("it_stored_encrypted")}
@@ -73,7 +78,8 @@ export default function SendgridSetup() {
                   } else {
                     showToast(json.message, "error");
                   }
-                }}>
+                }}
+              >
                 <fieldset className="space-y-2" disabled={form.formState.isSubmitting}>
                   <Controller
                     name="api_key"
@@ -130,9 +136,14 @@ export default function SendgridSetup() {
                         setTestPassed(false);
                       }
                       setTestLoading(false);
-                    }}>
+                    }}
+                  >
                     {t(
-                      testPassed !== undefined ? (testPassed ? "test_passed" : "test_failed") : "test_api_key"
+                      testPassed !== undefined
+                        ? testPassed
+                          ? "test_passed"
+                          : "test_failed"
+                        : "test_api_key",
                     )}
                   </Button>
                   <Button type="submit" loading={form.formState.isSubmitting}>

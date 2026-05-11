@@ -41,35 +41,46 @@ export default class AttendeeScheduledEmail extends BaseEmail {
     }
     const partstat: ParticipationStatus = "ACCEPTED";
     const role: ParticipationRole = "REQ-PARTICIPANT";
-    const icsEvent = createEvent(({
-	uid: this.calEvent.iCalUID || this.calEvent.uid!,
-	start: dayjs(this.calEvent.startTime).utc().toArray().slice(0, 6).map((v, i) => i === 1 ? v + 1 : v) as DateArray,
-	startInputType: 'utc',
-	productId: 'calcom/ics',
-	title: this.calEvent.title,
-	description: this.getTextBody(),
-	duration: { minutes: dayjs(this.calEvent.endTime).diff(dayjs(this.calEvent.startTime), 'minute') },
-	organizer: {
-		name: this.calEvent.organizer.name,
-		email: this.calEvent.organizer.email
-	},
-	attendees: [...this.calEvent.attendees.map((attendee: Person) => ({
-		name: attendee.name,
-		email: attendee.email,
-		partstat,
-		role,
-		rsvp: true
-	})), ...this.calEvent.team?.members ? this.calEvent.team?.members.map((member: Person) => ({
-		name: member.name,
-		email: member.email,
-		partstat,
-		role,
-		rsvp: true
-	})) : []],
-	method: 'REQUEST',
-	recurrenceRule,
-	status: 'CONFIRMED'
-}));
+    const icsEvent = createEvent({
+      uid: this.calEvent.iCalUID || this.calEvent.uid!,
+      start: dayjs(this.calEvent.startTime)
+        .utc()
+        .toArray()
+        .slice(0, 6)
+        .map((v, i) => (i === 1 ? v + 1 : v)) as DateArray,
+      startInputType: "utc",
+      productId: "calcom/ics",
+      title: this.calEvent.title,
+      description: this.getTextBody(),
+      duration: {
+        minutes: dayjs(this.calEvent.endTime).diff(dayjs(this.calEvent.startTime), "minute"),
+      },
+      organizer: {
+        name: this.calEvent.organizer.name,
+        email: this.calEvent.organizer.email,
+      },
+      attendees: [
+        ...this.calEvent.attendees.map((attendee: Person) => ({
+          name: attendee.name,
+          email: attendee.email,
+          partstat,
+          role,
+          rsvp: true,
+        })),
+        ...(this.calEvent.team?.members
+          ? this.calEvent.team?.members.map((member: Person) => ({
+              name: member.name,
+              email: member.email,
+              partstat,
+              role,
+              rsvp: true,
+            }))
+          : []),
+      ],
+      method: "REQUEST",
+      recurrenceRule,
+      status: "CONFIRMED",
+    });
     if (icsEvent.error) {
       throw icsEvent.error;
     }
@@ -89,7 +100,10 @@ export default class AttendeeScheduledEmail extends BaseEmail {
       },
       to: `${this.attendee.name} <${this.attendee.email}>`,
       from: `${this.calEvent.organizer.name} <${this.getMailerOptions().from}>`,
-      replyTo: [...this.calEvent.attendees.map(({ email }) => email), this.calEvent.organizer.email],
+      replyTo: [
+        ...this.calEvent.attendees.map(({ email }) => email),
+        this.calEvent.organizer.email,
+      ],
       subject: `${this.calEvent.title}`,
       html: renderEmail("AttendeeScheduledEmail", {
         calEvent: clonedCalEvent,
@@ -104,7 +118,7 @@ export default class AttendeeScheduledEmail extends BaseEmail {
 ${this.t(
   title || this.calEvent.recurringEvent?.count
     ? "your_event_has_been_scheduled_recurring"
-    : "your_event_has_been_scheduled"
+    : "your_event_has_been_scheduled",
 )}
 ${this.t(subtitle)}
 
@@ -140,7 +154,7 @@ ${getRichDescription(this.calEvent, this.t)}
     const inviteeTimeFormat = this.calEvent.organizer.timeFormat || TimeFormat.TWELVE_HOUR;
 
     return `${this.getInviteeStart(inviteeTimeFormat)} - ${this.getInviteeEnd(inviteeTimeFormat)}, ${this.t(
-      this.getInviteeStart("dddd").toLowerCase()
+      this.getInviteeStart("dddd").toLowerCase(),
     )}, ${this.t(this.getInviteeStart("MMMM").toLowerCase())} ${this.getInviteeStart("D, YYYY")}`;
   }
 }

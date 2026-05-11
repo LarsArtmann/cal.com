@@ -70,8 +70,10 @@ const IntegrationContainer = ({
       utils.viewer.appsRouter.listLocal.invalidate({ category });
       setDisableDialog(false);
       showToast(
-        enabled ? t("app_is_enabled", { appName: app.name }) : t("app_is_disabled", { appName: app.name }),
-        "success"
+        enabled
+          ? t("app_is_enabled", { appName: app.name })
+          : t("app_is_disabled", { appName: app.name }),
+        "success",
       );
       if (enabled) {
         showKeyModal();
@@ -119,7 +121,8 @@ const IntegrationContainer = ({
           variety="danger"
           onConfirm={() => {
             enableAppMutation.mutate({ slug: app.slug, enabled: !app.enabled });
-          }}>
+          }}
+        >
           {t("disable_app_description")}
         </ConfirmationDialogContent>
       </Dialog>
@@ -157,20 +160,26 @@ const AdminAppsList = ({
     <form
       {...rest}
       className={
-        classNames?.form ?? "max-w-80 bg-default mb-4 rounded-md px-0 pt-0 md:max-w-full md:px-8 md:pt-10"
+        classNames?.form ??
+        "max-w-80 bg-default mb-4 rounded-md px-0 pt-0 md:max-w-full md:px-8 md:pt-10"
       }
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit();
-      }}>
+      }}
+    >
       <AppCategoryNavigation
         baseURL={baseURL}
         useQueryParam={useQueryParam}
         classNames={{
           root: className,
           verticalTabsItem: classNames?.verticalTabsItem,
-          container: cs("min-w-0 w-full", classNames?.appCategoryNavigationContainer ?? "max-w-[500px]"),
-        }}>
+          container: cs(
+            "min-w-0 w-full",
+            classNames?.appCategoryNavigationContainer ?? "max-w-[500px]",
+          ),
+        }}
+      >
         <AdminAppsListContainer />
       </AppCategoryNavigation>
     </form>
@@ -198,7 +207,10 @@ const EditKeysModal: FC<{
 
   const saveKeysMutation = trpc.viewer.appsRouter.saveKeys.useMutation({
     onSuccess: () => {
-      showToast(fromEnabled ? t("app_is_enabled", { appName }) : t("keys_have_been_saved"), "success");
+      showToast(
+        fromEnabled ? t("app_is_enabled", { appName }) : t("keys_have_been_saved"),
+        "success",
+      );
       utils.viewer.appsRouter.listLocal.invalidate();
       handleModelClose();
     },
@@ -223,7 +235,8 @@ const EditKeysModal: FC<{
                 fromEnabled,
               })
             }
-            className="px-4 pb-4">
+            className="px-4 pb-4"
+          >
             {Object.keys(keys).map((key) => (
               <Controller
                 name={key}
@@ -272,7 +285,7 @@ const AdminAppsListContainer = () => {
 
   const { data: apps, isLoading } = trpc.viewer.appsRouter.listLocal.useQuery(
     { category },
-    { enabled: searchParams !== null }
+    { enabled: searchParams !== null },
   );
 
   const [modalState, setModalState] = useReducer(
@@ -283,7 +296,7 @@ const AdminAppsListContainer = () => {
       dirName: "",
       type: "",
       slug: "",
-    }
+    },
   );
 
   const handleModelClose = () =>

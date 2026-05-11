@@ -55,18 +55,19 @@ export const VerifyCodeDialog = ({
     },
   });
 
-  const verifyCodeMutationUserSessionNotRequired = trpc.viewer.auth.verifyCodeUnAuthenticated.useMutation({
-    onSuccess: (data) => {
-      setIsLoading(false);
-      onSuccess(data);
-    },
-    onError: (err) => {
-      setIsLoading(false);
-      if (err.message === "invalid_code") {
-        setError(t("code_provided_invalid"));
-      }
-    },
-  });
+  const verifyCodeMutationUserSessionNotRequired =
+    trpc.viewer.auth.verifyCodeUnAuthenticated.useMutation({
+      onSuccess: (data) => {
+        setIsLoading(false);
+        onSuccess(data);
+      },
+      onError: (err) => {
+        setIsLoading(false);
+        if (err.message === "invalid_code") {
+          setError(t("code_provided_invalid"));
+        }
+      },
+    });
 
   useEffect(() => onChange(""), [isOpenDialog]);
 
@@ -79,11 +80,15 @@ export const VerifyCodeDialog = ({
         onChange("");
         setError("");
         setIsOpenDialog(open);
-      }}>
+      }}
+    >
       <DialogContent className="sm:max-w-md">
         <div className="flex flex-row">
           <div className="w-full">
-            <DialogHeader title={t("verify_your_email")} subtitle={t("enter_digit_code", { email })} />
+            <DialogHeader
+              title={t("verify_your_email")}
+              subtitle={t("enter_digit_code", { email })}
+            />
             <Label htmlFor="code">{t("code")}</Label>
             <div className="flex flex-row justify-between">
               <Input
@@ -131,7 +136,8 @@ export const VerifyCodeDialog = ({
                       });
                     }
                   }
-                }}>
+                }}
+              >
                 {t("verify")}
               </Button>
             </DialogFooter>

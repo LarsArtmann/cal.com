@@ -17,7 +17,7 @@ export default class DisabledAppEmail extends BaseEmail {
     appType: string[],
     t: TFunction,
     title?: string,
-    eventTypeId?: number
+    eventTypeId?: number,
   ) {
     super();
     this.email = email;
@@ -34,7 +34,10 @@ export default class DisabledAppEmail extends BaseEmail {
       to: this.email,
       subject:
         this.title && this.eventTypeId
-          ? this.t("disabled_app_affects_event_type", { appName: this.appName, eventType: this.title })
+          ? this.t("disabled_app_affects_event_type", {
+              appName: this.appName,
+              eventType: this.title,
+            })
           : this.t("admin_has_disabled", { appName: this.appName }),
       html: renderEmail("DisabledAppEmail", {
         title: this.title,
@@ -51,7 +54,7 @@ export default class DisabledAppEmail extends BaseEmail {
     return this.appType.some((type) => type === "payment")
       ? this.t("disable_payment_app", { appName: this.appName, title: this.title })
       : this.appType.some((type) => type === "video")
-      ? this.t("app_disabled_video", { appName: this.appName })
-      : this.t("app_disabled", { appName: this.appName });
+        ? this.t("app_disabled_video", { appName: this.appName })
+        : this.t("app_disabled", { appName: this.appName });
   }
 }

@@ -7,7 +7,10 @@ import type { SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
 
 import getStripe from "@calcom/app-store/stripepayment/lib/client";
-import { getBookingRedirectExtraParams, useBookingSuccessRedirect } from "@calcom/lib/bookingSuccessRedirect";
+import {
+  getBookingRedirectExtraParams,
+  useBookingSuccessRedirect,
+} from "@calcom/lib/bookingSuccessRedirect";
 import { CAL_URL } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { Button, CheckboxField } from "@calcom/ui";
@@ -71,7 +74,9 @@ const PaymentForm = (props: Props) => {
   const stripe = useStripe();
   const elements = useElements();
   const paymentOption = props.payment.paymentOption;
-  const [holdAcknowledged, setHoldAcknowledged] = useState<boolean>(paymentOption === "HOLD" ? false : true);
+  const [holdAcknowledged, setHoldAcknowledged] = useState<boolean>(
+    paymentOption === "HOLD" ? false : true,
+  );
   const bookingSuccessRedirect = useBookingSuccessRedirect();
 
   useEffect(() => {
@@ -151,7 +156,8 @@ const PaymentForm = (props: Props) => {
           color="minimal"
           disabled={!holdAcknowledged || ["processing", "error"].includes(state.status)}
           id="cancel"
-          onClick={() => router.back()}>
+          onClick={() => router.back()}
+        >
           <span id="button-text">{t("cancel")}</span>
         </Button>
         <Button
@@ -159,7 +165,8 @@ const PaymentForm = (props: Props) => {
           disabled={!holdAcknowledged || ["processing", "error"].includes(state.status)}
           loading={state.status === "processing"}
           id="submit"
-          color="secondary">
+          color="secondary"
+        >
           <span id="button-text">
             {state.status === "processing" ? (
               <div className="spinner" id="spinner" />
@@ -198,7 +205,8 @@ export default function PaymentComponent(props: Props) {
         appearance: {
           theme,
         },
-      }}>
+      }}
+    >
       <PaymentForm {...props} />
     </Elements>
   );

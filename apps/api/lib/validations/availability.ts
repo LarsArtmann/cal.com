@@ -3,12 +3,13 @@ import { z } from "zod";
 import { _AvailabilityModel as Availability, _ScheduleModel as Schedule } from "@calcom/prisma/zod";
 import { denullishShape } from "@calcom/prisma/zod-utils";
 
-export const schemaAvailabilityBaseBodyParams = /** We make all these properties required */ denullishShape(
-  Availability.pick({
-    /** We need to pass the schedule where this availability belongs to */
-    scheduleId: true,
-  })
-);
+export const schemaAvailabilityBaseBodyParams =
+  /** We make all these properties required */ denullishShape(
+    Availability.pick({
+      /** We need to pass the schedule where this availability belongs to */
+      scheduleId: true,
+    }),
+  );
 
 export const schemaAvailabilityReadPublic = Availability.pick({
   id: true,
@@ -40,7 +41,7 @@ const schemaAvailabilityEditParams = z
 export const schemaAvailabilityEditBodyParams = schemaAvailabilityEditParams;
 
 export const schemaAvailabilityCreateBodyParams = schemaAvailabilityBaseBodyParams.merge(
-  schemaAvailabilityCreateParams
+  schemaAvailabilityCreateParams,
 );
 
 export const schemaAvailabilityReadBodyParams = z

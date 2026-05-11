@@ -120,7 +120,8 @@ export function TeamsListing() {
           ) : (
             <p>{t("org_admins_can_create_new_teams")}</p>
           )
-        }>
+        }
+      >
         {teams.length > 0 ? (
           <TeamList teams={teams} />
         ) : (
@@ -131,7 +132,8 @@ export function TeamsListing() {
             buttonRaw={
               <Button
                 color="secondary"
-                href={`${WEBAPP_URL}/settings/teams/new?returnTo=${WEBAPP_URL}/teams`}>
+                href={`${WEBAPP_URL}/settings/teams/new?returnTo=${WEBAPP_URL}/teams`}
+              >
                 {t(`create_new_team`)}
               </Button>
             }

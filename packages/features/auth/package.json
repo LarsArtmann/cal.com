@@ -1,10 +1,9 @@
 {
   "name": "@calcom/feature-auth",
-  "sideEffects": false,
+  "version": "1.0.0",
   "private": true,
   "description": "Cal.com's main auth code",
-  "authors": "Cal.com, Inc.",
-  "version": "1.0.0",
+  "sideEffects": false,
   "main": "index.ts",
   "dependencies": {
     "@calcom/dayjs": "*",
@@ -15,9 +14,10 @@
     "bcryptjs": "^3.0.3",
     "handlebars": "^4.7.9",
     "jose": "^6.2.3",
-    "lru-cache": "^11.3.5",
+    "lru-cache": "^11.3.6",
     "next-auth": "^4.24.14",
     "nodemailer": "^8.0.7",
     "otplib": "^13.4.0"
-  }
+  },
+  "authors": "Cal.com, Inc."
 }

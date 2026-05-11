@@ -13,5 +13,5 @@ const schemaReminderMailRequiredParams = z.object({
 });
 
 export const schemaReminderMailBodyParams = schemaReminderMailBaseBodyParams.merge(
-  schemaReminderMailRequiredParams
+  schemaReminderMailRequiredParams,
 );

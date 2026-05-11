@@ -7,7 +7,12 @@ test.describe("Can signup from a team invite", async () => {
   });
   test.afterEach(async ({ users }) => users.deleteAll());
 
-  test("Team invites validations work and can accept invite", async ({ browser, page, users, prisma }) => {
+  test("Team invites validations work and can accept invite", async ({
+    browser,
+    page,
+    users,
+    prisma,
+  }) => {
     const [proUser] = users.get();
     const teamName = `${proUser.username}'s Team`;
     const testUser = {

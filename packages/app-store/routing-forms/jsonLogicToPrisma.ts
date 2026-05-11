@@ -78,7 +78,7 @@ const NumberOperators = [">", ">=", "<", "<="];
 const convertSingleQueryToPrismaWhereClause = (
   operatorName: keyof typeof OPERATOR_MAP,
   logicData: LogicData,
-  isNegation: boolean
+  isNegation: boolean,
 ) => {
   const mappedOperator = OPERATOR_MAP[operatorName].operator;
   const staticSecondaryOperand = OPERATOR_MAP[operatorName].secondaryOperand;
@@ -89,13 +89,15 @@ const convertSingleQueryToPrismaWhereClause = (
 
   const mainOperand = operatorName !== "in" ? operands[0].var : operands[1].var;
 
-  let secondaryOperand = staticSecondaryOperand || (operatorName !== "in" ? operands[1] : operands[0]) || "";
+  let secondaryOperand =
+    staticSecondaryOperand || (operatorName !== "in" ? operands[1] : operands[0]) || "";
   if (operatorName === "all") {
     secondaryOperand = secondaryOperand.in[1];
   }
 
   const isNumberOperator = NumberOperators.includes(operatorName);
-  const secondaryOperandAsNumber = typeof secondaryOperand === "string" ? Number(secondaryOperand) : null;
+  const secondaryOperandAsNumber =
+    typeof secondaryOperand === "string" ? Number(secondaryOperand) : null;
 
   let prismaWhere;
   if (secondaryOperandAsNumber) {

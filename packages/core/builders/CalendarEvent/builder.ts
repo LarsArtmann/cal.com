@@ -27,7 +27,10 @@ const userSelect = Prisma.validator<Prisma.UserArgs>()({
 });
 
 type User = Prisma.UserGetPayload<typeof userSelect>;
-type PersonAttendeeCommonFields = Pick<User, "id" | "email" | "name" | "locale" | "timeZone" | "username">;
+type PersonAttendeeCommonFields = Pick<
+  User,
+  "id" | "email" | "name" | "locale" | "timeZone" | "username"
+>;
 interface ICalendarEventBuilder {
   calendarEvent: CalendarEventClass;
   eventType: Awaited<ReturnType<CalendarEventBuilder["getEventFromEventId"]>>;
@@ -234,7 +237,10 @@ export class CalendarEventBuilder implements ICalendarEventBuilder {
     }
   }
 
-  public buildRescheduleLink(booking: Partial<Booking>, eventType?: CalendarEventBuilder["eventType"]) {
+  public buildRescheduleLink(
+    booking: Partial<Booking>,
+    eventType?: CalendarEventBuilder["eventType"],
+  ) {
     try {
       if (!booking) {
         throw new Error("Parameter booking is required to build reschedule link");
@@ -246,7 +252,9 @@ export class CalendarEventBuilder implements ICalendarEventBuilder {
       if (isTeam && eventType?.team?.slug) {
         slug = `/team/${eventType.team?.slug}`;
       } else if (isDynamic) {
-        const dynamicSlug = isDynamic ? `${booking.dynamicGroupSlugRef}/${booking.dynamicEventSlugRef}` : "";
+        const dynamicSlug = isDynamic
+          ? `${booking.dynamicGroupSlugRef}/${booking.dynamicEventSlugRef}`
+          : "";
         slug = dynamicSlug;
       } else if (eventType?.slug) {
         slug = `${this.users[0].username}/${eventType.slug}`;

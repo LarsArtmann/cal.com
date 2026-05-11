@@ -54,9 +54,10 @@ export const ChildrenEventTypeSelect = ({
       <ul
         className={classNames(
           "border-subtle divide-subtle mt-3 divide-y rounded-md",
-          value.length >= 1 && "border"
+          value.length >= 1 && "border",
         )}
-        ref={animationRef}>
+        ref={animationRef}
+      >
         {value.map((children, index) => (
           <li key={index}>
             <div className="flex flex-row items-center gap-3 p-3">
@@ -95,7 +96,9 @@ export const ChildrenEventTypeSelect = ({
                         checked={!children.hidden}
                         onCheckedChange={(checked) => {
                           const newData = value.map((item) =>
-                            item.owner.id === children.owner.id ? { ...item, hidden: !checked } : item
+                            item.owner.id === children.owner.id
+                              ? { ...item, hidden: !checked }
+                              : item,
                           );
                           props.onChange(newData);
                         }}
@@ -120,7 +123,9 @@ export const ChildrenEventTypeSelect = ({
                         target="_blank"
                         variant="icon"
                         onClick={() =>
-                          props.onChange(value.filter((item) => item.owner.id !== children.owner.id))
+                          props.onChange(
+                            value.filter((item) => item.owner.id !== children.owner.id),
+                          )
                         }
                         StartIcon={X}
                       />

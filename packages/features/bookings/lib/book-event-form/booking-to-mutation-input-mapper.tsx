@@ -61,7 +61,7 @@ export const mapBookingToMutationInput = ({
 // Other than that it forwards the mapping to mapBookingToMutationInput.
 export const mapRecurringBookingToMutationInput = (
   booking: BookingOptions,
-  recurringCount: number
+  recurringCount: number,
 ): RecurringBookingCreateBody[] => {
   const recurringEventId = uuidv4();
   const [, recurringDates] = parseRecurringDates(
@@ -72,7 +72,7 @@ export const mapRecurringBookingToMutationInput = (
       recurringCount,
       withDefaultTimeFormat: true,
     },
-    booking.language
+    booking.language,
   );
 
   const input = mapBookingToMutationInput(booking);

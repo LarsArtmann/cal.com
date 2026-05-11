@@ -38,7 +38,7 @@ export function AppSetDefaultLinkDialog({
 
   const form = useForm<LocationTypeSetLinkDialogFormProps>({
     resolver: zodResolver(
-      z.object({ link: z.string().regex(new RegExp(eventLocationTypeOptions?.urlRegExp ?? "")) })
+      z.object({ link: z.string().regex(new RegExp(eventLocationTypeOptions?.urlRegExp ?? "")) }),
     ),
   });
 
@@ -57,7 +57,8 @@ export function AppSetDefaultLinkDialog({
         title={t("default_app_link_title")}
         description={t("default_app_link_description")}
         type="creation"
-        Icon={AlertCircle}>
+        Icon={AlertCircle}
+      >
         <Form
           form={form}
           handleSubmit={(values) => {
@@ -66,7 +67,8 @@ export function AppSetDefaultLinkDialog({
               appLink: values.link,
             });
             setLocationType(undefined);
-          }}>
+          }}
+        >
           <>
             <TextField
               type="text"

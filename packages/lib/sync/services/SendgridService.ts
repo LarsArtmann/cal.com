@@ -18,7 +18,7 @@ const calComCustomContactFields: SendgridFieldOptions = [
 const serviceName = "sendgrid_service";
 
 export default class SendgridService extends SyncServiceCore implements ISyncService {
-  protected declare service: Sendgrid;
+  declare protected service: Sendgrid;
   constructor() {
     super(serviceName, Sendgrid, logger.getChildLogger({ prefix: [`[[sync] ${serviceName}`] }));
   }
@@ -26,7 +26,8 @@ export default class SendgridService extends SyncServiceCore implements ISyncSer
   upsert = async (user: WebUserInfoType | ConsoleUserInfoType) => {
     this.log.debug("sync:sendgrid:user", user);
     // Get Custom Contact fields ids
-    const customFieldsIds = await this.service.getSendgridCustomFieldsIds(calComCustomContactFields);
+    const customFieldsIds =
+      await this.service.getSendgridCustomFieldsIds(calComCustomContactFields);
     this.log.debug("sync:sendgrid:user:customFieldsIds", customFieldsIds);
     const lastBooking = "email" in user ? await this.getUserLastBooking(user) : null;
     this.log.debug("sync:sendgrid:user:lastBooking", lastBooking);
@@ -53,7 +54,7 @@ export default class SendgridService extends SyncServiceCore implements ISyncSer
               [fieldId]: customContactFieldsValues[index],
             };
           }
-        })
+        }),
       ),
     };
     this.log.debug("sync:sendgrid:contact:contactData", contactData);

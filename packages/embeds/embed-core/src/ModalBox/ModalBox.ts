@@ -94,7 +94,7 @@ export class ModalBox extends HTMLElement {
       },
       {
         once: true,
-      }
+      },
     );
     this.shadowRoot.host.addEventListener("click", () => {
       this.close();

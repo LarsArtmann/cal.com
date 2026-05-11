@@ -74,7 +74,7 @@ const ProfileView = () => {
       onError: () => {
         router.push("/settings");
       },
-    }
+    },
   );
 
   const form = useForm<TeamAppearanceValues>({
@@ -87,10 +87,17 @@ const ProfileView = () => {
   });
 
   const isAdmin =
-    team && (team.membership.role === MembershipRole.OWNER || team.membership.role === MembershipRole.ADMIN);
+    team &&
+    (team.membership.role === MembershipRole.OWNER ||
+      team.membership.role === MembershipRole.ADMIN);
 
   if (isLoading) {
-    return <SkeletonLoader title={t("booking_appearance")} description={t("appearance_team_description")} />;
+    return (
+      <SkeletonLoader
+        title={t("booking_appearance")}
+        description={t("appearance_team_description")}
+      />
+    );
   }
   return (
     <>
@@ -104,7 +111,8 @@ const ProfileView = () => {
               ...values,
               theme: values.theme || null,
             });
-          }}>
+          }}
+        >
           <div className="mb-6 flex items-center text-sm">
             <div>
               <p className="font-semibold">{t("theme")}</p>
@@ -150,7 +158,9 @@ const ProfileView = () => {
               defaultValue={team.brandColor}
               render={() => (
                 <div>
-                  <p className="text-emphasis mb-2 block text-sm font-medium">{t("light_brand_color")}</p>
+                  <p className="text-emphasis mb-2 block text-sm font-medium">
+                    {t("light_brand_color")}
+                  </p>
                   <ColorPicker
                     defaultValue={team.brandColor}
                     resetDefaultValue="#292929"
@@ -165,11 +175,15 @@ const ProfileView = () => {
               defaultValue={team.darkBrandColor}
               render={() => (
                 <div className="mt-6 sm:mt-0">
-                  <p className="text-emphasis mb-2 block text-sm font-medium">{t("dark_brand_color")}</p>
+                  <p className="text-emphasis mb-2 block text-sm font-medium">
+                    {t("dark_brand_color")}
+                  </p>
                   <ColorPicker
                     defaultValue={team.darkBrandColor}
                     resetDefaultValue="#fafafa"
-                    onChange={(value) => form.setValue("darkBrandColor", value, { shouldDirty: true })}
+                    onChange={(value) =>
+                      form.setValue("darkBrandColor", value, { shouldDirty: true })
+                    }
                   />
                 </div>
               )}

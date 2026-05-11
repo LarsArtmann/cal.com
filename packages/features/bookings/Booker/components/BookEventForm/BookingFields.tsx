@@ -32,7 +32,8 @@ export const BookingFields = ({
         // During reschedule by default all system fields are readOnly. Make them editable on case by case basis.
         // Allowing a system field to be edited might require sending emails to attendees, so we need to be careful
         let readOnly =
-          (field.editable === "system" || field.editable === "system-but-optional") && !!rescheduleUid;
+          (field.editable === "system" || field.editable === "system-but-optional") &&
+          !!rescheduleUid;
 
         let hidden = !!field.hidden;
         const fieldViews = field.views;
@@ -50,7 +51,10 @@ export const BookingFields = ({
           // `smsReminderNumber` and location.optionValue when location.value===phone are the same data point. We should solve it in a better way in the Form Builder itself.
           // I think we should have a way to connect 2 fields together and have them share the same value in Form Builder
           if (locationResponse?.value === "phone") {
-            setValue(`responses.${SystemField.Enum.smsReminderNumber}`, locationResponse?.optionValue);
+            setValue(
+              `responses.${SystemField.Enum.smsReminderNumber}`,
+              locationResponse?.optionValue,
+            );
             // Just don't render the field now, as the value is already connected to attendee phone location
             return null;
           }
@@ -86,12 +90,17 @@ export const BookingFields = ({
           });
 
           field.options = options.filter(
-            (location): location is NonNullable<(typeof options)[number]> => !!location
+            (location): location is NonNullable<(typeof options)[number]> => !!location,
           );
         }
 
         return (
-          <FormBuilderField className="mb-4" field={{ ...field, hidden }} readOnly={readOnly} key={index} />
+          <FormBuilderField
+            className="mb-4"
+            field={{ ...field, hidden }}
+            readOnly={readOnly}
+            key={index}
+          />
         );
       })}
     </div>

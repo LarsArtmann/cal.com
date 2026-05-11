@@ -14,7 +14,8 @@ const Props = {
   maxSteps: MAX_STEPS,
   currentStep: CURRENT_STEP,
   navigateToStep: mockNavigateToStep,
-  stepLabel: (currentStep: number, totalSteps: number) => `Test Step ${currentStep} of ${totalSteps}`,
+  stepLabel: (currentStep: number, totalSteps: number) =>
+    `Test Step ${currentStep} of ${totalSteps}`,
 };
 
 describe("Tests for Steps Component", () => {

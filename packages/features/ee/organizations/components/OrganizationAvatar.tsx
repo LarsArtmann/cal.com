@@ -6,7 +6,13 @@ type OrganizationAvatarProps = AvatarProps & {
   organizationSlug: string | null | undefined;
 };
 
-const OrganizationAvatar = ({ size, imageSrc, alt, organizationSlug, ...rest }: OrganizationAvatarProps) => {
+const OrganizationAvatar = ({
+  size,
+  imageSrc,
+  alt,
+  organizationSlug,
+  ...rest
+}: OrganizationAvatarProps) => {
   return (
     <Avatar
       size={size}
@@ -15,7 +21,11 @@ const OrganizationAvatar = ({ size, imageSrc, alt, organizationSlug, ...rest }: 
       indicator={
         organizationSlug ? (
           <div
-            className={classNames("absolute bottom-0 right-0 z-10", size === "lg" ? "h-6 w-6" : "h-10 w-10")}>
+            className={classNames(
+              "absolute bottom-0 right-0 z-10",
+              size === "lg" ? "h-6 w-6" : "h-10 w-10",
+            )}
+          >
             <img
               src={`/org/${organizationSlug}/avatar.png`}
               alt={alt}

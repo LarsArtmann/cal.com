@@ -1,4 +1,9 @@
-import { WorkflowTriggerEvents, TimeUnit, WorkflowActions, WorkflowTemplates } from "@calcom/prisma/enums";
+import {
+  WorkflowTriggerEvents,
+  TimeUnit,
+  WorkflowActions,
+  WorkflowTemplates,
+} from "@calcom/prisma/enums";
 
 export const WORKFLOW_TRIGGER_EVENTS = [
   WorkflowTriggerEvents.BEFORE_EVENT,
@@ -28,7 +33,10 @@ export const WORKFLOW_TEMPLATES = [
   WorkflowTemplates.RESCHEDULED,
 ] as const;
 
-export const BASIC_WORKFLOW_TEMPLATES = [WorkflowTemplates.CUSTOM, WorkflowTemplates.REMINDER] as const;
+export const BASIC_WORKFLOW_TEMPLATES = [
+  WorkflowTemplates.CUSTOM,
+  WorkflowTemplates.REMINDER,
+] as const;
 
 export const WHATSAPP_WORKFLOW_TEMPLATES = [
   WorkflowTemplates.REMINDER,

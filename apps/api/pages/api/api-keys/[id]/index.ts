@@ -14,5 +14,5 @@ export default withMiddleware()(
       PATCH: import("./_patch"),
       DELETE: import("./_delete"),
     })(req, res);
-  })
+  }),
 );

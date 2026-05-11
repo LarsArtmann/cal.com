@@ -19,7 +19,7 @@ async function authMiddleware(req: NextApiRequest) {
 
 export async function checkPermissions(
   req: NextApiRequest,
-  role: Prisma.MembershipWhereInput["role"] = MembershipRole.OWNER
+  role: Prisma.MembershipWhereInput["role"] = MembershipRole.OWNER,
 ) {
   const { userId, prisma, isAdmin } = req;
   const { teamId } = schemaQueryTeamId.parse(req.query);
@@ -27,7 +27,8 @@ export async function checkPermissions(
   /** If not ADMIN then we check if the actual user belongs to team and matches the required role */
   if (!isAdmin) args.where = { ...args.where, members: { some: { userId, role } } };
   const team = await prisma.team.findFirst(args);
-  if (!team) throw new HttpError({ statusCode: 401, message: `Unauthorized: ${role.toString()} required` });
+  if (!team)
+    throw new HttpError({ statusCode: 401, message: `Unauthorized: ${role.toString()} required` });
   return team;
 }
 

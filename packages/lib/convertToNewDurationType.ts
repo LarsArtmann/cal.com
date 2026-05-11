@@ -7,7 +7,7 @@ export type DurationType = "minutes" | "hours" | "days";
 export default function convertToNewDurationType(
   prevType: DurationType,
   newType: DurationType,
-  prevValue: number
+  prevValue: number,
 ) {
   /** Convert `prevValue` from `prevType` to `newType` */
   const newDurationTypeMap = {

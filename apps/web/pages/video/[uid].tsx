@@ -61,7 +61,9 @@ export default function JoinCall(props: JoinCallPageProps) {
       ...(typeof meetingPassword === "string" && { token: meetingPassword }),
     });
     callFrame.join();
-    callFrame.on("recording-started", onRecordingStarted).on("recording-stopped", onRecordingStopped);
+    callFrame
+      .on("recording-started", onRecordingStarted)
+      .on("recording-stopped", onRecordingStopped);
     return () => {
       callFrame.destroy();
     };
@@ -183,7 +185,10 @@ function ProgressBar(props: ProgressBarProps) {
       </p>
       <div className="relative h-2 max-w-xl overflow-hidden rounded-full">
         <div className="absolute h-full w-full bg-gray-500/10" />
-        <div className={classNames("relative h-full bg-green-500")} style={{ width: `${percentage}%` }} />
+        <div
+          className={classNames("relative h-full bg-green-500")}
+          style={{ width: `${percentage}%` }}
+        />
       </div>
     </div>
   );
@@ -206,8 +211,9 @@ export function VideoMeetingInfo(props: VideoMeetingInfo) {
       <aside
         className={classNames(
           "no-scrollbar fixed left-0 top-0 z-30 flex h-full w-64 transform justify-between overflow-x-hidden overflow-y-scroll transition-all duration-300 ease-in-out",
-          open ? "translate-x-0" : "-translate-x-[232px]"
-        )}>
+          open ? "translate-x-0" : "-translate-x-[232px]",
+        )}
+      >
         <main className="prose-sm prose max-w-64 prose-a:text-white prose-h3:text-white prose-h3:font-cal scroll-bar scrollbar-track-w-20 w-full overflow-scroll overflow-x-hidden border-r border-gray-300/20 bg-black/80 p-4 text-white shadow-sm backdrop-blur-lg">
           <h3>{t("what")}:</h3>
           <p>{booking.title}</p>
@@ -254,10 +260,14 @@ export function VideoMeetingInfo(props: VideoMeetingInfo) {
           <button
             aria-label={`${open ? "close" : "open"} booking description sidebar`}
             className="h-20 w-6 rounded-r-md border border-l-0 border-gray-300/20 bg-black/60 text-white shadow-sm backdrop-blur-lg"
-            onClick={() => setOpen(!open)}>
+            onClick={() => setOpen(!open)}
+          >
             <ChevronRight
               aria-hidden
-              className={classNames(open && "rotate-180", "w-5 transition-all duration-300 ease-in-out")}
+              className={classNames(
+                open && "rotate-180",
+                "w-5 transition-all duration-300 ease-in-out",
+              )}
             />
           </button>
         </div>

@@ -32,7 +32,12 @@ const OptionalTooltipWrapper = ({
   return <>{children}</>;
 };
 
-export const ToggleGroup = ({ options, onValueChange, isFullWidth, ...props }: ToggleGroupProps) => {
+export const ToggleGroup = ({
+  options,
+  onValueChange,
+  isFullWidth,
+  ...props
+}: ToggleGroupProps) => {
   return (
     <>
       <RadixToggleGroup.Root
@@ -42,8 +47,9 @@ export const ToggleGroup = ({ options, onValueChange, isFullWidth, ...props }: T
         className={classNames(
           "min-h-9 border-default bg-default relative inline-flex gap-0.5 rounded-md border p-1 rtl:flex-row-reverse",
           props.className,
-          isFullWidth && "w-full"
-        )}>
+          isFullWidth && "w-full",
+        )}
+      >
         {options.map((option) => (
           <OptionalTooltipWrapper key={option.value} tooltipText={option.tooltip}>
             <RadixToggleGroup.Item
@@ -55,10 +61,13 @@ export const ToggleGroup = ({ options, onValueChange, isFullWidth, ...props }: T
                 option.disabled
                   ? "text-gray-400 hover:cursor-not-allowed"
                   : "text-default [&[aria-checked='false']]:hover:bg-emphasis",
-                isFullWidth && "w-full"
-              )}>
+                isFullWidth && "w-full",
+              )}
+            >
               <div className="item-center flex justify-center ">
-                {option.iconLeft && <span className="mr-2 flex h-4 w-4 items-center">{option.iconLeft}</span>}
+                {option.iconLeft && (
+                  <span className="mr-2 flex h-4 w-4 items-center">{option.iconLeft}</span>
+                )}
                 {option.label}
               </div>
             </RadixToggleGroup.Item>

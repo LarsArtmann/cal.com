@@ -88,7 +88,8 @@ export default function TeamListItem(props: Props) {
 
   const isOwner = props.team.role === MembershipRole.OWNER;
   const isInvitee = !props.team.accepted;
-  const isAdmin = props.team.role === MembershipRole.OWNER || props.team.role === MembershipRole.ADMIN;
+  const isAdmin =
+    props.team.role === MembershipRole.OWNER || props.team.role === MembershipRole.ADMIN;
   const { hideDropdown, setHideDropdown } = props;
 
   if (!team) return <></>;
@@ -143,7 +144,7 @@ export default function TeamListItem(props: Props) {
                       t("email_invite_team_bulk", {
                         userCount: data.usernameOrEmail.length,
                       }),
-                      "success"
+                      "success",
                     );
                     resetFields();
                   } else {
@@ -151,7 +152,7 @@ export default function TeamListItem(props: Props) {
                       t("email_invite_team", {
                         email: data.usernameOrEmail,
                       }),
-                      "success"
+                      "success",
                     );
                   }
                 }
@@ -159,7 +160,7 @@ export default function TeamListItem(props: Props) {
               onError: (error) => {
                 showToast(error.message, "error");
               },
-            }
+            },
           );
         }}
         onSettingsOpen={() => {
@@ -180,12 +181,18 @@ export default function TeamListItem(props: Props) {
           }}
         />
       )}
-      <div className={classNames("flex items-center  justify-between", !isInvitee && "hover:bg-muted group")}>
+      <div
+        className={classNames(
+          "flex items-center  justify-between",
+          !isInvitee && "hover:bg-muted group",
+        )}
+      >
         {!isInvitee ? (
           <Link
             href={"/settings/teams/" + team.id + "/profile"}
             className="flex-grow cursor-pointer truncate text-sm"
-            title={`${team.name}`}>
+            title={`${team.name}`}
+          >
             {teamInfo}
           </Link>
         ) : (
@@ -204,14 +211,20 @@ export default function TeamListItem(props: Props) {
                   data-testid={`accept-invitation-${team.id}`}
                   StartIcon={Check}
                   className="me-2 ms-2"
-                  onClick={acceptInvite}>
+                  onClick={acceptInvite}
+                >
                   {t("accept")}
                 </Button>
               </div>
               <div className="block sm:hidden">
                 <Dropdown>
                   <DropdownMenuTrigger asChild>
-                    <Button type="button" color="minimal" variant="icon" StartIcon={MoreHorizontal} />
+                    <Button
+                      type="button"
+                      color="minimal"
+                      variant="icon"
+                      StartIcon={MoreHorizontal}
+                    />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem>
@@ -220,7 +233,12 @@ export default function TeamListItem(props: Props) {
                       </DropdownItem>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <DropdownItem color="destructive" type="button" StartIcon={X} onClick={declineInvite}>
+                      <DropdownItem
+                        color="destructive"
+                        type="button"
+                        StartIcon={X}
+                        onClick={declineInvite}
+                      >
                         {t("reject")}
                       </DropdownItem>
                     </DropdownMenuItem>
@@ -242,7 +260,7 @@ export default function TeamListItem(props: Props) {
                             orgBranding
                               ? `${orgBranding.fullDomain}`
                               : process.env.NEXT_PUBLIC_WEBSITE_URL + "/team"
-                          }/${team.slug}`
+                          }/${team.slug}`,
                         );
                         showToast(t("link_copied"), "success");
                       }}
@@ -267,7 +285,8 @@ export default function TeamListItem(props: Props) {
                         <DropdownItem
                           type="button"
                           href={"/settings/teams/" + team.id + "/profile"}
-                          StartIcon={Edit2}>
+                          StartIcon={Edit2}
+                        >
                           {t("edit_team") as string}
                         </DropdownItem>
                       </DropdownMenuItem>
@@ -283,7 +302,8 @@ export default function TeamListItem(props: Props) {
                               ? `${orgBranding.fullDomain}`
                               : `${process.env.NEXT_PUBLIC_WEBSITE_URL}/team`
                           }/${team.slug}`}
-                          StartIcon={ExternalLink}>
+                          StartIcon={ExternalLink}
+                        >
                           {t("preview_team") as string}
                         </DropdownItem>
                       </DropdownMenuItem>
@@ -295,7 +315,8 @@ export default function TeamListItem(props: Props) {
                           onClick={() => {
                             setOpenMemberInvitationModal(true);
                           }}
-                          StartIcon={Send}>
+                          StartIcon={Send}
+                        >
                           {t("invite_team_member") as string}
                         </DropdownItem>
                       </DropdownMenuItem>
@@ -311,7 +332,8 @@ export default function TeamListItem(props: Props) {
                               StartIcon={Trash}
                               onClick={(e) => {
                                 e.stopPropagation();
-                              }}>
+                              }}
+                            >
                               {t("disband_team")}
                             </DropdownItem>
                           </DialogTrigger>
@@ -322,7 +344,8 @@ export default function TeamListItem(props: Props) {
                             isLoading={props.isLoading}
                             onConfirm={() => {
                               props.onActionSelect("disband");
-                            }}>
+                            }}
+                          >
                             {t("disband_team_confirmation_message")}
                           </ConfirmationDialogContent>
                         </Dialog>
@@ -339,7 +362,8 @@ export default function TeamListItem(props: Props) {
                               StartIcon={LogOut}
                               onClick={(e) => {
                                 e.stopPropagation();
-                              }}>
+                              }}
+                            >
                               {t("leave_team")}
                             </DropdownItem>
                           </DialogTrigger>
@@ -347,7 +371,8 @@ export default function TeamListItem(props: Props) {
                             variety="danger"
                             title={t("leave_team")}
                             confirmBtnText={t("confirm_leave_team")}
-                            onConfirm={declineInvite}>
+                            onConfirm={declineInvite}
+                          >
                             {t("leave_team_confirmation_message")}
                           </ConfirmationDialogContent>
                         </Dialog>
@@ -383,7 +408,8 @@ const TeamPublishButton = ({ teamId }: { teamId: number }) => {
         onClick={() => {
           publishTeamMutation.mutate({ teamId });
         }}
-        StartIcon={Globe}>
+        StartIcon={Globe}
+      >
         {t("team_publish")}
       </DropdownItem>
     </DropdownMenuItem>

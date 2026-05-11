@@ -30,7 +30,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         metadata: {
           ...(userWithMetadata?.metadata as Prisma.JsonObject),
           vitalSettings: {
-            ...((userWithMetadata?.metadata as Prisma.JsonObject)?.vitalSettings as Prisma.JsonObject),
+            ...((userWithMetadata?.metadata as Prisma.JsonObject)
+              ?.vitalSettings as Prisma.JsonObject),
             connected: true,
           },
         },

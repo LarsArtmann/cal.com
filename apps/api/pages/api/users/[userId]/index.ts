@@ -7,5 +7,5 @@ export default withMiddleware()(
     GET: import("./_get"),
     PATCH: import("./_patch"),
     DELETE: import("./_delete"),
-  })
+  }),
 );

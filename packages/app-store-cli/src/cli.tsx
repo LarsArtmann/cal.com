@@ -35,7 +35,7 @@ const cli = meow(
       },
     },
     allowUnknownFlags: false,
-  }
+  },
 );
 
 if (cli.input.length !== 1) {

@@ -28,7 +28,8 @@ OnboardTeamMembersPage.getLayout = (page: React.ReactElement, router: NextAppPro
     maxSteps={5}
     isOptionalCallback={() => {
       router.push(`/settings/organizations/${router.query.id}/add-teams`);
-    }}>
+    }}
+  >
     {page}
   </WizardLayout>
 );

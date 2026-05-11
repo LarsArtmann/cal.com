@@ -36,7 +36,7 @@ export const apiKeysRouter = router({
   findKeyOfType: authedProcedure.input(ZFindKeyOfTypeInputSchema).query(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.findKeyOfType) {
       UNSTABLE_HANDLER_CACHE.findKeyOfType = await import("./findKeyOfType.handler").then(
-        (mod) => mod.findKeyOfTypeHandler
+        (mod) => mod.findKeyOfTypeHandler,
       );
     }
 
@@ -54,7 +54,9 @@ export const apiKeysRouter = router({
   // Create a new key
   create: authedProcedure.input(ZCreateInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.create) {
-      UNSTABLE_HANDLER_CACHE.create = await import("./create.handler").then((mod) => mod.createHandler);
+      UNSTABLE_HANDLER_CACHE.create = await import("./create.handler").then(
+        (mod) => mod.createHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -86,7 +88,9 @@ export const apiKeysRouter = router({
 
   delete: authedProcedure.input(ZDeleteInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.delete) {
-      UNSTABLE_HANDLER_CACHE.delete = await import("./delete.handler").then((mod) => mod.deleteHandler);
+      UNSTABLE_HANDLER_CACHE.delete = await import("./delete.handler").then(
+        (mod) => mod.deleteHandler,
+      );
     }
 
     // Unreachable code but required for type safety

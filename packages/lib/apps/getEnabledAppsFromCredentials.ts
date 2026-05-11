@@ -19,7 +19,7 @@ const getEnabledAppsFromCredentials = async (
   options?: {
     where?: Prisma.AppWhereInput;
     filterOnCredentials?: boolean;
-  }
+  },
 ) => {
   const { where: _where = {}, filterOnCredentials = false } = options || {};
   const filterOnIds = {

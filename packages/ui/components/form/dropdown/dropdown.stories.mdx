@@ -310,7 +310,7 @@ The `Dropdown` component can be used to display a menu to the user.
       asChild: false,
       align: "start",
       disabled: false,
-      sideOffset: 0
+      sideOffset: 0,
     }}
     argTypes={{
       sideOffset: {
@@ -320,8 +320,8 @@ The `Dropdown` component can be used to display a menu to the user.
       },
       asChild: {
         control: {
-          type: "boolean"
-        }
+          type: "boolean",
+        },
       },
       align: {
         control: {
@@ -331,10 +331,11 @@ The `Dropdown` component can be used to display a menu to the user.
       },
       disabled: {
         control: {
-          type: "boolean"
-        }
-      }
-    }}>
+          type: "boolean",
+        },
+      },
+    }}
+  >
     {({ dir, asChild, sideOffset, align, disabled }) => (
       <VariantsTable titles={["Default"]} columnMinWidth={150}>
         <VariantRow>

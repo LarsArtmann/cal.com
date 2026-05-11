@@ -30,7 +30,8 @@ export function TeamsUpgradeBanner() {
           className="border-b border-b-black"
           onClick={() => {
             publishTeamMutation.mutate({ teamId: membership.team.id });
-          }}>
+          }}
+        >
           {t("upgrade_banner_action")}
         </button>
       }

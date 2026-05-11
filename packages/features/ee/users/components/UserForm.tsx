@@ -89,7 +89,9 @@ export const UserForm = ({
       },
       timeFormat: {
         value: defaultValues?.timeFormat || 12,
-        label: timeFormatOptions.find((option) => option.value === defaultValues?.timeFormat)?.label || "12",
+        label:
+          timeFormatOptions.find((option) => option.value === defaultValues?.timeFormat)?.label ||
+          "12",
       },
       timeZone: defaultValues?.timeZone || "",
       weekStart: {
@@ -105,8 +107,8 @@ export const UserForm = ({
       identityProvider: {
         value: defaultValues?.identityProvider || identityProviderOptions[0].value,
         label:
-          identityProviderOptions.find((option) => option.value === defaultValues?.identityProvider)?.label ||
-          identityProviderOptions[0].label,
+          identityProviderOptions.find((option) => option.value === defaultValues?.identityProvider)
+            ?.label || identityProviderOptions[0].label,
       },
     },
   });
@@ -169,7 +171,12 @@ export const UserForm = ({
       />
       <TextField label="Name" placeholder="example" required {...form.register("name")} />
       <TextField label="Username" placeholder="example" required {...form.register("username")} />
-      <EmailField label="Email" placeholder="user@example.com" required {...form.register("email")} />
+      <EmailField
+        label="Email"
+        placeholder="user@example.com"
+        required
+        {...form.register("email")}
+      />
       <TextField label="About" {...form.register("bio")} />
       <Controller
         name="locale"

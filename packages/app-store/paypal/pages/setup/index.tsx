@@ -37,7 +37,11 @@ export default function PayPalSetup() {
         <div className="bg-default border-subtle m-auto max-w-[43em] overflow-auto rounded border pb-10 md:p-10">
           <div className="ml-2 ltr:mr-2 rtl:ml-2 md:ml-5">
             <div className="invisible md:visible">
-              <img className="h-11" src="/api/app-store/paypal/icon.svg" alt="Paypal Payment Logo" />
+              <img
+                className="h-11"
+                src="/api/app-store/paypal/icon.svg"
+                alt="Paypal Payment Logo"
+              />
               <p className="text-default mt-5 text-lg">Paypal</p>
             </div>
             <form autoComplete="off" className="mt-5">
@@ -74,17 +78,20 @@ export default function PayPalSetup() {
                         secret_key: newSecretKey,
                       },
                     });
-                  }}>
+                  }}
+                >
                   {t("save")}
                 </Button>
               </div>
             </form>
             <div>
-              <p className="text-lgf text-default mt-5 font-bold">Getting started with Paypal APP</p>
+              <p className="text-lgf text-default mt-5 font-bold">
+                Getting started with Paypal APP
+              </p>
               <p className="text-default font-semi mt-2">
-                Here in Cal.com we offer Paypal as one of our payment gateway. You can use your own Paypal
-                Business account to receive payments from your customers enabling and setting up price and
-                currency for each of your event types.
+                Here in Cal.com we offer Paypal as one of our payment gateway. You can use your own
+                Paypal Business account to receive payments from your customers enabling and setting
+                up price and currency for each of your event types.
               </p>
 
               <p className="text-lgf text-default mt-5 inline-flex font-bold">
@@ -99,16 +106,17 @@ export default function PayPalSetup() {
               <a
                 className="text-orange-600 underline"
                 target="_blank"
-                href="https://developer.paypal.com/api/rest/#link-getclientidandclientsecret">
+                href="https://developer.paypal.com/api/rest/#link-getclientidandclientsecret"
+              >
                 Link to Paypal developer API REST Setup Guide:
                 https://developer.paypal.com/api/rest/#link-getclientidandclientsecret
               </a>
 
               <p className="text-lgf text-default mt-5 font-bold">Setup instructions</p>
               <p className="text-default font-semi mt-2">
-                Remember to only proceed with the following steps if your account has already been upgraded to
-                a business account. Also keep in mind that some of the following steps might be different
-                since Paypal offers different experiences based on your country.
+                Remember to only proceed with the following steps if your account has already been
+                upgraded to a business account. Also keep in mind that some of the following steps
+                might be different since Paypal offers different experiences based on your country.
               </p>
 
               <ol className="text-default ml-1 mt-5 list-decimal pl-2">
@@ -118,7 +126,8 @@ export default function PayPalSetup() {
                   <a
                     target="_blank"
                     href="https://developer.paypal.com/dashboard/applications/live"
-                    className="text-orange-600 underline">
+                    className="text-orange-600 underline"
+                  >
                     {t("here")}
                   </a>
                   .
@@ -130,7 +139,8 @@ export default function PayPalSetup() {
                   Go back to{" "}
                   <a
                     className="text-orange-600 underline"
-                    href="https://developer.paypal.com/dashboard/applications/live">
+                    href="https://developer.paypal.com/dashboard/applications/live"
+                  >
                     dashboard
                   </a>
                   , click on new app created.
@@ -144,11 +154,11 @@ export default function PayPalSetup() {
                 Reminder:
               </p>
               <p className="text-default mt-2">
-                Our integration creates a specific webhook on your Paypal account that we use to report back
-                transactions to our system. If you delete this webhook, we will not be able to report back and
-                you should Uninstall and Install the app again for this to work again. Uninstalling the app
-                won&apos;t delete your current event type price/currency configuration but you would not be
-                able to receive bookings.
+                Our integration creates a specific webhook on your Paypal account that we use to
+                report back transactions to our system. If you delete this webhook, we will not be
+                able to report back and you should Uninstall and Install the app again for this to
+                work again. Uninstalling the app won&apos;t delete your current event type
+                price/currency configuration but you would not be able to receive bookings.
               </p>
             </div>
           </div>

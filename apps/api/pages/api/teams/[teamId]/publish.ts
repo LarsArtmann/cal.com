@@ -47,5 +47,5 @@ export default withMiddleware()(
     return defaultHandler({
       PATCH: Promise.resolve({ default: defaultResponder(patchHandler) }),
     })(req, res);
-  })
+  }),
 );

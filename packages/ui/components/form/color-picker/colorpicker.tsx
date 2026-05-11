@@ -56,7 +56,7 @@ const ColorPicker = (props: ColorPickerProps) => {
       <HexColorInput
         className={cx(
           "border-default text-default bg-default block h-full w-full border px-3 py-2 ltr:rounded-r-md rtl:rounded-l-md sm:text-sm",
-          props.className
+          props.className,
         )}
         color={color}
         onChange={(val) => {

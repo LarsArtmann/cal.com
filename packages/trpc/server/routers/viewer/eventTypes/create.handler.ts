@@ -29,7 +29,9 @@ export const createHandler = async ({ ctx, input }: CreateOptions) => {
   const isManagedEventType = schedulingType === SchedulingType.MANAGED;
   // Get Users default conferencing app
 
-  const defaultConferencingData = userMetadataSchema.parse(ctx.user.metadata)?.defaultConferencingApp;
+  const defaultConferencingData = userMetadataSchema.parse(
+    ctx.user.metadata,
+  )?.defaultConferencingApp;
   const appKeys = await getAppKeysFromSlug("daily-video");
 
   let locations: { type: string; link?: string }[] = [];
@@ -45,7 +47,7 @@ export const createHandler = async ({ ctx, input }: CreateOptions) => {
   if (defaultConferencingData && defaultConferencingData.appSlug !== "daily-video") {
     const credentials = await getUsersCredentials(ctx.user.id);
     const foundApp = getApps(credentials, true).filter(
-      (app) => app.slug === defaultConferencingData.appSlug
+      (app) => app.slug === defaultConferencingData.appSlug,
     )[0]; // There is only one possible install here so index [0] is the one we are looking for ;
     const locationType = foundApp?.locationOption?.value ?? DailyLocationType; // Default to Daily if no location type is found
     locations = [{ type: locationType, link: defaultConferencingData.appLink }];
@@ -90,7 +92,10 @@ export const createHandler = async ({ ctx, input }: CreateOptions) => {
   } catch (e) {
     if (e instanceof PrismaClientKnownRequestError) {
       if (e.code === "P2002" && Array.isArray(e.meta?.target) && e.meta?.target.includes("slug")) {
-        throw new TRPCError({ code: "BAD_REQUEST", message: "URL Slug already exists for given user." });
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "URL Slug already exists for given user.",
+        });
       }
     }
     throw new TRPCError({ code: "BAD_REQUEST" });

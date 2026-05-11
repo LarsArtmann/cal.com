@@ -56,7 +56,11 @@ export const sendEmailVerification = async ({ email, language, username }: Verif
   return { ok: true, skipped: false };
 };
 
-export const sendEmailVerificationByCode = async ({ email, language, username }: VerifyEmailType) => {
+export const sendEmailVerificationByCode = async ({
+  email,
+  language,
+  username,
+}: VerifyEmailType) => {
   const translation = await getTranslation(language ?? "en", "common");
   const secret = createHash("md5")
     .update(email + process.env.CALENDSO_ENCRYPTION_KEY)

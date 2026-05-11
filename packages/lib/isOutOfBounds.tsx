@@ -28,7 +28,7 @@ function isOutOfBounds(
   }: Pick<
     EventType,
     "periodType" | "periodDays" | "periodCountCalendarDays" | "periodStartDate" | "periodEndDate"
-  >
+  >,
 ) {
   const date = dayjs(time);
   guardAgainstBookingInThePast(date.toDate());
@@ -46,7 +46,10 @@ function isOutOfBounds(
     case PeriodType.RANGE: {
       const periodRangeStartDay = dayjs(periodStartDate).utcOffset(date.utcOffset()).endOf("day");
       const periodRangeEndDay = dayjs(periodEndDate).utcOffset(date.utcOffset()).endOf("day");
-      return date.endOf("day").isBefore(periodRangeStartDay) || date.endOf("day").isAfter(periodRangeEndDay);
+      return (
+        date.endOf("day").isBefore(periodRangeStartDay) ||
+        date.endOf("day").isAfter(periodRangeEndDay)
+      );
     }
 
     case PeriodType.UNLIMITED:

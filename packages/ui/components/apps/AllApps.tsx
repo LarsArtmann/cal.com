@@ -37,7 +37,12 @@ export function useShouldShowArrows() {
     });
   };
 
-  return { ref, calculateScroll, leftVisible: showArrowScroll.left, rightVisible: showArrowScroll.right };
+  return {
+    ref,
+    calculateScroll,
+    leftVisible: showArrowScroll.left,
+    rightVisible: showArrowScroll.right,
+  };
 }
 
 type AllAppsPropsType = {
@@ -77,7 +82,8 @@ function CategoryTab({ selectedCategory, categories, searchText }: CategoryTabPr
           ? t("search")
           : t("category_apps", {
               category:
-                (selectedCategory && selectedCategory[0].toUpperCase() + selectedCategory.slice(1)) ||
+                (selectedCategory &&
+                  selectedCategory[0].toUpperCase() + selectedCategory.slice(1)) ||
                 t("all"),
             })}
       </h2>
@@ -92,15 +98,17 @@ function CategoryTab({ selectedCategory, categories, searchText }: CategoryTabPr
       <ul
         className="no-scrollbar mt-3 flex max-w-full space-x-1 overflow-x-auto lg:mt-0 lg:max-w-[50%]"
         onScroll={(e) => calculateScroll(e)}
-        ref={ref}>
+        ref={ref}
+      >
         <li
           onClick={() => {
             router.replace(pathname);
           }}
           className={classNames(
             selectedCategory === null ? "bg-emphasis text-default" : "bg-muted text-emphasis",
-            "hover:bg-emphasis min-w-max rounded-md px-4 py-2.5 text-sm font-medium hover:cursor-pointer"
-          )}>
+            "hover:bg-emphasis min-w-max rounded-md px-4 py-2.5 text-sm font-medium hover:cursor-pointer",
+          )}
+        >
           {t("all")}
         </li>
         {categories.map((cat, pos) => (
@@ -117,8 +125,9 @@ function CategoryTab({ selectedCategory, categories, searchText }: CategoryTabPr
             }}
             className={classNames(
               selectedCategory === cat ? "bg-emphasis text-default" : "bg-muted text-emphasis",
-              "hover:bg-emphasis rounded-md px-4 py-2.5 text-sm font-medium hover:cursor-pointer"
-            )}>
+              "hover:bg-emphasis rounded-md px-4 py-2.5 text-sm font-medium hover:cursor-pointer",
+            )}
+          >
             {cat[0].toUpperCase() + cat.slice(1)}
           </li>
         ))}
@@ -148,7 +157,9 @@ export function AllApps({ apps, searchText, categories, userAdminTeams }: AllApp
 
   useEffect(() => {
     const queryCategory =
-      typeof categoryQuery === "string" && categories.includes(categoryQuery) ? categoryQuery : null;
+      typeof categoryQuery === "string" && categories.includes(categoryQuery)
+        ? categoryQuery
+        : null;
     setSelectedCategory(queryCategory);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryQuery]);
@@ -159,9 +170,11 @@ export function AllApps({ apps, searchText, categories, userAdminTeams }: AllApp
         ? app.categories
           ? app.categories.includes(selectedCategory as AppCategories)
           : app.category === selectedCategory
-        : true
+        : true,
     )
-    .filter((app) => (searchText ? app.name.toLowerCase().includes(searchText.toLowerCase()) : true))
+    .filter((app) =>
+      searchText ? app.name.toLowerCase().includes(searchText.toLowerCase()) : true,
+    )
     .sort(function (a, b) {
       if (a.name < b.name) return -1;
       else if (a.name > b.name) return 1;
@@ -170,11 +183,16 @@ export function AllApps({ apps, searchText, categories, userAdminTeams }: AllApp
 
   return (
     <div>
-      <CategoryTab selectedCategory={selectedCategory} searchText={searchText} categories={categories} />
+      <CategoryTab
+        selectedCategory={selectedCategory}
+        searchText={searchText}
+        categories={categories}
+      />
       {filteredApps.length ? (
         <div
           className="grid gap-3 lg:grid-cols-4 [@media(max-width:1270px)]:grid-cols-3 [@media(max-width:500px)]:grid-cols-1 [@media(max-width:730px)]:grid-cols-1"
-          ref={appsContainerRef}>
+          ref={appsContainerRef}
+        >
           {filteredApps.map((app) => (
             <AppCard
               key={app.name}

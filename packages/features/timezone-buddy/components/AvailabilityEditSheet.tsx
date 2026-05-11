@@ -37,11 +37,22 @@ type AvailabilityFormValues = {
   isDefault: boolean;
 };
 
-const DateOverride = ({ workingHours, disabled }: { workingHours: WorkingHours[]; disabled?: boolean }) => {
-  const { remove, append, replace, fields } = useFieldArray<AvailabilityFormValues, "dateOverrides">({
+const DateOverride = ({
+  workingHours,
+  disabled,
+}: {
+  workingHours: WorkingHours[];
+  disabled?: boolean;
+}) => {
+  const { remove, append, replace, fields } = useFieldArray<
+    AvailabilityFormValues,
+    "dateOverrides"
+  >({
     name: "dateOverrides",
   });
-  const excludedDates = fields.map((field) => dayjs(field.ranges[0].start).utc().format("YYYY-MM-DD"));
+  const excludedDates = fields.map((field) =>
+    dayjs(field.ranges[0].start).utc().format("YYYY-MM-DD"),
+  );
   const { t } = useLocale();
   return (
     <div className="">
@@ -59,7 +70,12 @@ const DateOverride = ({ workingHours, disabled }: { workingHours: WorkingHours[]
           excludedDates={excludedDates}
           onChange={(ranges) => ranges.forEach((range) => append({ ranges: [range] }))}
           Trigger={
-            <Button color="secondary" StartIcon={Plus} data-testid="add-override" disabled={disabled}>
+            <Button
+              color="secondary"
+              StartIcon={Plus}
+              data-testid="add-override"
+              disabled={disabled}
+            >
               {t("add_an_override")}
             </Button>
           }
@@ -122,7 +138,8 @@ export function AvailabilityEditSheet(props: Props) {
               dateOverrides: dateOverrides.flatMap((override) => override.ranges),
               ...values,
             });
-        }}>
+        }}
+      >
         <SheetContent
           bottomActions={
             <>
@@ -134,11 +151,13 @@ export function AvailabilityEditSheet(props: Props) {
                 className="w-full justify-center"
                 type="submit"
                 loading={updateMutation.isLoading}
-                form="availability-form">
+                form="availability-form"
+              >
                 {t("save")}
               </Button>
             </>
-          }>
+          }
+        >
           <SheetHeader>
             <SheetTitle>
               {t("edit_users_availability", {

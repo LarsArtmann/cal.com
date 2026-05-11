@@ -14,7 +14,8 @@ const IS_STRIPE_ENABLED = !!(
 );
 
 const IS_SELF_HOSTED = !(
-  new URL(WEBAPP_URL).hostname.endsWith(".cal.dev") || !!new URL(WEBAPP_URL).hostname.endsWith(".cal.com")
+  new URL(WEBAPP_URL).hostname.endsWith(".cal.dev") ||
+  !!new URL(WEBAPP_URL).hostname.endsWith(".cal.com")
 );
 
 test.describe("Change username on settings", () => {

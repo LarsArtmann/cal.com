@@ -101,11 +101,14 @@ function ConnectedCalendarsList(props: Props) {
                           buttonProps={{ className: "border border-default" }}
                         />
                       </div>
-                    }>
+                    }
+                  >
                     <div className="border-subtle border-t">
                       {!fromOnboarding && (
                         <>
-                          <p className="text-subtle px-5 pt-4 text-sm">{t("toggle_calendars_conflict")}</p>
+                          <p className="text-subtle px-5 pt-4 text-sm">
+                            {t("toggle_calendars_conflict")}
+                          </p>
                           <ul className="space-y-4 px-5 py-4">
                             {item.calendars.map((cal) => (
                               <CalendarSwitch
@@ -130,8 +133,8 @@ function ConnectedCalendarsList(props: Props) {
                     title={t("something_went_wrong")}
                     message={
                       <span>
-                        <Link href={"/apps/" + item.integration.slug}>{item.integration.name}</Link>:{" "}
-                        {t("calendar_error")}
+                        <Link href={"/apps/" + item.integration.slug}>{item.integration.name}</Link>
+                        : {t("calendar_error")}
                       </span>
                     }
                     iconClassName="h-10 w-10 ml-2 mr-1 mt-0.5"
@@ -166,12 +169,15 @@ export function CalendarListContainer(props: { heading?: boolean; fromOnboarding
         { variant: "calendar", onlyInstalled: true },
         {
           exact: true,
-        }
+        },
       ),
       utils.viewer.connectedCalendars.invalidate(),
     ]);
   const query = trpc.viewer.connectedCalendars.useQuery();
-  const installedCalendars = trpc.viewer.integrations.useQuery({ variant: "calendar", onlyInstalled: true });
+  const installedCalendars = trpc.viewer.integrations.useQuery({
+    variant: "calendar",
+    onlyInstalled: true,
+  });
   const mutation = trpc.viewer.setDestinationCalendar.useMutation({
     onSuccess: () => {
       utils.viewer.connectedCalendars.invalidate();
@@ -212,7 +218,9 @@ export function CalendarListContainer(props: { heading?: boolean; fromOnboarding
                           />
                         </div>
                         <div className="md:w-6/12">
-                          <h1 className="text-emphasis text-sm font-semibold">{t("create_events_on")}</h1>
+                          <h1 className="text-emphasis text-sm font-semibold">
+                            {t("create_events_on")}
+                          </h1>
                           <p className="text-default text-sm font-normal">{t("set_calendar")}</p>
                         </div>
                         <div className="justify-end md:w-6/12">
@@ -238,7 +246,9 @@ export function CalendarListContainer(props: { heading?: boolean; fromOnboarding
                 {!!query.data?.connectedCalendars.length && (
                   <ShellSubHeading
                     className="mt-4"
-                    title={<SubHeadingTitleWithConnections title={t("connect_additional_calendar")} />}
+                    title={
+                      <SubHeadingTitleWithConnections title={t("connect_additional_calendar")} />
+                    }
                   />
                 )}
                 <CalendarList onChanged={onChanged} />
@@ -254,7 +264,8 @@ export function CalendarListContainer(props: { heading?: boolean; fromOnboarding
                   <Button
                     color="secondary"
                     data-testid="connect-calendar-apps"
-                    href="/apps/categories/calendar">
+                    href="/apps/categories/calendar"
+                  >
                     {t(`connect_calendar_apps`)}
                   </Button>
                 }

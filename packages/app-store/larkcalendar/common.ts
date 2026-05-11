@@ -12,7 +12,7 @@ export const isExpired = (expiryDate: number) =>
 
 export async function handleLarkError<T extends { code: number; msg: string }>(
   response: Response,
-  log: typeof logger
+  log: typeof logger,
 ): Promise<T> {
   const data: T = await response.json();
   if (!response.ok || data.code !== 0) {

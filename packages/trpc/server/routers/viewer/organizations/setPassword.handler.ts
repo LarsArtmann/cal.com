@@ -30,7 +30,8 @@ export const setPasswordHandler = async ({ ctx, input }: UpdateOptions) => {
   });
 
   if (!user) throw new TRPCError({ code: "BAD_REQUEST", message: "User not found" });
-  if (!user.password) throw new TRPCError({ code: "BAD_REQUEST", message: "Password not set by default" });
+  if (!user.password)
+    throw new TRPCError({ code: "BAD_REQUEST", message: "Password not set by default" });
 
   const generatedPassword = createHash("md5")
     .update(`${user?.email ?? ""}${process.env.CALENDSO_ENCRYPTION_KEY}`)

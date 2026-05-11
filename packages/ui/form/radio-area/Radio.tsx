@@ -12,8 +12,9 @@ export const Radio = (props: RadioGroupPrimitive.RadioGroupItemProps & { childre
     {...props}
     className={classNames(
       "hover:bg-subtle border-default dark:checked:bg-brand-default dark:bg-darkgray-100 dark:hover:bg-subtle dark:checked:hover:bg-brand-default focus:ring-brand-default hover:border-emphasis me-1.5 mt-0.5 h-4 w-4 flex-shrink-0 rounded-full border text-[--cal-brand] focus:border-0 focus:ring-1",
-      props.disabled && "opacity-60"
-    )}>
+      props.disabled && "opacity-60",
+    )}
+  >
     {props.children}
   </RadioGroupPrimitive.Item>
 );
@@ -21,7 +22,7 @@ export const Indicator = ({ disabled }: { disabled?: boolean }) => (
   <RadioGroupPrimitive.Indicator
     className={classNames(
       "after:bg-default dark:after:bg-brand-accent relative flex h-full w-full items-center justify-center rounded-full bg-black after:h-[6px] after:w-[6px] after:rounded-full after:content-['']",
-      disabled ? "after:bg-muted" : "bg-brand-default"
+      disabled ? "after:bg-muted" : "bg-brand-default",
     )}
   />
 );
@@ -31,7 +32,7 @@ export const Label = (props: JSX.IntrinsicElements["label"] & { disabled?: boole
     {...props}
     className={classNames(
       "text-emphasis ms-2 w-full text-sm font-medium leading-5",
-      props.disabled && "text-subtle"
+      props.disabled && "text-subtle",
     )}
   />
 );

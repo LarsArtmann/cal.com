@@ -8,7 +8,7 @@ describe("Tests for ScrollableArea Component", () => {
       <ScrollableArea>
         <div>Child 1</div>
         <div>Child 2</div>
-      </ScrollableArea>
+      </ScrollableArea>,
     );
 
     expect(getByText("Child 1")).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe("Tests for ScrollableArea Component", () => {
     const { queryByTestId } = render(
       <ScrollableArea>
         <div style={{ height: `${mockScrollHeight}px` }}>Non-Overflowing Content</div>
-      </ScrollableArea>
+      </ScrollableArea>,
     );
 
     expect(queryByTestId("overflow-indicator")).not.toBeInTheDocument();
@@ -38,7 +38,7 @@ describe("Tests for ScrollableArea Component", () => {
     const { getByTestId } = render(
       <ScrollableArea>
         <div>Overflowing Content</div>
-      </ScrollableArea>
+      </ScrollableArea>,
     );
 
     expect(getByTestId("overflow-indicator")).toBeInTheDocument();

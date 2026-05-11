@@ -32,7 +32,12 @@ The `ToggleGroup` component is used to create a group of toggle items with optio
     <TooltipProvider>
       <ToggleGroup
         options={[
-          { value: "option1", label: "Option 1", tooltip: "Tooltip for Option 1", iconLeft: <ArrowRight /> },
+          {
+            value: "option1",
+            label: "Option 1",
+            tooltip: "Tooltip for Option 1",
+            iconLeft: <ArrowRight />,
+          },
           { value: "option2", label: "Option 2", iconLeft: <ArrowRight /> },
           { value: "option3", label: "Option 3", iconLeft: <ArrowRight /> },
           {
@@ -94,7 +99,8 @@ The `ToggleGroup` component is used to create a group of toggle items with optio
           },
         },
       },
-    }}>
+    }}
+  >
     {({ options, isFullWidth }) => (
       <VariantsTable titles={["Default"]} columnMinWidth={150}>
         <VariantRow>

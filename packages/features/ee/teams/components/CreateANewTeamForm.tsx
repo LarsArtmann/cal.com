@@ -63,7 +63,8 @@ export const CreateANewTeamForm = () => {
             setServerErrorMessage(null);
             createTeamMutation.mutate(v);
           }
-        }}>
+        }}
+      >
         <div className="mb-8">
           {serverErrorMessage && (
             <div className="mb-4">
@@ -165,7 +166,8 @@ export const CreateANewTeamForm = () => {
             disabled={createTeamMutation.isLoading}
             color="secondary"
             href={returnToParam}
-            className="w-full justify-center">
+            className="w-full justify-center"
+          >
             {t("cancel")}
           </Button>
           <Button
@@ -173,7 +175,8 @@ export const CreateANewTeamForm = () => {
             color="primary"
             EndIcon={ArrowRight}
             type="submit"
-            className="w-full justify-center">
+            className="w-full justify-center"
+          >
             {t("continue")}
           </Button>
         </div>

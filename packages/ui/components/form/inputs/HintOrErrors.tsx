@@ -50,15 +50,26 @@ export function HintsOrErrors<T extends FieldValues = FieldValues>({
             return (
               <li
                 key={key}
-                className={error !== undefined ? (submitted ? "text-red-700" : "") : "text-green-600"}>
+                className={
+                  error !== undefined ? (submitted ? "text-red-700" : "") : "text-green-600"
+                }
+              >
                 {error !== undefined ? (
                   submitted ? (
                     <X size="12" strokeWidth="3" className="-ml-1 inline-block ltr:mr-2 rtl:ml-2" />
                   ) : (
-                    <Circle fill="currentColor" size="5" className="inline-block ltr:mr-2 rtl:ml-2" />
+                    <Circle
+                      fill="currentColor"
+                      size="5"
+                      className="inline-block ltr:mr-2 rtl:ml-2"
+                    />
                   )
                 ) : (
-                  <Check size="12" strokeWidth="3" className="-ml-1 inline-block ltr:mr-2 rtl:ml-2" />
+                  <Check
+                    size="12"
+                    strokeWidth="3"
+                    className="-ml-1 inline-block ltr:mr-2 rtl:ml-2"
+                  />
                 )}
                 {t(`${fieldName}_hint_${key}`)}
               </li>

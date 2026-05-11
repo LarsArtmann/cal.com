@@ -28,7 +28,7 @@ export default class OrganizerPaymentRefundFailedEmail extends OrganizerSchedule
           ? this.t("error_message", {
               errorMessage: this.calEvent.paymentInfo.reason,
             })
-          : " "
+          : " ",
       ),
     };
   }

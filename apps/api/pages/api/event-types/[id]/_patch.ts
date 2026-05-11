@@ -7,7 +7,10 @@ import { defaultResponder } from "@calcom/lib/server";
 import { SchedulingType } from "@calcom/prisma/enums";
 
 import type { schemaEventTypeBaseBodyParams } from "~/lib/validations/event-type";
-import { schemaEventTypeEditBodyParams, schemaEventTypeReadPublic } from "~/lib/validations/event-type";
+import {
+  schemaEventTypeEditBodyParams,
+  schemaEventTypeReadPublic,
+} from "~/lib/validations/event-type";
 import { schemaQueryIdParseInt } from "~/lib/validations/shared/queryIdTransformParseInt";
 import ensureOnlyMembersAsHosts from "~/pages/api/event-types/_utils/ensureOnlyMembersAsHosts";
 
@@ -233,7 +236,10 @@ export async function patchHandler(req: NextApiRequest) {
   return { event_type: schemaEventTypeReadPublic.parse(eventType) };
 }
 
-async function checkPermissions(req: NextApiRequest, body: z.infer<typeof schemaEventTypeBaseBodyParams>) {
+async function checkPermissions(
+  req: NextApiRequest,
+  body: z.infer<typeof schemaEventTypeBaseBodyParams>,
+) {
   const { userId, prisma, isAdmin } = req;
   const { id } = schemaQueryIdParseInt.parse(req.query);
   if (isAdmin) return;

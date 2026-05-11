@@ -16,12 +16,15 @@ const getInstallCountPerApp = async () => {
       c."appId"
     ORDER BY
       "installCount" DESC
-    `
+    `,
   );
-  return mostPopularApps.reduce((acc, { appId, installCount }) => {
-    acc[appId] = installCount;
-    return acc;
-  }, {} as Record<string, number>);
+  return mostPopularApps.reduce(
+    (acc, { appId, installCount }) => {
+      acc[appId] = installCount;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 };
 
 export default getInstallCountPerApp;

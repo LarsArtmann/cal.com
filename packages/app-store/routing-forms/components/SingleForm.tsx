@@ -80,7 +80,12 @@ const Actions = ({
   return (
     <div className="flex items-center">
       <div className="hidden items-center sm:inline-flex">
-        <FormAction className="self-center" data-testid="toggle-form" action="toggle" routingForm={form} />
+        <FormAction
+          className="self-center"
+          data-testid="toggle-form"
+          action="toggle"
+          routingForm={form}
+        />
         <VerticalDivider />
       </div>
       <ButtonGroup combined containerProps={{ className: "hidden md:inline-flex items-center" }}>
@@ -144,7 +149,8 @@ const Actions = ({
               action="copyRedirectUrl"
               color="minimal"
               type="button"
-              StartIcon={LinkIcon}>
+              StartIcon={LinkIcon}
+            >
               {t("Copy Typeform Redirect Url")}
             </FormAction>
           </FormActionsDropdown>
@@ -160,7 +166,8 @@ const Actions = ({
             type="button"
             rel="noreferrer"
             action="preview"
-            StartIcon={ExternalLink}>
+            StartIcon={ExternalLink}
+          >
             {t("preview")}
           </FormAction>
           <FormAction
@@ -169,7 +176,8 @@ const Actions = ({
             routingForm={form}
             color="minimal"
             type="button"
-            StartIcon={LinkIcon}>
+            StartIcon={LinkIcon}
+          >
             {t("copy_link_to_form")}
           </FormAction>
           <FormAction
@@ -178,7 +186,8 @@ const Actions = ({
             className="w-full"
             color="minimal"
             type="button"
-            StartIcon={Download}>
+            StartIcon={Download}
+          >
             {t("download_responses")}
           </FormAction>
           <FormAction
@@ -187,7 +196,8 @@ const Actions = ({
             color="minimal"
             type="button"
             className="w-full"
-            StartIcon={Code}>
+            StartIcon={Code}
+          >
             {t("embed")}
           </FormAction>
           {typeformApp ? (
@@ -197,7 +207,8 @@ const Actions = ({
               action="copyRedirectUrl"
               color="minimal"
               type="button"
-              StartIcon={LinkIcon}>
+              StartIcon={LinkIcon}
+            >
               {t("Copy Typeform Redirect Url")}
             </FormAction>
           ) : null}
@@ -208,7 +219,8 @@ const Actions = ({
             className="w-full"
             type="button"
             color="destructive"
-            StartIcon={Trash}>
+            StartIcon={Trash}
+          >
             {t("delete")}
           </FormAction>
           <div className="block sm:hidden">
@@ -309,7 +321,8 @@ function SingleForm({ form, appUrl, Page }: SingleFormComponentProps) {
           mutation.mutate({
             ...data,
           });
-        }}>
+        }}
+      >
         <FormActionsProvider appUrl={appUrl}>
           <Meta title={form.name} description={form.description || ""} />
           <ShellMain
@@ -325,7 +338,8 @@ function SingleForm({ form, appUrl, Page }: SingleFormComponentProps) {
             }
             subtitle={form.description || ""}
             backPath={`/${appUrl}/forms`}
-            CTA={<Actions form={form} mutation={mutation} />}>
+            CTA={<Actions form={form} mutation={mutation} />}
+          >
             <div className="-mx-4 mt-4 px-4 sm:px-6 md:-mx-8 md:mt-0 md:px-8">
               <div className="flex flex-col items-center items-baseline md:flex-row md:items-start">
                 <div className="lg:min-w-72 lg:max-w-72 mb-6 md:mr-6">
@@ -409,7 +423,8 @@ function SingleForm({ form, appUrl, Page }: SingleFormComponentProps) {
                     <Button
                       color="secondary"
                       data-testid="test-preview"
-                      onClick={() => setIsTestPreviewOpen(true)}>
+                      onClick={() => setIsTestPreviewOpen(true)}
+                    >
                       {t("test_preview")}
                     </Button>
                   </div>
@@ -449,9 +464,12 @@ function SingleForm({ form, appUrl, Page }: SingleFormComponentProps) {
               onSubmit={(e) => {
                 e.preventDefault();
                 testRouting();
-              }}>
+              }}
+            >
               <div className="px-1">
-                {form && <FormInputFields form={form} response={response} setResponse={setResponse} />}
+                {form && (
+                  <FormInputFields form={form} response={response} setResponse={setResponse} />
+                )}
               </div>
               <div>
                 {decidedAction && (
@@ -482,7 +500,8 @@ function SingleForm({ form, appUrl, Page }: SingleFormComponentProps) {
                                 ? decidedAction.value
                                 : `http://${decidedAction.value}`
                             }
-                            rel="noreferrer">
+                            rel="noreferrer"
+                          >
                             {decidedAction.value}
                           </a>
                         </span>
@@ -492,7 +511,8 @@ function SingleForm({ form, appUrl, Page }: SingleFormComponentProps) {
                             target="_blank"
                             href={`/${decidedAction.value}`}
                             rel="noreferrer"
-                            data-testid="test-routing-result">
+                            data-testid="test-routing-result"
+                          >
                             {decidedAction.value}
                           </a>
                         </span>
@@ -508,7 +528,8 @@ function SingleForm({ form, appUrl, Page }: SingleFormComponentProps) {
                     setIsTestPreviewOpen(false);
                     setDecidedAction(null);
                     setResponse({});
-                  }}>
+                  }}
+                >
                   {t("close")}
                 </DialogClose>
                 <Button type="submit" data-testid="test-routing">
@@ -529,7 +550,7 @@ export default function SingleFormWrapper({ form: _form, ...props }: SingleFormC
     {
       initialData: _form,
       trpc: {},
-    }
+    },
   );
   const { t } = useLocale();
 
@@ -548,70 +569,72 @@ export default function SingleFormWrapper({ form: _form, ...props }: SingleFormC
   );
 }
 
-export const getServerSidePropsForSingleFormView = async function getServerSidePropsForSingleFormView(
-  context: AppGetServerSidePropsContext,
-  prisma: AppPrisma,
-  user: AppUser,
-  ssrInit: AppSsrInit
-) {
-  const ssr = await ssrInit(context);
+export const getServerSidePropsForSingleFormView =
+  async function getServerSidePropsForSingleFormView(
+    context: AppGetServerSidePropsContext,
+    prisma: AppPrisma,
+    user: AppUser,
+    ssrInit: AppSsrInit,
+  ) {
+    const ssr = await ssrInit(context);
 
-  if (!user) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/auth/login",
+    if (!user) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/auth/login",
+        },
+      };
+    }
+    const { params } = context;
+    if (!params) {
+      return {
+        notFound: true,
+      };
+    }
+    const formId = params.appPages[0];
+    if (!formId || params.appPages.length > 1) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const isFormCreateEditAllowed = (await import("../lib/isFormCreateEditAllowed"))
+      .isFormCreateEditAllowed;
+    if (!(await isFormCreateEditAllowed({ userId: user.id, formId, targetTeamId: null }))) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const form = await prisma.app_RoutingForms_Form.findUnique({
+      where: {
+        id: formId,
       },
-    };
-  }
-  const { params } = context;
-  if (!params) {
-    return {
-      notFound: true,
-    };
-  }
-  const formId = params.appPages[0];
-  if (!formId || params.appPages.length > 1) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const isFormCreateEditAllowed = (await import("../lib/isFormCreateEditAllowed")).isFormCreateEditAllowed;
-  if (!(await isFormCreateEditAllowed({ userId: user.id, formId, targetTeamId: null }))) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const form = await prisma.app_RoutingForms_Form.findUnique({
-    where: {
-      id: formId,
-    },
-    include: {
-      team: {
-        select: {
-          name: true,
-          slug: true,
+      include: {
+        team: {
+          select: {
+            name: true,
+            slug: true,
+          },
+        },
+        _count: {
+          select: {
+            responses: true,
+          },
         },
       },
-      _count: {
-        select: {
-          responses: true,
-        },
-      },
-    },
-  });
-  if (!form) {
-    return {
-      notFound: true,
-    };
-  }
+    });
+    if (!form) {
+      return {
+        notFound: true,
+      };
+    }
 
-  return {
-    props: {
-      trpcState: ssr.dehydrate(),
-      form: await getSerializableForm({ form }),
-    },
+    return {
+      props: {
+        trpcState: ssr.dehydrate(),
+        form: await getSerializableForm({ form }),
+      },
+    };
   };
-};

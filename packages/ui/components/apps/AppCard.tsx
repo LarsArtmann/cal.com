@@ -42,12 +42,15 @@ export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCar
 
   const enabledOnTeams = doesAppSupportTeamInstall(app.categories, app.concurrentMeetings);
 
-  const appInstalled = enabledOnTeams && userAdminTeams ? userAdminTeams.length < appAdded : appAdded > 0;
+  const appInstalled =
+    enabledOnTeams && userAdminTeams ? userAdminTeams.length < appAdded : appAdded > 0;
 
   const [searchTextIndex, setSearchTextIndex] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    setSearchTextIndex(searchText ? app.name.toLowerCase().indexOf(searchText.toLowerCase()) : undefined);
+    setSearchTextIndex(
+      searchText ? app.name.toLowerCase().indexOf(searchText.toLowerCase()) : undefined,
+    );
   }, [app.name, searchText]);
 
   return (
@@ -59,7 +62,7 @@ export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCar
           className={classNames(
             app.logo.includes("-dark") && "dark:invert",
             "mb-4 h-12 w-12 rounded-sm",
-            app.dirName == "caldavcalendar" && "dark:invert" // TODO: Maybe find a better way to handle this @Hariom?
+            app.dirName == "caldavcalendar" && "dark:invert", // TODO: Maybe find a better way to handle this @Hariom?
           )}
         />
       </div>
@@ -89,7 +92,8 @@ export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCar
           display: "-webkit-box",
           WebkitBoxOrient: "vertical",
           WebkitLineClamp: "3",
-        }}>
+        }}
+      >
         {app.description}
       </p>
 
@@ -98,7 +102,8 @@ export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCar
           color="secondary"
           className="flex w-32 flex-grow justify-center"
           href={`/apps/${app.slug}`}
-          data-testid={`app-store-app-card-${app.slug}`}>
+          data-testid={`app-store-app-card-${app.slug}`}
+        >
           {t("details")}
         </Button>
         {app.isGlobal || (credentials && credentials.length > 0 && allowedMultipleInstalls)
@@ -106,7 +111,9 @@ export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCar
               <InstallAppButton
                 type={app.type}
                 teamsPlanRequired={app.teamsPlanRequired}
-                disableInstall={!!app.dependencies && !app.dependencyData?.some((data) => !data.installed)}
+                disableInstall={
+                  !!app.dependencies && !app.dependencyData?.some((data) => !data.installed)
+                }
                 wrapperClassName="[@media(max-width:260px)]:w-full"
                 render={({ useDefaultComponent, ...props }) => {
                   if (useDefaultComponent) {
@@ -131,7 +138,9 @@ export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCar
               <InstallAppButton
                 type={app.type}
                 wrapperClassName="[@media(max-width:260px)]:w-full"
-                disableInstall={!!app.dependencies && app.dependencyData?.some((data) => !data.installed)}
+                disableInstall={
+                  !!app.dependencies && app.dependencyData?.some((data) => !data.installed)
+                }
                 teamsPlanRequired={app.teamsPlanRequired}
                 render={({ useDefaultComponent, ...props }) => {
                   if (useDefaultComponent) {
@@ -157,7 +166,9 @@ export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCar
       <div className="max-w-44 absolute right-0 mr-4 flex flex-wrap justify-end gap-1">
         {appInstalled ? <Badge variant="green">{t("installed", { count: appAdded })}</Badge> : null}
         {app.isTemplate && (
-          <span className="bg-error rounded-md px-2 py-1 text-sm font-normal text-red-800">Template</span>
+          <span className="bg-error rounded-md px-2 py-1 text-sm font-normal text-red-800">
+            Template
+          </span>
         )}
         {(app.isDefault || (!app.isDefault && app.isGlobal)) && (
           <span className="bg-subtle text-emphasis flex items-center rounded-md px-2 py-1 text-sm font-normal">
@@ -195,7 +206,8 @@ const InstallAppButtonChild = ({
       showToast(t("app_successfully_installed"), "success");
     },
     onError: (error) => {
-      if (error instanceof Error) showToast(error.message || t("app_could_not_be_installed"), "error");
+      if (error instanceof Error)
+        showToast(error.message || t("app_could_not_be_installed"), "error");
     },
   });
 
@@ -206,7 +218,8 @@ const InstallAppButtonChild = ({
         className="[@media(max-width:260px)]:w-full [@media(max-width:260px)]:justify-center"
         StartIcon={Plus}
         data-testid="install-app-button"
-        {...props}>
+        {...props}
+      >
         {t("install")}
       </Button>
     );
@@ -220,7 +233,8 @@ const InstallAppButtonChild = ({
           className="[@media(max-width:260px)]:w-full [@media(max-width:260px)]:justify-center"
           StartIcon={Plus}
           data-testid="install-app-button"
-          {...props}>
+          {...props}
+        >
           {t("install")}
         </Button>
       </DropdownMenuTrigger>
@@ -229,7 +243,8 @@ const InstallAppButtonChild = ({
           className="w-56"
           onInteractOutside={(event) => {
             if (mutation.isLoading) event.preventDefault();
-          }}>
+          }}
+        >
           {mutation.isLoading && (
             <div className="z-1 fixed inset-0 flex items-center justify-center">
               <Spinner />
@@ -240,7 +255,7 @@ const InstallAppButtonChild = ({
             const isInstalledTeamOrUser =
               credentials &&
               credentials.some((credential) =>
-                credential?.teamId ? credential?.teamId === team.id : credential.userId === team.id
+                credential?.teamId ? credential?.teamId === team.id : credential.userId === team.id,
               );
             return (
               <DropdownItem
@@ -257,9 +272,10 @@ const InstallAppButtonChild = ({
                 )}
                 onClick={() => {
                   mutation.mutate(
-                    team.isUser ? addAppMutationInput : { ...addAppMutationInput, teamId: team.id }
+                    team.isUser ? addAppMutationInput : { ...addAppMutationInput, teamId: team.id },
                   );
-                }}>
+                }}
+              >
                 <p className="text-left">
                   {t(team.name)} {isInstalledTeamOrUser && `(${t("installed")})`}
                 </p>

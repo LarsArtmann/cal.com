@@ -35,7 +35,8 @@ export const checkForGWorkspace = async ({ ctx }: CheckForGCalOptions) => {
 export const getUsersFromGWorkspace = async ({}: CheckForGCalOptions) => {
   const { client_id, client_secret } = await getAppKeysFromSlug("google-calendar");
   if (!client_id || typeof client_id !== "string") throw new Error("Google client_id missing.");
-  if (!client_secret || typeof client_secret !== "string") throw new Error("Google client_secret missing.");
+  if (!client_secret || typeof client_secret !== "string")
+    throw new Error("Google client_secret missing.");
 
   const hasExistingCredentials = await prisma.credential.findFirst({
     where: {

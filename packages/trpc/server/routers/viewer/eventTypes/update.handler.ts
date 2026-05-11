@@ -122,20 +122,29 @@ export const updateHandler = async ({ ctx, input }: UpdateOptions) => {
   if (bookingLimits) {
     const isValid = validateIntervalLimitOrder(bookingLimits);
     if (!isValid)
-      throw new TRPCError({ code: "BAD_REQUEST", message: "Booking limits must be in ascending order." });
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Booking limits must be in ascending order.",
+      });
     data.bookingLimits = bookingLimits;
   }
 
   if (durationLimits) {
     const isValid = validateIntervalLimitOrder(durationLimits);
     if (!isValid)
-      throw new TRPCError({ code: "BAD_REQUEST", message: "Duration limits must be in ascending order." });
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Duration limits must be in ascending order.",
+      });
     data.durationLimits = durationLimits;
   }
 
   if (offsetStart !== undefined) {
     if (offsetStart < 0) {
-      throw new TRPCError({ code: "BAD_REQUEST", message: "Offset start time must be zero or greater." });
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "Offset start time must be zero or greater.",
+      });
     }
     data.offsetStart = offsetStart;
   }
@@ -223,7 +232,7 @@ export const updateHandler = async ({ ctx, input }: UpdateOptions) => {
     if (input.metadata?.disableStandardEmails.confirmation?.host) {
       if (
         !workflows.find(
-          (workflow) => !!workflow.steps.find((step) => step.action === WorkflowActions.EMAIL_HOST)
+          (workflow) => !!workflow.steps.find((step) => step.action === WorkflowActions.EMAIL_HOST),
         )
       ) {
         input.metadata.disableStandardEmails.confirmation.host = false;
@@ -233,7 +242,8 @@ export const updateHandler = async ({ ctx, input }: UpdateOptions) => {
     if (input.metadata?.disableStandardEmails.confirmation?.attendee) {
       if (
         !workflows.find(
-          (workflow) => !!workflow.steps.find((step) => step.action === WorkflowActions.EMAIL_ATTENDEE)
+          (workflow) =>
+            !!workflow.steps.find((step) => step.action === WorkflowActions.EMAIL_ATTENDEE),
         )
       ) {
         input.metadata.disableStandardEmails.confirmation.attendee = false;

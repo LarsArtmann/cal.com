@@ -47,7 +47,8 @@ ErrorBoundary offers a flexible component capable of catching JavaScript errors 
     args={{
       children: <p class="text-default">Child Component</p>,
       message: "There is a problem with the App",
-    }}>
+    }}
+  >
     {({ children, message }) => (
       <VariantsTable titles={["Default"]} columnMinWidth={150}>
         <VariantRow variant="Default">

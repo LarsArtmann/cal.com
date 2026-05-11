@@ -19,7 +19,7 @@ const DatePicker = ({ minDate, disabled, date, onDatesChange, className }: Props
     <PrimitiveDatePicker
       className={classNames(
         "focus:ring-primary-500 focus:border-primary-500 border-default rounded-md border p-1 pl-2 shadow-sm sm:text-sm",
-        className
+        className,
       )}
       calendarClassName="rounded-md dark:text-black"
       clearIcon={null}

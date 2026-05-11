@@ -17,9 +17,13 @@ export const updateUserHandler = async ({ ctx, input }: UpdateUserOptions) => {
   const { user } = ctx;
   const { id: userId, organizationId } = user;
   if (!organizationId)
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "You must be a memeber of an organizaiton" });
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "You must be a memeber of an organizaiton",
+    });
 
-  if (!(await isOrganisationAdmin(userId, organizationId))) throw new TRPCError({ code: "UNAUTHORIZED" });
+  if (!(await isOrganisationAdmin(userId, organizationId)))
+    throw new TRPCError({ code: "UNAUTHORIZED" });
 
   // Is requested user a member of the organization?
   const requestedMember = await prisma.membership.findFirst({
@@ -31,7 +35,10 @@ export const updateUserHandler = async ({ ctx, input }: UpdateUserOptions) => {
   });
 
   if (!requestedMember)
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "User does not belong to your organization" });
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "User does not belong to your organization",
+    });
 
   // Update user
   await prisma.$transaction([

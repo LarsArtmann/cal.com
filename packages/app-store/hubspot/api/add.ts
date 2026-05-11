@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     redirectUri,
     scopes.join(" "),
     undefined,
-    encodeOAuthState(req)
+    encodeOAuthState(req),
   );
   res.status(200).json({ url });
 }

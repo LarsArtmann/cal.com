@@ -67,7 +67,7 @@ const editBookingTool = (apiKey: string, userId: number) => {
           startTime,
           status,
           title,
-        })
+        }),
       );
     },
     name: "editBooking",

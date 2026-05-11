@@ -27,8 +27,11 @@ const schemaAttendeeEditParams = z
     timeZone: timeZone.optional(),
   })
   .strict();
-export const schemaAttendeeEditBodyParams = schemaAttendeeBaseBodyParams.merge(schemaAttendeeEditParams);
-export const schemaAttendeeCreateBodyParams = schemaAttendeeBaseBodyParams.merge(schemaAttendeeCreateParams);
+export const schemaAttendeeEditBodyParams =
+  schemaAttendeeBaseBodyParams.merge(schemaAttendeeEditParams);
+export const schemaAttendeeCreateBodyParams = schemaAttendeeBaseBodyParams.merge(
+  schemaAttendeeCreateParams,
+);
 
 export const schemaAttendeeReadPublic = Attendee.pick({
   id: true,

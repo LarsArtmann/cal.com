@@ -10,7 +10,10 @@ import type { CalendarEvent } from "@calcom/types/Calendar";
 
 import { deleteScheduledEmailReminder, scheduleEmailReminder } from "./emailReminderManager";
 import { deleteScheduledSMSReminder, scheduleSMSReminder } from "./smsReminderManager";
-import { deleteScheduledWhatsappReminder, scheduleWhatsappReminder } from "./whatsappReminderManager";
+import {
+  deleteScheduledWhatsappReminder,
+  scheduleWhatsappReminder,
+} from "./whatsappReminderManager";
 
 type ExtendedCalendarEvent = CalendarEvent & {
   metadata?: { videoCallUrl: string | undefined };
@@ -49,9 +52,12 @@ const processWorkflowStep = async (
     seatReferenceUid,
     eventTypeRequiresConfirmation,
     isKYCVerified,
-  }: ProcessWorkflowStepParams
+  }: ProcessWorkflowStepParams,
 ) => {
-  if (isTextMessageToAttendeeAction(step.action) && (!isKYCVerified || !eventTypeRequiresConfirmation))
+  if (
+    isTextMessageToAttendeeAction(step.action) &&
+    (!isKYCVerified || !eventTypeRequiresConfirmation)
+  )
     return;
 
   if (step.action === WorkflowActions.SMS_ATTENDEE || step.action === WorkflowActions.SMS_NUMBER) {
@@ -72,9 +78,12 @@ const processWorkflowStep = async (
       workflow.userId,
       workflow.teamId,
       step.numberVerificationPending,
-      seatReferenceUid
+      seatReferenceUid,
     );
-  } else if (step.action === WorkflowActions.EMAIL_ATTENDEE || step.action === WorkflowActions.EMAIL_HOST) {
+  } else if (
+    step.action === WorkflowActions.EMAIL_ATTENDEE ||
+    step.action === WorkflowActions.EMAIL_HOST
+  ) {
     let sendTo: string[] = [];
 
     switch (step.action) {
@@ -107,10 +116,11 @@ const processWorkflowStep = async (
       step.sender || SENDER_NAME,
       hideBranding,
       seatReferenceUid,
-      step.includeCalendarEvent
+      step.includeCalendarEvent,
     );
   } else if (isWhatsappAction(step.action)) {
-    const sendTo = step.action === WorkflowActions.WHATSAPP_ATTENDEE ? smsReminderNumber : step.sendTo;
+    const sendTo =
+      step.action === WorkflowActions.WHATSAPP_ATTENDEE ? smsReminderNumber : step.sendTo;
     await scheduleWhatsappReminder(
       evt,
       sendTo,
@@ -126,7 +136,7 @@ const processWorkflowStep = async (
       workflow.userId,
       workflow.teamId,
       step.numberVerificationPending,
-      seatReferenceUid
+      seatReferenceUid,
     );
   }
 };
@@ -190,12 +200,12 @@ const reminderMethods: { [x: string]: (id: number, referenceId: string | null) =
 };
 
 export const cancelWorkflowReminders = async (
-  workflowReminders: { method: WorkflowMethods; id: number; referenceId: string | null }[]
+  workflowReminders: { method: WorkflowMethods; id: number; referenceId: string | null }[],
 ) => {
   await Promise.all(
     workflowReminders.map((reminder) => {
       return reminderMethods[reminder.method](reminder.id, reminder.referenceId);
-    })
+    }),
   );
 };
 
@@ -213,8 +223,14 @@ export interface SendCancelledRemindersArgs {
 }
 
 export const sendCancelledReminders = async (args: SendCancelledRemindersArgs) => {
-  const { workflows, smsReminderNumber, evt, hideBranding, isKYCVerified, eventTypeRequiresConfirmation } =
-    args;
+  const {
+    workflows,
+    smsReminderNumber,
+    evt,
+    hideBranding,
+    isKYCVerified,
+    eventTypeRequiresConfirmation,
+  } = args;
   if (!workflows.length) return;
 
   for (const workflowRef of workflows) {

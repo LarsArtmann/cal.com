@@ -25,15 +25,18 @@ async function handler(req: NextApiRequest & { userId?: number }, res: NextApiRe
     if (key === 0) {
       const calcAppsStatus: { [key: string]: AppsStatus } = createdBookings
         .flatMap((book) => (book.appsStatus !== undefined ? book.appsStatus : []))
-        .reduce((prev, curr) => {
-          if (prev[curr.type]) {
-            prev[curr.type].failures += curr.failures;
-            prev[curr.type].success += curr.success;
-          } else {
-            prev[curr.type] = curr;
-          }
-          return prev;
-        }, {} as { [key: string]: AppsStatus });
+        .reduce(
+          (prev, curr) => {
+            if (prev[curr.type]) {
+              prev[curr.type].failures += curr.failures;
+              prev[curr.type].success += curr.success;
+            } else {
+              prev[curr.type] = curr;
+            }
+            return prev;
+          },
+          {} as { [key: string]: AppsStatus },
+        );
       appsStatus = Object.values(calcAppsStatus);
     }
 

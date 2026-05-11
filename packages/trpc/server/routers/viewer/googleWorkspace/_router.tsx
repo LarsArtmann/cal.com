@@ -13,7 +13,7 @@ export const googleWorkspaceRouter = router({
   checkForGWorkspace: authedProcedure.query(async ({ ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.checkForGWorkspace) {
       UNSTABLE_HANDLER_CACHE.checkForGWorkspace = await import("./googleWorkspace.handler").then(
-        (mod) => mod.checkForGWorkspace
+        (mod) => mod.checkForGWorkspace,
       );
     }
 
@@ -28,9 +28,8 @@ export const googleWorkspaceRouter = router({
   }),
   getUsersFromGWorkspace: authedProcedure.mutation(async ({ ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.getUsersFromGWorkspace) {
-      UNSTABLE_HANDLER_CACHE.getUsersFromGWorkspace = await import("./googleWorkspace.handler").then(
-        (mod) => mod.getUsersFromGWorkspace
-      );
+      UNSTABLE_HANDLER_CACHE.getUsersFromGWorkspace =
+        await import("./googleWorkspace.handler").then((mod) => mod.getUsersFromGWorkspace);
     }
 
     // Unreachable code but required for type safety
@@ -44,9 +43,10 @@ export const googleWorkspaceRouter = router({
   }),
   removeCurrentGoogleWorkspaceConnection: authedProcedure.mutation(async ({ ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.removeCurrentGoogleWorkspaceConnection) {
-      UNSTABLE_HANDLER_CACHE.removeCurrentGoogleWorkspaceConnection = await import(
-        "./googleWorkspace.handler"
-      ).then((mod) => mod.removeCurrentGoogleWorkspaceConnection);
+      UNSTABLE_HANDLER_CACHE.removeCurrentGoogleWorkspaceConnection =
+        await import("./googleWorkspace.handler").then(
+          (mod) => mod.removeCurrentGoogleWorkspaceConnection,
+        );
     }
 
     // Unreachable code but required for type safety

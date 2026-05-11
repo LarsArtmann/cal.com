@@ -1,6 +1,8 @@
 import { ESLintUtils } from "@typescript-eslint/utils";
 
-const createRule = ESLintUtils.RuleCreator((name) => `https://developer.cal.com/eslint/rule/${name}`);
+const createRule = ESLintUtils.RuleCreator(
+  (name) => `https://developer.cal.com/eslint/rule/${name}`,
+);
 
 const rule = createRule({
   create(context) {

@@ -63,7 +63,9 @@ export default function TeamList(props: Props) {
               team.role !== "MEMBER" &&
               i === 0 && (
                 <div className="bg-subtle p-6">
-                  <h3 className="text-emphasis mb-4 text-sm font-semibold">{t("recommended_next_steps")}</h3>
+                  <h3 className="text-emphasis mb-4 text-sm font-semibold">
+                    {t("recommended_next_steps")}
+                  </h3>
                   <div className="grid-col-1 grid gap-2 md:grid-cols-3">
                     <Card
                       icon={<UserPlus className="h-5 w-5 text-green-700" />}
@@ -97,7 +99,11 @@ export default function TeamList(props: Props) {
                       title={t("collective_or_roundrobin")}
                       description={t("book_your_team_members")}
                       actionButton={{
-                        href: "/event-types?dialog=new&eventPage=team%2F" + team.slug + "&teamId=" + team.id,
+                        href:
+                          "/event-types?dialog=new&eventPage=team%2F" +
+                          team.slug +
+                          "&teamId=" +
+                          team.id,
                         child: t("create"),
                       }}
                     />
@@ -113,7 +119,7 @@ export default function TeamList(props: Props) {
                     />
                   </div>
                 </div>
-              )
+              ),
           )}
         </>
       )}

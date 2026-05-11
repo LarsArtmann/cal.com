@@ -1,7 +1,11 @@
 import { z } from "zod";
 
 import { _DestinationCalendarModel, _EventTypeModel } from "@calcom/prisma/zod";
-import { customInputSchema, EventTypeMetaDataSchema, stringOrNumber } from "@calcom/prisma/zod-utils";
+import {
+  customInputSchema,
+  EventTypeMetaDataSchema,
+  stringOrNumber,
+} from "@calcom/prisma/zod-utils";
 import { eventTypeBookingFields } from "@calcom/prisma/zod-utils";
 
 export const EventTypeUpdateInput = _EventTypeModel
@@ -23,7 +27,7 @@ export const EventTypeUpdateInput = _EventTypeModel
             eventTypeSlugs: z.array(z.string()),
           }),
           hidden: z.boolean(),
-        })
+        }),
       )
       .optional(),
     hosts: z
@@ -31,7 +35,7 @@ export const EventTypeUpdateInput = _EventTypeModel
         z.object({
           userId: z.number(),
           isFixed: z.boolean().optional(),
-        })
+        }),
       )
       .optional(),
     schedule: z.number().nullable().optional(),
@@ -47,7 +51,7 @@ export const EventTypeUpdateInput = _EventTypeModel
       /** Required fields */
       .pick({
         id: true,
-      })
+      }),
   );
 
 export const EventTypeDuplicateInput = z.object({

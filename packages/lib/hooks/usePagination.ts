@@ -18,7 +18,7 @@ export function usePagination({
       pageIndex,
       pageSize,
     }),
-    [pageIndex, pageSize]
+    [pageIndex, pageSize],
   );
 
   return {

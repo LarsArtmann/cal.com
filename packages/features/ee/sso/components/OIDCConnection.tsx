@@ -4,7 +4,15 @@ import { Controller, useForm } from "react-hook-form";
 import type { SSOConnection } from "@calcom/ee/sso/lib/saml";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { trpc } from "@calcom/trpc/react";
-import { Button, DialogFooter, Form, showToast, TextField, Dialog, DialogContent } from "@calcom/ui";
+import {
+  Button,
+  DialogFooter,
+  Form,
+  showToast,
+  TextField,
+  Dialog,
+  DialogContent,
+} from "@calcom/ui";
 
 type FormValues = {
   clientId: string;
@@ -33,7 +41,11 @@ export default function OIDCConnection({
         </div>
         {!connection && (
           <div className="flex-shrink-0 pt-3 sm:ml-auto sm:pl-3 sm:pt-0">
-            <Button data-testid="sso-oidc-configure" color="secondary" onClick={() => setOpenModal(true)}>
+            <Button
+              data-testid="sso-oidc-configure"
+              color="secondary"
+              onClick={() => setOpenModal(true)}
+            >
               {t("configure")}
             </Button>
           </div>
@@ -63,7 +75,7 @@ const CreateConnectionDialog = ({
         t("sso_connection_created_successfully", {
           connectionType: "OIDC",
         }),
-        "success"
+        "success",
       );
       setOpenModal(false);
       await utils.viewer.saml.get.invalidate();
@@ -87,7 +99,8 @@ const CreateConnectionDialog = ({
               clientSecret,
               wellKnownUrl,
             });
-          }}>
+          }}
+        >
           <h2 className="font-semi-bold font-cal text-emphasis text-xl tracking-wide">
             {t("sso_oidc_configuration_title")}
           </h2>
@@ -152,7 +165,8 @@ const CreateConnectionDialog = ({
               onClick={() => {
                 setOpenModal(false);
               }}
-              tabIndex={-1}>
+              tabIndex={-1}
+            >
               {t("cancel")}
             </Button>
             <Button type="submit" data-testid="sso-oidc-save" loading={form.formState.isSubmitting}>

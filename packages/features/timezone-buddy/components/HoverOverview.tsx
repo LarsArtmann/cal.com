@@ -116,7 +116,7 @@ export function HoverOverview() {
       bottom: `${bottom}px`,
       width: `${width}px`,
     }),
-    [leftEdge, top, bottom, width]
+    [leftEdge, top, bottom, width],
   );
 
   const leftWhiteout = useMemo(
@@ -126,7 +126,7 @@ export function HoverOverview() {
       bottom: `${bottom}px`,
       width: `${leftEdge}px`,
     }),
-    [leftEdge, top, bottom]
+    [leftEdge, top, bottom],
   );
 
   const rightWhiteout = useMemo(
@@ -136,7 +136,7 @@ export function HoverOverview() {
       bottom: `${bottom}px`,
       left: `${rightEdge}px`,
     }),
-    [rightEdge, top, bottom]
+    [rightEdge, top, bottom],
   );
 
   return (

@@ -5,7 +5,10 @@ import FreshChatScript from "./FreshChatScript";
 
 type FreshChatContextType = { active: boolean; setActive: Dispatch<SetStateAction<boolean>> };
 
-const FreshChatContext = createContext<FreshChatContextType>({ active: false, setActive: () => undefined });
+const FreshChatContext = createContext<FreshChatContextType>({
+  active: false,
+  setActive: () => undefined,
+});
 
 interface FreshChatProviderProps {
   children: ReactNode;

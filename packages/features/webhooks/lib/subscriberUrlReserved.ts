@@ -23,7 +23,8 @@ export const subscriberUrlReserved = ({
 
   const findMatchingWebhook = (condition: (webhook: Webhook) => void) => {
     return !!webhooks?.find(
-      (webhook) => webhook.subscriberUrl === subscriberUrl && (!id || webhook.id !== id) && condition(webhook)
+      (webhook) =>
+        webhook.subscriberUrl === subscriberUrl && (!id || webhook.id !== id) && condition(webhook),
     );
   };
 

@@ -11,9 +11,12 @@ const teamIdschema = z.object({
 });
 
 const auditAndReturnNextUser = async (
-  impersonatedUser: Pick<User, "id" | "username" | "email" | "name" | "role" | "organizationId" | "locale">,
+  impersonatedUser: Pick<
+    User,
+    "id" | "username" | "email" | "name" | "role" | "organizationId" | "locale"
+  >,
   impersonatedByUID: number,
-  hasTeam?: boolean
+  hasTeam?: boolean,
 ) => {
   // Log impersonations for audit purposes
   await prisma.impersonations.create({
@@ -128,7 +131,7 @@ const ImpersonationProvider = CredentialsProvider({
       return auditAndReturnNextUser(
         impersonatedUser,
         session?.user.id as number,
-        impersonatedUser.teams.length > 0 // If the user has any teams, they belong to an active team and we can set the hasActiveTeam ctx to true
+        impersonatedUser.teams.length > 0, // If the user has any teams, they belong to an active team and we can set the hasActiveTeam ctx to true
       );
     }
 
@@ -167,14 +170,17 @@ const ImpersonationProvider = CredentialsProvider({
     }
 
     // We find team by ID so we know there is only one team in the array
-    if (sessionUserFromDb?.teams[0].role === "ADMIN" && impersonatedUser.teams[0].role === "OWNER") {
+    if (
+      sessionUserFromDb?.teams[0].role === "ADMIN" &&
+      impersonatedUser.teams[0].role === "OWNER"
+    ) {
       throw new Error("You do not have permission to do this.");
     }
 
     return auditAndReturnNextUser(
       impersonatedUser,
       session?.user.id as number,
-      impersonatedUser.teams.length > 0 // If the user has any teams, they belong to an active team and we can set the hasActiveTeam ctx to true
+      impersonatedUser.teams.length > 0, // If the user has any teams, they belong to an active team and we can set the hasActiveTeam ctx to true
     );
   },
 });

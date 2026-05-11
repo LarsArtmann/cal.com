@@ -61,7 +61,7 @@ const CreateConnectionDialog = ({
         t("sso_connection_created_successfully", {
           connectionType: "SAML",
         }),
-        "success"
+        "success",
       );
       setOpenModal(false);
       await utils.viewer.saml.get.invalidate();
@@ -81,12 +81,15 @@ const CreateConnectionDialog = ({
               teamId,
               encodedRawMetadata: Buffer.from(values.metadata).toString("base64"),
             });
-          }}>
+          }}
+        >
           <div className="mb-1">
             <h2 className="font-semi-bold font-cal text-emphasis text-xl tracking-wide">
               {t("sso_saml_configuration_title")}
             </h2>
-            <p className="text-subtle mb-5 mt-1 text-sm">{t("sso_saml_configuration_description")}</p>
+            <p className="text-subtle mb-5 mt-1 text-sm">
+              {t("sso_saml_configuration_description")}
+            </p>
           </div>
           <Controller
             control={form.control}
@@ -114,7 +117,8 @@ const CreateConnectionDialog = ({
               onClick={() => {
                 setOpenModal(false);
               }}
-              tabIndex={-1}>
+              tabIndex={-1}
+            >
               {t("cancel")}
             </Button>
             <Button type="submit" loading={form.formState.isSubmitting}>

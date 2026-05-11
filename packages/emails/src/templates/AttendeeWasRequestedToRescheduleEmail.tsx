@@ -2,7 +2,9 @@ import { CallToAction, CallToActionTable } from "../components";
 import { OrganizerScheduledEmail } from "./OrganizerScheduledEmail";
 
 export const AttendeeWasRequestedToRescheduleEmail = (
-  props: { metadata: { rescheduleLink: string } } & React.ComponentProps<typeof OrganizerScheduledEmail>
+  props: { metadata: { rescheduleLink: string } } & React.ComponentProps<
+    typeof OrganizerScheduledEmail
+  >,
 ) => {
   const t = props.attendee.language.translate;
   return (
@@ -20,7 +22,11 @@ export const AttendeeWasRequestedToRescheduleEmail = (
       subject="rescheduled_event_type_subject"
       callToAction={
         <CallToActionTable>
-          <CallToAction label="Book a new time" href={props.metadata.rescheduleLink} endIconName="linkIcon" />
+          <CallToAction
+            label="Book a new time"
+            href={props.metadata.rescheduleLink}
+            endIconName="linkIcon"
+          />
         </CallToActionTable>
       }
       {...props}

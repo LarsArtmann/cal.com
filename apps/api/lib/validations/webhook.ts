@@ -25,13 +25,14 @@ export const schemaWebhookCreateParams = z
   })
   .strict();
 
-export const schemaWebhookCreateBodyParams = schemaWebhookBaseBodyParams.merge(schemaWebhookCreateParams);
+export const schemaWebhookCreateBodyParams =
+  schemaWebhookBaseBodyParams.merge(schemaWebhookCreateParams);
 
 export const schemaWebhookEditBodyParams = schemaWebhookBaseBodyParams
   .merge(
     z.object({
       eventTriggers: z.enum(WEBHOOK_TRIGGER_EVENTS).array().optional(),
-    })
+    }),
   )
   .partial()
   .strict();
@@ -51,5 +52,5 @@ export const schemaWebhookReadPublic = Webhook.pick({
 }).merge(
   z.object({
     subscriberUrl: z.string(),
-  })
+  }),
 );

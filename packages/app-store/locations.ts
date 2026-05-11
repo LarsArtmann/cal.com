@@ -26,7 +26,13 @@ export type DefaultEventLocationType = {
     | "locationPhoneNumber"
     | "phone"
     | "hostDefault";
-  defaultValueVariable: "address" | "attendeeAddress" | "link" | "hostPhoneNumber" | "hostDefault" | "phone";
+  defaultValueVariable:
+    | "address"
+    | "attendeeAddress"
+    | "link"
+    | "hostPhoneNumber"
+    | "hostDefault"
+    | "phone";
 } & (
   | {
       organizerInputType: "phone" | "text" | null;
@@ -170,7 +176,10 @@ export type LocationObject = {
   displayLocationPublicly?: boolean;
   credentialId?: number;
 } & Partial<
-  Record<"address" | "attendeeAddress" | "link" | "hostPhoneNumber" | "hostDefault" | "phone", string>
+  Record<
+    "address" | "attendeeAddress" | "link" | "hostPhoneNumber" | "hostDefault" | "phone",
+    string
+  >
 >;
 
 // integrations:jitsi | 919999999999 | Delhi | https://manual.meeting.link | Around Video
@@ -249,7 +258,9 @@ export const LocationType = { ...DefaultEventLocationTypeEnum, ...AppStoreLocati
 
 type PrivacyFilteredLocationObject = Optional<LocationObject, "address" | "link">;
 
-export const privacyFilteredLocations = (locations: LocationObject[]): PrivacyFilteredLocationObject[] => {
+export const privacyFilteredLocations = (
+  locations: LocationObject[],
+): PrivacyFilteredLocationObject[] => {
   const locationsAfterPrivacyFilter = locations.map((location) => {
     const eventLocationType = getEventLocationType(location.type);
     if (!eventLocationType) {
@@ -281,7 +292,11 @@ export const getMessageForOrganizer = (location: string, t: TFunction) => {
   if (defaultLocation) {
     return t(defaultLocation.messageForOrganizer);
   }
-  if (videoLocation && videoLocation.linkType !== "static" && videoLocation.type !== "integrations:zoom") {
+  if (
+    videoLocation &&
+    videoLocation.linkType !== "static" &&
+    videoLocation.type !== "integrations:zoom"
+  ) {
     return t(`Cal will provide a ${videoLocation.label} URL.`);
   }
   return "";
@@ -295,7 +310,7 @@ export const getMessageForOrganizer = (location: string, t: TFunction) => {
  */
 export const getHumanReadableLocationValue = (
   linkValue: string | undefined | null,
-  translationFunction: TFunction
+  translationFunction: TFunction,
 ): string => {
   if (!linkValue) {
     return translationFunction("no_location");
@@ -328,7 +343,7 @@ export const locationKeyToString = (location: LocationObject) => {
 
 export const getEventLocationWithType = (
   locations: LocationObject[],
-  locationType: EventLocationType["type"] | undefined
+  locationType: EventLocationType["type"] | undefined,
 ) => {
   const location = locations.find((location) => location.type === locationType);
   return location;
@@ -341,7 +356,7 @@ export const getEventLocationWithType = (
  */
 export const getLocationValueForDB = (
   bookingLocationTypeOrValue: EventLocationType["type"],
-  eventLocations: LocationObject[]
+  eventLocations: LocationObject[],
 ) => {
   let bookingLocation = bookingLocationTypeOrValue;
   let conferenceCredentialId = undefined;
@@ -364,7 +379,10 @@ export const getLocationValueForDB = (
   return { bookingLocation, conferenceCredentialId };
 };
 
-export const getEventLocationValue = (eventLocations: LocationObject[], bookingLocation: LocationObject) => {
+export const getEventLocationValue = (
+  eventLocations: LocationObject[],
+  bookingLocation: LocationObject,
+) => {
   const eventLocationType = getEventLocationType(bookingLocation?.type);
   if (!eventLocationType) {
     return "";
@@ -385,14 +403,16 @@ export const getEventLocationValue = (eventLocations: LocationObject[], bookingL
   // Backend checks for `integration` to generate link
   // TODO: use zodSchema to ensure the type of data is correct
   return (
-    bookingLocation[defaultValueVariable] || eventLocation[defaultValueVariable] || eventLocationType.type
+    bookingLocation[defaultValueVariable] ||
+    eventLocation[defaultValueVariable] ||
+    eventLocationType.type
   );
 };
 
 export function getSuccessPageLocationMessage(
   location: EventLocationType["type"],
   t: TFunction,
-  bookingStatus?: BookingStatus
+  bookingStatus?: BookingStatus,
 ) {
   const eventLocationType = getEventLocationType(location);
   let locationToDisplay = location;
@@ -414,15 +434,15 @@ export function getSuccessPageLocationMessage(
 export const getTranslatedLocation = (
   location: PrivacyFilteredLocationObject,
   eventLocationType: ReturnType<typeof getEventLocationType>,
-  t: TFunction
+  t: TFunction,
 ) => {
   if (!eventLocationType) return null;
   const locationKey = z.string().default("").parse(locationKeyToString(location));
   const translatedLocation = location.type.startsWith("integrations:")
     ? eventLocationType.label
     : translateAbleKeys.includes(locationKey)
-    ? t(locationKey)
-    : locationKey;
+      ? t(locationKey)
+      : locationKey;
 
   return translatedLocation;
 };

@@ -98,14 +98,19 @@ export default function WorkflowListPage({ workflows }: Props) {
     <>
       {workflows && workflows.length > 0 ? (
         <div className="bg-default border-subtle overflow-hidden rounded-md border sm:mx-0">
-          <ul className="divide-subtle !static w-full divide-y" data-testid="workflow-list" ref={parent}>
+          <ul
+            className="divide-subtle !static w-full divide-y"
+            data-testid="workflow-list"
+            ref={parent}
+          >
             {workflows.map((workflow, index) => {
               const firstItem = workflows[0];
               const lastItem = workflows[workflows.length - 1];
               return (
                 <li
                   key={workflow.id}
-                  className="group flex w-full max-w-full items-center justify-between overflow-hidden">
+                  className="group flex w-full max-w-full items-center justify-between overflow-hidden"
+                >
                   {!(firstItem && firstItem.id === workflow.id) && (
                     <ArrowButton onClick={() => moveWorkflow(index, -1)} arrowDirection="up" />
                   )}
@@ -119,18 +124,21 @@ export default function WorkflowListPage({ workflows }: Props) {
                           <div
                             className={classNames(
                               "max-w-56 text-emphasis truncate text-sm font-medium leading-6 md:max-w-max",
-                              workflow.name ? "text-emphasis" : "text-subtle"
-                            )}>
+                              workflow.name ? "text-emphasis" : "text-subtle",
+                            )}
+                          >
                             {workflow.name
                               ? workflow.name
                               : workflow.steps[0]
-                              ? "Untitled (" +
-                                `${t(`${workflow.steps[0].action.toLowerCase()}_action`)}`
-                                  .charAt(0)
-                                  .toUpperCase() +
-                                `${t(`${workflow.steps[0].action.toLowerCase()}_action`)}`.slice(1) +
-                                ")"
-                              : "Untitled"}
+                                ? "Untitled (" +
+                                  `${t(`${workflow.steps[0].action.toLowerCase()}_action`)}`
+                                    .charAt(0)
+                                    .toUpperCase() +
+                                  `${t(`${workflow.steps[0].action.toLowerCase()}_action`)}`.slice(
+                                    1,
+                                  ) +
+                                  ")"
+                                : "Untitled"}
                           </div>
                           <div>
                             {workflow.readOnly && (
@@ -150,7 +158,9 @@ export default function WorkflowListPage({ workflows }: Props) {
                                 <span className="mr-1">{t("triggers")}</span>
                                 {workflow.timeUnit && workflow.time && (
                                   <span className="mr-1">
-                                    {t(`${workflow.timeUnit.toLowerCase()}`, { count: workflow.time })}
+                                    {t(`${workflow.timeUnit.toLowerCase()}`, {
+                                      count: workflow.time,
+                                    })}
                                   </span>
                                 )}
                                 <span>{t(`${workflow.trigger.toLowerCase()}_trigger`)}</span>
@@ -162,7 +172,9 @@ export default function WorkflowListPage({ workflows }: Props) {
                               {workflow.activeOn && workflow.activeOn.length > 0 ? (
                                 <Tooltip
                                   content={workflow.activeOn
-                                    .filter((wf) => (workflow.teamId ? wf.eventType.parentId === null : true))
+                                    .filter((wf) =>
+                                      workflow.teamId ? wf.eventType.parentId === null : true,
+                                    )
                                     .map((activeOn, key) => (
                                       <p key={key}>
                                         {activeOn.eventType.title}
@@ -170,12 +182,16 @@ export default function WorkflowListPage({ workflows }: Props) {
                                           ? ` (+${activeOn.eventType._count.children})`
                                           : ""}
                                       </p>
-                                    ))}>
+                                    ))}
+                                >
                                   <div>
-                                    <LinkIcon className="mr-1.5 inline h-3 w-3" aria-hidden="true" />
+                                    <LinkIcon
+                                      className="mr-1.5 inline h-3 w-3"
+                                      aria-hidden="true"
+                                    />
                                     {t("active_on_event_types", {
                                       count: workflow.activeOn.filter((wf) =>
-                                        workflow.teamId ? wf.eventType.parentId === null : true
+                                        workflow.teamId ? wf.eventType.parentId === null : true,
                                       ).length,
                                     })}
                                   </div>
@@ -213,7 +229,7 @@ export default function WorkflowListPage({ workflows }: Props) {
                               }
                               imageSrc={getPlaceholderAvatar(
                                 workflow?.team.logo,
-                                workflow.team?.name as string
+                                workflow.team?.name as string,
                               )}
                               size="xxs"
                               className="mt-[3px] inline-flex justify-center"
@@ -234,7 +250,9 @@ export default function WorkflowListPage({ workflows }: Props) {
                               variant="icon"
                               StartIcon={Edit2}
                               disabled={workflow.readOnly}
-                              onClick={async () => await router.replace("/workflows/" + workflow.id)}
+                              onClick={async () =>
+                                await router.replace("/workflows/" + workflow.id)
+                              }
                             />
                           </Tooltip>
                           <Tooltip content={t("delete") as string}>
@@ -267,7 +285,10 @@ export default function WorkflowListPage({ workflows }: Props) {
                                 <DropdownItem
                                   type="button"
                                   StartIcon={Edit2}
-                                  onClick={async () => await router.replace("/workflows/" + workflow.id)}>
+                                  onClick={async () =>
+                                    await router.replace("/workflows/" + workflow.id)
+                                  }
+                                >
                                   {t("edit")}
                                 </DropdownItem>
                               </DropdownMenuItem>
@@ -279,7 +300,8 @@ export default function WorkflowListPage({ workflows }: Props) {
                                   onClick={() => {
                                     setDeleteDialogOpen(true);
                                     setwWorkflowToDeleteId(workflow.id);
-                                  }}>
+                                  }}
+                                >
                                   {t("delete")}
                                 </DropdownItem>
                               </DropdownMenuItem>

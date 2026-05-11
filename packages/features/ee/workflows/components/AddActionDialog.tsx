@@ -37,7 +37,7 @@ interface IAddActionDialog {
     sendTo?: string,
     numberRequired?: boolean,
     senderId?: string,
-    senderName?: string
+    senderName?: string,
   ) => void;
   setKYCVerificationDialogOpen: () => void;
 }
@@ -124,7 +124,8 @@ export const AddActionDialog = (props: IAddActionDialog) => {
 
   const canRequirePhoneNumber = (workflowStep: string) => {
     return (
-      WorkflowActions.SMS_ATTENDEE === workflowStep || WorkflowActions.WHATSAPP_ATTENDEE === workflowStep
+      WorkflowActions.SMS_ATTENDEE === workflowStep ||
+      WorkflowActions.WHATSAPP_ATTENDEE === workflowStep
     );
   };
 
@@ -147,7 +148,7 @@ export const AddActionDialog = (props: IAddActionDialog) => {
                 values.sendTo,
                 values.numberRequired,
                 values.senderId,
-                values.senderName
+                values.senderName,
               );
               form.unregister("sendTo");
               form.unregister("action");
@@ -156,7 +157,8 @@ export const AddActionDialog = (props: IAddActionDialog) => {
               setIsPhoneNumberNeeded(false);
               setIsEmailAddressNeeded(false);
               setIsSenderIdNeeded(false);
-            }}>
+            }}
+          >
             <div className="space-y-1">
               <Label htmlFor="label">{t("action")}:</Label>
               <Controller
@@ -206,7 +208,9 @@ export const AddActionDialog = (props: IAddActionDialog) => {
                     )}
                   />
                   {form.formState.errors.sendTo && (
-                    <p className="mt-1 text-sm text-red-500">{form.formState.errors.sendTo.message}</p>
+                    <p className="mt-1 text-sm text-red-500">
+                      {form.formState.errors.sendTo.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -225,7 +229,12 @@ export const AddActionDialog = (props: IAddActionDialog) => {
                       <Info className="ml-2 mr-1 mt-0.5 h-4 w-4 text-gray-500" />
                     </Tooltip>
                   </div>
-                  <Input type="text" placeholder={SENDER_ID} maxLength={11} {...form.register(`senderId`)} />
+                  <Input
+                    type="text"
+                    placeholder={SENDER_ID}
+                    maxLength={11}
+                    {...form.register(`senderId`)}
+                  />
                 </div>
                 {form.formState.errors && form.formState?.errors?.senderId && (
                   <p className="mt-1 text-xs text-red-500">{t("sender_id_error_message")}</p>

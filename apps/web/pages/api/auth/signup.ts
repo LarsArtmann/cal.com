@@ -55,7 +55,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(401).json({ message: "Token expired" });
     }
     if (foundToken?.teamId) {
-      const teamUserValidation = await validateUsernameInTeam(username, userEmail, foundToken?.teamId);
+      const teamUserValidation = await validateUsernameInTeam(
+        username,
+        userEmail,
+        foundToken?.teamId,
+      );
       if (!teamUserValidation.isValid) {
         return res.status(409).json({ message: "Username or email is already taken" });
       }

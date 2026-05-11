@@ -16,7 +16,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
   const { teamId } = req.query;
 
-  await throwIfNotHaveAdminAccessToTeam({ teamId: Number(teamId) ?? null, userId: req.session.user.id });
+  await throwIfNotHaveAdminAccessToTeam({
+    teamId: Number(teamId) ?? null,
+    userId: req.session.user.id,
+  });
   const installForObject = teamId ? { teamId: Number(teamId) } : { userId: req.session.user.id };
 
   const appType = "huddle01_video";
@@ -48,5 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(500);
   }
   // need to return a json object with the response status
-  return res.status(200).json({ url: getInstalledAppPath({ variant: "conferencing", slug: "huddle01" }) });
+  return res
+    .status(200)
+    .json({ url: getInstalledAppPath({ variant: "conferencing", slug: "huddle01" }) });
 }

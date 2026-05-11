@@ -56,7 +56,7 @@ const joinMultipleNames = (names: string[] = []) => {
  */
 export const constructMeetingImage = (
   { title, users = [], profile }: MeetingImageProps,
-  encodeUri = true
+  encodeUri = true,
 ): string => {
   const url = [
     `?type=meeting`,
@@ -75,7 +75,10 @@ export const constructMeetingImage = (
  * Test url:
  * http://localhost:3000/api/social/og/image?type=app&name=Huddle01&slug=/api/app-store/huddle01video/icon.svg&description=Huddle01%20is%20a%20new%20video%20conferencing%20software%20native%20to%20Web3%20and%20is%20comparable%20to%20a%20decentralized%20version%20of%20Zoom.%20It%20supports%20conversations%20for...
  */
-export const constructAppImage = ({ name, slug, description }: AppImageProps, encodeUri = true): string => {
+export const constructAppImage = (
+  { name, slug, description }: AppImageProps,
+  encodeUri = true,
+): string => {
   const url = [
     `?type=app`,
     `&name=${encodeURIComponent(name)}`,
@@ -87,7 +90,10 @@ export const constructAppImage = ({ name, slug, description }: AppImageProps, en
   return encodeUri ? encodeURIComponent(url) : url;
 };
 
-export const constructGenericImage = ({ title, description }: GenericImageProps, encodeUri = true) => {
+export const constructGenericImage = (
+  { title, description }: GenericImageProps,
+  encodeUri = true,
+) => {
   const url = [
     `?type=generic`,
     `&title=${encodeURIComponent(title)}`,
@@ -108,7 +114,9 @@ const Wrapper = ({ children, variant = "light", rotateBackground }: WrapperProps
       width="1200"
       height="600"
     />
-    <div tw="flex flex-col w-full h-full px-[80px] py-[70px] items-start justify-center">{children}</div>
+    <div tw="flex flex-col w-full h-full px-[80px] py-[70px] items-start justify-center">
+      {children}
+    </div>
   </div>
 );
 
@@ -118,7 +126,7 @@ export const Meeting = ({ title, users = [], profile }: MeetingImageProps) => {
   // any non existing images for dynamic collectives, while at the same time removing them from
   // the names list, because the profile name of that event is a concatenation of all names.
   const attendees = (profile?.image ? [profile, ...users] : users).filter(
-    (value, index, self) => self.findIndex((v) => v.name === value.name) == index
+    (value, index, self) => self.findIndex((v) => v.name === value.name) == index,
   );
 
   // Construct list of avatar urls, removes duplicates and empty profile images
@@ -164,12 +172,14 @@ export const Meeting = ({ title, users = [], profile }: MeetingImageProps) => {
         <div style={{ color: "#111827" }} tw="relative flex text-[54px] w-full flex-col mt-auto">
           <div
             tw="flex w-[1040px] overflow-hidden"
-            style={{ whiteSpace: "nowrap", fontFamily: "cal", textOverflow: "ellipsis" }}>
+            style={{ whiteSpace: "nowrap", fontFamily: "cal", textOverflow: "ellipsis" }}
+          >
             Meet {joinMultipleNames(names)}
           </div>
           <div
             tw="flex mt-3 w-[1040px] overflow-hidden"
-            style={{ whiteSpace: "nowrap", fontFamily: "inter", textOverflow: "ellipsis" }}>
+            style={{ whiteSpace: "nowrap", fontFamily: "inter", textOverflow: "ellipsis" }}
+          >
             {title}
           </div>
         </div>
@@ -254,7 +264,10 @@ export const Generic = ({ title, description }: GenericImageProps) => (
 export const ScreenShot = ({ image, fallbackImage }: ScreenshotImageProps) => (
   <Wrapper rotateBackground>
     <div tw="relative h-full w-full flex flex-col justify-center items-center">
-      <div tw="relative mt-[140px] flex rounded-2xl" style={{ boxShadow: "0 0 45px -3px rgba(0,0,0,.3)" }}>
+      <div
+        tw="relative mt-[140px] flex rounded-2xl"
+        style={{ boxShadow: "0 0 45px -3px rgba(0,0,0,.3)" }}
+      >
         <img
           src={fallbackImage}
           tw="absolute inset-0 rounded-2xl"

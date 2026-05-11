@@ -79,7 +79,11 @@ const CalendarsView = () => {
 
   return (
     <>
-      <Meta title={t("calendars")} description={t("calendars_description")} CTA={<AddCalendarButton />} />
+      <Meta
+        title={t("calendars")}
+        description={t("calendars_description")}
+        CTA={<AddCalendarButton />}
+      />
       <QueryCell
         query={query}
         customLoader={<SkeletonLoader />}
@@ -98,8 +102,8 @@ const CalendarsView = () => {
                     </h4>
                     <p className=" text-default text-sm leading-5">
                       <Trans i18nKey="add_to_calendar_description">
-                        Where to add events when you re booked. You can override this on a per-event basis in
-                        advanced settings in the event type.
+                        Where to add events when you re booked. You can override this on a per-event
+                        basis in advanced settings in the event type.
                       </Trans>
                     </p>
                   </div>
@@ -150,7 +154,7 @@ const CalendarsView = () => {
                               <img
                                 className={classNames(
                                   "h-10 w-10",
-                                  item.integration.logo.includes("-dark") && "dark:invert"
+                                  item.integration.logo.includes("-dark") && "dark:invert",
                                 )}
                                 src={item.integration.logo}
                                 alt={item.integration.title}
@@ -158,7 +162,10 @@ const CalendarsView = () => {
                             )
                           }
                           <div className="flex-grow truncate pl-2">
-                            <ListItemTitle component="h3" className="mb-1 space-x-2 rtl:space-x-reverse">
+                            <ListItemTitle
+                              component="h3"
+                              className="mb-1 space-x-2 rtl:space-x-reverse"
+                            >
                               <Link href={"/apps/" + item.integration.slug}>
                                 {item.integration.name || item.integration.title}
                               </Link>
@@ -166,7 +173,9 @@ const CalendarsView = () => {
                                 <Badge variant="green">Default</Badge>
                               )}
                             </ListItemTitle>
-                            <ListItemText component="p">{item.integration.description}</ListItemText>
+                            <ListItemText component="p">
+                              {item.integration.description}
+                            </ListItemText>
                           </div>
                           <div>
                             <DisconnectIntegration
@@ -177,7 +186,9 @@ const CalendarsView = () => {
                           </div>
                         </div>
                         <div className="border-subtle w-full border-t">
-                          <p className="text-subtle px-2 pt-4 text-sm">{t("toggle_calendars_conflict")}</p>
+                          <p className="text-subtle px-2 pt-4 text-sm">
+                            {t("toggle_calendars_conflict")}
+                          </p>
                           <ul className="space-y-4 p-4">
                             {item.calendars.map((cal) => (
                               <CalendarSwitch
@@ -188,7 +199,8 @@ const CalendarsView = () => {
                                 name={cal.name || "Nameless calendar"}
                                 type={item.integration.type}
                                 isChecked={
-                                  cal.isSelected || cal.externalId === data?.destinationCalendar?.externalId
+                                  cal.isSelected ||
+                                  cal.externalId === data?.destinationCalendar?.externalId
                                 }
                               />
                             ))}

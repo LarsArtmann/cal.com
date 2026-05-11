@@ -87,11 +87,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         reminder.booking?.eventType?.title || "",
         timeZone || "",
         attendeeName || "",
-        userName
+        userName,
       );
 
       if (message?.length && message?.length > 0 && sendTo) {
-        const scheduledSMS = await twilio.scheduleSMS(sendTo, message, reminder.scheduledDate, "", true);
+        const scheduledSMS = await twilio.scheduleSMS(
+          sendTo,
+          message,
+          reminder.scheduledDate,
+          "",
+          true,
+        );
 
         await prisma.workflowReminder.update({
           where: {

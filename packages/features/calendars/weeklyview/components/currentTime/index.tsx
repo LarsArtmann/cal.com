@@ -53,7 +53,8 @@ export function CurrentTime() {
       style={{
         top: `calc(${currentTimePos}*var(--one-minute-height) + var(--calendar-offset-top))`,
         zIndex: 70,
-      }}>
+      }}
+    >
       <div className="w-14 pr-2 text-right">{dayjs().tz(timezone).format(timeFormat)}</div>
       <div className="bg-inverted h-3 w-px" />
       <div className="bg-inverted h-px w-screen" />

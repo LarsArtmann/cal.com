@@ -113,12 +113,14 @@ const availabilitySchema = z
   })
   .refine(
     (data) => !!data.username || !!data.userId || !!data.teamId,
-    "Either username or userId or teamId should be filled in."
+    "Either username or userId or teamId should be filled in.",
   );
 
 async function handler(req: NextApiRequest) {
   const { prisma, isAdmin, userId: reqUserId } = req;
-  const { username, userId, eventTypeId, dateTo, dateFrom, teamId } = availabilitySchema.parse(req.query);
+  const { username, userId, eventTypeId, dateTo, dateFrom, teamId } = availabilitySchema.parse(
+    req.query,
+  );
   if (!teamId)
     return getUserAvailability({
       username,

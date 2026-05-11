@@ -13,7 +13,14 @@ const ShellHeading = () => {
 
 export default function WrappedApp(props: AppPageProps) {
   return (
-    <Shell smallHeading isPublic hideHeadingOnMobile heading={<ShellHeading />} backPath="/apps" withoutSeo>
+    <Shell
+      smallHeading
+      isPublic
+      hideHeadingOnMobile
+      heading={<ShellHeading />}
+      backPath="/apps"
+      withoutSeo
+    >
       <HeadSeo
         title={props.name}
         description={props.description}

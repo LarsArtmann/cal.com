@@ -5,7 +5,7 @@ import { InputComponent, OptionComponent } from "./components";
 export const getReactSelectProps = <
   Option,
   IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>
+  Group extends GroupBase<Option> = GroupBase<Option>,
 >({
   components,
   menuPlacement = "auto",

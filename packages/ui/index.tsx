@@ -98,8 +98,17 @@ export {
   SkeletonText,
   Loader,
 } from "./components/skeleton";
-export { HorizontalTabs, HorizontalTabItem, VerticalTabs, VerticalTabItem } from "./components/navigation";
-export type { HorizontalTabItemProps, NavTabProps, VerticalTabItemProps } from "./components/navigation";
+export {
+  HorizontalTabs,
+  HorizontalTabItem,
+  VerticalTabs,
+  VerticalTabItem,
+} from "./components/navigation";
+export type {
+  HorizontalTabItemProps,
+  NavTabProps,
+  VerticalTabItemProps,
+} from "./components/navigation";
 export { Card, StepCard, FormCard } from "./components/card";
 export type { BaseCardProps } from "./components/card";
 export { Tooltip } from "./components/tooltip";

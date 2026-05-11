@@ -25,7 +25,10 @@ export const removeMemberHandler = async ({ ctx, input }: RemoveMemberOptions) =
     : false;
   if (!isAdmin && ctx.user.id !== input.memberId) throw new TRPCError({ code: "UNAUTHORIZED" });
   // Only a team owner can remove another team owner.
-  if ((await isTeamOwner(input.memberId, input.teamId)) && !(await isTeamOwner(ctx.user.id, input.teamId)))
+  if (
+    (await isTeamOwner(input.memberId, input.teamId)) &&
+    !(await isTeamOwner(ctx.user.id, input.teamId))
+  )
     throw new TRPCError({ code: "UNAUTHORIZED" });
 
   if (ctx.user.id === input.memberId && isAdmin && !isOrgAdmin)

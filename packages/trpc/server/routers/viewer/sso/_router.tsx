@@ -35,7 +35,9 @@ export const ssoRouter = router({
   // Update the SAML Connection
   update: authedProcedure.input(ZUpdateInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.update) {
-      UNSTABLE_HANDLER_CACHE.update = await import("./update.handler").then((mod) => mod.updateHandler);
+      UNSTABLE_HANDLER_CACHE.update = await import("./update.handler").then(
+        (mod) => mod.updateHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -52,7 +54,9 @@ export const ssoRouter = router({
   // Delete the SAML Connection
   delete: authedProcedure.input(ZDeleteInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.delete) {
-      UNSTABLE_HANDLER_CACHE.delete = await import("./delete.handler").then((mod) => mod.deleteHandler);
+      UNSTABLE_HANDLER_CACHE.delete = await import("./delete.handler").then(
+        (mod) => mod.deleteHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -70,7 +74,7 @@ export const ssoRouter = router({
   updateOIDC: authedProcedure.input(ZUpdateOIDCInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.updateOIDC) {
       UNSTABLE_HANDLER_CACHE.updateOIDC = await import("./updateOIDC.handler").then(
-        (mod) => mod.updateOIDCHandler
+        (mod) => mod.updateOIDCHandler,
       );
     }
 

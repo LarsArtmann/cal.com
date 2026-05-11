@@ -4,7 +4,7 @@ export async function resizeBase64Image(
   base64OrUrl: string,
   opts?: {
     maxSize?: number;
-  }
+  },
 ) {
   if (!base64OrUrl.startsWith("data:")) {
     // might be a `https://` or something

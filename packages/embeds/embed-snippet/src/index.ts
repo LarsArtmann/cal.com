@@ -57,7 +57,7 @@ export default function EmbedSnippet(url = EMBED_LIB_URL) {
     },
     //! Replace it with "https://cal.com/embed.js" or the URL where you have embed.js installed
     url,
-    "init"
+    "init",
   );
   /*!  Copying ends here. */
 

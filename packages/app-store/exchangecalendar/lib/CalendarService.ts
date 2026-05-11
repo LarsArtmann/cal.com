@@ -50,7 +50,7 @@ export default class ExchangeCalendarService implements Calendar {
     this.integrationName = "exchange_calendar";
     this.log = logger.getChildLogger({ prefix: [`[[lib] ${this.integrationName}`] });
     this.payload = JSON.parse(
-      symmetricDecrypt(credential.key?.toString() || "", process.env.CALENDSO_ENCRYPTION_KEY || "")
+      symmetricDecrypt(credential.key?.toString() || "", process.env.CALENDSO_ENCRYPTION_KEY || ""),
     );
   }
 
@@ -89,9 +89,12 @@ export default class ExchangeCalendarService implements Calendar {
 
   async updateEvent(
     uid: string,
-    event: CalendarEvent
+    event: CalendarEvent,
   ): Promise<NewCalendarEventType | NewCalendarEventType[]> {
-    const appointment: Appointment = await Appointment.Bind(this.getExchangeService(), new ItemId(uid));
+    const appointment: Appointment = await Appointment.Bind(
+      this.getExchangeService(),
+      new ItemId(uid),
+    );
     appointment.Subject = event.title;
     appointment.Start = DateTime.Parse(event.startTime);
     appointment.End = DateTime.Parse(event.endTime);
@@ -108,7 +111,7 @@ export default class ExchangeCalendarService implements Calendar {
     return appointment
       .Update(
         ConflictResolutionMode.AlwaysOverwrite,
-        SendInvitationsOrCancellationsMode.SendToChangedAndSaveCopy
+        SendInvitationsOrCancellationsMode.SendToChangedAndSaveCopy,
       )
       .then(() => {
         return {
@@ -127,7 +130,10 @@ export default class ExchangeCalendarService implements Calendar {
   }
 
   async deleteEvent(uid: string): Promise<void> {
-    const appointment: Appointment = await Appointment.Bind(this.getExchangeService(), new ItemId(uid));
+    const appointment: Appointment = await Appointment.Bind(
+      this.getExchangeService(),
+      new ItemId(uid),
+    );
     return appointment.Delete(DeleteMode.MoveToDeletedItems).catch((reason) => {
       this.log.error(reason);
       throw reason;
@@ -137,7 +143,7 @@ export default class ExchangeCalendarService implements Calendar {
   async getAvailability(
     dateFrom: string,
     dateTo: string,
-    selectedCalendars: IntegrationCalendar[]
+    selectedCalendars: IntegrationCalendar[],
   ): Promise<EventBusyDate[]> {
     const calendars: IntegrationCalendar[] = await this.listCalendars();
     const promises: Promise<EventBusyDate[]>[] = calendars
@@ -146,7 +152,7 @@ export default class ExchangeCalendarService implements Calendar {
         return this.getExchangeService()
           .FindAppointments(
             new FolderId(calendar.externalId),
-            new CalendarView(DateTime.Parse(dateFrom), DateTime.Parse(dateTo))
+            new CalendarView(DateTime.Parse(dateFrom), DateTime.Parse(dateTo)),
           )
           .then((results: FindItemsResults<Appointment>) => {
             return results.Items.filter((appointment: Appointment) => {
@@ -176,7 +182,9 @@ export default class ExchangeCalendarService implements Calendar {
     view.Traversal = FolderTraversal.Deep;
     const deletedItemsFolder: Folder = await Folder.Bind(service, WellKnownFolderName.DeletedItems);
     const searchFilterCollection = new SearchFilter.SearchFilterCollection(LogicalOperator.And);
-    searchFilterCollection.Add(new SearchFilter.IsEqualTo(FolderSchema.FolderClass, "IPF.Appointment"));
+    searchFilterCollection.Add(
+      new SearchFilter.IsEqualTo(FolderSchema.FolderClass, "IPF.Appointment"),
+    );
     return service
       .FindFolders(WellKnownFolderName.MsgFolderRoot, searchFilterCollection, view)
       .then((res: FindFoldersResults) => {

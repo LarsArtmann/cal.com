@@ -34,8 +34,9 @@ export function Event({
           !selected &&
           "bg-default text-emphasis border-[1px] border-dashed border-gray-900",
         selected && "bg-inverted text-inverted border-[1px] border-transparent",
-        disabled ? "hover:cursor-default" : "hover:cursor-pointer"
-      )}>
+        disabled ? "hover:cursor-default" : "hover:cursor-pointer",
+      )}
+    >
       <div className="w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-left leading-4">
         {event.title}
       </div>

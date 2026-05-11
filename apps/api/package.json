@@ -1,11 +1,11 @@
 {
   "name": "@calcom/api",
   "version": "1.0.0",
-  "description": "Public API for Cal.com",
-  "main": "index.ts",
-  "repository": "git@github.com:calcom/api.git",
-  "author": "Cal.com Inc.",
   "private": true,
+  "description": "Public API for Cal.com",
+  "author": "Cal.com Inc.",
+  "repository": "git@github.com:calcom/api.git",
+  "main": "index.ts",
   "scripts": {
     "build": "next build",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
@@ -14,11 +14,6 @@
     "lint:fix": "eslint . --ext .ts,.js,.tsx,.jsx --fix",
     "start": "PORT=3002 next start",
     "type-check": "tsc --pretty --noEmit"
-  },
-  "devDependencies": {
-    "@calcom/tsconfig": "*",
-    "@calcom/types": "*",
-    "node-mocks-http": "^1.17.2"
   },
   "dependencies": {
     "@calcom/app-store": "*",
@@ -29,10 +24,10 @@
     "@calcom/lib": "*",
     "@calcom/prisma": "*",
     "@calcom/trpc": "*",
-    "@sentry/nextjs": "^10.51.0",
+    "@sentry/nextjs": "^10.52.0",
     "bcryptjs": "^3.0.3",
     "memory-cache": "^0.2.0",
-    "next": "^16.2.4",
+    "next": "^16.2.6",
     "next-api-middleware": "^3.0.0",
     "next-axiom": "^1.10.0",
     "next-swagger-doc": "^0.4.1",
@@ -40,6 +35,11 @@
     "typescript": "^6.0.3",
     "tzdata": "^1.0.49",
     "uuid": "^14.0.0",
-    "zod": "^4.4.1"
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@calcom/tsconfig": "*",
+    "@calcom/types": "*",
+    "node-mocks-http": "^1.17.2"
   }
 }

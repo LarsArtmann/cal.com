@@ -28,7 +28,8 @@ export const Info = (props: {
             lineHeight: "24px",
             whiteSpace: "pre-wrap",
             textDecoration: props.lineThrough ? "line-through" : undefined,
-          }}>
+          }}
+        >
           {props.formatted ? (
             <p
               className="dark:text-darkgray-600 mt-2 text-sm text-gray-500 [&_a]:text-blue-500 [&_a]:underline [&_a]:hover:text-blue-600"

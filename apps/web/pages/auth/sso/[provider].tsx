@@ -7,7 +7,12 @@ import { getPremiumMonthlyPlanPriceId } from "@calcom/app-store/stripepayment/li
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
 import { orgDomainConfig } from "@calcom/features/ee/organizations/lib/orgDomains";
 import stripe from "@calcom/features/ee/payments/server/stripe";
-import { hostedCal, isSAMLLoginEnabled, samlProductID, samlTenantID } from "@calcom/features/ee/sso/lib/saml";
+import {
+  hostedCal,
+  isSAMLLoginEnabled,
+  samlProductID,
+  samlTenantID,
+} from "@calcom/features/ee/sso/lib/saml";
 import { ssoTenantProduct } from "@calcom/features/ee/sso/lib/sso";
 import { checkUsername } from "@calcom/lib/server/checkUsername";
 import prisma from "@calcom/prisma";
@@ -56,7 +61,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   const providerParam = asStringOrNull(context.query.provider);
   const emailParam = asStringOrNull(context.query.email);
   const usernameParam = asStringOrNull(context.query.username);
-  const successDestination = "/getting-started" + (usernameParam ? `?username=${usernameParam}` : "");
+  const successDestination =
+    "/getting-started" + (usernameParam ? `?username=${usernameParam}` : "");
   if (!providerParam) {
     throw new Error(`File is not named sso/[provider]`);
   }

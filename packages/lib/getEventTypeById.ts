@@ -272,7 +272,9 @@ export default async function getEventTypeById({
 
   const parsedMetaData = newMetadata;
 
-  const parsedCustomInputs = (rawEventType.customInputs || []).map((input) => customInputSchema.parse(input));
+  const parsedCustomInputs = (rawEventType.customInputs || []).map((input) =>
+    customInputSchema.parse(input),
+  );
 
   const eventType = {
     ...restEventType,
@@ -300,7 +302,7 @@ export default async function getEventTypeById({
             },
             created: true,
           }
-        : []
+        : [],
     ),
   };
 
@@ -325,14 +327,13 @@ export default async function getEventTypeById({
     eventType.users.push(fallbackUser);
   }
 
-  const eventTypeUsers: ((typeof eventType.users)[number] & { avatar: string })[] = eventType.users.map(
-    (user) => ({
+  const eventTypeUsers: ((typeof eventType.users)[number] & { avatar: string })[] =
+    eventType.users.map((user) => ({
       ...user,
       avatar: `${eventType.team?.parent?.slug ? getOrgFullDomain(eventType.team?.parent?.slug) : CAL_URL}/${
         user.username
       }/avatar.png`,
-    })
-  );
+    }));
 
   const currentUser = eventType.users.find((u) => u.id === userId);
 
@@ -347,7 +348,7 @@ export default async function getEventTypeById({
 
   const locationOptions = await getLocationGroupedOptions(
     eventType.teamId ? { teamId: eventType.teamId } : { userId },
-    t
+    t,
   );
   if (eventType.schedulingType === SchedulingType.MANAGED) {
     locationOptions.splice(0, 0, {
@@ -392,7 +393,8 @@ export default async function getEventTypeById({
 
   // Find the current users membership so we can check role to enable/disable deletion.
   // Sets to null if no membership is found - this must mean we are in a none team event type
-  const currentUserMembership = eventTypeObject.team?.members.find((el) => el.user.id === userId) ?? null;
+  const currentUserMembership =
+    eventTypeObject.team?.members.find((el) => el.user.id === userId) ?? null;
 
   let destinationCalendar = eventTypeObject.destinationCalendar;
   if (!destinationCalendar) {

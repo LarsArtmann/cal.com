@@ -1,10 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "private": true,
   "name": "@calcom/n8n",
   "version": "0.0.0",
-  "main": "./index.ts",
+  "private": true,
   "description": "Automate without limits. The workflow automation platform that doesn't box you in, that you never outgrow",
+  "main": "./index.ts",
   "dependencies": {
     "@calcom/lib": "*"
   },

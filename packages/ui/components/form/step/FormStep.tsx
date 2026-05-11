@@ -21,7 +21,7 @@ function FormStep({ currentStep, steps }: Props) {
             <div
               className={classNames(
                 "h-1 w-full rounded-sm",
-                currentStep - 1 >= j ? "bg-black" : "bg-gray-400"
+                currentStep - 1 >= j ? "bg-black" : "bg-gray-400",
               )}
               key={j}
             />

@@ -5,7 +5,9 @@ export type EmbedProps = {
 };
 
 export default function withEmbedSsr(getServerSideProps: GetServerSideProps) {
-  return async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<EmbedProps>> => {
+  return async (
+    context: GetServerSidePropsContext,
+  ): Promise<GetServerSidePropsResult<EmbedProps>> => {
     const ssrResponse = await getServerSideProps(context);
     const embed = context.query.embed;
     const layout = context.query.layout;

@@ -37,7 +37,7 @@ export const connectedCalendarsHandler = async ({ ctx, input }: ConnectedCalenda
   const { connectedCalendars, destinationCalendar } = await getConnectedCalendars(
     calendarCredentials,
     user.selectedCalendars,
-    user.destinationCalendar?.externalId
+    user.destinationCalendar?.externalId,
   );
   let toggledCalendarDetails:
     | {
@@ -63,7 +63,7 @@ export const connectedCalendarsHandler = async ({ ctx, input }: ConnectedCalenda
     // Select the first calendar matching the primary by default since that will also be the destination calendar
     if (onboarding && externalId) {
       const calendarIndex = (connectedCalendars[0].calendars || []).findIndex(
-        (item) => item.externalId === externalId && item.integration === integration
+        (item) => item.externalId === externalId && item.integration === integration,
       );
       if (calendarIndex >= 0 && connectedCalendars[0].calendars) {
         connectedCalendars[0].calendars[calendarIndex].isSelected = true;
@@ -89,7 +89,7 @@ export const connectedCalendarsHandler = async ({ ctx, input }: ConnectedCalenda
     const destinationCal = allCals.find(
       (cal) =>
         cal.externalId === user.destinationCalendar?.externalId &&
-        cal.integration === user.destinationCalendar?.integration
+        cal.integration === user.destinationCalendar?.integration,
     );
 
     if (!destinationCal) {
@@ -98,7 +98,7 @@ export const connectedCalendarsHandler = async ({ ctx, input }: ConnectedCalenda
       // Select the first calendar matching the primary by default since that will also be the destination calendar
       if (onboarding && externalId) {
         const calendarIndex = (connectedCalendars[0].calendars || []).findIndex(
-          (item) => item.externalId === externalId && item.integration === integration
+          (item) => item.externalId === externalId && item.integration === integration,
         );
         if (calendarIndex >= 0 && connectedCalendars[0].calendars) {
           connectedCalendars[0].calendars[calendarIndex].isSelected = true;
@@ -122,7 +122,7 @@ export const connectedCalendarsHandler = async ({ ctx, input }: ConnectedCalenda
         const index = (cal.calendars || []).findIndex(
           (calendar) =>
             calendar.externalId === destinationCal.externalId &&
-            calendar.integration === destinationCal.integration
+            calendar.integration === destinationCal.integration,
         );
         if (index >= 0 && cal.calendars) {
           cal.calendars[index].isSelected = true;

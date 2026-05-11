@@ -39,7 +39,8 @@ export const options = [
     <ul>
       <li>The difference between the types are when they are filled. </li>
     </ul>
-  }>
+  }
+>
   <Example title="Single Select [Unselected]" isFullWidth>
     <SelectField label={"Single Select"} options={options} />
   </Example>
@@ -50,7 +51,12 @@ export const options = [
     <SelectField label={"Multi Select"} options={options} isMulti={true} />
   </Example>
   <Example title="Multi Select [Selected]" isFullWidth>
-    <SelectField label={"Multi Select"} options={options} isMulti={true} defaultValue={options[0]} />
+    <SelectField
+      label={"Multi Select"}
+      options={options}
+      isMulti={true}
+      defaultValue={options[0]}
+    />
   </Example>
 </Examples>
 
@@ -74,7 +80,9 @@ const BadSelect = (props) => (
   <Select
     {...props}
     components={{
-      Control: ({ children, ...rest }) => <components.Control {...rest}>👎 {children}</components.Control>,
+      Control: ({ children, ...rest }) => (
+        <components.Control {...rest}>👎 {children}</components.Control>
+      ),
     }}
   />
 );
@@ -118,7 +126,8 @@ const GoodSelect = (props) => <Select {...props} components={{ Control }} />;
           options: ["default", "checkbox"],
         },
       },
-    }}>
+    }}
+  >
     {(args) => (
       <VariantsTable titles={["Default"]} columnMinWidth={300}>
         <VariantRow>

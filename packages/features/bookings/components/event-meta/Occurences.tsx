@@ -13,14 +13,13 @@ import type { PublicEvent } from "../../types";
 export const EventOccurences = ({ event }: { event: PublicEvent }) => {
   const maxOccurences = event.recurringEvent?.count || null;
   const { t, i18n } = useLocale();
-  const [setRecurringEventCount, recurringEventCount, setOccurenceCount, occurenceCount] = useBookerStore(
-    (state) => [
+  const [setRecurringEventCount, recurringEventCount, setOccurenceCount, occurenceCount] =
+    useBookerStore((state) => [
       state.setRecurringEventCount,
       state.recurringEventCount,
       state.setOccurenceCount,
       state.occurenceCount,
-    ]
-  );
+    ]);
   const selectedTimeslot = useBookerStore((state) => state.selectedTimeslot);
   const bookerState = useBookerStore((state) => state.state);
   const { timezone, timeFormat } = useTimePreferences();
@@ -32,7 +31,13 @@ export const EventOccurences = ({ event }: { event: PublicEvent }) => {
     setRecurringEventCount(recurringEventCount || event.recurringEvent.count);
     if (occurenceCount && (occurenceCount > event.recurringEvent.count || occurenceCount < 1))
       setWarning(true);
-  }, [setRecurringEventCount, event.recurringEvent, recurringEventCount, setOccurenceCount, occurenceCount]);
+  }, [
+    setRecurringEventCount,
+    event.recurringEvent,
+    recurringEventCount,
+    setOccurenceCount,
+    occurenceCount,
+  ]);
   if (!event.recurringEvent) return null;
 
   if (bookerState === "booking" && recurringEventCount && selectedTimeslot) {
@@ -44,7 +49,7 @@ export const EventOccurences = ({ event }: { event: PublicEvent }) => {
         recurringCount: recurringEventCount,
         selectedTimeFormat: timeFormat,
       },
-      i18n.language
+      i18n.language,
     );
     return (
       <>
@@ -55,7 +60,8 @@ export const EventOccurences = ({ event }: { event: PublicEvent }) => {
           <Tooltip
             content={recurringStrings.slice(5).map((timeFormatted, key) => (
               <p key={key}>{timeFormatted}</p>
-            ))}>
+            ))}
+          >
             <p className=" text-sm">+ {t("plus_more", { count: recurringStrings.length - 5 })}</p>
           </Tooltip>
         )}

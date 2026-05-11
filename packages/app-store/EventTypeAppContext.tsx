@@ -21,14 +21,14 @@ const EventTypeAppContext = React.createContext<AppContext>({
 
 type SetAppDataGeneric<TAppData extends ZodType> = <
   TKey extends keyof z.infer<TAppData>,
-  TValue extends z.infer<TAppData>[TKey]
+  TValue extends z.infer<TAppData>[TKey],
 >(
   key: TKey,
-  value: TValue
+  value: TValue,
 ) => void;
 
 type GetAppDataGeneric<TAppData extends ZodType> = <TKey extends keyof z.infer<TAppData>>(
-  key: TKey
+  key: TKey,
 ) => z.infer<TAppData>[TKey];
 
 export const useAppContextWithSchema = <TAppData extends ZodType>() => {

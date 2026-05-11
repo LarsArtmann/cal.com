@@ -11,7 +11,9 @@ import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { EmailField, EmptyScreen, Label, PasswordField, TextField } from "@calcom/ui";
 import { UserCheck } from "@calcom/ui/components/icon";
 
-export const AdminUserContainer = (props: React.ComponentProps<typeof AdminUser> & { userCount: number }) => {
+export const AdminUserContainer = (
+  props: React.ComponentProps<typeof AdminUser> & { userCount: number },
+) => {
   const { t } = useLocale();
   if (props.userCount > 0)
     return (
@@ -22,7 +24,8 @@ export const AdminUserContainer = (props: React.ComponentProps<typeof AdminUser>
         onSubmit={(e) => {
           e.preventDefault();
           props.onSuccess();
-        }}>
+        }}
+      >
         <EmptyScreen
           Icon={UserCheck}
           headline={t("admin_user_created")}
@@ -33,7 +36,11 @@ export const AdminUserContainer = (props: React.ComponentProps<typeof AdminUser>
   return <AdminUser {...props} />;
 };
 
-export const AdminUser = (props: { onSubmit: () => void; onError: () => void; onSuccess: () => void }) => {
+export const AdminUser = (props: {
+  onSubmit: () => void;
+  onError: () => void;
+  onSuccess: () => void;
+}) => {
   const { t } = useLocale();
 
   const formSchema = z.object({

@@ -10,7 +10,7 @@ const buttonText = "Click Me";
 describe("Tests for ShellSubHeading Component", () => {
   test("Should render correctly the component with title and subtitle if the prop was passed", () => {
     const { getByText, queryByText, rerender } = render(
-      <ShellSubHeading title={titleText} subtitle={subtitleText} />
+      <ShellSubHeading title={titleText} subtitle={subtitleText} />,
     );
 
     expect(getByText(titleText)).toBeInTheDocument();
@@ -26,7 +26,10 @@ describe("Tests for ShellSubHeading Component", () => {
     const mockClickHandler = vi.fn();
 
     const { getByText } = render(
-      <ShellSubHeading title={titleText} actions={<button onClick={mockClickHandler}>{buttonText}</button>} />
+      <ShellSubHeading
+        title={titleText}
+        actions={<button onClick={mockClickHandler}>{buttonText}</button>}
+      />,
     );
 
     const button = getByText(buttonText);

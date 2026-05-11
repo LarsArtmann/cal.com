@@ -20,7 +20,7 @@ export const DatePicker = ({ minDate, disabled, date, onDatesChange, className }
     <PrimitiveDatePicker
       className={classNames(
         "focus:ring-primary-500 focus:border-primary-500 border-default rounded-sm border p-1 pl-2 text-sm",
-        className
+        className,
       )}
       clearIcon={null}
       calendarIcon={<Calendar className="text-subtle h-5 w-5" />}

@@ -21,7 +21,7 @@ const ConnectedVideoStep = (props: ConnectedAppStepProps) => {
   const { t } = useLocale();
 
   const hasAnyInstalledVideoApps = queryConnectedVideoApps?.items.some(
-    (item) => item.userCredentialIds.length > 0
+    (item) => item.userCredentialIds.length > 0,
   );
 
   return (
@@ -54,10 +54,11 @@ const ConnectedVideoStep = (props: ConnectedAppStepProps) => {
         data-testid="save-video-button"
         className={classNames(
           "text-inverted mt-8 flex w-full flex-row justify-center rounded-md border border-black bg-black p-2 text-center text-sm",
-          !hasAnyInstalledVideoApps ? "cursor-not-allowed opacity-20" : ""
+          !hasAnyInstalledVideoApps ? "cursor-not-allowed opacity-20" : "",
         )}
         disabled={!hasAnyInstalledVideoApps}
-        onClick={() => nextStep()}>
+        onClick={() => nextStep()}
+      >
         {t("next_step_text")}
         <ArrowRight className="ml-2 h-4 w-4 self-center" aria-hidden="true" />
       </button>

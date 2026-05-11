@@ -83,7 +83,7 @@ describe("Tests for Badge component", () => {
       <Badge>
         <span>Child element 1</span>
         <span>Child element 2</span>
-      </Badge>
+      </Badge>,
     );
 
     expect(getByText("Child element 1")).toBeInTheDocument();

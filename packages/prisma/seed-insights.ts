@@ -18,7 +18,7 @@ const shuffle = (
       description: true;
     };
   }>[],
-  usersIdsToPick?: number[]
+  usersIdsToPick?: number[],
 ) => {
   const startTime = dayjs(booking.startTime)
     .add(Math.floor(Math.random() * 365), "day")
@@ -269,14 +269,14 @@ async function main() {
 
     await prisma.booking.createMany({
       data: new Array(10000)
-          .fill(0)
-          .map(() => shuffle({ ...baseBookingSingle }, dayjs().get("y") - 1, singleEvents)),
+        .fill(0)
+        .map(() => shuffle({ ...baseBookingSingle }, dayjs().get("y") - 1, singleEvents)),
     });
 
     await prisma.booking.createMany({
       data: new Array(10000)
-          .fill(0)
-          .map(() => shuffle({ ...baseBookingSingle }, dayjs().get("y") - 0, singleEvents)),
+        .fill(0)
+        .map(() => shuffle({ ...baseBookingSingle }, dayjs().get("y") - 0, singleEvents)),
     });
   }
 
@@ -329,35 +329,35 @@ async function main() {
   // Create past bookings -2y, -1y, -0y
   await prisma.booking.createMany({
     data: new Array(10000)
-        .fill(0)
-        .map(() =>
-          shuffle({ ...baseBooking }, dayjs().get("y") - 2, teamEvents, [
-            insightsAdmin?.id ?? 0,
-            insightsUser?.id ?? 0,
-          ])
-        ),
+      .fill(0)
+      .map(() =>
+        shuffle({ ...baseBooking }, dayjs().get("y") - 2, teamEvents, [
+          insightsAdmin?.id ?? 0,
+          insightsUser?.id ?? 0,
+        ]),
+      ),
   });
 
   await prisma.booking.createMany({
     data: new Array(10000)
-        .fill(0)
-        .map(() =>
-          shuffle({ ...baseBooking }, dayjs().get("y") - 1, teamEvents, [
-            insightsAdmin?.id ?? 0,
-            insightsUser?.id ?? 0,
-          ])
-        ),
+      .fill(0)
+      .map(() =>
+        shuffle({ ...baseBooking }, dayjs().get("y") - 1, teamEvents, [
+          insightsAdmin?.id ?? 0,
+          insightsUser?.id ?? 0,
+        ]),
+      ),
   });
 
   await prisma.booking.createMany({
     data: new Array(10000)
-        .fill(0)
-        .map(() =>
-          shuffle({ ...baseBooking }, dayjs().get("y"), teamEvents, [
-            insightsAdmin?.id ?? 0,
-            insightsUser?.id ?? 0,
-          ])
-        ),
+      .fill(0)
+      .map(() =>
+        shuffle({ ...baseBooking }, dayjs().get("y"), teamEvents, [
+          insightsAdmin?.id ?? 0,
+          insightsUser?.id ?? 0,
+        ]),
+      ),
   });
 }
 main()
@@ -459,7 +459,7 @@ async function createPerformanceData() {
             },
           },
         },
-      })
+      }),
     );
 
     await Promise.all(updateMemberPromises);
@@ -480,7 +480,7 @@ async function createPerformanceData() {
     const createEventPromises = createEvents.map((data) =>
       prisma.eventType.create({
         data,
-      })
+      }),
     );
     await Promise.all(createEventPromises);
 
@@ -505,8 +505,8 @@ async function createPerformanceData() {
 
     await prisma.booking.createMany({
       data: new Array(10000)
-          .fill(0)
-          .map(() => shuffle({ ...baseBooking }, dayjs().get("y"), singleEventsCreated)),
+        .fill(0)
+        .map(() => shuffle({ ...baseBooking }, dayjs().get("y"), singleEventsCreated)),
     });
   }
 }

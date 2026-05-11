@@ -37,7 +37,9 @@ export function ScheduleListItem({
 }) {
   const { t, i18n } = useLocale();
 
-  const { data, isLoading } = trpc.viewer.availability.schedule.get.useQuery({ scheduleId: schedule.id });
+  const { data, isLoading } = trpc.viewer.availability.schedule.get.useQuery({
+    scheduleId: schedule.id,
+  });
 
   return (
     <li key={schedule.id}>
@@ -46,7 +48,8 @@ export function ScheduleListItem({
           <Link
             href={"/availability/" + schedule.id}
             className="flex-grow truncate text-sm"
-            title={schedule.name}>
+            title={schedule.name}
+          >
             <div className="space-x-2 rtl:space-x-reverse">
               <span className="text-emphasis truncate font-medium">{schedule.name}</span>
               {schedule.isDefault && (
@@ -99,7 +102,8 @@ export function ScheduleListItem({
                         scheduleId: schedule.id,
                         isDefault: true,
                       });
-                    }}>
+                    }}
+                  >
                     {t("set_as_default")}
                   </DropdownItem>
                 )}
@@ -113,7 +117,8 @@ export function ScheduleListItem({
                     duplicateFunction({
                       scheduleId: schedule.id,
                     });
-                  }}>
+                  }}
+                >
                   {t("duplicate")}
                 </DropdownItem>
               </DropdownMenuItem>
@@ -131,7 +136,8 @@ export function ScheduleListItem({
                         scheduleId: schedule.id,
                       });
                     }
-                  }}>
+                  }}
+                >
                   {t("delete")}
                 </DropdownItem>
               </DropdownMenuItem>

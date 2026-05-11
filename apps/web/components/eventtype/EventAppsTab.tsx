@@ -62,11 +62,12 @@ export const EventAppsTab = ({ eventType }: { eventType: EventType }) => {
     };
   };
 
-  const { shouldLockDisableProps, isManagedEventType, isChildrenManagedEventType } = useLockedFieldsManager(
-    eventType,
-    t("locked_fields_admin_description"),
-    t("locked_fields_member_description")
-  );
+  const { shouldLockDisableProps, isManagedEventType, isChildrenManagedEventType } =
+    useLockedFieldsManager(
+      eventType,
+      t("locked_fields_admin_description"),
+      t("locked_fields_member_description"),
+    );
 
   const appsWithTeamCredentials = eventTypeApps?.items.filter((app) => app.teams.length) || [];
   const cardsForAppsWithTeams = appsWithTeamCredentials.map((app) => {
@@ -81,7 +82,7 @@ export const EventAppsTab = ({ eventType }: { eventType: EventType }) => {
           app={app}
           eventType={eventType}
           {...shouldLockDisableProps("apps")}
-        />
+        />,
       );
     }
 
@@ -104,7 +105,7 @@ export const EventAppsTab = ({ eventType }: { eventType: EventType }) => {
             }}
             eventType={eventType}
             {...shouldLockDisableProps("apps")}
-          />
+          />,
         );
       }
     }

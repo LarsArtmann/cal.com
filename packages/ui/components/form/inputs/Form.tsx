@@ -7,10 +7,10 @@ import { getErrorFromUnknown } from "@calcom/lib/errors";
 
 import { showToast } from "../../..";
 
-type FormProps<T extends object> = { form: UseFormReturn<T>; handleSubmit: SubmitHandler<T> } & Omit<
-  JSX.IntrinsicElements["form"],
-  "onSubmit"
->;
+type FormProps<T extends object> = {
+  form: UseFormReturn<T>;
+  handleSubmit: SubmitHandler<T>;
+} & Omit<JSX.IntrinsicElements["form"], "onSubmit">;
 
 const PlainForm = <T extends FieldValues>(props: FormProps<T>, ref: Ref<HTMLFormElement>) => {
   const { form, handleSubmit, ...passThrough } = props;
@@ -30,7 +30,8 @@ const PlainForm = <T extends FieldValues>(props: FormProps<T>, ref: Ref<HTMLForm
               showToast(`${getErrorFromUnknown(err).message}`, "error");
             });
         }}
-        {...passThrough}>
+        {...passThrough}
+      >
         {props.children}
       </form>
     </FormProvider>
@@ -38,5 +39,5 @@ const PlainForm = <T extends FieldValues>(props: FormProps<T>, ref: Ref<HTMLForm
 };
 
 export const Form = forwardRef(PlainForm) as <T extends FieldValues>(
-  p: FormProps<T> & { ref?: Ref<HTMLFormElement> }
+  p: FormProps<T> & { ref?: Ref<HTMLFormElement> },
 ) => ReactElement;

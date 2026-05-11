@@ -78,8 +78,8 @@ export const trpc = createTRPCNext<AppRouter, NextPageContext, "ExperimentalSusp
       typeof window !== "undefined"
         ? "/api/trpc"
         : process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}/api/trpc`
-        : `${process.env.NEXT_PUBLIC_WEBAPP_URL}/api/trpc`;
+          ? `https://${process.env.VERCEL_URL}/api/trpc`
+          : `${process.env.NEXT_PUBLIC_WEBAPP_URL}/api/trpc`;
 
     /**
      * If you want to use SSR, you need to use the server's full URL
@@ -93,7 +93,8 @@ export const trpc = createTRPCNext<AppRouter, NextPageContext, "ExperimentalSusp
         // adds pretty logs to your console in development and logs errors in production
         loggerLink({
           enabled: (opts) =>
-            !!process.env.NEXT_PUBLIC_DEBUG || (opts.direction === "down" && opts.result instanceof Error),
+            !!process.env.NEXT_PUBLIC_DEBUG ||
+            (opts.direction === "down" && opts.result instanceof Error),
         }),
         splitLink({
           // check for context property `skipBatch`
@@ -101,14 +102,20 @@ export const trpc = createTRPCNext<AppRouter, NextPageContext, "ExperimentalSusp
           // when condition is true, use normal request
           true: (runtime) => {
             const links = Object.fromEntries(
-              ENDPOINTS.map((endpoint) => [endpoint, httpLink({ url: url + "/" + endpoint })(runtime)])
+              ENDPOINTS.map((endpoint) => [
+                endpoint,
+                httpLink({ url: url + "/" + endpoint })(runtime),
+              ]),
             );
             return resolveEndpoint(links);
           },
           // when condition is false, use batch request
           false: (runtime) => {
             const links = Object.fromEntries(
-              ENDPOINTS.map((endpoint) => [endpoint, httpBatchLink({ url: url + "/" + endpoint })(runtime)])
+              ENDPOINTS.map((endpoint) => [
+                endpoint,
+                httpBatchLink({ url: url + "/" + endpoint })(runtime),
+              ]),
             );
             return resolveEndpoint(links);
           },

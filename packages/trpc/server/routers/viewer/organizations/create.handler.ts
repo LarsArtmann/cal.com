@@ -49,7 +49,7 @@ const vercelCreateDomain = async (domain: string) => {
         "Content-Type": "application/json",
       },
       method: "POST",
-    }
+    },
   );
 
   const data = await response.json();
@@ -116,12 +116,14 @@ export const createHandler = async ({ input, ctx }: CreateOptions) => {
           orgSlug: slug,
           ownerEmail: adminEmail,
           webappIPAddress: await getIPAddress(
-            WEBAPP_URL.replace("https://", "")?.replace("http://", "").replace(/(:.*)/, "")
+            WEBAPP_URL.replace("https://", "")?.replace("http://", "").replace(/(:.*)/, ""),
           ),
           t,
         });
       } else {
-        console.warn("Organization created: subdomain not configured and couldn't notify adminnistrators");
+        console.warn(
+          "Organization created: subdomain not configured and couldn't notify adminnistrators",
+        );
       }
     }
 

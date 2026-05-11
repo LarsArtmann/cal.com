@@ -43,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const secret = symmetricDecrypt(user.twoFactorSecret, process.env.CALENDSO_ENCRYPTION_KEY);
   if (secret.length !== 32) {
     console.error(
-      `Two factor secret decryption failed. Expected key with length 32 but got ${secret.length}`
+      `Two factor secret decryption failed. Expected key with length 32 but got ${secret.length}`,
     );
     return res.status(500).json({ error: ErrorCode.InternalServerError });
   }

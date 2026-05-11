@@ -42,7 +42,8 @@ export default function TimezoneChangeDialog() {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const tzDifferent =
-      !isLoading && dayjs.tz(undefined, currentTz).utcOffset() !== dayjs.tz(undefined, userTz).utcOffset();
+      !isLoading &&
+      dayjs.tz(undefined, currentTz).utcOffset() !== dayjs.tz(undefined, userTz).utcOffset();
     const showDialog = tzDifferent && !document.cookie.includes("calcom-timezone-dialog=1");
     setOpen(!IS_VISUAL_REGRESSION_TESTING && showDialog);
   }, [currentTz, isLoading, userTz]);
@@ -67,7 +68,8 @@ export default function TimezoneChangeDialog() {
         title={t("update_timezone_question")}
         description={t("update_timezone_description", { formattedCurrentTz })}
         type="creation"
-        onInteractOutside={() => onCancel(ONE_DAY, false) /* 1 day expire */}>
+        onInteractOutside={() => onCancel(ONE_DAY, false) /* 1 day expire */}
+      >
         {/* todo: save this in db and auto-update when timezone changes (be able to disable??? if yes, /settings)
         <Checkbox description="Always update timezone" />
         */}

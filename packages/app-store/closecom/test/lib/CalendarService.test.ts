@@ -115,7 +115,7 @@ test("retrieve custom fields for custom activity type: type doesn't exist, no fi
       ["Date & Time", "", true, true],
       ["Time Zone", "", true, true],
     ],
-    closeCom
+    closeCom,
   );
   expect(contactIds).toEqual({
     activityType: "type1",
@@ -139,7 +139,9 @@ test("retrieve custom fields for custom activity type: type exists, no field cre
 
   CloseCom.prototype.customField = {
     activity: {
-      get: () => ({ data: [{ id: "fieldY", custom_activity_type_id: "typeX", name: "Attendees" }] }),
+      get: () => ({
+        data: [{ id: "fieldY", custom_activity_type_id: "typeX", name: "Attendees" }],
+      }),
       create: (data: { name: string }) => ({ id: `field${data.name.length}${data.name[0]}` }),
     },
   } as any;
@@ -151,7 +153,7 @@ test("retrieve custom fields for custom activity type: type exists, no field cre
       ["Date & Time", "", true, true],
       ["Time Zone", "", true, true],
     ],
-    closeCom
+    closeCom,
   );
   expect(contactIds).toEqual({
     activityType: "typeX",
@@ -207,7 +209,7 @@ test("prepare data to create custom activity type instance: two attendees, no ad
       ["Date & Time", "", true, true],
       ["Time Zone", "", true, true],
     ],
-    closeCom
+    closeCom,
   );
   expect(data).toEqual({
     custom_activity_type_id: "type1",
@@ -263,7 +265,7 @@ test("prepare data to create custom activity type instance: one attendees, with 
       ["Date & Time", "", true, true],
       ["Time Zone", "", true, true],
     ],
-    closeCom
+    closeCom,
   );
   expect(data).toEqual({
     custom_activity_type_id: "type1",

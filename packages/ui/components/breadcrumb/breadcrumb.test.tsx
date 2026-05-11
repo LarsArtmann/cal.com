@@ -7,7 +7,7 @@ describe("Tests for Breadcrumb component", () => {
     render(
       <Breadcrumb>
         <div>Dummy Child</div>
-      </Breadcrumb>
+      </Breadcrumb>,
     );
 
     const breadcrumbNav = screen.getByRole("navigation");
@@ -29,7 +29,7 @@ describe("Tests for Breadcrumb component", () => {
         <BreadcrumbItem href="/contact" listProps={{ className: "custom-list" }}>
           Contact
         </BreadcrumbItem>
-      </Breadcrumb>
+      </Breadcrumb>,
     );
 
     const customListItems = document.querySelectorAll(".custom-list");
@@ -41,7 +41,7 @@ describe("Tests for Breadcrumb component", () => {
       <Breadcrumb>
         <BreadcrumbItem href="/category">Category</BreadcrumbItem>
         <BreadcrumbItem href="/category/item">Item</BreadcrumbItem>
-      </Breadcrumb>
+      </Breadcrumb>,
     );
 
     const categoryLink = screen.getByText("Category");
@@ -56,7 +56,7 @@ describe("Tests for Breadcrumb component", () => {
       <Breadcrumb>
         <BreadcrumbItem href="/category">Category</BreadcrumbItem>
         <BreadcrumbItem href="/category/item">Item</BreadcrumbItem>
-      </Breadcrumb>
+      </Breadcrumb>,
     );
 
     const categoryLink = screen.getByText("Category");
@@ -72,7 +72,7 @@ describe("Tests for Breadcrumb component", () => {
     render(
       <Breadcrumb>
         <BreadcrumbItem href="/">Home</BreadcrumbItem>
-      </Breadcrumb>
+      </Breadcrumb>,
     );
 
     const separators = screen.queryAllByText("/");
@@ -85,7 +85,7 @@ describe("Tests for Breadcrumb component", () => {
         <BreadcrumbItem href="/contact">Contact</BreadcrumbItem>
         <BreadcrumbItem href="/about">About</BreadcrumbItem>
         <BreadcrumbItem href="/">Home</BreadcrumbItem>
-      </Breadcrumb>
+      </Breadcrumb>,
     );
 
     const breadcrumbList = screen.getByRole("list");

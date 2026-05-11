@@ -117,7 +117,8 @@ const AppearanceView = () => {
           // back to null here.
           theme: values.theme || null,
         });
-      }}>
+      }}
+    >
       <Meta title={t("appearance")} description={t("appearance_description")} />
       <div className="mb-6 flex items-center text-sm">
         <div>
@@ -172,7 +173,9 @@ const AppearanceView = () => {
           defaultValue={user.brandColor}
           render={() => (
             <div>
-              <p className="text-default mb-2 block text-sm font-medium">{t("light_brand_color")}</p>
+              <p className="text-default mb-2 block text-sm font-medium">
+                {t("light_brand_color")}
+              </p>
               <ColorPicker
                 defaultValue={user.brandColor}
                 resetDefaultValue="#292929"
@@ -250,7 +253,9 @@ const AppearanceView = () => {
                   </p>
                   <UpgradeTeamsBadge />
                 </div>
-                <p className="text-default  mt-0.5">{t("removes_cal_branding", { appName: APP_NAME })}</p>
+                <p className="text-default  mt-0.5">
+                  {t("removes_cal_branding", { appName: APP_NAME })}
+                </p>
               </div>
               <div className="flex-none">
                 <Switch
@@ -272,7 +277,8 @@ const AppearanceView = () => {
         loading={mutation.isLoading}
         color="primary"
         className="mt-8"
-        data-testid="update-theme-btn">
+        data-testid="update-theme-btn"
+      >
         {t("update")}
       </Button>
     </Form>

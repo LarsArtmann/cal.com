@@ -56,7 +56,9 @@ type AppPropsWithChildren = AppProps & {
 const getEmbedNamespace = (query: ParsedUrlQuery) => {
   // Mostly embed query param should be available on server. Use that there.
   // Use the most reliable detection on client
-  return typeof window !== "undefined" ? window.getEmbedNamespace() : (query.embed as string) || null;
+  return typeof window !== "undefined"
+    ? window.getEmbedNamespace()
+    : (query.embed as string) || null;
 };
 
 // We dont need to pass nonce to the i18n provider - this was causing x2-x3 re-renders on a hard refresh
@@ -166,16 +168,16 @@ function getThemeProviderProps({
   const themeSupport = isBookingPage
     ? ThemeSupport.Booking
     : // if isThemeSupported is explicitly false, we don't use theme there
-    props.isThemeSupported === false
-    ? ThemeSupport.None
-    : ThemeSupport.App;
+      props.isThemeSupported === false
+      ? ThemeSupport.None
+      : ThemeSupport.App;
 
   const isBookingPageThemeSupportRequired = themeSupport === ThemeSupport.Booking;
   const themeBasis = props.themeBasis;
 
   if ((isBookingPageThemeSupportRequired || isEmbedMode) && !themeBasis) {
     console.warn(
-      "`themeBasis` is required for booking page theme support. Not providing it will cause theme flicker."
+      "`themeBasis` is required for booking page theme support. Not providing it will cause theme flicker.",
     );
   }
 
@@ -195,10 +197,10 @@ function getThemeProviderProps({
       // Even though it's recommended to use different namespaces when you want to theme differently on the same page but if the embeds are on different pages, the problem can still arise
       `embed-theme-${embedNamespace}${appearanceIdSuffix}${embedExplicitlySetThemeSuffix}`
     : themeSupport === ThemeSupport.App
-    ? "app-theme"
-    : isBookingPageThemeSupportRequired
-    ? `booking-theme${appearanceIdSuffix}`
-    : undefined;
+      ? "app-theme"
+      : isBookingPageThemeSupportRequired
+        ? `booking-theme${appearanceIdSuffix}`
+        : undefined;
 
   return {
     storageKey,
@@ -252,7 +254,8 @@ const AppProviders = (props: AppPropsWithChildren) => {
               nonce={props.pageProps.nonce}
               isThemeSupported={props.Component.isThemeSupported}
               isBookingPage={props.Component.isBookingPage || isBookingPage}
-              router={props.router}>
+              router={props.router}
+            >
               <FeatureFlagsProvider>
                 <OrgBrandProvider>
                   <MetaProvider>{props.children}</MetaProvider>

@@ -119,7 +119,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
   if (
     ([BookingStatus.CANCELLED, BookingStatus.REJECTED] as BookingStatus[]).includes(
-      booking.status as BookingStatus
+      booking.status as BookingStatus,
     )
   ) {
     return {
@@ -151,7 +151,7 @@ function hasStringProp<T extends string>(x: unknown, key: T): x is { [key in T]:
 }
 
 function getClientSecretFromPayment(
-  payment: Omit<Partial<Payment>, "data"> & { data: Record<string, unknown> }
+  payment: Omit<Partial<Payment>, "data"> & { data: Record<string, unknown> },
 ) {
   if (
     payment.paymentOption === "HOLD" &&

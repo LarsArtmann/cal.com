@@ -15,19 +15,22 @@ export const webhookProcedure = authedProcedure
     if (!input) return next();
     const { id, teamId, eventTypeId } = input;
 
-    const assertPartOfTeamWithRequiredAccessLevel = (memberships?: Membership[], teamId?: number) => {
+    const assertPartOfTeamWithRequiredAccessLevel = (
+      memberships?: Membership[],
+      teamId?: number,
+    ) => {
       if (!memberships) return false;
       if (teamId) {
         return memberships.some(
           (membership) =>
             membership.teamId === teamId &&
-            (membership.role === MembershipRole.ADMIN || membership.role === MembershipRole.OWNER)
+            (membership.role === MembershipRole.ADMIN || membership.role === MembershipRole.OWNER),
         );
       }
       return memberships.some(
         (membership) =>
           membership.userId === ctx.user.id &&
-          (membership.role === MembershipRole.ADMIN || membership.role === MembershipRole.OWNER)
+          (membership.role === MembershipRole.ADMIN || membership.role === MembershipRole.OWNER),
       );
     };
 
@@ -72,7 +75,8 @@ export const webhookProcedure = authedProcedure
             user.teams.some(
               (membership) =>
                 membership.teamId === webhook.teamId &&
-                (membership.role === MembershipRole.ADMIN || membership.role === MembershipRole.OWNER)
+                (membership.role === MembershipRole.ADMIN ||
+                  membership.role === MembershipRole.OWNER),
             );
 
           if (!userHasAdminOwnerPermissionInTeam) {

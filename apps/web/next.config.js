@@ -35,7 +35,7 @@ if (
   (process.env.CALCOM_ENV === "production" || process.env.NODE_ENV === "production")
 ) {
   throw new Error(
-    "Strict CSP policy(for style-src) is not yet supported in production. You can experiment with it in Dev Mode"
+    "Strict CSP policy(for style-src) is not yet supported in production. You can experiment with it in Dev Mode",
   );
 }
 
@@ -43,7 +43,7 @@ if (!process.env.EMAIL_FROM) {
   console.warn(
     "\x1b[33mwarn",
     "\x1b[0m",
-    "EMAIL_FROM environment variable is not set, this may indicate mailing is currently disabled. Please refer to the .env.example file."
+    "EMAIL_FROM environment variable is not set, this may indicate mailing is currently disabled. Please refer to the .env.example file.",
   );
 }
 
@@ -65,7 +65,7 @@ if (process.env.GOOGLE_API_CREDENTIALS && !validJson(process.env.GOOGLE_API_CRED
   console.warn(
     "\x1b[33mwarn",
     "\x1b[0m",
-    '- Disabled \'Google Calendar\' integration. Reason: Invalid value for GOOGLE_API_CREDENTIALS environment variable. When set, this value needs to contain valid JSON like {"web":{"client_id":"<clid>","client_secret":"<secret>","redirect_uris":["<yourhost>/api/integrations/googlecalendar/callback>"]}. You can download this JSON from your OAuth Client @ https://console.cloud.google.com/apis/credentials.'
+    '- Disabled \'Google Calendar\' integration. Reason: Invalid value for GOOGLE_API_CREDENTIALS environment variable. When set, this value needs to contain valid JSON like {"web":{"client_id":"<clid>","client_secret":"<secret>","redirect_uris":["<yourhost>/api/integrations/googlecalendar/callback>"]}. You can download this JSON from your OAuth Client @ https://console.cloud.google.com/apis/credentials.',
   );
 }
 
@@ -202,10 +202,12 @@ const nextConfig = {
             },
           },
         ],
-      })
+      }),
     );
 
-    config.plugins.push(new webpack.DefinePlugin({ "process.env.BUILD_ID": JSON.stringify(buildId) }));
+    config.plugins.push(
+      new webpack.DefinePlugin({ "process.env.BUILD_ID": JSON.stringify(buildId) }),
+    );
 
     config.resolve.fallback = {
       ...config.resolve.fallback, // if you miss it, all the other options in fallback, specified
@@ -225,26 +227,26 @@ const nextConfig = {
     return config;
   },
   async rewrites() {
-    const beforeFiles = (isOrganizationsEnabled
-        ? [
-            {
-              ...matcherConfigRootPath,
-              destination: "/team/:orgSlug",
-            },
-            {
-              ...matcherConfigUserRoute,
-              destination: "/org/:orgSlug/:user",
-            },
-            {
-              ...matcherConfigUserTypeRoute,
-              destination: "/org/:orgSlug/:user/:type",
-            },
-            {
-              ...matcherConfigUserTypeEmbedRoute,
-              destination: "/org/:orgSlug/:user/:type/embed",
-            },
-          ]
-        : []);
+    const beforeFiles = isOrganizationsEnabled
+      ? [
+          {
+            ...matcherConfigRootPath,
+            destination: "/team/:orgSlug",
+          },
+          {
+            ...matcherConfigUserRoute,
+            destination: "/org/:orgSlug/:user",
+          },
+          {
+            ...matcherConfigUserTypeRoute,
+            destination: "/org/:orgSlug/:user/:type",
+          },
+          {
+            ...matcherConfigUserTypeEmbedRoute,
+            destination: "/org/:orgSlug/:user/:type/embed",
+          },
+        ]
+      : [];
 
     let afterFiles = [
       {
@@ -446,7 +448,8 @@ const nextConfig = {
       },
       {
         source: "/booking/direct/:action/:email/:bookingUid/:oldToken",
-        destination: "/api/link?action=:action&email=:email&bookingUid=:bookingUid&oldToken=:oldToken",
+        destination:
+          "/api/link?action=:action&email=:email&bookingUid=:bookingUid&oldToken=:oldToken",
         permanent: true,
       },
       {
@@ -510,7 +513,7 @@ const nextConfig = {
           source: "/apps/jitsi_video",
           destination: "/apps/jitsi",
           permanent: true,
-        }
+        },
       );
     }
 

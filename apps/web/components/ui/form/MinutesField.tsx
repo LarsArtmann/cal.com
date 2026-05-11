@@ -11,7 +11,10 @@ const MinutesField = forwardRef<HTMLInputElement, Props>(({ label, ...rest }, re
     <div className="block sm:flex">
       {!!label && (
         <div className="min-w-48 mb-4 sm:mb-0">
-          <label htmlFor={rest.id} className="text-default flex h-full items-center text-sm font-medium">
+          <label
+            htmlFor={rest.id}
+            className="text-default flex h-full items-center text-sm font-medium"
+          >
             {label}
           </label>
         </div>
@@ -24,7 +27,7 @@ const MinutesField = forwardRef<HTMLInputElement, Props>(({ label, ...rest }, re
             type="number"
             className={classNames(
               "border-default block w-full rounded-sm pl-2 pr-12 text-sm",
-              rest.className
+              rest.className,
             )}
           />
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">

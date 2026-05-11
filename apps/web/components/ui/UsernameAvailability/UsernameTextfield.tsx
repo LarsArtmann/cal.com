@@ -23,7 +23,9 @@ interface ICustomUsernameProps {
   onErrorMutation?: (error: TRPCClientErrorLike<AppRouter>) => void;
 }
 
-const UsernameTextfield = (props: ICustomUsernameProps & Partial<React.ComponentProps<typeof TextField>>) => {
+const UsernameTextfield = (
+  props: ICustomUsernameProps & Partial<React.ComponentProps<typeof TextField>>,
+) => {
   const { t } = useLocale();
   const { update } = useSession();
 
@@ -48,7 +50,7 @@ const UsernameTextfield = (props: ICustomUsernameProps & Partial<React.Component
         setMarkAsError(!data.available);
         setUsernameIsAvailable(data.available);
       }, 150),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -84,7 +86,8 @@ const UsernameTextfield = (props: ICustomUsernameProps & Partial<React.Component
         <Button
           type="button"
           onClick={() => setOpenDialogSaveUsername(true)}
-          data-testid="update-username-btn">
+          data-testid="update-username-btn"
+        >
           {t("update")}
         </Button>
         <Button
@@ -94,7 +97,8 @@ const UsernameTextfield = (props: ICustomUsernameProps & Partial<React.Component
             if (currentUsername) {
               setInputUsernameValue(currentUsername);
             }
-          }}>
+          }}
+        >
           {t("cancel")}
         </Button>
       </div>
@@ -124,7 +128,7 @@ const UsernameTextfield = (props: ICustomUsernameProps & Partial<React.Component
               "mb-0 mt-0 rounded-md rounded-l-none",
               markAsError
                 ? "focus:shadow-0 focus:ring-shadow-0 border-red-500 focus:border-red-500 focus:outline-none focus:ring-0"
-                : ""
+                : "",
             )}
             onChange={(event) => {
               event.preventDefault();
@@ -153,7 +157,11 @@ const UsernameTextfield = (props: ICustomUsernameProps & Partial<React.Component
         </div>
       )}
       <Dialog open={openDialogSaveUsername}>
-        <DialogContent type="confirmation" Icon={Edit2} title={t("confirm_username_change_dialog_title")}>
+        <DialogContent
+          type="confirmation"
+          Icon={Edit2}
+          title={t("confirm_username_change_dialog_title")}
+        >
           <div className="flex flex-row">
             <div className="mb-4 w-full pt-1">
               <div className="bg-subtle flex w-full flex-wrap gap-6 rounded-sm px-2 py-3 text-sm">
@@ -178,7 +186,8 @@ const UsernameTextfield = (props: ICustomUsernameProps & Partial<React.Component
               type="button"
               loading={updateUsernameMutation.isLoading}
               data-testid="save-username"
-              onClick={updateUsername}>
+              onClick={updateUsername}
+            >
               {t("save")}
             </Button>
 

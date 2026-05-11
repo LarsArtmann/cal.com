@@ -3,7 +3,10 @@ import { mockReset, mockDeep } from "vitest-mock-extended";
 
 import type * as reminderScheduler from "@calcom/features/ee/workflows/lib/reminders/reminderScheduler";
 
-vi.mock("@calcom/features/ee/workflows/lib/reminders/reminderScheduler", () => reminderSchedulerMock);
+vi.mock(
+  "@calcom/features/ee/workflows/lib/reminders/reminderScheduler",
+  () => reminderSchedulerMock,
+);
 
 beforeEach(() => {
   mockReset(reminderSchedulerMock);

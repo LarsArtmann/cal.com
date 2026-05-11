@@ -21,7 +21,10 @@ interface IUserToValue {
   email: string;
 }
 
-const mapUserToValue = ({ id, name, username, avatar, email }: IUserToValue, pendingString: string) => ({
+const mapUserToValue = (
+  { id, name, username, avatar, email }: IUserToValue,
+  pendingString: string,
+) => ({
   value: `${id || ""}`,
   label: `${name || email || ""}${!username ? ` (${pendingString})` : ""}`,
   avatar,
@@ -31,7 +34,7 @@ const mapUserToValue = ({ id, name, username, avatar, email }: IUserToValue, pen
 export const mapMemberToChildrenOption = (
   member: EventTypeSetupProps["teamMembers"][number],
   slug: string,
-  pendingString: string
+  pendingString: string,
 ) => {
   return {
     slug,
@@ -50,7 +53,10 @@ export const mapMemberToChildrenOption = (
   };
 };
 
-const sortByLabel = (a: ReturnType<typeof mapUserToValue>, b: ReturnType<typeof mapUserToValue>) => {
+const sortByLabel = (
+  a: ReturnType<typeof mapUserToValue>,
+  b: ReturnType<typeof mapUserToValue>,
+) => {
   if (a.label < b.label) {
     return -1;
   }
@@ -81,11 +87,13 @@ const ChildrenEventTypesList = ({
               onChange(
                 options.map((option) => ({
                   ...option,
-                }))
+                })),
               );
           }}
           value={value}
-          options={options.filter((opt) => !value.find((val) => val.owner.id.toString() === opt.value))}
+          options={options.filter(
+            (opt) => !value.find((val) => val.owner.id.toString() === opt.value),
+          )}
           controlShouldRenderValue={false}
           {...rest}
         />
@@ -117,14 +125,16 @@ const CheckedHostField = ({
       <div>
         <Label>{labelText}</Label>
         <CheckedTeamSelect
-          isOptionDisabled={(option) => !!value.find((host) => host.userId.toString() === option.value)}
+          isOptionDisabled={(option) =>
+            !!value.find((host) => host.userId.toString() === option.value)
+          }
           onChange={(options) => {
             onChange &&
               onChange(
                 options.map((option) => ({
                   isFixed,
                   userId: parseInt(option.value, 10),
-                }))
+                })),
               );
           }}
           value={(value || [])
@@ -132,7 +142,7 @@ const CheckedHostField = ({
             .map(
               (host) =>
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                options.find((member) => member.value === host.userId.toString())!
+                options.find((member) => member.value === host.userId.toString())!,
             )
             .filter(Boolean)}
           controlShouldRenderValue={false}
@@ -152,7 +162,8 @@ const FixedHostHelper = (
     <Link
       className="underline underline-offset-2"
       target="_blank"
-      href="https://cal.com/docs/enterprise-features/teams/round-robin-scheduling#fixed-hosts">
+      href="https://cal.com/docs/enterprise-features/teams/round-robin-scheduling#fixed-hosts"
+    >
       Learn more
     </Link>
   </Trans>
@@ -188,7 +199,9 @@ const RoundRobinHosts = ({
       />
       <CheckedHostField
         options={teamMembers.sort(sortByLabel)}
-        onChange={(changeValue) => onChange([...value.filter(({ isFixed }) => isFixed), ...changeValue])}
+        onChange={(changeValue) =>
+          onChange([...value.filter(({ isFixed }) => isFixed), ...changeValue])
+        }
         value={value}
         isFixed={false}
         placeholder={t("add_attendees")}
@@ -208,7 +221,11 @@ const ChildrenEventTypes = ({
     <Controller<FormValues>
       name="children"
       render={({ field: { onChange, value } }) => (
-        <ChildrenEventTypesList value={value} options={childrenEventTypeOptions} onChange={onChange} />
+        <ChildrenEventTypesList
+          value={value}
+          options={childrenEventTypeOptions}
+          onChange={onChange}
+        />
       )}
     />
   );
@@ -248,7 +265,8 @@ const Hosts = ({
       return;
     }
     resetField("hosts", {
-      defaultValue: initialValue.current.schedulingType === schedulingType ? initialValue.current.hosts : [],
+      defaultValue:
+        initialValue.current.schedulingType === schedulingType ? initialValue.current.hosts : [],
     });
   }, [schedulingType, resetField, getValues, submitCount]);
 

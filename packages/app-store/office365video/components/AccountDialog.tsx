@@ -11,7 +11,8 @@ export function AccountDialog(props: DialogProps) {
       <DialogContent
         type="creation"
         title="Connecting with MS Teams requires a work/school Microsoft account."
-        description="If you continue with a personal account you will receive an error">
+        description="If you continue with a personal account you will receive an error"
+      >
         <DialogFooter showDivider className="mt-6">
           <>
             <DialogClose
@@ -20,7 +21,8 @@ export function AccountDialog(props: DialogProps) {
               tabIndex={-1}
               onClick={() => {
                 props.onOpenChange?.(false);
-              }}>
+              }}
+            >
               Cancel
             </DialogClose>
 

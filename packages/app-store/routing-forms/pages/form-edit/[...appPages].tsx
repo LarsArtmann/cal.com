@@ -142,7 +142,7 @@ function Field({
       updatedOptions
         .filter((opt) => opt.value)
         .map((opt) => opt.value)
-        .join("\n")
+        .join("\n"),
     );
   };
 
@@ -159,15 +159,19 @@ function Field({
   return (
     <div
       data-testid="field"
-      className="bg-default group mb-4 flex w-full items-center justify-between ltr:mr-2 rtl:ml-2">
+      className="bg-default group mb-4 flex w-full items-center justify-between ltr:mr-2 rtl:ml-2"
+    >
       <FormCard
         label="Field"
         moveUp={moveUp}
         moveDown={moveDown}
         badge={
-          router ? { text: router.name, variant: "gray", href: `${appUrl}/form-edit/${router.id}` } : null
+          router
+            ? { text: router.name, variant: "gray", href: `${appUrl}/form-edit/${router.id}` }
+            : null
         }
-        deleteField={router ? null : deleteField}>
+        deleteField={router ? null : deleteField}
+      >
         <div className="w-full">
           <div className="mb-6 w-full">
             <TextField
@@ -258,7 +262,8 @@ function Field({
                       <button
                         type="button"
                         onClick={() => handleRemoveOptions(index)}
-                        aria-label={t("remove")}>
+                        aria-label={t("remove")}
+                      >
                         <X className="h-4 w-4" />
                       </button>
                     }
@@ -272,7 +277,8 @@ function Field({
                   type="button"
                   StartIcon={Plus}
                   color="secondary"
-                  onClick={handleAddOptions}>
+                  onClick={handleAddOptions}
+                >
                   Add an option
                 </Button>
               </div>
@@ -386,7 +392,8 @@ const FormEdit = ({
               type="button"
               StartIcon={Plus}
               color="secondary"
-              onClick={addField}>
+              onClick={addField}
+            >
               Add field
             </Button>
           </div>

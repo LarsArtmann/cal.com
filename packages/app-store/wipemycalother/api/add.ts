@@ -42,5 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(500);
   }
 
-  return res.status(200).json({ url: getInstalledAppPath({ variant: "other", slug: "wipe-my-cal" }) });
+  return res
+    .status(200)
+    .json({ url: getInstalledAppPath({ variant: "other", slug: "wipe-my-cal" }) });
 }

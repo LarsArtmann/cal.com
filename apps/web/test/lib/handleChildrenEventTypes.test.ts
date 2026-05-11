@@ -97,12 +97,19 @@ describe("handleChildrenEventTypes", () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       // eslint-disable-next-line
-      const { schedulingType, id, teamId, timeZone, users, requiresBookerEmailVerification, ...evType } =
-        mockFindFirstEventType({
-          id: 123,
-          metadata: { managedEventConfig: {} },
-          locations: [],
-        });
+      const {
+        schedulingType,
+        id,
+        teamId,
+        timeZone,
+        users,
+        requiresBookerEmailVerification,
+        ...evType
+      } = mockFindFirstEventType({
+        id: 123,
+        metadata: { managedEventConfig: {} },
+        locations: [],
+      });
       const result = await updateChildrenEventTypes({
         eventTypeId: 1,
         oldEventType: { children: [], team: { name: "" } },
@@ -229,17 +236,26 @@ describe("handleChildrenEventTypes", () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       // eslint-disable-next-line
-      const { schedulingType, id, teamId, timeZone, users, requiresBookerEmailVerification, ...evType } =
-        mockFindFirstEventType({
-          id: 123,
-          metadata: { managedEventConfig: {} },
-          locations: [],
-        });
+      const {
+        schedulingType,
+        id,
+        teamId,
+        timeZone,
+        users,
+        requiresBookerEmailVerification,
+        ...evType
+      } = mockFindFirstEventType({
+        id: 123,
+        metadata: { managedEventConfig: {} },
+        locations: [],
+      });
       prismaMock.eventType.deleteMany.mockResolvedValue([123] as unknown as Prisma.BatchPayload);
       const result = await updateChildrenEventTypes({
         eventTypeId: 1,
         oldEventType: { children: [], team: { name: "" } },
-        children: [{ hidden: false, owner: { id: 4, name: "", email: "", eventTypeSlugs: ["something"] } }],
+        children: [
+          { hidden: false, owner: { id: 4, name: "", email: "", eventTypeSlugs: ["something"] } },
+        ],
         updatedEventType: { schedulingType: "MANAGED", slug: "something" },
         currentUserId: 1,
         hashedLink: undefined,
@@ -285,7 +301,9 @@ describe("handleChildrenEventTypes", () => {
       const result = await updateChildrenEventTypes({
         eventTypeId: 1,
         oldEventType: { children: [{ userId: 4 }], team: { name: "" } },
-        children: [{ hidden: false, owner: { id: 4, name: "", email: "", eventTypeSlugs: ["something"] } }],
+        children: [
+          { hidden: false, owner: { id: 4, name: "", email: "", eventTypeSlugs: ["something"] } },
+        ],
         updatedEventType: { schedulingType: "MANAGED", slug: "something" },
         currentUserId: 1,
         hashedLink: undefined,

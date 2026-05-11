@@ -35,7 +35,7 @@ export interface InstallAppButtonProps {
       /** Tells that the default render component should be used */
       useDefaultComponent?: boolean;
       isLoading?: boolean;
-    }
+    },
   ) => JSX.Element;
   onChanged?: () => unknown;
   disableInstall?: boolean;
@@ -44,7 +44,14 @@ export type EventTypeAppCardComponentProps = {
   // Limit what data should be accessible to apps
   eventType: Pick<
     z.infer<typeof EventTypeModel>,
-    "id" | "title" | "description" | "teamId" | "length" | "recurringEvent" | "seatsPerTimeSlot" | "team"
+    | "id"
+    | "title"
+    | "description"
+    | "teamId"
+    | "length"
+    | "recurringEvent"
+    | "seatsPerTimeSlot"
+    | "team"
   > & {
     URL: string;
   };

@@ -19,7 +19,7 @@ export default function RecurringEventController({
 }: RecurringEventControllerProps) {
   const { t } = useLocale();
   const [recurringEventState, setRecurringEventState] = useState<RecurringEvent | null>(
-    eventType.recurringEvent
+    eventType.recurringEvent,
   );
   const formMethods = useFormContext<FormValues>();
 
@@ -34,7 +34,7 @@ export default function RecurringEventController({
   const { shouldLockDisableProps } = useLockedFieldsManager(
     eventType,
     t("locked_fields_admin_description"),
-    t("locked_fields_member_description")
+    t("locked_fields_member_description"),
   );
 
   const recurringLocked = shouldLockDisableProps("recurringEvent");
@@ -65,7 +65,8 @@ export default function RecurringEventController({
                   formMethods.setValue("recurringEvent", newVal);
                   setRecurringEventState(newVal);
                 }
-              }}>
+              }}
+            >
               {recurringEventState && (
                 <div data-testid="recurring-event-collapsible" className="text-sm">
                   <div className="flex items-center">

@@ -12,7 +12,7 @@ import prisma from "@calcom/prisma";
  */
 export const deleteAllBookingsByEmail = async (
   email: string,
-  whereConditional: Prisma.BookingWhereInput = {}
+  whereConditional: Prisma.BookingWhereInput = {},
 ) =>
   prisma.booking.deleteMany({
     where: {

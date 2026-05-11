@@ -74,7 +74,9 @@ export default class SalesforceCalendarService implements Calendar {
     const conn = await this.conn;
     const createdContacts = await Promise.all(
       attendees.map(async (attendee) => {
-        const [FirstName, LastName] = attendee.name ? attendee.name.split(" ") : [attendee.email, ""];
+        const [FirstName, LastName] = attendee.name
+          ? attendee.name.split(" ")
+          : [attendee.email, ""];
         return await conn
           .sobject("Contact")
           .create({
@@ -87,10 +89,10 @@ export default class SalesforceCalendarService implements Calendar {
               return { Id: result.id, Email: attendee.email };
             }
           });
-      })
+      }),
     );
     return createdContacts.filter(
-      (contact): contact is Omit<ContactSearchResult, "attributes"> => contact !== undefined
+      (contact): contact is Omit<ContactSearchResult, "attributes"> => contact !== undefined,
     );
   };
 
@@ -98,7 +100,7 @@ export default class SalesforceCalendarService implements Calendar {
     const conn = await this.conn;
     const search: ContactSearchResult[] = await conn.sobject("Contact").find(
       event.attendees.map((att) => ({ Email: att.email })),
-      ["Id", "Email"]
+      ["Id", "Email"],
     );
     return search;
   };
@@ -113,7 +115,7 @@ export default class SalesforceCalendarService implements Calendar {
 
   private salesforceCreateEventApiCall = async (
     event: CalendarEvent,
-    options: { [key: string]: unknown }
+    options: { [key: string]: unknown },
   ) => {
     const conn = await this.conn;
     return await conn.sobject("Event").create({
@@ -132,7 +134,7 @@ export default class SalesforceCalendarService implements Calendar {
 
   private salesforceCreateEvent = async (
     event: CalendarEvent,
-    contacts: Omit<ContactSearchResult, "attributes">[]
+    contacts: Omit<ContactSearchResult, "attributes">[],
   ) => {
     const createdEvent = await this.salesforceCreateEventApiCall(event, {
       EventWhoIds: contacts.map((contact) => contact.Id),
@@ -141,7 +143,7 @@ export default class SalesforceCalendarService implements Calendar {
         this.calWarnings.push(
           `Please enable option "Allow Users to Relate Multiple Contacts to Tasks and Events" under
            "Setup > Feature Settings > Sales > Activity Settings" to be able to create events with
-           multiple contact attendees.`
+           multiple contact attendees.`,
         );
         // User has not configured "Allow Users to Relate Multiple Contacts to Tasks and Events"
         // proceeding to create the event using just the first attendee as the primary WhoId
@@ -176,7 +178,10 @@ export default class SalesforceCalendarService implements Calendar {
     return await conn.sobject("Event").delete(uid);
   };
 
-  async handleEventCreation(event: CalendarEvent, contacts: Omit<ContactSearchResult, "attributes">[]) {
+  async handleEventCreation(
+    event: CalendarEvent,
+    contacts: Omit<ContactSearchResult, "attributes">[],
+  ) {
     const sfEvent = await this.salesforceCreateEvent(event, contacts);
     if (sfEvent.success) {
       this.log.debug("event:creation:ok", { sfEvent });
@@ -210,7 +215,7 @@ export default class SalesforceCalendarService implements Calendar {
         this.log.debug("contact:filter:existing", { existingContacts });
         // Get non existing contacts filtering out existing from attendees
         const nonExistingContacts = event.attendees.filter(
-          (attendee) => !existingContacts.includes(attendee.email)
+          (attendee) => !existingContacts.includes(attendee.email),
         );
         this.log.debug("contact:filter:nonExisting", { nonExistingContacts });
         // Only create contacts in Salesforce that were not present in the previous contact search
@@ -251,7 +256,9 @@ export default class SalesforceCalendarService implements Calendar {
         additionalInfo: { calWarnings: this.calWarnings },
       });
     } else {
-      return Promise.reject({ calError: "Something went wrong when updating the event in Salesforce" });
+      return Promise.reject({
+        calError: "Something went wrong when updating the event in Salesforce",
+      });
     }
   }
 
@@ -264,7 +271,11 @@ export default class SalesforceCalendarService implements Calendar {
     }
   }
 
-  async getAvailability(_dateFrom: string, _dateTo: string, _selectedCalendars: IntegrationCalendar[]) {
+  async getAvailability(
+    _dateFrom: string,
+    _dateTo: string,
+    _selectedCalendars: IntegrationCalendar[],
+  ) {
     return Promise.resolve([]);
   }
 

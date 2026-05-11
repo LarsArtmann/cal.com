@@ -78,7 +78,7 @@ export const createTeamsHandler = async ({ ctx, input }: CreateTeamsOptions) => 
     .concat(userSlugs.flatMap((us) => us.username ?? []));
 
   const duplicatedSlugs = existingSlugs.filter((slug) =>
-    teamNames.map((item) => slugify(item)).includes(slug)
+    teamNames.map((item) => slugify(item)).includes(slug),
   );
 
   if (duplicatedSlugs.length === teamNames.length) {
@@ -100,7 +100,7 @@ export const createTeamsHandler = async ({ ctx, input }: CreateTeamsOptions) => 
       } else {
         return [];
       }
-    })
+    }),
   );
 
   return { duplicatedSlugs };

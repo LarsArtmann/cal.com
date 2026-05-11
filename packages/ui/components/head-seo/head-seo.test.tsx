@@ -9,7 +9,9 @@ import HeadSeo from "./HeadSeo";
 vi.mock("next-seo", () => {
   return {
     NextSeo: (props: NextSeoProps) => {
-      const { images, ...restOpenGraph } = props.openGraph as OpenGraph & { images: Array<{ url: string }> };
+      const { images, ...restOpenGraph } = props.openGraph as OpenGraph & {
+        images: Array<{ url: string }>;
+      };
       const mockedProps = {
         ...restOpenGraph,
         canonical: props.canonical,
@@ -81,7 +83,9 @@ describe("Tests for HeadSeo component", () => {
   });
 
   test("Should render with meeting props", async () => {
-    const { container } = render(<HeadSeo {...basicProps} meeting={{} as HeadSeoProps["meeting"]} />);
+    const { container } = render(
+      <HeadSeo {...basicProps} meeting={{} as HeadSeoProps["meeting"]} />,
+    );
     await waitFor(async () => {
       const titleEl = container.querySelector("title");
       expect(titleEl?.getAttribute("image")).toContain("constructMeetingImage");

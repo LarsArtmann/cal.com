@@ -11,7 +11,7 @@ export const enum ENTITY_PERMISSION_LEVEL {
 
 export function canEditEntity(
   entity: Parameters<typeof getEntityPermissionLevel>[0],
-  userId: Parameters<typeof getEntityPermissionLevel>[1]
+  userId: Parameters<typeof getEntityPermissionLevel>[1],
 ) {
   const permissionLevel = getEntityPermissionLevel(entity, userId);
   return (
@@ -29,7 +29,7 @@ export function getEntityPermissionLevel(
     userId: number | null;
     team: { members: Membership[] } | null;
   },
-  userId: number
+  userId: number,
 ) {
   if (entity.team) {
     const roleForTeamMember = entity.team.members.find((member) => member.userId === userId)?.role;

@@ -8,7 +8,9 @@ import type { zodRouterRouteView, zodNonRouterRoute, zodFieldsView, zodRoutesVie
 
 export type RoutingForm = SerializableForm<App_RoutingForms_Form>;
 
-export type QueryBuilderUpdatedConfig = typeof QueryBuilderInitialConfig & { fields: Config["fields"] };
+export type QueryBuilderUpdatedConfig = typeof QueryBuilderInitialConfig & {
+  fields: Config["fields"];
+};
 
 export type Response = Record<
   // Field ID

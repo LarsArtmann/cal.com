@@ -77,6 +77,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const state = decodeOAuthState(req);
   return res.redirect(
     getSafeRedirectUrl(state?.returnTo) ??
-      getInstalledAppPath({ variant: "calendar", slug: "office365-calendar" })
+      getInstalledAppPath({ variant: "calendar", slug: "office365-calendar" }),
   );
 }

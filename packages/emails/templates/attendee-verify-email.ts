@@ -44,7 +44,7 @@ ${this.verifyAccountInput.language("verify_email_by_code_email_body")}
 ${this.verifyAccountInput.verificationEmailCode}
 ${this.verifyAccountInput.language("happy_scheduling")} ${this.verifyAccountInput.language(
       "the_calcom_team",
-      { companyName: COMPANY_NAME }
+      { companyName: COMPANY_NAME },
     )}
 `.replace(/(<([^>]+)>)/gi, "");
   }

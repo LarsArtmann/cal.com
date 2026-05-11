@@ -6,7 +6,7 @@ export const NoShowFeeChargedEmail = (
   props: {
     calEvent: CalendarEvent;
     attendee: Person;
-  } & Partial<React.ComponentProps<typeof BaseScheduledEmail>>
+  } & Partial<React.ComponentProps<typeof BaseScheduledEmail>>,
 ) => {
   const { calEvent } = props;
   const t = props.attendee.language.translate;

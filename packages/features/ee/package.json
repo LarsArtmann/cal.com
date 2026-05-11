@@ -1,8 +1,8 @@
 {
   "name": "@calcom/ee",
-  "description": "Cal.com Commercial License features",
   "version": "0.0.0",
   "private": true,
+  "description": "Cal.com Commercial License features",
   "license": "See license in LICENSE",
   "main": "./index.ts",
   "dependencies": {
@@ -12,9 +12,9 @@
     "@hookform/resolvers": "^5.2.2",
     "@sendgrid/client": "^8.1.6",
     "@sendgrid/mail": "^8.1.6",
-    "libphonenumber-js": "^1.12.42",
-    "twilio": "^6.0.0",
-    "zod": "^4.4.1"
+    "libphonenumber-js": "^1.13.0",
+    "twilio": "^6.0.2",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@calcom/tsconfig": "*"

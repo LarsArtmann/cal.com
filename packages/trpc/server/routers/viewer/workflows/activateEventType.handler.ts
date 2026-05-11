@@ -59,7 +59,10 @@ export const activateEventTypeHandler = async ({ ctx, input }: ActivateEventType
   });
 
   if (!userEventType)
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "Not authorized to edit this event type" });
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "Not authorized to edit this event type",
+    });
 
   // Check that the workflow belongs to the user or team
   const eventTypeWorkflow = await prisma.workflow.findFirst({
@@ -185,7 +188,10 @@ export const activateEventTypeHandler = async ({ ctx, input }: ActivateEventType
         },
       };
       for (const step of eventTypeWorkflow.steps) {
-        if (step.action === WorkflowActions.EMAIL_ATTENDEE || step.action === WorkflowActions.EMAIL_HOST) {
+        if (
+          step.action === WorkflowActions.EMAIL_ATTENDEE ||
+          step.action === WorkflowActions.EMAIL_HOST
+        ) {
           let sendTo: string[] = [];
 
           switch (step.action) {
@@ -210,7 +216,7 @@ export const activateEventTypeHandler = async ({ ctx, input }: ActivateEventType
             step.reminderBody || "",
             step.id,
             step.template,
-            step.sender || SENDER_NAME
+            step.sender || SENDER_NAME,
           );
         } else if (step.action === WorkflowActions.SMS_NUMBER && step.sendTo) {
           await scheduleSMSReminder(
@@ -227,7 +233,7 @@ export const activateEventTypeHandler = async ({ ctx, input }: ActivateEventType
             step.template,
             step.sender || SENDER_ID,
             booking.userId,
-            eventTypeWorkflow.teamId
+            eventTypeWorkflow.teamId,
           );
         } else if (step.action === WorkflowActions.WHATSAPP_NUMBER && step.sendTo) {
           await scheduleWhatsappReminder(
@@ -243,7 +249,7 @@ export const activateEventTypeHandler = async ({ ctx, input }: ActivateEventType
             step.id,
             step.template,
             booking.userId,
-            eventTypeWorkflow.teamId
+            eventTypeWorkflow.teamId,
           );
         }
       }

@@ -21,14 +21,18 @@ export default function MeetingUnavailable(props: inferSSRProps<typeof getServer
         <div className="fixed inset-0 z-50 overflow-y-auto">
           <div className="flex min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
             <div className="fixed inset-0 my-4 transition-opacity sm:my-0" aria-hidden="true">
-              <span className="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">
+              <span
+                className="hidden sm:inline-block sm:h-screen sm:align-middle"
+                aria-hidden="true"
+              >
                 &#8203;
               </span>
               <div
                 className="bg-default inline-block transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
                 role="dialog"
                 aria-modal="true"
-                aria-labelledby="modal-headline">
+                aria-labelledby="modal-headline"
+              >
                 <div>
                   <div className="bg-error mx-auto flex h-12 w-12 items-center justify-center rounded-full">
                     <X className="h-6 w-6 text-red-600" />
@@ -44,7 +48,9 @@ export default function MeetingUnavailable(props: inferSSRProps<typeof getServer
                     </h2>
                     <p className="text-subtle text-center">
                       <Calendar className="-mt-1 mr-1 inline-block h-4 w-4" />
-                      {dayjs(props.booking.startTime).format(detectBrowserTimeFormat + ", dddd DD MMMM YYYY")}
+                      {dayjs(props.booking.startTime).format(
+                        detectBrowserTimeFormat + ", dddd DD MMMM YYYY",
+                      )}
                     </p>
                   </div>
                 </div>

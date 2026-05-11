@@ -44,7 +44,10 @@ export function getAvatarUrlFromUser(user: {
 }
 
 /** @see https://www.prisma.io/docs/concepts/components/prisma-client/excluding-fields#excluding-the-password-field */
-function exclude<UserType, Key extends keyof UserType>(user: UserType, keys: Key[]): Omit<UserType, Key> {
+function exclude<UserType, Key extends keyof UserType>(
+  user: UserType,
+  keys: Key[],
+): Omit<UserType, Key> {
   for (const key of keys) {
     delete user[key];
   }
@@ -54,22 +57,25 @@ function exclude<UserType, Key extends keyof UserType>(user: UserType, keys: Key
 /** Reusable logic that checks for admin permissions and if the requested user exists */
 //const authedAdminWithUserMiddleware = middleware();
 
-const authedAdminProcedureWithRequestedUser = authedAdminProcedure.use(async ({ ctx, next, rawInput }) => {
-  const { prisma } = ctx;
-  const parsed = userIdSchema.safeParse(rawInput);
-  if (!parsed.success) throw new TRPCError({ code: "BAD_REQUEST", message: "User id is required" });
-  const { userId: id } = parsed.data;
-  const user = await prisma.user.findUnique({ where: { id } });
-  if (!user) throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
-  return next({
-    ctx: {
-      user: ctx.user,
-      requestedUser:
-        /** Don't leak the password */
-        exclude(user, ["password"]),
-    },
-  });
-});
+const authedAdminProcedureWithRequestedUser = authedAdminProcedure.use(
+  async ({ ctx, next, rawInput }) => {
+    const { prisma } = ctx;
+    const parsed = userIdSchema.safeParse(rawInput);
+    if (!parsed.success)
+      throw new TRPCError({ code: "BAD_REQUEST", message: "User id is required" });
+    const { userId: id } = parsed.data;
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+    return next({
+      ctx: {
+        user: ctx.user,
+        requestedUser:
+          /** Don't leak the password */
+          exclude(user, ["password"]),
+      },
+    });
+  },
+);
 
 export const userAdminRouter = router({
   get: authedAdminProcedureWithRequestedUser.input(userIdSchema).query(async ({ ctx }) => {

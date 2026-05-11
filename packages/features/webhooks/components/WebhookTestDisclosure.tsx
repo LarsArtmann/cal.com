@@ -27,7 +27,8 @@ export default function WebhookTestDisclosure() {
           color="secondary"
           disabled={mutation.isLoading || !subscriberUrl}
           StartIcon={Activity}
-          onClick={() => mutation.mutate({ url: subscriberUrl, type: "PING", payloadTemplate })}>
+          onClick={() => mutation.mutate({ url: subscriberUrl, type: "PING", payloadTemplate })}
+        >
           {t("ping_test")}
         </Button>
       </div>
@@ -47,7 +48,9 @@ export default function WebhookTestDisclosure() {
         <div className="text-inverted bg-inverted rounded-b-md p-4 font-mono text-[13px] leading-4">
           {!mutation.data && <p>{t("no_data_yet")}</p>}
           {mutation.status === "success" && (
-            <div className="text-inverted overflow-x-auto">{JSON.stringify(mutation.data, null, 4)}</div>
+            <div className="text-inverted overflow-x-auto">
+              {JSON.stringify(mutation.data, null, 4)}
+            </div>
           )}
         </div>
       </div>

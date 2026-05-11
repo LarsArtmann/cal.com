@@ -35,13 +35,13 @@ export const importHandler = async <
   T extends {
     // eslint-disable-next-line @typescript-eslint/ban-types
     default: Function;
-  }
+  },
 >(
   /**
    * The name of the handler in cache. It has to be unique across all routes
    */
   name: string,
-  importer: () => Promise<T>
+  importer: () => Promise<T>,
 ) => {
   const nameInCache = name as keyof typeof UNSTABLE_HANDLER_CACHE;
 

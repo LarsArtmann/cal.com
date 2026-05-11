@@ -1,7 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 
-import { getSlugOrRequestedSlug, orgDomainConfig } from "@calcom/features/ee/organizations/lib/orgDomains";
+import {
+  getSlugOrRequestedSlug,
+  orgDomainConfig,
+} from "@calcom/features/ee/organizations/lib/orgDomains";
 import { AVATAR_FALLBACK } from "@calcom/lib/constants";
 import { getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
 import prisma from "@calcom/prisma";
@@ -30,8 +33,8 @@ async function getIdentityData(req: NextApiRequest) {
         id: orgId,
       }
     : org
-    ? getSlugOrRequestedSlug(org)
-    : null;
+      ? getSlugOrRequestedSlug(org)
+      : null;
 
   if (username) {
     const user = await prisma.user.findFirst({
@@ -106,7 +109,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.end();
   }
 
-  const decoded = img.toString().replace("data:image/png;base64,", "").replace("data:image/jpeg;base64,", "");
+  const decoded = img
+    .toString()
+    .replace("data:image/png;base64,", "")
+    .replace("data:image/jpeg;base64,", "");
   const imageResp = Buffer.from(decoded, "base64");
   if (identity.org) {
     res.setHeader("x-cal-org", identity.org);

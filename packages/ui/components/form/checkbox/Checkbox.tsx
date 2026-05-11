@@ -28,10 +28,13 @@ const Checkbox = React.forwardRef<
     ref={ref}
     className={classNames(
       "border-default data-[state=checked]:bg-brand-default data-[state=checked]:text-brand peer h-4 w-4 shrink-0 rounded-[4px] border ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed",
-      className
+      className,
     )}
-    {...props}>
-    <CheckboxPrimitive.Indicator className={classNames("flex items-center justify-center text-current")}>
+    {...props}
+  >
+    <CheckboxPrimitive.Indicator
+      className={classNames("flex items-center justify-center text-current")}
+    >
       <Check className="h-4 w-4" />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
@@ -56,7 +59,7 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
                     }
                   : {}),
               },
-              label
+              label,
             )}
           </div>
         )}
@@ -68,7 +71,7 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
                 className: classNames(
                   "relative flex items-start",
                   !error && descriptionAsLabel ? "text-emphasis" : "text-emphasis",
-                  error && "text-error"
+                  error && "text-error",
                 ),
               },
               <>
@@ -86,7 +89,7 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
                         : "hover:bg-subtle hover:border-emphasis checked:bg-gray-800",
                       error &&
                         "border-error hover:bg-error hover:border-error checked:bg-darkerror checked:hover:border-error checked:hover:bg-darkerror",
-                      rest.className
+                      rest.className,
                     )}
                   />
                 </div>
@@ -98,16 +101,18 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
                     }}
                   />
                 ) : (
-                  <span className={classNames("text-sm", rest.descriptionClassName)}>{description}</span>
+                  <span className={classNames("text-sm", rest.descriptionClassName)}>
+                    {description}
+                  </span>
                 )}
-              </>
+              </>,
             )}
             {/* {informationIconText && <InfoBadge content={informationIconText}></InfoBadge>} */}
           </div>
         </div>
       </div>
     );
-  }
+  },
 );
 
 CheckboxField.displayName = "CheckboxField";

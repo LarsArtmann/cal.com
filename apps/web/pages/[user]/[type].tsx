@@ -69,7 +69,7 @@ async function getDynamicGroupPageProps(context: GetServerSidePropsContext) {
   const ssr = await ssrInit(context);
   const { currentOrgDomain, isValidOrgDomain } = orgDomainConfig(
     context.req.headers.host ?? "",
-    context.params?.orgSlug
+    context.params?.orgSlug,
   );
 
   const users = await prisma.user.findMany({
@@ -122,7 +122,7 @@ async function getDynamicGroupPageProps(context: GetServerSidePropsContext) {
       duration: getMultipleDurationValue(
         eventData.metadata?.multipleDuration,
         queryDuration,
-        eventData.length
+        eventData.length,
       ),
       booking,
       user: usernames.join("+"),
@@ -144,7 +144,7 @@ async function getUserPageProps(context: GetServerSidePropsContext) {
   const { rescheduleUid, bookingUid, duration: queryDuration } = context.query;
   const { currentOrgDomain, isValidOrgDomain } = orgDomainConfig(
     context.req.headers.host ?? "",
-    context.params?.orgSlug
+    context.params?.orgSlug,
   );
 
   const { ssrInit } = await import("@server/lib/ssr");
@@ -152,7 +152,8 @@ async function getUserPageProps(context: GetServerSidePropsContext) {
   const user = await prisma.user.findFirst({
     where: {
       username,
-      organization: isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
+      organization:
+        isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
     },
     select: {
       away: true,
@@ -195,7 +196,7 @@ async function getUserPageProps(context: GetServerSidePropsContext) {
       duration: getMultipleDurationValue(
         eventData.metadata?.multipleDuration,
         queryDuration,
-        eventData.length
+        eventData.length,
       ),
       away: user?.away,
       user: username,

@@ -114,14 +114,14 @@ function WorkflowPage() {
     { id: +workflowId },
     {
       enabled: !!workflowId,
-    }
+    },
   );
 
   const { data: verifiedNumbers } = trpc.viewer.workflows.getVerifiedNumbers.useQuery(
     { teamId: workflow?.team?.id },
     {
       enabled: !!workflow?.id,
-    }
+    },
   );
 
   const readOnly =
@@ -140,7 +140,7 @@ function WorkflowPage() {
             value: String(active.eventType.id),
             label: active.eventType.title,
           };
-        }) || []
+        }) || [],
       );
       const activeOn = workflow.activeOn
         ? workflow.activeOn.map((active) => ({
@@ -190,7 +190,7 @@ function WorkflowPage() {
           t("workflow_updated_successfully", {
             workflowName: workflow.name,
           }),
-          "success"
+          "success",
         );
       }
       router.push("/workflows");
@@ -224,16 +224,23 @@ function WorkflowPage() {
           }
 
           if (step.reminderBody) {
-            step.reminderBody = translateVariablesToEnglish(step.reminderBody, { locale: i18n.language, t });
+            step.reminderBody = translateVariablesToEnglish(step.reminderBody, {
+              locale: i18n.language,
+              t,
+            });
           }
           if (step.emailSubject) {
-            step.emailSubject = translateVariablesToEnglish(step.emailSubject, { locale: i18n.language, t });
+            step.emailSubject = translateVariablesToEnglish(step.emailSubject, {
+              locale: i18n.language,
+              t,
+            });
           }
           isEmpty = !isEmpty ? isBodyEmpty : isEmpty;
 
           //check if phone number is verified
           if (
-            (step.action === WorkflowActions.SMS_NUMBER || step.action === WorkflowActions.WHATSAPP_NUMBER) &&
+            (step.action === WorkflowActions.SMS_NUMBER ||
+              step.action === WorkflowActions.WHATSAPP_NUMBER) &&
             !verifiedNumbers?.find((verifiedNumber) => verifiedNumber.phoneNumber === step.sendTo)
           ) {
             isVerified = false;
@@ -262,7 +269,8 @@ function WorkflowPage() {
           });
           utils.viewer.workflows.getVerifiedNumbers.invalidate();
         }
-      }}>
+      }}
+    >
       <Shell
         backPath="/workflows"
         title={workflow && workflow.name ? workflow.name : "Untitled"}
@@ -295,7 +303,8 @@ function WorkflowPage() {
               )}
             </div>
           )
-        }>
+        }
+      >
         <LicenseRequired>
           {!isError ? (
             <>

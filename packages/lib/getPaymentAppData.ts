@@ -7,7 +7,7 @@ import type { EventTypeAppsList } from "@calcom/app-store/utils";
 
 export default function getPaymentAppData(
   eventType: Parameters<typeof getEventTypeAppData>[0],
-  forcedGet?: boolean
+  forcedGet?: boolean,
 ) {
   const metadataApps = eventType?.metadata?.apps as unknown as EventTypeAppsList;
   if (!metadataApps) {
@@ -18,7 +18,7 @@ export default function getPaymentAppData(
   const paymentAppIds = (Object.keys(metadataApps) as Array<keyof typeof appDataSchemas>).filter(
     (app) =>
       (metadataApps[app as appId] as unknown as z.infer<typeof appDataSchema>)?.price &&
-      (metadataApps[app as appId] as unknown as z.infer<typeof appDataSchema>)?.enabled
+      (metadataApps[app as appId] as unknown as z.infer<typeof appDataSchema>)?.enabled,
   );
 
   // Event type should only have one payment app data

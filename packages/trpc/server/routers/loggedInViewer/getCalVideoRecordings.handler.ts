@@ -12,7 +12,10 @@ type GetCalVideoRecordingsOptions = {
   input: TGetCalVideoRecordingsInputSchema;
 };
 
-export const getCalVideoRecordingsHandler = async ({ ctx: _ctx, input }: GetCalVideoRecordingsOptions) => {
+export const getCalVideoRecordingsHandler = async ({
+  ctx: _ctx,
+  input,
+}: GetCalVideoRecordingsOptions) => {
   const { roomName } = input;
 
   try {

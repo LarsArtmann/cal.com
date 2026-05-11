@@ -70,7 +70,8 @@ export const ChargeCardDialog = (props: IRescheduleDialog) => {
                   chargeCardMutation.mutate({
                     bookingId,
                   })
-                }>
+                }
+              >
                 {t("charge_attendee", currencyStringParams)}
               </Button>
             </DialogFooter>

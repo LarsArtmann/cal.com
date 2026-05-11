@@ -96,7 +96,8 @@ const schemaEventTypeEditParams = z
   })
   .strict();
 
-export const schemaEventTypeEditBodyParams = schemaEventTypeBaseBodyParams.merge(schemaEventTypeEditParams);
+export const schemaEventTypeEditBodyParams =
+  schemaEventTypeBaseBodyParams.merge(schemaEventTypeEditParams);
 export const schemaEventTypeReadPublic = EventType.pick({
   id: true,
   title: true,
@@ -144,12 +145,12 @@ export const schemaEventTypeReadPublic = EventType.pick({
           address: z.string().optional(),
           hostPhoneNumber: z.string().optional(),
           type: z.any().optional(),
-        })
+        }),
       )
       .nullable(),
     metadata: jsonSchema.nullable(),
     customInputs: customInputSchema.array().optional(),
     link: z.string().optional(),
     bookingFields: eventTypeBookingFields.optional().nullable(),
-  })
+  }),
 );

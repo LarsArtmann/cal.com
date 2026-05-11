@@ -55,7 +55,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: ErrorCode.MissingBackupCodes });
     }
 
-    const backupCodes = JSON.parse(symmetricDecrypt(user.backupCodes, process.env.CALENDSO_ENCRYPTION_KEY));
+    const backupCodes = JSON.parse(
+      symmetricDecrypt(user.backupCodes, process.env.CALENDSO_ENCRYPTION_KEY),
+    );
 
     // check if user-supplied code matches one
     const index = backupCodes.indexOf(req.body.backupCode.replaceAll("-", ""));
@@ -85,7 +87,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const secret = symmetricDecrypt(user.twoFactorSecret, process.env.CALENDSO_ENCRYPTION_KEY);
     if (secret.length !== 32) {
       console.error(
-        `Two factor secret decryption failed. Expected key with length 32 but got ${secret.length}`
+        `Two factor secret decryption failed. Expected key with length 32 but got ${secret.length}`,
       );
       throw new Error(ErrorCode.InternalServerError);
     }

@@ -20,9 +20,8 @@ const schemaDestinationCalendarCreateParams = z
   })
   .strict();
 
-export const schemaDestinationCalendarCreateBodyParams = schemaDestinationCalendarBaseBodyParams.merge(
-  schemaDestinationCalendarCreateParams
-);
+export const schemaDestinationCalendarCreateBodyParams =
+  schemaDestinationCalendarBaseBodyParams.merge(schemaDestinationCalendarCreateParams);
 
 const schemaDestinationCalendarEditParams = z
   .object({
@@ -34,9 +33,8 @@ const schemaDestinationCalendarEditParams = z
   })
   .strict();
 
-export const schemaDestinationCalendarEditBodyParams = schemaDestinationCalendarBaseBodyParams.merge(
-  schemaDestinationCalendarEditParams
-);
+export const schemaDestinationCalendarEditBodyParams =
+  schemaDestinationCalendarBaseBodyParams.merge(schemaDestinationCalendarEditParams);
 
 export const schemaDestinationCalendarReadPublic = DestinationCalendar.pick({
   id: true,

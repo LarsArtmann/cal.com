@@ -36,7 +36,8 @@ interface Props {
 }
 
 export default function WorkflowDetailsPage(props: Props) {
-  const { form, workflowId, selectedEventTypes, setSelectedEventTypes, teamId, isMixedEventType } = props;
+  const { form, workflowId, selectedEventTypes, setSelectedEventTypes, teamId, isMixedEventType } =
+    props;
   const { t } = useLocale();
   const router = useRouter();
 
@@ -62,12 +63,14 @@ export default function WorkflowDetailsPage(props: Props) {
           ...group.eventTypes.map((eventType) => ({
             value: String(eventType.id),
             label: `${eventType.title} ${
-              eventType.children && eventType.children.length ? `(+${eventType.children.length})` : ``
+              eventType.children && eventType.children.length
+                ? `(+${eventType.children.length})`
+                : ``
             }`,
           })),
         ];
       }, [] as Option[]) || [],
-    [data]
+    [data],
   );
 
   let allEventTypeOptions = eventTypeOptions;
@@ -87,7 +90,7 @@ export default function WorkflowDetailsPage(props: Props) {
     sendTo?: string,
     numberRequired?: boolean,
     sender?: string,
-    senderName?: string
+    senderName?: string,
   ) => {
     const steps = form.getValues("steps");
     const id =
@@ -161,7 +164,8 @@ export default function WorkflowDetailsPage(props: Props) {
               StartIcon={Trash2}
               color="destructive"
               className="border"
-              onClick={() => setDeleteDialogOpen(true)}>
+              onClick={() => setDeleteDialogOpen(true)}
+            >
               {t("delete_workflow")}
             </Button>
           )}
@@ -210,7 +214,8 @@ export default function WorkflowDetailsPage(props: Props) {
                   type="button"
                   onClick={() => setIsAddActionDialogOpen(true)}
                   color="secondary"
-                  className="bg-default">
+                  className="bg-default"
+                >
                   {t("add_action")}
                 </Button>
               </div>

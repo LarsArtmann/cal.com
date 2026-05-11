@@ -48,12 +48,17 @@ export const EventTypeList = memo(() => {
     <AnimatedPopover text={getPopoverText()}>
       <FilterCheckboxFieldsContainer>
         {filterOptions?.map((eventType) => (
-          <div key={eventType.value} className="item-center hover:bg-muted flex cursor-pointer px-4 py-2">
+          <div
+            key={eventType.value}
+            className="item-center hover:bg-muted flex cursor-pointer px-4 py-2"
+          >
             <CheckboxField
               checked={eventTypeValue?.value === eventType.value}
               onChange={(e) => {
                 if (e.target.checked) {
-                  const selectedEventTypeId = data.find((item) => item.id.toString() === eventType.value)?.id;
+                  const selectedEventTypeId = data.find(
+                    (item) => item.id.toString() === eventType.value,
+                  )?.id;
                   !!selectedEventTypeId &&
                     setConfigFilters({
                       selectedEventTypeId,
@@ -69,7 +74,9 @@ export const EventTypeList = memo(() => {
           </div>
         ))}
         {filterOptions?.length === 0 && (
-          <h2 className="text-default px-4 py-2 text-sm font-medium">{t("no_options_available")}</h2>
+          <h2 className="text-default px-4 py-2 text-sm font-medium">
+            {t("no_options_available")}
+          </h2>
         )}
       </FilterCheckboxFieldsContainer>
     </AnimatedPopover>

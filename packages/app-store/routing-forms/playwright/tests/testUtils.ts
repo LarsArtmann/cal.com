@@ -20,7 +20,7 @@ export async function addForm(page: Page, { name = "Test Form Name" } = {}) {
 export async function addOneFieldAndDescriptionAndSaveForm(
   formId: string,
   page: Page,
-  form: { description?: string; field?: { typeIndex: number; label: string } }
+  form: { description?: string; field?: { typeIndex: number; label: string } },
 ) {
   await page.goto(`apps/routing-forms/form-edit/${formId}`);
   await page.click('[data-testid="add-field"]');
@@ -31,8 +31,16 @@ export async function addOneFieldAndDescriptionAndSaveForm(
   // Verify all Options of SelectBox
   const { optionsInUi: types } = await verifySelectOptions(
     { selector: ".data-testid-field-type", nth: 0 },
-    ["Email", "Long Text", "Multiple Selection", "Number", "Phone", "Single Selection", "Short Text"],
-    page
+    [
+      "Email",
+      "Long Text",
+      "Multiple Selection",
+      "Number",
+      "Phone",
+      "Single Selection",
+      "Short Text",
+    ],
+    page,
   );
 
   const nextFieldIndex = (await page.locator('[data-testid="field"]').count()) - 1;
@@ -65,7 +73,7 @@ export async function saveCurrentForm(page: Page) {
 export async function verifySelectOptions(
   selector: { selector: string; nth: number },
   expectedOptions: string[],
-  page: Page
+  page: Page,
 ) {
   await page.locator(selector.selector).nth(selector.nth).click();
   const selectOptions = await page

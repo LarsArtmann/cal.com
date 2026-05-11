@@ -32,7 +32,7 @@ export type WebhookDataType = CalendarEvent &
   };
 
 function getZapierPayload(
-  data: CalendarEvent & EventTypeInfo & { status?: string; createdAt: string }
+  data: CalendarEvent & EventTypeInfo & { status?: string; createdAt: string },
 ): string {
   const attendees = data.attendees.map((attendee) => {
     return {
@@ -100,7 +100,7 @@ const sendPayload = async (
   triggerEvent: string,
   createdAt: string,
   webhook: Pick<Webhook, "subscriberUrl" | "appId" | "payloadTemplate">,
-  data: Omit<WebhookDataType, "createdAt" | "triggerEvent">
+  data: Omit<WebhookDataType, "createdAt" | "triggerEvent">,
 ) => {
   const { appId, payloadTemplate: template } = webhook;
 
@@ -156,7 +156,7 @@ const _sendPayload = async (
   secretKey: string | null,
   webhook: Pick<Webhook, "subscriberUrl" | "appId" | "payloadTemplate">,
   body: string,
-  contentType: "application/json" | "application/x-www-form-urlencoded"
+  contentType: "application/json" | "application/x-www-form-urlencoded",
 ) => {
   const { subscriberUrl } = webhook;
   if (!subscriberUrl || !body) {

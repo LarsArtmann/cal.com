@@ -53,12 +53,13 @@ export default function HelpMenuItem({ onHelpItemSelect }: HelpMenuItemProps) {
           href="https://cal.com/docs/"
           target="_blank"
           className="hover:bg-subtle hover:text-emphasis text-default flex w-full px-5 py-2 pr-4 text-sm font-medium"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {t("documentation")}
           <ExternalLink
             className={classNames(
               "group-hover:text-subtle text-muted",
-              "ml-1 mt-px h-4 w-4 flex-shrink-0 ltr:mr-3"
+              "ml-1 mt-px h-4 w-4 flex-shrink-0 ltr:mr-3",
             )}
           />
         </a>
@@ -72,16 +73,27 @@ export default function HelpMenuItem({ onHelpItemSelect }: HelpMenuItemProps) {
         <p className="text-subtle mb-1">{t("feedback").toUpperCase()}</p>
         <p className="text-default flex w-full py-2 text-sm font-medium">{t("comments")}</p>
 
-        <TextArea id="comment" name="comment" rows={3} onChange={(event) => setComment(event.target.value)} />
+        <TextArea
+          id="comment"
+          name="comment"
+          rows={3}
+          onChange={(event) => setComment(event.target.value)}
+        />
 
         <div className="my-3 flex justify-end">
           <button
             className={classNames(
               "m-1 items-center justify-center p-1.5 grayscale hover:opacity-100 hover:grayscale-0",
-              rating === "Extremely unsatisfied" ? "grayscale-0" : "opacity-50"
+              rating === "Extremely unsatisfied" ? "grayscale-0" : "opacity-50",
             )}
-            onClick={() => onRatingClick("Extremely unsatisfied")}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="1.5em" height="1.5em">
+            onClick={() => onRatingClick("Extremely unsatisfied")}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 36 36"
+              width="1.5em"
+              height="1.5em"
+            >
               <path
                 fill="#FFCC4D"
                 d="M36 18c0 9.941-8.059 18-18 18S0 27.941 0 18 8.059 0 18 0s18 8.059 18 18"
@@ -102,10 +114,16 @@ export default function HelpMenuItem({ onHelpItemSelect }: HelpMenuItemProps) {
           <button
             className={classNames(
               "m-1 items-center justify-center p-1.5 grayscale hover:opacity-100 hover:grayscale-0",
-              rating === "Unsatisfied" ? "grayscale-0" : "opacity-50"
+              rating === "Unsatisfied" ? "grayscale-0" : "opacity-50",
             )}
-            onClick={() => onRatingClick("Unsatisfied")}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="1.5em" height="1.5em">
+            onClick={() => onRatingClick("Unsatisfied")}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 36 36"
+              width="1.5em"
+              height="1.5em"
+            >
               <path
                 fill="#FFCC4D"
                 d="M36 18c0 9.941-8.059 18-18 18-9.94 0-18-8.059-18-18C0 8.06 8.06 0 18 0c9.941 0 18 8.06 18 18"
@@ -121,10 +139,16 @@ export default function HelpMenuItem({ onHelpItemSelect }: HelpMenuItemProps) {
           <button
             className={classNames(
               "m-1 items-center justify-center p-1.5 grayscale hover:opacity-100 hover:grayscale-0",
-              rating === "Satisfied" ? "grayscale-0" : "opacity-50"
+              rating === "Satisfied" ? "grayscale-0" : "opacity-50",
             )}
-            onClick={() => onRatingClick("Satisfied")}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="1.5em" height="1.5em">
+            onClick={() => onRatingClick("Satisfied")}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 36 36"
+              width="1.5em"
+              height="1.5em"
+            >
               <path
                 fill="#FFCC4D"
                 d="M36 18c0 9.941-8.059 18-18 18-9.94 0-18-8.059-18-18C0 8.06 8.06 0 18 0c9.941 0 18 8.06 18 18"
@@ -139,10 +163,16 @@ export default function HelpMenuItem({ onHelpItemSelect }: HelpMenuItemProps) {
           <button
             className={classNames(
               "m-1 items-center justify-center p-1.5 grayscale hover:opacity-100 hover:grayscale-0",
-              rating === "Extremely satisfied" ? "grayscale-0" : "opacity-50"
+              rating === "Extremely satisfied" ? "grayscale-0" : "opacity-50",
             )}
-            onClick={() => onRatingClick("Extremely satisfied")}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="1.5em" height="1.5em">
+            onClick={() => onRatingClick("Extremely satisfied")}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 36 36"
+              width="1.5em"
+              height="1.5em"
+            >
               <path
                 fill="#FFCC4D"
                 d="M36 18c0 9.941-8.059 18-18 18S0 27.941 0 18 8.059 0 18 0s18 8.059 18 18"
@@ -167,7 +197,8 @@ export default function HelpMenuItem({ onHelpItemSelect }: HelpMenuItemProps) {
               if (rating && comment) {
                 await sendFeedback(rating, comment);
               }
-            }}>
+            }}
+          >
             {t("submit")}
           </Button>
         </div>
@@ -198,7 +229,8 @@ export default function HelpMenuItem({ onHelpItemSelect }: HelpMenuItemProps) {
             }
 
             onHelpItemSelect();
-          }}>
+          }}
+        >
           {t("contact_support")}
         </button>
         <span> {t("or").toLowerCase()} </span>
@@ -207,7 +239,8 @@ export default function HelpMenuItem({ onHelpItemSelect }: HelpMenuItemProps) {
           className="hover:text-emphasis text-defualt font-medium underline"
           href="https://cal.com/docs"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           {t("browse_our_docs")}
         </a>
         .

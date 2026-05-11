@@ -17,7 +17,10 @@ const Steps = (props: ISteps) => {
   return (
     <div className="mt-6 space-y-2">
       <p className="text-subtle text-xs font-medium">{stepLabel(currentStep, maxSteps)}</p>
-      <div data-testid="step-indicator-container" className="flex w-full space-x-2 rtl:space-x-reverse">
+      <div
+        data-testid="step-indicator-container"
+        className="flex w-full space-x-2 rtl:space-x-reverse"
+      >
         {new Array(maxSteps).fill(0).map((_s, index) => {
           return index <= currentStep - 1 ? (
             <div
@@ -25,7 +28,7 @@ const Steps = (props: ISteps) => {
               onClick={() => navigateToStep(index)}
               className={classNames(
                 "bg-inverted h-1 w-full rounded-[1px]",
-                index < currentStep - 1 ? "cursor-pointer" : ""
+                index < currentStep - 1 ? "cursor-pointer" : "",
               )}
               data-testid={`step-indicator-${index}`}
             />

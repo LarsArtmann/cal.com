@@ -14,7 +14,7 @@ import { APP_NAME } from "./constants";
 export async function getCloseComContactIds(
   persons: { email: string; name: string | null }[],
   closeCom: CloseCom,
-  leadFromCalComId?: string
+  leadFromCalComId?: string,
 ): Promise<string[]> {
   // Check if persons exist or to see if any should be created
   const closeComContacts = await closeCom.contact.search({
@@ -28,22 +28,24 @@ export async function getCloseComContactIds(
     // Existing contacts based on persons emails: contacts may have more
     // than one email, we just need the one used by the event.
     const existingContactsEmails = closeComContacts.data.flatMap((cont) =>
-      cont.emails.filter((em) => personsEmails.includes(em.email)).map((ems) => ems.email)
+      cont.emails.filter((em) => personsEmails.includes(em.email)).map((ems) => ems.email),
     );
-    const nonExistingContacts = persons.filter((person) => !existingContactsEmails.includes(person.email));
+    const nonExistingContacts = persons.filter(
+      (person) => !existingContactsEmails.includes(person.email),
+    );
     const createdContacts = await Promise.all(
       nonExistingContacts.map(
         async (per) =>
           await closeCom.contact.create({
             person: per,
             leadId: leadFromCalComId,
-          })
-      )
+          }),
+      ),
     );
     if (createdContacts.length === nonExistingContacts.length) {
       // All non existent contacts where created
       return Promise.resolve(
-        closeComContacts.data.map((cont) => cont.id).concat(createdContacts.map((cont) => cont.id))
+        closeComContacts.data.map((cont) => cont.id).concat(createdContacts.map((cont) => cont.id)),
       );
     } else {
       return Promise.reject("Some contacts were not possible to create in Close.com");
@@ -56,14 +58,17 @@ export async function getCloseComContactIds(
 export async function getCustomActivityTypeInstanceData(
   event: CalendarEvent,
   customFields: CloseComFieldOptions,
-  closeCom: CloseCom
+  closeCom: CloseCom,
 ): Promise<CloseComCustomActivityCreate> {
   // Get Cal.com generic Lead
   const leadFromCalComId = await getCloseComLeadId(closeCom);
   // Get Contacts ids
   const contactsIds = await getCloseComContactIds(event.attendees, closeCom, leadFromCalComId);
   // Get Custom Activity Type id
-  const customActivityTypeAndFieldsIds = await getCloseComCustomActivityTypeFieldsIds(customFields, closeCom);
+  const customActivityTypeAndFieldsIds = await getCloseComCustomActivityTypeFieldsIds(
+    customFields,
+    closeCom,
+  );
   // Prepare values for each Custom Activity Fields
   const customActivityFieldsValues = [
     contactsIds.length > 1 ? contactsIds.slice(1) : null, // Attendee
@@ -83,7 +88,7 @@ export async function getCustomActivityTypeInstanceData(
       return {
         [`custom.${fieldId}`]: customActivityFieldsValues[index],
       };
-    })
+    }),
   );
 }
 
@@ -91,17 +96,19 @@ export async function getCustomFieldsIds(
   entity: keyof CloseCom["customField"],
   customFields: CloseComFieldOptions,
   closeCom: CloseCom,
-  custom_activity_type_id?: string
+  custom_activity_type_id?: string,
 ): Promise<string[]> {
   // Get Custom Activity Fields
   const allFields: CloseComCustomActivityFieldGet | CloseComCustomContactFieldGet =
     await closeCom.customField[entity].get({
-      query: { _fields: ["name", "id"].concat(entity === "activity" ? ["custom_activity_type_id"] : []) },
+      query: {
+        _fields: ["name", "id"].concat(entity === "activity" ? ["custom_activity_type_id"] : []),
+      },
     });
   let relevantFields: { id: string; name: string }[];
   if (entity === "activity") {
     relevantFields = (allFields as CloseComCustomActivityFieldGet).data.filter(
-      (fie) => fie.custom_activity_type_id === custom_activity_type_id
+      (fie) => fie.custom_activity_type_id === custom_activity_type_id,
     );
   } else {
     relevantFields = allFields.data as CloseComCustomActivityFieldGet["data"];
@@ -145,21 +152,28 @@ export async function getCustomFieldsIds(
       }
       // Return an array with a single undefined value for the case where "exist" is true
       return "";
-    })
+    }),
   ).then((results) => results.filter((id) => id));
 }
 
 export async function getCloseComCustomActivityTypeFieldsIds(
   customFields: CloseComFieldOptions,
-  closeCom: CloseCom
+  closeCom: CloseCom,
 ) {
   // Check if Custom Activity Type exists
   const customActivities = await closeCom.customActivity.type.get();
-  const calComCustomActivity = customActivities.data.filter((act) => act.name === `${APP_NAME} Activity`);
+  const calComCustomActivity = customActivities.data.filter(
+    (act) => act.name === `${APP_NAME} Activity`,
+  );
   if (calComCustomActivity.length > 0) {
     // Cal.com Custom Activity type exist
     // Get Custom Activity Type fields ids
-    const fields = await getCustomFieldsIds("activity", customFields, closeCom, calComCustomActivity[0].id);
+    const fields = await getCustomFieldsIds(
+      "activity",
+      customFields,
+      closeCom,
+      calComCustomActivity[0].id,
+    );
     return {
       activityType: calComCustomActivity[0].id,
       fields,
@@ -183,7 +197,7 @@ export async function getCloseComCustomActivityTypeFieldsIds(
           editable_with_roles: [],
         });
         return creation.id;
-      })
+      }),
     );
     return {
       activityType,
@@ -197,11 +211,11 @@ export async function getCloseComLeadId(
   leadInfo: CloseComLead = {
     companyName: "From " + APP_NAME,
     description: "Generic Lead for Contacts created by " + APP_NAME,
-  }
+  },
 ): Promise<string> {
   const closeComLeadNames = await closeCom.lead.list({ query: { _fields: ["name", "id"] } });
   const searchLeadFromCalCom: CloseComLead[] = closeComLeadNames.data.filter(
-    (lead) => lead.name === leadInfo.companyName
+    (lead) => lead.name === leadInfo.companyName,
   );
   if (searchLeadFromCalCom.length === 0) {
     // No Lead exists, create it

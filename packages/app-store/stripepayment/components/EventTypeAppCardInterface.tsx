@@ -43,7 +43,8 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
       switchOnClick={(enabled) => {
         setRequirePayment(enabled);
       }}
-      teamId={eventType.team?.id || undefined}>
+      teamId={eventType.team?.id || undefined}
+    >
       <>
         {recurringEventDefined && (
           <Alert className="mt-2" severity="warning" title={t("warning_recurring_event_payment")} />

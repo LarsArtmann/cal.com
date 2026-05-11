@@ -63,7 +63,8 @@ export const FilterType = () => {
                   selectedFilter: [option.value],
                 });
               }}
-              childrenClassName="w-full">
+              childrenClassName="w-full"
+            >
               <div className="flex w-full items-center justify-between">
                 {t(option.label)}
                 {filterValue?.value === option.value && <Check className="h-4 w-4" />}

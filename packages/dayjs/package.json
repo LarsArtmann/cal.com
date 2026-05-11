@@ -1,8 +1,8 @@
 {
   "name": "@calcom/dayjs",
-  "description": "Cal.com's Day.js shared library",
-  "private": true,
   "version": "1.0.0",
+  "private": true,
+  "description": "Cal.com's Day.js shared library",
   "main": "./index.ts",
   "dependencies": {
     "dayjs": "1.11.20",

@@ -54,11 +54,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   await createOAuthAppCredential(
     { appId: "zohocrm", type: "zohocrm_other_calendar" },
     zohoCrmTokenInfo.data,
-    req
+    req,
   );
 
   const state = decodeOAuthState(req);
   res.redirect(
-    getSafeRedirectUrl(state?.returnTo) ?? getInstalledAppPath({ variant: "other", slug: "zohocrm" })
+    getSafeRedirectUrl(state?.returnTo) ??
+      getInstalledAppPath({ variant: "other", slug: "zohocrm" }),
   );
 }

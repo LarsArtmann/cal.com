@@ -12,7 +12,9 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
   const { getAppData } = useAppContextWithSchema<typeof appDataSchema>();
   const [enabled, setEnabled] = useState(getAppData("enabled"));
   const [projects, setProjects] = useState();
-  const [selectedProject, setSelectedProject] = useState<undefined | { label: string; value: string }>();
+  const [selectedProject, setSelectedProject] = useState<
+    undefined | { label: string; value: string }
+  >();
   const { data } = trpc.viewer.appBasecamp3.projects.useQuery();
   const setProject = trpc.viewer.appBasecamp3.projectMutation.useMutation();
   useEffect(() => {
@@ -26,7 +28,7 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
           value: project.id,
           label: project.name,
         };
-      })
+      }),
     );
   }, [data]);
 
@@ -40,7 +42,8 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
           setEnabled(true);
         }
       }}
-      switchChecked={enabled}>
+      switchChecked={enabled}
+    >
       <div className="mt-2 text-sm">
         <div className="flex gap-3">
           <div className="items-center">
@@ -61,8 +64,8 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
           />
         </div>
         <div className="mt-2">
-          Please note that as of now you can only link <span className="italic">one</span> of your projects to
-          cal.com
+          Please note that as of now you can only link <span className="italic">one</span> of your
+          projects to cal.com
         </div>
       </div>
     </AppCard>

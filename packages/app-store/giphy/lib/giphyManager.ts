@@ -40,12 +40,15 @@ export const getGiphyById = async (giphyId: string) => {
   const queryParams = new URLSearchParams({
     api_key,
   });
-  const response = await fetch(`https://api.giphy.com/v1/gifs/${giphyId}?${queryParams.toString()}`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
+  const response = await fetch(
+    `https://api.giphy.com/v1/gifs/${giphyId}?${queryParams.toString()}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     },
-  });
+  );
   const responseBody = await response.json();
   const gifs = responseBody.data;
   return gifs?.images?.fixed_height_downsampled?.url || null;

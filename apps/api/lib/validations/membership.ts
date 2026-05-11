@@ -39,7 +39,7 @@ export const membershipEditBodySchema = Membership.omit({
   .strict();
 
 export const schemaMembershipBodyParams = schemaMembershipBaseBodyParams.merge(
-  schemaMembershipRequiredParams
+  schemaMembershipRequiredParams,
 );
 
 export const schemaMembershipPublic = Membership.merge(z.object({ team: _TeamModel }).partial());

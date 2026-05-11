@@ -20,7 +20,7 @@ export const LockedIndicator = (label: string) => (
 const useLockedFieldsManager = (
   eventType: Pick<z.infer<typeof _EventTypeModel>, "schedulingType" | "userId" | "metadata">,
   adminLabel: string,
-  memberLabel: string
+  memberLabel: string,
 ) => {
   const unlockedFields =
     (eventType.metadata?.managedEventConfig?.unlockedFields !== undefined &&
@@ -38,7 +38,9 @@ const useLockedFieldsManager = (
     if (fieldName.includes(".")) {
       locked = locked && get(unlockedFields, fieldName) === undefined;
     } else {
-      locked = locked && unlockedFields[fieldName as keyof Omit<Prisma.EventTypeSelect, "id">] === undefined;
+      locked =
+        locked &&
+        unlockedFields[fieldName as keyof Omit<Prisma.EventTypeSelect, "id">] === undefined;
     }
     return locked && LockedIndicator(isManagedEventType ? adminLabel : memberLabel);
   };
@@ -53,7 +55,12 @@ const useLockedFieldsManager = (
     };
   };
 
-  return { shouldLockIndicator, shouldLockDisableProps, isManagedEventType, isChildrenManagedEventType };
+  return {
+    shouldLockIndicator,
+    shouldLockDisableProps,
+    isManagedEventType,
+    isChildrenManagedEventType,
+  };
 };
 
 export default useLockedFieldsManager;

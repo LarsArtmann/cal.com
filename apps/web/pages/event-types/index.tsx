@@ -111,7 +111,8 @@ const MobileTeamsTab: FC<MobileTeamsTabProps> = (props) => {
     href: item.teamId ? `/event-types?teamId=${item.teamId}` : "/event-types?noTeam",
     avatar: orgBranding
       ? `${orgBranding.fullDomain}${item.teamId ? "/team" : ""}/${item.profile.slug}/avatar.png`
-      : item.profile.image ?? `${WEBAPP_URL + (item.teamId && "/team")}/${item.profile.slug}/avatar.png`,
+      : (item.profile.image ??
+        `${WEBAPP_URL + (item.teamId && "/team")}/${item.profile.slug}/avatar.png`),
   }));
   const { data } = useTypedQuery(querySchema);
   const events = eventTypeGroups.filter((item) => item.teamId === data.teamId);
@@ -133,22 +134,34 @@ const MobileTeamsTab: FC<MobileTeamsTabProps> = (props) => {
   );
 };
 
-const Item = ({ type, group, readOnly }: { type: EventType; group: EventTypeGroup; readOnly: boolean }) => {
+const Item = ({
+  type,
+  group,
+  readOnly,
+}: {
+  type: EventType;
+  group: EventTypeGroup;
+  readOnly: boolean;
+}) => {
   const { t } = useLocale();
 
   const content = () => (
     <div>
       <span
         className="text-default font-semibold ltr:mr-1 rtl:ml-1"
-        data-testid={"event-type-title-" + type.id}>
+        data-testid={"event-type-title-" + type.id}
+      >
         {type.title}
       </span>
       {group.profile.slug ? (
         <small
           className="text-subtle hidden font-normal leading-4 sm:inline"
-          data-testid={"event-type-slug-" + type.id}>
+          data-testid={"event-type-slug-" + type.id}
+        >
           {`/${
-            type.schedulingType !== SchedulingType.MANAGED ? group.profile.slug : t("username_placeholder")
+            type.schedulingType !== SchedulingType.MANAGED
+              ? group.profile.slug
+              : t("username_placeholder")
           }/${type.slug}`}
         </small>
       ) : null}
@@ -173,17 +186,20 @@ const Item = ({ type, group, readOnly }: { type: EventType; group: EventTypeGrou
     <Link
       href={`/event-types/${type.id}?tabName=setup`}
       className="flex-1 overflow-hidden pr-4 text-sm"
-      title={type.title}>
+      title={type.title}
+    >
       <div>
         <span
           className="text-default font-semibold ltr:mr-1 rtl:ml-1"
-          data-testid={"event-type-title-" + type.id}>
+          data-testid={"event-type-title-" + type.id}
+        >
           {type.title}
         </span>
         {group.profile.slug ? (
           <small
             className="text-subtle hidden font-normal leading-4 sm:inline"
-            data-testid={"event-type-slug-" + type.id}>
+            data-testid={"event-type-slug-" + type.id}
+          >
             {`/${group.profile.slug}/${type.slug}`}
           </small>
         ) : null}
@@ -204,7 +220,12 @@ const Item = ({ type, group, readOnly }: { type: EventType; group: EventTypeGrou
 
 const MemoizedItem = memo(Item);
 
-export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeListProps): JSX.Element => {
+export const EventTypeList = ({
+  group,
+  groupIndex,
+  readOnly,
+  types,
+}: EventTypeListProps): JSX.Element => {
   const { t } = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -213,9 +234,8 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
   const [parent] = useAutoAnimate<HTMLUListElement>();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteDialogTypeId, setDeleteDialogTypeId] = useState(0);
-  const [deleteDialogTypeSchedulingType, setDeleteDialogSchedulingType] = useState<SchedulingType | null>(
-    null
-  );
+  const [deleteDialogTypeSchedulingType, setDeleteDialogSchedulingType] =
+    useState<SchedulingType | null>(null);
   const utils = trpc.useContext();
   const mutation = trpc.viewer.eventTypeOrder.useMutation({
     onError: async (err) => {
@@ -379,7 +399,8 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
           const calLink = `${orgBranding?.fullDomain ?? CAL_URL}/${embedLink}`;
           const isManagedEventType = type.schedulingType === SchedulingType.MANAGED;
           const isChildrenManagedEventType =
-            type.metadata?.managedEventConfig !== undefined && type.schedulingType !== SchedulingType.MANAGED;
+            type.metadata?.managedEventConfig !== undefined &&
+            type.schedulingType !== SchedulingType.MANAGED;
           return (
             <li key={type.id}>
               <div className="hover:bg-muted flex w-full items-center justify-between">
@@ -402,13 +423,16 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                           items={
                             type?.users
                               ? type.users.map(
-                                  (organizer: { name: string | null; username: string | null }) => ({
+                                  (organizer: {
+                                    name: string | null;
+                                    username: string | null;
+                                  }) => ({
                                     alt: organizer.name || "",
                                     image: `${orgBranding?.fullDomain ?? WEBAPP_URL}/${
                                       organizer.username
                                     }/avatar.png`,
                                     title: organizer.name || "",
-                                  })
+                                  }),
                                 )
                               : []
                           }
@@ -433,7 +457,12 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                           <>
                             {type.hidden && <Badge variant="gray">{t("hidden")}</Badge>}
                             <Tooltip
-                              content={type.hidden ? t("show_eventtype_on_profile") : t("hide_from_profile")}>
+                              content={
+                                type.hidden
+                                  ? t("show_eventtype_on_profile")
+                                  : t("hide_from_profile")
+                              }
+                            >
                               <div className="self-center rounded-md p-2">
                                 <Switch
                                   name="Hidden"
@@ -475,7 +504,10 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                             </>
                           )}
                           <Dropdown modal={false}>
-                            <DropdownMenuTrigger asChild data-testid={"event-type-options-" + type.id}>
+                            <DropdownMenuTrigger
+                              asChild
+                              data-testid={"event-type-options-" + type.id}
+                            >
                               <Button
                                 type="button"
                                 variant="icon"
@@ -491,7 +523,8 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                                     type="button"
                                     data-testid={"event-type-edit-" + type.id}
                                     StartIcon={Edit2}
-                                    onClick={() => router.push("/event-types/" + type.id)}>
+                                    onClick={() => router.push("/event-types/" + type.id)}
+                                  >
                                     {t("edit")}
                                   </DropdownItem>
                                 </DropdownMenuItem>
@@ -503,7 +536,8 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                                       type="button"
                                       data-testid={"event-type-duplicate-" + type.id}
                                       StartIcon={Copy}
-                                      onClick={() => openDuplicateModal(type, group)}>
+                                      onClick={() => openDuplicateModal(type, group)}
+                                    >
                                       {t("duplicate")}
                                     </DropdownItem>
                                   </DropdownMenuItem>
@@ -517,13 +551,15 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                                     StartIcon={Code}
                                     className="w-full rounded-none"
                                     embedUrl={encodeURIComponent(embedLink)}
-                                    eventId={type.id}>
+                                    eventId={type.id}
+                                  >
                                     {t("embed")}
                                   </EventTypeEmbedButton>
                                 </DropdownMenuItem>
                               )}
                               {/* readonly is only set when we are on a team - if we are on a user event type null will be the value. */}
-                              {(group.metadata?.readOnly === false || group.metadata.readOnly === null) &&
+                              {(group.metadata?.readOnly === false ||
+                                group.metadata.readOnly === null) &&
                                 !isChildrenManagedEventType && (
                                   <>
                                     <DropdownMenuSeparator />
@@ -536,7 +572,8 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                                           setDeleteDialogSchedulingType(type.schedulingType);
                                         }}
                                         StartIcon={Trash}
-                                        className="w-full rounded-none">
+                                        className="w-full rounded-none"
+                                      >
                                         {t("delete")}
                                       </DropdownItem>
                                     </DropdownMenuItem>
@@ -552,7 +589,12 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                 <div className="min-w-9 mx-5 flex sm:hidden">
                   <Dropdown>
                     <DropdownMenuTrigger asChild data-testid={"event-type-options-" + type.id}>
-                      <Button type="button" variant="icon" color="secondary" StartIcon={MoreHorizontal} />
+                      <Button
+                        type="button"
+                        variant="icon"
+                        color="secondary"
+                        StartIcon={MoreHorizontal}
+                      />
                     </DropdownMenuTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuContent>
@@ -563,7 +605,8 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                                 href={calLink}
                                 target="_blank"
                                 StartIcon={ExternalLink}
-                                className="w-full rounded-none">
+                                className="w-full rounded-none"
+                              >
                                 {t("preview")}
                               </DropdownItem>
                             </DropdownMenuItem>
@@ -575,7 +618,8 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                                   showToast(t("link_copied"), "success");
                                 }}
                                 StartIcon={Clipboard}
-                                className="w-full rounded-none text-left">
+                                className="w-full rounded-none text-left"
+                              >
                                 {t("copy_link")}
                               </DropdownItem>
                             </DropdownMenuItem>
@@ -596,7 +640,8 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                                   .catch(() => showToast(t("failed"), "error"));
                               }}
                               StartIcon={Upload}
-                              className="w-full rounded-none">
+                              className="w-full rounded-none"
+                            >
                               {t("share")}
                             </DropdownItem>
                           </DropdownMenuItem>
@@ -606,7 +651,8 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                             <DropdownItem
                               onClick={() => router.push("/event-types/" + type.id)}
                               StartIcon={Edit}
-                              className="w-full rounded-none">
+                              className="w-full rounded-none"
+                            >
                               {t("edit")}
                             </DropdownItem>
                           </DropdownMenuItem>
@@ -616,7 +662,8 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                             <DropdownItem
                               onClick={() => openDuplicateModal(type, group)}
                               StartIcon={Copy}
-                              data-testid={"event-type-duplicate-" + type.id}>
+                              data-testid={"event-type-duplicate-" + type.id}
+                            >
                               {t("duplicate")}
                             </DropdownItem>
                           </DropdownMenuItem>
@@ -634,7 +681,8 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                                     setDeleteDialogSchedulingType(type.schedulingType);
                                   }}
                                   StartIcon={Trash}
-                                  className="w-full rounded-none">
+                                  className="w-full rounded-none"
+                                >
                                   {t("delete")}
                                 </DropdownItem>
                               </DropdownMenuItem>
@@ -646,8 +694,11 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
                             <Skeleton
                               as={Label}
                               htmlFor="hiddenSwitch"
-                              className="mt-2 inline cursor-pointer self-center pr-2 ">
-                              {type.hidden ? t("show_eventtype_on_profile") : t("hide_from_profile")}
+                              className="mt-2 inline cursor-pointer self-center pr-2 "
+                            >
+                              {type.hidden
+                                ? t("show_eventtype_on_profile")
+                                : t("hide_from_profile")}
                             </Skeleton>
                             <Switch
                               id="hiddenSwitch"
@@ -678,15 +729,20 @@ export const EventTypeList = ({ group, groupIndex, readOnly, types }: EventTypeL
           onConfirm={(e) => {
             e.preventDefault();
             deleteEventTypeHandler(deleteDialogTypeId);
-          }}>
+          }}
+        >
           <p className="mt-5">
             <Trans
               i18nKey={`delete${isManagedEventPrefix()}_event_type_description`}
-              components={{ li: <li />, ul: <ul className="ml-4 list-disc" /> }}>
+              components={{ li: <li />, ul: <ul className="ml-4 list-disc" /> }}
+            >
               <ul>
-                <li>Members assigned to this event type will also have their event types deleted.</li>
                 <li>
-                  Anyone who they&apos;ve shared their link with will no longer be able to book using it.
+                  Members assigned to this event type will also have their event types deleted.
+                </li>
+                <li>
+                  Anyone who they&apos;ve shared their link with will no longer be able to book
+                  using it.
                 </li>
               </ul>
             </Trans>
@@ -732,7 +788,8 @@ const EventTypeListHeading = ({
       <div>
         <Link
           href={teamId ? `/settings/teams/${teamId}/profile` : "/settings/my-account/profile"}
-          className="text-emphasis font-bold">
+          className="text-emphasis font-bold"
+        >
           {profile?.name || ""}
         </Link>
         {membershipCount && teamId && (
@@ -748,7 +805,8 @@ const EventTypeListHeading = ({
         {profile?.slug && (
           <Link
             href={`${orgBranding ? orgBranding.fullDomain : CAL_URL}/${profile.slug}`}
-            className="text-subtle block text-xs">
+            className="text-subtle block text-xs"
+          >
             {`${bookerUrl.replace("https://", "").replace("http://", "")}/${profile.slug}`}
           </Link>
         )}
@@ -836,7 +894,8 @@ const SetupProfileBanner = ({ closeAction }: { closeAction: () => void }) => {
           <Button
             color="secondary"
             className="border-sky-700 bg-sky-50 text-sky-700 hover:border-sky-900 hover:bg-sky-200"
-            href="/getting-started">
+            href="/getting-started"
+          >
             {t("set_up")}
           </Button>
         </div>
@@ -855,7 +914,8 @@ const EmptyEventTypeList = ({ group }: { group: EventTypeGroup }) => {
           <Button
             href={`?dialog=new&eventPage=${group.profile.slug}&teamId=${group.teamId}`}
             variant="button"
-            className="mt-5">
+            className="mt-5"
+          >
             {t("create")}
           </Button>
         }
@@ -888,7 +948,8 @@ const Main = ({
   }
 
   const isFilteredByOnlyOneItem =
-    (filters?.teamIds?.length === 1 || filters?.userIds?.length === 1) && data.eventTypeGroups.length === 1;
+    (filters?.teamIds?.length === 1 || filters?.userIds?.length === 1) &&
+    data.eventTypeGroups.length === 1;
   return (
     <>
       {data.eventTypeGroups.length > 1 || isFilteredByOnlyOneItem ? (
@@ -949,11 +1010,14 @@ const EventTypesPage = () => {
   const filters = getTeamsFiltersFromQuery(routerQuery);
 
   // TODO: Maybe useSuspenseQuery to focus on success case only? Remember that it would crash the page when there is an error in query. Also, it won't support skeleton
-  const { data, status, error } = trpc.viewer.eventTypes.getByViewer.useQuery(filters && { filters }, {
-    refetchOnWindowFocus: false,
-    cacheTime: 1 * 60 * 60 * 1000,
-    staleTime: 1 * 60 * 60 * 1000,
-  });
+  const { data, status, error } = trpc.viewer.eventTypes.getByViewer.useQuery(
+    filters && { filters },
+    {
+      refetchOnWindowFocus: false,
+      cacheTime: 1 * 60 * 60 * 1000,
+      staleTime: 1 * 60 * 60 * 1000,
+    },
+  );
 
   function closeBanner() {
     setShowProfileBanner(false);
@@ -970,7 +1034,9 @@ const EventTypesPage = () => {
 
   useEffect(() => {
     setShowProfileBanner(
-      !!orgBranding && !document.cookie.includes("calcom-profile-banner=1") && !user?.completedOnboarding
+      !!orgBranding &&
+        !document.cookie.includes("calcom-profile-banner=1") &&
+        !user?.completedOnboarding,
     );
   }, [orgBranding, user]);
 
@@ -982,7 +1048,8 @@ const EventTypesPage = () => {
       subtitle={t("event_types_page_subtitle")}
       afterHeading={showProfileBanner && <SetupProfileBanner closeAction={closeBanner} />}
       beforeCTAactions={<Actions />}
-      CTA={<CTA data={data} />}>
+      CTA={<CTA data={data} />}
+    >
       <HeadSeo
         title="Event Types"
         description="Create events to share for people to book on your calendar."

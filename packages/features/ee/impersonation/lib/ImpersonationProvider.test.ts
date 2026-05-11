@@ -69,7 +69,10 @@ describe("checkPermission", () => {
   });
 
   it("should not throw an error if the user is an admin and team impersonation is disabled", () => {
-    const modifiedSession = { ...session, user: { ...session.user, role: UserPermissionRole.ADMIN } };
+    const modifiedSession = {
+      ...session,
+      user: { ...session.user, role: UserPermissionRole.ADMIN },
+    };
     process.env.NEXT_PUBLIC_TEAM_IMPERSONATION = "false";
     expect(() => checkPermission(modifiedSession)).not.toThrow();
   });

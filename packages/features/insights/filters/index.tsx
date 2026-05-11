@@ -26,7 +26,8 @@ const ClearFilters = () => {
         className="min-w-24 h-[38px] border-0"
         onClick={() => {
           clearFilters();
-        }}>
+        }}
+      >
         <X className="mr-1 h-4 w-4" />
         {t("clear")}
       </Button>

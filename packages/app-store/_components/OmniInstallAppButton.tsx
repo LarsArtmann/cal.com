@@ -40,7 +40,8 @@ export default function OmniInstallAppButton({
       showToast(t("app_successfully_installed"), "success");
     },
     onError: (error) => {
-      if (error instanceof Error) showToast(error.message || t("app_could_not_be_installed"), "error");
+      if (error instanceof Error)
+        showToast(error.message || t("app_could_not_be_installed"), "error");
     },
   });
 
@@ -75,7 +76,8 @@ export default function OmniInstallAppButton({
             color="secondary"
             className="[@media(max-width:260px)]:w-full [@media(max-width:260px)]:justify-center"
             StartIcon={Plus}
-            {...props}>
+            {...props}
+          >
             {t("add")}
           </Button>
         );

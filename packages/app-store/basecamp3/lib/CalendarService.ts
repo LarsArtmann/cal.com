@@ -140,7 +140,7 @@ export default class BasecampCalendarService implements Calendar {
             starts_at: new Date(event.startTime).toISOString(),
             ends_at: new Date(event.endTime).toISOString(),
           }),
-        }
+        },
       );
       const meetingJson = await basecampEvent.json();
       const id = meetingJson.id;
@@ -161,7 +161,7 @@ export default class BasecampCalendarService implements Calendar {
 
   async updateEvent(
     uid: string,
-    event: CalendarEvent
+    event: CalendarEvent,
   ): Promise<NewCalendarEventType | NewCalendarEventType[]> {
     try {
       const auth = await this.auth;
@@ -183,7 +183,7 @@ export default class BasecampCalendarService implements Calendar {
             starts_at: new Date(event.startTime).toISOString(),
             ends_at: new Date(event.endTime).toISOString(),
           }),
-        }
+        },
       );
       const meetingJson = await basecampEvent.json();
       const id = meetingJson.id;
@@ -215,7 +215,7 @@ export default class BasecampCalendarService implements Calendar {
             Authorization: `Bearer ${this.accessToken}`,
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       if (deletedEventResponse.ok) {
         Promise.resolve("Deleted basecamp meeting");
@@ -270,7 +270,7 @@ export default class BasecampCalendarService implements Calendar {
   async getAvailability(
     _dateFrom: string,
     _dateTo: string,
-    _selectedCalendars: IntegrationCalendar[]
+    _selectedCalendars: IntegrationCalendar[],
   ): Promise<EventBusyDate[]> {
     return Promise.resolve([]);
   }

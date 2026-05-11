@@ -6,5 +6,5 @@ export default withMiddleware()(
   defaultHandler({
     GET: import("./_get"),
     POST: import("./_post"),
-  })
+  }),
 );

@@ -13,14 +13,18 @@ export async function handleWebhookTrigger(args: {
     const subscribers = await getWebhooks(args.subscriberOptions);
 
     const promises = subscribers.map((sub) =>
-      sendPayload(sub.secret, args.eventTrigger, new Date().toISOString(), sub, args.webhookData).catch(
-        (e) => {
-          console.error(
-            `Error executing webhook for event: ${args.eventTrigger}, URL: ${sub.subscriberUrl}`,
-            e
-          );
-        }
-      )
+      sendPayload(
+        sub.secret,
+        args.eventTrigger,
+        new Date().toISOString(),
+        sub,
+        args.webhookData,
+      ).catch((e) => {
+        console.error(
+          `Error executing webhook for event: ${args.eventTrigger}, URL: ${sub.subscriberUrl}`,
+          e,
+        );
+      }),
     );
     await Promise.all(promises);
   } catch (error) {

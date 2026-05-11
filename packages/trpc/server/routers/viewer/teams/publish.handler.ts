@@ -84,7 +84,10 @@ const publishOrganizationTeamHandler = async ({ ctx, input }: PublishOptions) =>
   }
 
   if (!metadata?.requestedSlug) {
-    throw new TRPCError({ code: "BAD_REQUEST", message: "Can't publish team without `requestedSlug`" });
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: "Can't publish team without `requestedSlug`",
+    });
   }
   const { requestedSlug, ...newMetadata } = metadata;
   let updatedTeam: Awaited<ReturnType<typeof prisma.team.update>>;
@@ -111,7 +114,8 @@ const publishOrganizationTeamHandler = async ({ ctx, input }: PublishOptions) =>
 export const publishHandler = async ({ ctx, input }: PublishOptions) => {
   if (ctx.user.organizationId) return publishOrganizationTeamHandler({ ctx, input });
 
-  if (!(await isTeamAdmin(ctx.user.id, input.teamId))) throw new TRPCError({ code: "UNAUTHORIZED" });
+  if (!(await isTeamAdmin(ctx.user.id, input.teamId)))
+    throw new TRPCError({ code: "UNAUTHORIZED" });
   const { teamId: id } = input;
 
   const prevTeam = await prisma.team.findFirst({ where: { id }, include: { members: true } });
@@ -130,7 +134,10 @@ export const publishHandler = async ({ ctx, input }: PublishOptions) => {
   if (checkoutSession) return checkoutSession;
 
   if (!metadata?.requestedSlug) {
-    throw new TRPCError({ code: "BAD_REQUEST", message: "Can't publish team without `requestedSlug`" });
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: "Can't publish team without `requestedSlug`",
+    });
   }
 
   const { requestedSlug, ...newMetadata } = metadata;

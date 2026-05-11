@@ -78,9 +78,9 @@ test.describe("Manage Booking Questions", () => {
             email: "booker@example.com",
           });
           await expect(page.locator("[data-testid=success-page]")).toBeVisible();
-          expect(await page.locator('[data-testid="attendee-name-John Doe"]').nth(0).textContent()).toBe(
-            "John Doe"
-          );
+          expect(
+            await page.locator('[data-testid="attendee-name-John Doe"]').nth(0).textContent(),
+          ).toBe("John Doe");
           await expectWebhookToBeCalled(webhookReceiver, {
             triggerEvent: WebhookTriggerEvents.BOOKING_CREATED,
             payload: {
@@ -221,7 +221,7 @@ async function runTestStepsCommonForTeamAndUserEventType(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     requestList: (import("http").IncomingMessage & { body?: any })[];
     url: string;
-  }
+  },
 ) {
   await page.click('[href$="tabName=advanced"]');
 
@@ -300,7 +300,9 @@ async function runTestStepsCommonForTeamAndUserEventType(
           const formBuilderFieldLocator = page.locator('[data-fob-field-name="how-are-you"]');
           await expect(formBuilderFieldLocator).toBeVisible();
           expect(
-            await formBuilderFieldLocator.locator('[name="how-are-you"]').getAttribute("placeholder")
+            await formBuilderFieldLocator
+              .locator('[name="how-are-you"]')
+              .getAttribute("placeholder"),
           ).toBe("I'm fine, thanks");
           expect(await getLabelText(formBuilderFieldLocator)).toBe("How are you?");
           await formBuilderFieldLocator.locator('[name="how-are-you"]').fill("I am great!");
@@ -308,7 +310,9 @@ async function runTestStepsCommonForTeamAndUserEventType(
           await expect(page.locator("[data-testid=success-page]")).toBeVisible();
 
           expect(
-            await page.locator('[data-testid="field-response"][data-fob-field="how-are-you"]').innerText()
+            await page
+              .locator('[data-testid="field-response"][data-fob-field="how-are-you"]')
+              .innerText(),
           ).toBe("I am great!");
 
           await waitFor(() => {
@@ -346,7 +350,7 @@ async function runTestStepsCommonForTeamAndUserEventType(
             },
           });
         },
-        true
+        true,
       );
     });
 
@@ -385,8 +389,12 @@ async function expectSystemFieldsToBeThereOnBookingPage({
 
   if (isFirstAndLastNameVariant) {
     if (values?.name) {
-      await expect(nameLocator.locator('[name="firstName"]')).toHaveValue(values?.name?.firstName || "");
-      await expect(nameLocator.locator('[name="lastName"]')).toHaveValue(values?.name?.lastName || "");
+      await expect(nameLocator.locator('[name="firstName"]')).toHaveValue(
+        values?.name?.firstName || "",
+      );
+      await expect(nameLocator.locator('[name="lastName"]')).toHaveValue(
+        values?.name?.lastName || "",
+      );
       expect(await nameLocator.locator(".testid-firstName > label").innerText()).toContain("*");
     } else {
       await expect(nameLocator.locator('[name="firstName"]')).toBeVisible();
@@ -533,7 +541,7 @@ async function doOnFreshPreview(
   page: Page,
   context: PlaywrightTestArgs["context"],
   callback: (page: Page) => Promise<void>,
-  persistTab = false
+  persistTab = false,
 ) {
   const previewTabPage = await openBookingFormInPreviewTab(context, page);
   await callback(previewTabPage);
@@ -548,9 +556,10 @@ async function doOnFreshPreviewWithSearchParams(
   page: Page,
   context: PlaywrightTestArgs["context"],
   callback: (page: Page) => Promise<void>,
-  persistTab = false
+  persistTab = false,
 ) {
-  const previewUrl = (await page.locator('[data-testid="preview-button"]').getAttribute("href")) || "";
+  const previewUrl =
+    (await page.locator('[data-testid="preview-button"]').getAttribute("href")) || "";
   const previewUrlObj = new URL(previewUrl);
   searchParams.forEach((value, key) => {
     previewUrlObj.searchParams.append(key, value);
@@ -565,7 +574,10 @@ async function doOnFreshPreviewWithSearchParams(
 }
 
 async function toggleQuestionAndSave({ name, page }: { name: string; page: Page }) {
-  await page.locator(`[data-testid="field-${name}"]`).locator('[data-testid="toggle-field"]').click();
+  await page
+    .locator(`[data-testid="field-${name}"]`)
+    .locator('[data-testid="toggle-field"]')
+    .click();
   await saveEventType(page);
 }
 
@@ -578,7 +590,10 @@ async function toggleQuestionRequireStatusAndSave({
   name: string;
   page: Page;
 }) {
-  await page.locator(`[data-testid="field-${name}"]`).locator('[data-testid="edit-field-action"]').click();
+  await page
+    .locator(`[data-testid="field-${name}"]`)
+    .locator('[data-testid="edit-field-action"]')
+    .click();
   await page
     .locator('[data-testid="edit-field-dialog"]')
     .locator('[data-testid="field-required"] button')
@@ -627,7 +642,7 @@ async function saveEventType(page: Page) {
 
 async function addWebhook(
   user?: Awaited<ReturnType<typeof createAndLoginUserWithEventTypes>>,
-  teamId?: number | null
+  teamId?: number | null,
 ) {
   const webhookReceiver = createHttpServer();
 
@@ -665,7 +680,7 @@ async function expectWebhookToBeCalled(
     payload: Omit<Partial<CalendarEvent>, "attendees"> & {
       attendees: Partial<CalendarEvent["attendees"][number]>[];
     };
-  }
+  },
 ) {
   await waitFor(() => {
     expect(webhookReceiver.requestList.length).toBe(1);

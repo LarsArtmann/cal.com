@@ -36,7 +36,9 @@ export function isEventTypeOwnerKYCVerified(eventType?: EventTypeOwnerType | nul
 
     const isPartOfVerifiedTeam = eventType.owner.teams.find(
       (team) =>
-        team.accepted && hasKeyInMetadata(team.team, "kycVerified") && !!team.team.metadata.kycVerified
+        team.accepted &&
+        hasKeyInMetadata(team.team, "kycVerified") &&
+        !!team.team.metadata.kycVerified,
     );
     return !!isPartOfVerifiedTeam;
   }

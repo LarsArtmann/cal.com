@@ -1,9 +1,6 @@
 {
   "name": "@calcom/embed-snippet",
-  "sideEffects": false,
   "version": "1.1.2",
-  "main": "./dist/snippet.umd.js",
-  "module": "./dist/snippet.es.js",
   "description": "Vanilla JS embed snippet that is responsible to fetch @calcom/embed-core and thus show Cal Link as an embed on a page.",
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
@@ -11,6 +8,13 @@
     "url": "https://github.com/calcom/cal.com",
     "directory": "packages/embeds/embed-snippet"
   },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "main": "./dist/snippet.umd.js",
+  "module": "./dist/snippet.es.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && vite build && tsc --emitDeclarationOnly --declarationDir dist",
     "type-check": "tsc --pretty --noEmit",
@@ -20,15 +24,11 @@
     "prepack": "yarn ../../../ lint --filter='@calcom/embed-snippet' && yarn withEmbedPublishEnv build",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
-  "files": [
-    "dist"
-  ],
-  "types": "./dist/index.d.ts",
-  "devDependencies": {
-    "typescript": "^6.0.3",
-    "vite": "^8.0.10"
-  },
   "dependencies": {
     "@calcom/embed-core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "vite": "^8.0.12"
   }
 }

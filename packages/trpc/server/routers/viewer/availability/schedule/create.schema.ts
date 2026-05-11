@@ -8,8 +8,8 @@ export const ZCreateInputSchema = z.object({
         z.object({
           start: z.date(),
           end: z.date(),
-        })
-      )
+        }),
+      ),
     )
     .optional(),
   eventTypeId: z.number().optional(),

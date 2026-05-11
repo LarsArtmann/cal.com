@@ -65,11 +65,14 @@ const OrgAppearanceView = () => {
     },
   });
 
-  const { data: currentOrg, isLoading } = trpc.viewer.organizations.listCurrent.useQuery(undefined, {
-    onError: () => {
-      router.push("/settings");
+  const { data: currentOrg, isLoading } = trpc.viewer.organizations.listCurrent.useQuery(
+    undefined,
+    {
+      onError: () => {
+        router.push("/settings");
+      },
     },
-  });
+  );
 
   const form = useForm<OrgAppearanceValues>({
     defaultValues: {
@@ -82,10 +85,16 @@ const OrgAppearanceView = () => {
 
   const isAdmin =
     currentOrg &&
-    (currentOrg.user.role === MembershipRole.OWNER || currentOrg.user.role === MembershipRole.ADMIN);
+    (currentOrg.user.role === MembershipRole.OWNER ||
+      currentOrg.user.role === MembershipRole.ADMIN);
 
   if (isLoading) {
-    return <SkeletonLoader title={t("booking_appearance")} description={t("appearance_team_description")} />;
+    return (
+      <SkeletonLoader
+        title={t("booking_appearance")}
+        description={t("appearance_team_description")}
+      />
+    );
   }
   return (
     <LicenseRequired>
@@ -98,7 +107,8 @@ const OrgAppearanceView = () => {
               ...values,
               theme: values.theme || null,
             });
-          }}>
+          }}
+        >
           <div className="mb-6 flex items-center text-sm">
             <div>
               <p className="font-semibold">{t("theme")}</p>
@@ -144,7 +154,9 @@ const OrgAppearanceView = () => {
               defaultValue={currentOrg.brandColor}
               render={() => (
                 <div>
-                  <p className="text-emphasis mb-2 block text-sm font-medium">{t("light_brand_color")}</p>
+                  <p className="text-emphasis mb-2 block text-sm font-medium">
+                    {t("light_brand_color")}
+                  </p>
                   <ColorPicker
                     defaultValue={currentOrg.brandColor || "#292929"}
                     resetDefaultValue="#292929"
@@ -159,11 +171,15 @@ const OrgAppearanceView = () => {
               defaultValue={currentOrg.darkBrandColor}
               render={() => (
                 <div className="mt-6 sm:mt-0">
-                  <p className="text-emphasis mb-2 block text-sm font-medium">{t("dark_brand_color")}</p>
+                  <p className="text-emphasis mb-2 block text-sm font-medium">
+                    {t("dark_brand_color")}
+                  </p>
                   <ColorPicker
                     defaultValue={currentOrg.darkBrandColor || "#fafafa"}
                     resetDefaultValue="#fafafa"
-                    onChange={(value) => form.setValue("darkBrandColor", value, { shouldDirty: true })}
+                    onChange={(value) =>
+                      form.setValue("darkBrandColor", value, { shouldDirty: true })
+                    }
                   />
                 </div>
               )}

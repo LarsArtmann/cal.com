@@ -37,12 +37,13 @@ export const scheduleWhatsappReminder = async (
   userId?: number | null,
   teamId?: number | null,
   isVerificationPending = false,
-  seatReferenceUid?: string
+  seatReferenceUid?: string,
 ) => {
   const { startTime, endTime } = evt;
   const uid = evt.uid as string;
   const currentDate = dayjs();
-  const timeUnit: timeUnitLowerCase | undefined = timeSpan.timeUnit?.toLocaleLowerCase() as timeUnitLowerCase;
+  const timeUnit: timeUnitLowerCase | undefined =
+    timeSpan.timeUnit?.toLocaleLowerCase() as timeUnitLowerCase;
   let scheduledDate = null;
 
   //WHATSAPP_ATTENDEE action does not need to be verified
@@ -61,16 +62,20 @@ export const scheduleWhatsappReminder = async (
   const isNumberVerified = await getIsNumberVerified();
 
   if (triggerEvent === WorkflowTriggerEvents.BEFORE_EVENT) {
-    scheduledDate = timeSpan.time && timeUnit ? dayjs(startTime).subtract(timeSpan.time, timeUnit) : null;
+    scheduledDate =
+      timeSpan.time && timeUnit ? dayjs(startTime).subtract(timeSpan.time, timeUnit) : null;
   } else if (triggerEvent === WorkflowTriggerEvents.AFTER_EVENT) {
     scheduledDate = timeSpan.time && timeUnit ? dayjs(endTime).add(timeSpan.time, timeUnit) : null;
   }
 
-  const name = action === WorkflowActions.WHATSAPP_ATTENDEE ? evt.attendees[0].name : evt.organizer.name;
+  const name =
+    action === WorkflowActions.WHATSAPP_ATTENDEE ? evt.attendees[0].name : evt.organizer.name;
   const attendeeName =
     action === WorkflowActions.WHATSAPP_ATTENDEE ? evt.organizer.name : evt.attendees[0].name;
   const timeZone =
-    action === WorkflowActions.WHATSAPP_ATTENDEE ? evt.attendees[0].timeZone : evt.organizer.timeZone;
+    action === WorkflowActions.WHATSAPP_ATTENDEE
+      ? evt.attendees[0].timeZone
+      : evt.organizer.timeZone;
 
   switch (template) {
     case WorkflowTemplates.REMINDER:
@@ -83,7 +88,7 @@ export const scheduleWhatsappReminder = async (
           evt.title,
           timeZone,
           attendeeName,
-          name
+          name,
         ) || message;
       break;
     case WorkflowTemplates.CANCELLED:
@@ -96,7 +101,7 @@ export const scheduleWhatsappReminder = async (
           evt.title,
           timeZone,
           attendeeName,
-          name
+          name,
         ) || message;
       break;
     case WorkflowTemplates.RESCHEDULED:
@@ -109,7 +114,7 @@ export const scheduleWhatsappReminder = async (
           evt.title,
           timeZone,
           attendeeName,
-          name
+          name,
         ) || message;
       break;
     case WorkflowTemplates.COMPLETED:
@@ -122,7 +127,7 @@ export const scheduleWhatsappReminder = async (
           evt.title,
           timeZone,
           attendeeName,
-          name
+          name,
         ) || message;
       break;
     default:
@@ -135,7 +140,7 @@ export const scheduleWhatsappReminder = async (
           evt.title,
           timeZone,
           attendeeName,
-          name
+          name,
         ) || message;
   }
 
@@ -169,7 +174,7 @@ export const scheduleWhatsappReminder = async (
             message,
             scheduledDate.toDate(),
             "",
-            true
+            true,
           );
 
           await prisma.workflowReminder.create({

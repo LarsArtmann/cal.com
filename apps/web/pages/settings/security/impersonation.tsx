@@ -61,7 +61,8 @@ const ProfileImpersonationView = () => {
         form={formMethods}
         handleSubmit={({ disableImpersonation }) => {
           mutation.mutate({ disableImpersonation });
-        }}>
+        }}
+      >
         <div className="flex space-x-3">
           <Switch
             onCheckedChange={(e) => {
@@ -84,7 +85,8 @@ const ProfileImpersonationView = () => {
           loading={mutation.isLoading}
           className="mt-8"
           type="submit"
-          disabled={isDisabled}>
+          disabled={isDisabled}
+        >
           {t("update")}
         </Button>
       </Form>

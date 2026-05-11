@@ -44,7 +44,7 @@ function BasePhoneInput({ name, className = "", onChange, ...rest }: PhoneInputP
       }}
       containerClass={classNames(
         "hover:border-emphasis dark:focus:border-emphasis border-default !bg-default rounded-md border focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-default disabled:cursor-not-allowed",
-        className
+        className,
       )}
       inputClass="text-sm focus:ring-0 !bg-default text-default"
       buttonClass="text-emphasis !bg-default hover:!bg-emphasis"

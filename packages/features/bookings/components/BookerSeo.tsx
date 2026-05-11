@@ -17,11 +17,12 @@ interface BookerSeoProps {
 }
 
 export const BookerSeo = (props: BookerSeoProps) => {
-  const { eventSlug, username, rescheduleUid, hideBranding, isTeamEvent, entity, isSEOIndexable } = props;
+  const { eventSlug, username, rescheduleUid, hideBranding, isTeamEvent, entity, isSEOIndexable } =
+    props;
   const { t } = useLocale();
   const { data: event } = trpc.viewer.public.event.useQuery(
     { username, eventSlug, isTeamEvent, org: entity.orgSlug ?? null },
-    { refetchOnWindowFocus: false }
+    { refetchOnWindowFocus: false },
   );
 
   const profileName = event?.profile?.name ?? "";
@@ -35,9 +36,9 @@ export const BookerSeo = (props: BookerSeoProps) => {
         title: title,
         profile: { name: profileName, image: profileImage },
         users: (event?.users || []).map((user) => ({
-            name: `${user.name}`,
-            username: `${user.username}`,
-          })),
+          name: `${user.name}`,
+          username: `${user.username}`,
+        })),
       }}
       nextSeoProps={{
         nofollow: event?.hidden || !isSEOIndexable,

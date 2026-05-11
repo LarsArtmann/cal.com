@@ -59,7 +59,8 @@ export const TimeTimeUnitInput = (props: Props) => {
                       onClick={() => {
                         setTimeUnit(option.value);
                         form.setValue("timeUnit", option.value);
-                      }}>
+                      }}
+                    >
                       {option.label}
                     </DropdownItem>
                   </DropdownMenuItem>

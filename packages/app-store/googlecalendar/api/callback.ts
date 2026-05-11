@@ -70,12 +70,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       res.redirect(
         getSafeRedirectUrl(CAL_URL + "/apps/installed/conferencing?hl=google-meet") ??
-          getInstalledAppPath({ variant: "conferencing", slug: "google-meet" })
+          getInstalledAppPath({ variant: "conferencing", slug: "google-meet" }),
       );
     }
   }
   res.redirect(
     getSafeRedirectUrl(state?.returnTo) ??
-      getInstalledAppPath({ variant: "calendar", slug: "google-calendar" })
+      getInstalledAppPath({ variant: "calendar", slug: "google-calendar" }),
   );
 }

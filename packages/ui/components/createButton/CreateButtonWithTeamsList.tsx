@@ -4,7 +4,10 @@ import type { CreateBtnProps } from "./CreateButton";
 import { CreateButton } from "./CreateButton";
 
 export function CreateButtonWithTeamsList(
-  props: Omit<CreateBtnProps, "options"> & { onlyShowWithTeams?: boolean; onlyShowWithNoTeams?: boolean }
+  props: Omit<CreateBtnProps, "options"> & {
+    onlyShowWithTeams?: boolean;
+    onlyShowWithNoTeams?: boolean;
+  },
 ) {
   const query = trpc.viewer.teamsAndUserProfilesQuery.useQuery();
   if (!query.data) return null;

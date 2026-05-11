@@ -154,7 +154,7 @@ const useTabs = () => {
       !user?.twoFactorEnabled
     ) {
       tab.children = tab?.children?.filter(
-        (childTab) => childTab.href !== "/settings/security/two-factor-auth"
+        (childTab) => childTab.href !== "/settings/security/two-factor-auth",
       );
     }
     return tab;
@@ -174,7 +174,8 @@ const BackButtonInSidebar = ({ name }: { name: string }) => {
     <Link
       href="/"
       className="hover:bg-subtle [&[aria-current='page']]:bg-emphasis [&[aria-current='page']]:text-emphasis group-hover:text-default text-emphasis group my-6 flex h-6 max-h-6 w-full flex-row items-center rounded-md px-3 py-2 text-sm font-medium leading-4"
-      data-testid={`vertical-tab-${name}`}>
+      data-testid={`vertical-tab-${name}`}
+    >
       <ArrowLeft className="h-4 w-4 stroke-[2px] ltr:mr-[10px] rtl:ml-[10px] rtl:rotate-180 md:mt-0" />
       <Skeleton title={name} as="p" className="max-w-36 min-h-4 truncate" loadingClassName="ms-3">
         {name}
@@ -222,7 +223,7 @@ const SettingsSidebarContainer = ({
       setTeamMenuState(teamStates);
       setTimeout(() => {
         const tabMembers = Array.from(document.getElementsByTagName("a")).filter(
-          (bottom) => bottom.dataset.testid === "vertical-tab-Members"
+          (bottom) => bottom.dataset.testid === "vertical-tab-Members",
         )[1];
         tabMembers?.scrollIntoView({ behavior: "smooth" });
       }, 100);
@@ -240,7 +241,7 @@ const SettingsSidebarContainer = ({
       setTimeout(() => {
         // @TODO: test if this works for 2 dataset testids
         const tabMembers = Array.from(document.getElementsByTagName("a")).filter(
-          (bottom) => bottom.dataset.testid === "vertical-tab-Members"
+          (bottom) => bottom.dataset.testid === "vertical-tab-Members",
         )[1];
         tabMembers?.scrollIntoView({ behavior: "smooth" });
       }, 100);
@@ -269,9 +270,10 @@ const SettingsSidebarContainer = ({
         className,
         navigationIsOpenedOnMobile
           ? "translate-x-0 opacity-100"
-          : "-translate-x-full opacity-0 lg:translate-x-0 lg:opacity-100"
+          : "-translate-x-full opacity-0 lg:translate-x-0 lg:opacity-100",
       )}
-      aria-label="Tabs">
+      aria-label="Tabs"
+    >
       <>
         <BackButtonInSidebar name={t("back")} />
         {tabsWithPermissions.map((tab) => {
@@ -295,7 +297,8 @@ const SettingsSidebarContainer = ({
                         title={tab.name}
                         as="p"
                         className="truncate text-sm font-medium leading-5"
-                        loadingClassName="ms-3">
+                        loadingClassName="ms-3"
+                      >
                         {t(tab.name)}
                       </Skeleton>
                     </div>
@@ -330,7 +333,8 @@ const SettingsSidebarContainer = ({
                           title={tab.name}
                           as="p"
                           className="truncate text-sm font-medium leading-5"
-                          loadingClassName="ms-3">
+                          loadingClassName="ms-3"
+                        >
                           {t(isOrgAdminOrOwner ? "my_teams" : tab.name)}
                         </Skeleton>
                       </div>
@@ -355,7 +359,8 @@ const SettingsSidebarContainer = ({
                                     teamMenuOpen: !teamMenuState[index].teamMenuOpen,
                                   }),
                                 ])
-                              }>
+                              }
+                            >
                               <CollapsibleTrigger asChild>
                                 <div
                                   className="hover:bg-subtle [&[aria-current='page']]:bg-emphasis [&[aria-current='page']]:text-emphasis text-default flex h-9 w-full flex-row items-center rounded-md px-3 py-[10px]  text-left text-sm font-medium leading-none"
@@ -367,7 +372,8 @@ const SettingsSidebarContainer = ({
                                         teamMenuOpen: !teamMenuState[index].teamMenuOpen,
                                       }),
                                     ])
-                                  }>
+                                  }
+                                >
                                   <div className="me-3">
                                     {teamMenuState[index].teamMenuOpen ? (
                                       <ChevronDown className="h-4 w-4" />
@@ -472,7 +478,8 @@ const SettingsSidebarContainer = ({
                           title={t("org_admin_other_teams")}
                           as="p"
                           className="truncate text-sm font-medium leading-5"
-                          loadingClassName="ms-3">
+                          loadingClassName="ms-3"
+                        >
                           {t("org_admin_other_teams")}
                         </Skeleton>
                       </div>
@@ -483,7 +490,9 @@ const SettingsSidebarContainer = ({
                         if (!otherTeamMenuState[index]) {
                           return null;
                         }
-                        if (otherTeamMenuState.some((teamState) => teamState.teamId === otherTeam.id))
+                        if (
+                          otherTeamMenuState.some((teamState) => teamState.teamId === otherTeam.id)
+                        )
                           return (
                             <Collapsible
                               className="cursor-pointer"
@@ -497,7 +506,8 @@ const SettingsSidebarContainer = ({
                                     teamMenuOpen: !otherTeamMenuState[index].teamMenuOpen,
                                   }),
                                 ])
-                              }>
+                              }
+                            >
                               <CollapsibleTrigger asChild>
                                 <div
                                   className="hover:bg-subtle [&[aria-current='page']]:bg-emphasis [&[aria-current='page']]:text-emphasis text-default flex h-9 w-full flex-row items-center rounded-md px-3 py-[10px]  text-left text-sm font-medium leading-none"
@@ -509,7 +519,8 @@ const SettingsSidebarContainer = ({
                                         teamMenuOpen: !otherTeamMenuState[index].teamMenuOpen,
                                       }),
                                     ])
-                                  }>
+                                  }
+                                >
                                   <div className="me-3">
                                     {otherTeamMenuState[index].teamMenuOpen ? (
                                       <ChevronDown className="h-4 w-4" />
@@ -518,7 +529,10 @@ const SettingsSidebarContainer = ({
                                     )}
                                   </div>
                                   <img
-                                    src={getPlaceholderAvatar(otherTeam.logo, otherTeam?.name as string)}
+                                    src={getPlaceholderAvatar(
+                                      otherTeam.logo,
+                                      otherTeam?.name as string,
+                                    )}
                                     className="h-[16px] w-[16px] self-start rounded-full stroke-[2px] ltr:mr-2 rtl:ml-2 md:mt-0"
                                     alt={otherTeam.name || "Team logo"}
                                   />
@@ -571,13 +585,19 @@ const MobileSettingsContainer = (props: { onSideContainerOpen?: () => void }) =>
     <>
       <nav className="bg-muted border-muted sticky top-0 z-20 flex w-full items-center justify-between border-b py-2 sm:relative lg:hidden">
         <div className="flex items-center space-x-3 ">
-          <Button StartIcon={Menu} color="minimal" variant="icon" onClick={props.onSideContainerOpen}>
+          <Button
+            StartIcon={Menu}
+            color="minimal"
+            variant="icon"
+            onClick={props.onSideContainerOpen}
+          >
             <span className="sr-only">{t("show_navigation")}</span>
           </Button>
 
           <button
             className="hover:bg-emphasis flex items-center space-x-2 rounded-md px-3 py-1 rtl:space-x-reverse"
-            onClick={() => router.back()}>
+            onClick={() => router.back()}
+          >
             <ArrowLeft className="text-default h-4 w-4" />
             <p className="text-emphasis font-semibold">{t("settings")}</p>
           </button>
@@ -630,8 +650,11 @@ export default function SettingsLayout({
       drawerState={state}
       MobileNavigationContainer={null}
       TopNavContainer={
-        <MobileSettingsContainer onSideContainerOpen={() => setSideContainerOpen(!sideContainerOpen)} />
-      }>
+        <MobileSettingsContainer
+          onSideContainerOpen={() => setSideContainerOpen(!sideContainerOpen)}
+        />
+      }
+    >
       <div className="flex flex-1 [&>*]:flex-1">
         <div className="mx-auto max-w-full justify-center md:max-w-4xl">
           <ShellHeader />
@@ -656,7 +679,8 @@ const SidebarContainerElement = ({
       {sideContainerOpen && (
         <button
           onClick={() => setSideContainerOpen(false)}
-          className="fixed left-0 top-0 z-10 h-full w-full bg-black/50">
+          className="fixed left-0 top-0 z-10 h-full w-full bg-black/50"
+        >
           <span className="sr-only">{t("hide_navigation")}</span>
         </button>
       )}

@@ -12,7 +12,7 @@ import { Button as CalButton, TextField, TextArea } from "@calcom/ui";
 import { Trash, Plus } from "@calcom/ui/components/icon";
 
 const Select = dynamic(
-  async () => (await import("@calcom/ui")).SelectWithValidation
+  async () => (await import("@calcom/ui")).SelectWithValidation,
 ) as unknown as typeof import("@calcom/ui").SelectWithValidation;
 
 export type CommonProps<
@@ -23,7 +23,7 @@ export type CommonProps<
     | {
         value: string;
         optionValue: string;
-      }
+      },
 > = {
   placeholder?: string;
   readOnly?: boolean;
@@ -45,17 +45,17 @@ export type SelectLikeComponentProps<
     | {
         value: string;
         optionValue: string;
-      } = string
+      } = string,
 > = {
   options: {
     label: string;
     value: TVal extends (infer P)[]
       ? P
       : TVal extends {
-          value: string;
-        }
-      ? TVal["value"]
-      : TVal;
+            value: string;
+          }
+        ? TVal["value"]
+        : TVal;
   }[];
 } & CommonProps<TVal>;
 
@@ -63,9 +63,10 @@ export type SelectLikeComponentPropsRAQB<TVal extends string | string[] = string
   listValues: { title: string; value: TVal extends (infer P)[] ? P : TVal }[];
 } & CommonProps<TVal>;
 
-export type TextLikeComponentProps<TVal extends string | string[] | boolean = string> = CommonProps<TVal> & {
-  name?: string;
-};
+export type TextLikeComponentProps<TVal extends string | string[] | boolean = string> =
+  CommonProps<TVal> & {
+    name?: string;
+  };
 
 export type TextLikeComponentPropsRAQB<TVal extends string | boolean = string> =
   TextLikeComponentProps<TVal> & {
@@ -76,7 +77,8 @@ export type TextLikeComponentPropsRAQB<TVal extends string | boolean = string> =
   };
 
 const TextAreaWidget = (props: TextLikeComponentPropsRAQB) => {
-  const { value, setValue, readOnly, placeholder, maxLength, customProps, ...remainingProps } = props;
+  const { value, setValue, readOnly, placeholder, maxLength, customProps, ...remainingProps } =
+    props;
 
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
@@ -179,7 +181,12 @@ const MultiSelectWidget = ({
   );
 };
 
-function SelectWidget({ listValues, setValue, value, ...remainingProps }: SelectLikeComponentPropsRAQB) {
+function SelectWidget({
+  listValues,
+  setValue,
+  value,
+  ...remainingProps
+}: SelectLikeComponentPropsRAQB) {
   if (!listValues) {
     return null;
   }
@@ -231,7 +238,8 @@ function Button({ config, type, label, onClick, readonly }: ButtonProps) {
       type="button"
       color="secondary"
       disabled={readonly}
-      onClick={onClick}>
+      onClick={onClick}
+    >
       {label}
     </CalButton>
   );

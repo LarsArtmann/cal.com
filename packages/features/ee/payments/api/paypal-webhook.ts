@@ -40,7 +40,7 @@ async function getEventType(id: number) {
 export async function handlePaymentSuccess(
   payload: z.infer<typeof eventSchema>,
   rawPayload: string,
-  webhookHeaders: WebHookHeadersType
+  webhookHeaders: WebHookHeadersType,
 ) {
   const payment = await prisma.payment.findFirst({
     where: {
@@ -155,8 +155,8 @@ export async function handlePaymentSuccess(
     destinationCalendar: booking.destinationCalendar
       ? [booking.destinationCalendar]
       : user.destinationCalendar
-      ? [user.destinationCalendar]
-      : [],
+        ? [user.destinationCalendar]
+        : [],
     recurringEvent: parseRecurringEvent(eventTypeRaw?.recurringEvent),
   };
 
@@ -296,7 +296,7 @@ const webhookHeadersSchema = z
 type WebHookHeadersType = z.infer<typeof webhookHeadersSchema>;
 
 export const findPaymentCredentials = async (
-  bookingId: number
+  bookingId: number,
 ): Promise<{ clientId: string; secretKey: string; webhookId: string }> => {
   try {
     // @TODO: what about team bookings with paypal?

@@ -32,7 +32,7 @@ export const eventTypesRouter = router({
   getByViewer: authedProcedure.input(ZEventTypeInputSchema).query(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.getByViewer) {
       UNSTABLE_HANDLER_CACHE.getByViewer = await import("./getByViewer.handler").then(
-        (mod) => mod.getByViewerHandler
+        (mod) => mod.getByViewerHandler,
       );
     }
 
@@ -71,7 +71,7 @@ export const eventTypesRouter = router({
   listWithTeam: authedProcedure.query(async ({ ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.listWithTeam) {
       UNSTABLE_HANDLER_CACHE.listWithTeam = await import("./listWithTeam.handler").then(
-        (mod) => mod.listWithTeamHandler
+        (mod) => mod.listWithTeamHandler,
       );
     }
 
@@ -87,7 +87,9 @@ export const eventTypesRouter = router({
 
   create: authedProcedure.input(ZCreateInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.create) {
-      UNSTABLE_HANDLER_CACHE.create = await import("./create.handler").then((mod) => mod.createHandler);
+      UNSTABLE_HANDLER_CACHE.create = await import("./create.handler").then(
+        (mod) => mod.createHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -119,7 +121,9 @@ export const eventTypesRouter = router({
 
   update: eventOwnerProcedure.input(ZUpdateInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.update) {
-      UNSTABLE_HANDLER_CACHE.update = await import("./update.handler").then((mod) => mod.updateHandler);
+      UNSTABLE_HANDLER_CACHE.update = await import("./update.handler").then(
+        (mod) => mod.updateHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -135,7 +139,9 @@ export const eventTypesRouter = router({
 
   delete: eventOwnerProcedure.input(ZDeleteInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.delete) {
-      UNSTABLE_HANDLER_CACHE.delete = await import("./delete.handler").then((mod) => mod.deleteHandler);
+      UNSTABLE_HANDLER_CACHE.delete = await import("./delete.handler").then(
+        (mod) => mod.deleteHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -152,7 +158,7 @@ export const eventTypesRouter = router({
   duplicate: eventOwnerProcedure.input(ZDuplicateInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.duplicate) {
       UNSTABLE_HANDLER_CACHE.duplicate = await import("./duplicate.handler").then(
-        (mod) => mod.duplicateHandler
+        (mod) => mod.duplicateHandler,
       );
     }
 
@@ -170,7 +176,7 @@ export const eventTypesRouter = router({
   bulkEventFetch: authedProcedure.query(async ({ ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.bulkEventFetch) {
       UNSTABLE_HANDLER_CACHE.bulkEventFetch = await import("./bulkEventFetch.handler").then(
-        (mod) => mod.bulkEventFetchHandler
+        (mod) => mod.bulkEventFetchHandler,
       );
     }
 
@@ -188,13 +194,14 @@ export const eventTypesRouter = router({
     .input(
       z.object({
         eventTypeIds: z.array(z.number()),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       if (!UNSTABLE_HANDLER_CACHE.bulkUpdateToDefaultLocation) {
-        UNSTABLE_HANDLER_CACHE.bulkUpdateToDefaultLocation = await import(
-          "./bulkUpdateToDefaultLocation.handler"
-        ).then((mod) => mod.bulkUpdateToDefaultLocationHandler);
+        UNSTABLE_HANDLER_CACHE.bulkUpdateToDefaultLocation =
+          await import("./bulkUpdateToDefaultLocation.handler").then(
+            (mod) => mod.bulkUpdateToDefaultLocationHandler,
+          );
       }
 
       // Unreachable code but required for type safety

@@ -33,7 +33,7 @@ function gotoUrl(url: string, newTab?: boolean) {
 }
 
 export function GoogleWorkspaceInviteButton(
-  props: PropsWithChildren<{ onSuccess: (data: string[]) => void }>
+  props: PropsWithChildren<{ onSuccess: (data: string[]) => void }>,
 ) {
   const featureFlags = useFlagMap();
   const utils = trpc.useContext();
@@ -76,7 +76,8 @@ export function GoogleWorkspaceInviteButton(
             }}
             className="w-full justify-center gap-2"
             StartIcon={UsersIcon}
-            loading={mutation.isLoading}>
+            loading={mutation.isLoading}
+          >
             {t("import_from_google_workspace")}
           </Button>
         </Tooltip>
@@ -119,7 +120,8 @@ export function GoogleWorkspaceInviteButton(
         const json = await res.json();
         gotoUrl(json.url, json.newTab);
       }}
-      className="justify-center gap-2">
+      className="justify-center gap-2"
+    >
       {t("connect_google_workspace")}
     </Button>
   );

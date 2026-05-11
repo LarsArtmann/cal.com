@@ -14,7 +14,8 @@ export default function UnconfirmedBookingBadge() {
         rounded
         title={t("unconfirmed_bookings_tooltip")}
         variant="orange"
-        className="cursor-pointer hover:bg-orange-800 hover:text-orange-100">
+        className="cursor-pointer hover:bg-orange-800 hover:text-orange-100"
+      >
         {unconfirmedBookingCount}
       </Badge>
     </Link>

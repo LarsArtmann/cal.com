@@ -14,10 +14,13 @@ export default class OrganizerRescheduledEmail extends OrganizerScheduledEmail {
       },
       from: `${APP_NAME} <${this.getMailerOptions().from}>`,
       to: toAddresses.join(","),
-      subject: `${this.calEvent.organizer.language.translate("event_type_has_been_rescheduled_on_time_date", {
-        title: this.calEvent.title,
-        date: this.getFormattedDate(),
-      })}`,
+      subject: `${this.calEvent.organizer.language.translate(
+        "event_type_has_been_rescheduled_on_time_date",
+        {
+          title: this.calEvent.title,
+          date: this.getFormattedDate(),
+        },
+      )}`,
       html: renderEmail("OrganizerRescheduledEmail", {
         calEvent: { ...this.calEvent, attendeeSeatId: undefined },
         attendee: this.calEvent.organizer,

@@ -46,10 +46,12 @@ const DateOverrideForm = ({
       value[0].start.getUTCHours() === 0 &&
       value[0].start.getUTCMinutes() === 0 &&
       value[0].end.getUTCHours() === 0 &&
-      value[0].end.getUTCMinutes() === 0
+      value[0].end.getUTCMinutes() === 0,
   );
 
-  const [selectedDates, setSelectedDates] = useState<Dayjs[]>(value ? [dayjs.utc(value[0].start)] : []);
+  const [selectedDates, setSelectedDates] = useState<Dayjs[]>(
+    value ? [dayjs.utc(value[0].start)] : [],
+  );
 
   const onDateChange = (newDate: Dayjs) => {
     // If clicking on a selected date unselect it
@@ -94,10 +96,15 @@ const DateOverrideForm = ({
                 .hour(range.start.getUTCHours())
                 .minute(range.start.getUTCMinutes())
                 .second(0)
-                .format()
+                .format(),
             ),
             end: new Date(
-              dayjs.utc().hour(range.end.getUTCHours()).minute(range.end.getUTCMinutes()).second(0).format()
+              dayjs
+                .utc()
+                .hour(range.end.getUTCHours())
+                .minute(range.end.getUTCMinutes())
+                .second(0)
+                .format(),
             ),
           }))
         : defaultRanges,
@@ -121,7 +128,11 @@ const DateOverrideForm = ({
                   .minute(item.start.getUTCMinutes())
                   .utc(true)
                   .toDate(),
-                end: date.hour(item.end.getUTCHours()).minute(item.end.getUTCMinutes()).utc(true).toDate(),
+                end: date
+                  .hour(item.end.getUTCHours())
+                  .minute(item.end.getUTCMinutes())
+                  .utc(true)
+                  .toDate(),
               });
             });
           });
@@ -135,16 +146,18 @@ const DateOverrideForm = ({
                   end: date.utc(true).startOf("day").add(1, "day").toDate(),
                 };
               })
-            : datesInRanges
+            : datesInRanges,
         );
         onClose();
       }}
-      className="p-6 sm:flex sm:p-0 md:flex-col lg:flex-col xl:flex-row">
+      className="p-6 sm:flex sm:p-0 md:flex-col lg:flex-col xl:flex-row"
+    >
       <div
         className={classNames(
           selectedDates[0] && "sm:border-subtle w-full sm:border-r sm:pr-6",
-          "sm:p-4 md:p-8"
-        )}>
+          "sm:p-4 md:p-8",
+        )}
+      >
         <DialogHeader title={t("date_overrides_dialog_title")} />
         <DatePicker
           excludedDates={excludedDates}
@@ -163,7 +176,9 @@ const DateOverrideForm = ({
       {selectedDates[0] && (
         <div className="relative mt-8 flex w-full flex-col sm:mt-0 sm:p-4 md:p-8">
           <div className="mb-4 flex-grow space-y-4">
-            <p className="text-medium text-emphasis text-sm">{t("date_overrides_dialog_which_hours")}</p>
+            <p className="text-medium text-emphasis text-sm">
+              {t("date_overrides_dialog_which_hours")}
+            </p>
             <div>
               {datesUnavailable ? (
                 <p className="text-subtle border-default rounded border p-2 text-sm">
@@ -186,7 +201,8 @@ const DateOverrideForm = ({
               color="primary"
               type="submit"
               disabled={selectedDates.length === 0}
-              data-testid="add-override-submit-btn">
+              data-testid="add-override-submit-btn"
+            >
               {value ? t("date_overrides_update_btn") : t("date_overrides_add_btn")}
             </Button>
             <DialogClose onClick={onClose} />

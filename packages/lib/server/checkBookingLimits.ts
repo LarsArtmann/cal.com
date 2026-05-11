@@ -11,14 +11,14 @@ import { parseBookingLimit } from "../isBookingLimits";
 export async function checkBookingLimits(
   bookingLimits: IntervalLimit,
   eventStartDate: Date,
-  eventId: number
+  eventId: number,
 ) {
   const parsedBookingLimits = parseBookingLimit(bookingLimits);
   if (!parsedBookingLimits) return false;
 
   // not iterating entries to preserve types
   const limitCalculations = ascendingLimitKeys.map((key) =>
-    checkBookingLimit({ key, limitingNumber: parsedBookingLimits[key], eventStartDate, eventId })
+    checkBookingLimit({ key, limitingNumber: parsedBookingLimits[key], eventStartDate, eventId }),
   );
 
   try {

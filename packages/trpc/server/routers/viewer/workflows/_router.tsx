@@ -62,7 +62,9 @@ export const workflowsRouter = router({
 
   create: authedProcedure.input(ZCreateInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.create) {
-      UNSTABLE_HANDLER_CACHE.create = await import("./create.handler").then((mod) => mod.createHandler);
+      UNSTABLE_HANDLER_CACHE.create = await import("./create.handler").then(
+        (mod) => mod.createHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -78,7 +80,9 @@ export const workflowsRouter = router({
 
   delete: authedProcedure.input(ZDeleteInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.delete) {
-      UNSTABLE_HANDLER_CACHE.delete = await import("./delete.handler").then((mod) => mod.deleteHandler);
+      UNSTABLE_HANDLER_CACHE.delete = await import("./delete.handler").then(
+        (mod) => mod.deleteHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -94,7 +98,9 @@ export const workflowsRouter = router({
 
   update: authedProcedure.input(ZUpdateInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.update) {
-      UNSTABLE_HANDLER_CACHE.update = await import("./update.handler").then((mod) => mod.updateHandler);
+      UNSTABLE_HANDLER_CACHE.update = await import("./update.handler").then(
+        (mod) => mod.updateHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -108,31 +114,34 @@ export const workflowsRouter = router({
     });
   }),
 
-  activateEventType: authedProcedure.input(ZActivateEventTypeInputSchema).mutation(async ({ ctx, input }) => {
-    if (!UNSTABLE_HANDLER_CACHE.activateEventType) {
-      UNSTABLE_HANDLER_CACHE.activateEventType = await import("./activateEventType.handler").then(
-        (mod) => mod.activateEventTypeHandler
-      );
-    }
+  activateEventType: authedProcedure
+    .input(ZActivateEventTypeInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      if (!UNSTABLE_HANDLER_CACHE.activateEventType) {
+        UNSTABLE_HANDLER_CACHE.activateEventType = await import("./activateEventType.handler").then(
+          (mod) => mod.activateEventTypeHandler,
+        );
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.activateEventType) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.activateEventType) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.activateEventType({
-      ctx,
-      input,
-    });
-  }),
+      return UNSTABLE_HANDLER_CACHE.activateEventType({
+        ctx,
+        input,
+      });
+    }),
 
   sendVerificationCode: authedProcedure
     .input(ZSendVerificationCodeInputSchema)
     .mutation(async ({ ctx, input }) => {
       if (!UNSTABLE_HANDLER_CACHE.sendVerificationCode) {
-        UNSTABLE_HANDLER_CACHE.sendVerificationCode = await import("./sendVerificationCode.handler").then(
-          (mod) => mod.sendVerificationCodeHandler
-        );
+        UNSTABLE_HANDLER_CACHE.sendVerificationCode =
+          await import("./sendVerificationCode.handler").then(
+            (mod) => mod.sendVerificationCodeHandler,
+          );
       }
 
       // Unreachable code but required for type safety
@@ -146,47 +155,51 @@ export const workflowsRouter = router({
       });
     }),
 
-  verifyPhoneNumber: authedProcedure.input(ZVerifyPhoneNumberInputSchema).mutation(async ({ ctx, input }) => {
-    if (!UNSTABLE_HANDLER_CACHE.verifyPhoneNumber) {
-      UNSTABLE_HANDLER_CACHE.verifyPhoneNumber = await import("./verifyPhoneNumber.handler").then(
-        (mod) => mod.verifyPhoneNumberHandler
-      );
-    }
+  verifyPhoneNumber: authedProcedure
+    .input(ZVerifyPhoneNumberInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      if (!UNSTABLE_HANDLER_CACHE.verifyPhoneNumber) {
+        UNSTABLE_HANDLER_CACHE.verifyPhoneNumber = await import("./verifyPhoneNumber.handler").then(
+          (mod) => mod.verifyPhoneNumberHandler,
+        );
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.verifyPhoneNumber) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.verifyPhoneNumber) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.verifyPhoneNumber({
-      ctx,
-      input,
-    });
-  }),
+      return UNSTABLE_HANDLER_CACHE.verifyPhoneNumber({
+        ctx,
+        input,
+      });
+    }),
 
-  getVerifiedNumbers: authedProcedure.input(ZGetVerifiedNumbersInputSchema).query(async ({ ctx, input }) => {
-    if (!UNSTABLE_HANDLER_CACHE.getVerifiedNumbers) {
-      UNSTABLE_HANDLER_CACHE.getVerifiedNumbers = await import("./getVerifiedNumbers.handler").then(
-        (mod) => mod.getVerifiedNumbersHandler
-      );
-    }
+  getVerifiedNumbers: authedProcedure
+    .input(ZGetVerifiedNumbersInputSchema)
+    .query(async ({ ctx, input }) => {
+      if (!UNSTABLE_HANDLER_CACHE.getVerifiedNumbers) {
+        UNSTABLE_HANDLER_CACHE.getVerifiedNumbers =
+          await import("./getVerifiedNumbers.handler").then((mod) => mod.getVerifiedNumbersHandler);
+      }
 
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.getVerifiedNumbers) {
-      throw new Error("Failed to load handler");
-    }
+      // Unreachable code but required for type safety
+      if (!UNSTABLE_HANDLER_CACHE.getVerifiedNumbers) {
+        throw new Error("Failed to load handler");
+      }
 
-    return UNSTABLE_HANDLER_CACHE.getVerifiedNumbers({
-      ctx,
-      input,
-    });
-  }),
+      return UNSTABLE_HANDLER_CACHE.getVerifiedNumbers({
+        ctx,
+        input,
+      });
+    }),
 
   getWorkflowActionOptions: authedProcedure.query(async ({ ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.getWorkflowActionOptions) {
-      UNSTABLE_HANDLER_CACHE.getWorkflowActionOptions = await import(
-        "./getWorkflowActionOptions.handler"
-      ).then((mod) => mod.getWorkflowActionOptionsHandler);
+      UNSTABLE_HANDLER_CACHE.getWorkflowActionOptions =
+        await import("./getWorkflowActionOptions.handler").then(
+          (mod) => mod.getWorkflowActionOptionsHandler,
+        );
     }
 
     // Unreachable code but required for type safety
@@ -201,7 +214,7 @@ export const workflowsRouter = router({
   filteredList: authedProcedure.input(ZFilteredListInputSchema).query(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.filteredList) {
       UNSTABLE_HANDLER_CACHE.filteredList = await import("./filteredList.handler").then(
-        (mod) => mod.filteredListHandler
+        (mod) => mod.filteredListHandler,
       );
     }
 

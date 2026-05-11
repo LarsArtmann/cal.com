@@ -9,7 +9,11 @@ import type { BookingStatus } from "@calcom/prisma/enums";
 import type { Slot } from "@calcom/trpc/server/routers/viewer/slots/types";
 import { getAvailableSlots as getSchedule } from "@calcom/trpc/server/routers/viewer/slots/util";
 
-import { getDate, getGoogleCalendarCredential, createBookingScenario } from "../utils/bookingScenario";
+import {
+  getDate,
+  getGoogleCalendarCredential,
+  createBookingScenario,
+} from "../utils/bookingScenario";
 
 // TODO: Mock properly
 prismaMock.eventType.findUnique.mockResolvedValue(null);
@@ -33,7 +37,7 @@ expect.extend({
   toHaveTimeSlots(
     schedule: { slots: Record<string, Slot[]> },
     expectedSlots: string[],
-    { dateString }: { dateString: string }
+    { dateString }: { dateString: string },
   ) {
     if (!schedule.slots[`${dateString}`]) {
       return {
@@ -53,7 +57,7 @@ expect.extend({
         message: () =>
           `has incorrect timeslots for ${dateString}.\n\r ${diff(
             expectedSlots.map((expectedSlot) => `${dateString}T${expectedSlot}`),
-            schedule.slots[`${dateString}`].map((slot) => slot.time)
+            schedule.slots[`${dateString}`].map((slot) => slot.time),
           )}`,
       };
     }
@@ -316,7 +320,7 @@ describe("getSchedule", () => {
         ],
         {
           dateString: plus2DateString,
-        }
+        },
       );
 
       // Day plus 3
@@ -348,7 +352,7 @@ describe("getSchedule", () => {
         ],
         {
           dateString: plus3DateString,
-        }
+        },
       );
     });
 
@@ -418,7 +422,7 @@ describe("getSchedule", () => {
         ],
         {
           dateString: plus2DateString,
-        }
+        },
       );
 
       const scheduleForEventWith30minsLengthAndSlotInterval2hrs = await getSchedule({
@@ -437,7 +441,7 @@ describe("getSchedule", () => {
         [`04:30:00.000Z`, `06:30:00.000Z`, `08:30:00.000Z`, `10:30:00.000Z`, `12:30:00.000Z`],
         {
           dateString: plus2DateString,
-        }
+        },
       );
     });
 
@@ -449,7 +453,7 @@ describe("getSchedule", () => {
           const today = new Date();
           // Beginning of the day in current timezone of the system
           return new Date(today.getFullYear(), today.getMonth(), today.getDate());
-        })()
+        })(),
       );
 
       createBookingScenario({
@@ -503,7 +507,7 @@ describe("getSchedule", () => {
         ],
         {
           dateString: todayDateString,
-        }
+        },
       );
 
       const scheduleForEventWithBookingNotice10Hrs = await getSchedule({
@@ -526,7 +530,7 @@ describe("getSchedule", () => {
         ],
         {
           dateString: todayDateString,
-        }
+        },
       );
       vi.useRealTimers();
     });
@@ -591,7 +595,7 @@ describe("getSchedule", () => {
         ],
         {
           dateString: plus3DateString,
-        }
+        },
       );
     });
 
@@ -665,7 +669,7 @@ describe("getSchedule", () => {
         ],
         {
           dateString: plus2DateString,
-        }
+        },
       );
     });
 
@@ -735,7 +739,7 @@ describe("getSchedule", () => {
         ],
         {
           dateString: plus2DateString,
-        }
+        },
       );
     });
 
@@ -781,7 +785,7 @@ describe("getSchedule", () => {
         ["08:30:00.000Z", "09:30:00.000Z", "10:30:00.000Z", "11:30:00.000Z"],
         {
           dateString: plus2DateString,
-        }
+        },
       );
     });
 
@@ -872,7 +876,7 @@ describe("getSchedule", () => {
         ],
         {
           dateString: plus2DateString,
-        }
+        },
       );
     });
   });
@@ -969,7 +973,7 @@ describe("getSchedule", () => {
         ],
         {
           dateString: plus1DateString,
-        }
+        },
       );
 
       const scheduleForTeamEventOnADayWithOneBookingForEachUser = await getSchedule({
@@ -1000,7 +1004,7 @@ describe("getSchedule", () => {
           `11:00:00.000Z`,
           `11:45:00.000Z`,
         ],
-        { dateString: plus2DateString }
+        { dateString: plus2DateString },
       );
     });
 
@@ -1080,18 +1084,21 @@ describe("getSchedule", () => {
           },
         ],
       });
-      const scheduleForTeamEventOnADayWithOneBookingForEachUserButOnDifferentTimeslots = await getSchedule({
-        input: {
-          eventTypeId: 1,
-          eventTypeSlug: "",
-          startTime: `${plus1DateString}T18:30:00.000Z`,
-          endTime: `${plus2DateString}T18:29:59.999Z`,
-          timeZone: Timezones["+5:30"],
-          isTeamEvent: true,
-        },
-      });
+      const scheduleForTeamEventOnADayWithOneBookingForEachUserButOnDifferentTimeslots =
+        await getSchedule({
+          input: {
+            eventTypeId: 1,
+            eventTypeSlug: "",
+            startTime: `${plus1DateString}T18:30:00.000Z`,
+            endTime: `${plus2DateString}T18:29:59.999Z`,
+            timeZone: Timezones["+5:30"],
+            isTeamEvent: true,
+          },
+        });
       // A user with blocked time in another event, still affects Team Event availability
-      expect(scheduleForTeamEventOnADayWithOneBookingForEachUserButOnDifferentTimeslots).toHaveTimeSlots(
+      expect(
+        scheduleForTeamEventOnADayWithOneBookingForEachUserButOnDifferentTimeslots,
+      ).toHaveTimeSlots(
         [
           `04:00:00.000Z`, // - Blocked with User 101 but free with User 102. Being RoundRobin it is still bookable
           `04:45:00.000Z`,
@@ -1105,7 +1112,7 @@ describe("getSchedule", () => {
           `10:45:00.000Z`,
           `11:30:00.000Z`,
         ],
-        { dateString: plus2DateString }
+        { dateString: plus2DateString },
       );
 
       const scheduleForTeamEventOnADayWithOneBookingForEachUserOnSameTimeSlot = await getSchedule({
@@ -1134,7 +1141,7 @@ describe("getSchedule", () => {
           `11:00:00.000Z`,
           `11:45:00.000Z`,
         ],
-        { dateString: plus3DateString }
+        { dateString: plus3DateString },
       );
     });
   });

@@ -11,7 +11,7 @@ export const RecentAppsSlider = <T extends App>({ items }: { items: T[] }) => {
     <Slider<T>
       title={t("recently_added")}
       items={items.sort(
-        (a, b) => new Date(b?.createdAt || 0).valueOf() - new Date(a?.createdAt || 0).valueOf()
+        (a, b) => new Date(b?.createdAt || 0).valueOf() - new Date(a?.createdAt || 0).valueOf(),
       )}
       itemKey={(app) => app.name}
       options={{

@@ -10,7 +10,10 @@ import { useEmbedTheme } from "@calcom/embed-core/embed-iframe";
  * To just read the values pass `getOnly` as `true` and `themeToSet` as `null`
  */
 // eslint-disable-next-line @typescript-eslint/ban-types
-export default function useTheme(themeToSet: "system" | (string & {}) | undefined | null, getOnly = false) {
+export default function useTheme(
+  themeToSet: "system" | (string & {}) | undefined | null,
+  getOnly = false,
+) {
   const { resolvedTheme, setTheme, forcedTheme, theme: activeTheme } = useNextTheme();
   const embedTheme = useEmbedTheme();
 
@@ -23,7 +26,11 @@ export default function useTheme(themeToSet: "system" | (string & {}) | undefine
     // Embed theme takes precedence over theme configured in app.
     // If embedTheme isn't set i.e. it's not explicitly configured with a theme, then it would use the theme configured in appearance.
     // If embedTheme is set to "auto" then we consider it as null which then uses system theme.
-    const finalThemeToSet = embedTheme ? (embedTheme === "auto" ? "system" : embedTheme) : themeToSet;
+    const finalThemeToSet = embedTheme
+      ? embedTheme === "auto"
+        ? "system"
+        : embedTheme
+      : themeToSet;
 
     if (!finalThemeToSet || finalThemeToSet === activeTheme) return;
 

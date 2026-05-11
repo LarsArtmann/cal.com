@@ -23,7 +23,9 @@ const isCalendarService = (x: unknown): x is CalendarApp =>
   !!x.lib &&
   "CalendarService" in x.lib;
 
-export const getCalendar = async (credential: CredentialPayload | null): Promise<Calendar | null> => {
+export const getCalendar = async (
+  credential: CredentialPayload | null,
+): Promise<Calendar | null> => {
   if (!credential || !credential.key) return null;
   let { type: calendarType } = credential;
   if (calendarType?.endsWith("_other_calendar")) {

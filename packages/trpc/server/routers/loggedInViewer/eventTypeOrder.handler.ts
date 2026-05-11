@@ -62,6 +62,6 @@ export const eventTypeOrderHandler = async ({ ctx, input }: EventTypeOrderOption
           position,
         },
       });
-    })
+    }),
   );
 };

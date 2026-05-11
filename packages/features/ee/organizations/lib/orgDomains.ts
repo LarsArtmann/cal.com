@@ -27,7 +27,8 @@ export function getOrgSlug(hostname: string) {
 
 export function orgDomainConfig(hostname: string, fallback?: string | string[]) {
   const currentOrgDomain = getOrgSlug(hostname);
-  const isValidOrgDomain = currentOrgDomain !== null && !RESERVED_SUBDOMAINS.includes(currentOrgDomain);
+  const isValidOrgDomain =
+    currentOrgDomain !== null && !RESERVED_SUBDOMAINS.includes(currentOrgDomain);
   if (isValidOrgDomain || !fallback) {
     return {
       currentOrgDomain: isValidOrgDomain ? currentOrgDomain : null,
@@ -47,7 +48,10 @@ export function subdomainSuffix() {
   return urlSplit.length === 3 ? urlSplit.slice(1).join(".") : urlSplit.join(".");
 }
 
-export function getOrgFullDomain(slug: string, options: { protocol: boolean } = { protocol: true }) {
+export function getOrgFullDomain(
+  slug: string,
+  options: { protocol: boolean } = { protocol: true },
+) {
   return `${options.protocol ? `${new URL(WEBAPP_URL).protocol}//` : ""}${slug}.${subdomainSuffix()}`;
 }
 

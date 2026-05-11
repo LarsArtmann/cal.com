@@ -42,7 +42,9 @@ test.describe("Onboarding", () => {
       });
 
       await test.step("step 2", async () => {
-        const isDisabled = await page.locator("button[data-testid=save-calendar-button]").isDisabled();
+        const isDisabled = await page
+          .locator("button[data-testid=save-calendar-button]")
+          .isDisabled();
         await expect(isDisabled).toBe(true);
         // tests skip button, we don't want to test entire flow.
         await page.locator("button[data-testid=skip-step]").click();

@@ -41,7 +41,7 @@ export const zoomMeetingsSchema = z.object({
       topic: z.string(),
       type: z.number(),
       uuid: z.string(),
-    })
+    }),
   ),
 });
 
@@ -102,7 +102,9 @@ const zoomAuth = (credential: CredentialPayload) => {
       return Promise.reject(new Error("Invalid refreshed tokens were returned"));
     }
     const newTokens = parsedToken.data;
-    const oldCredential = await prisma.credential.findUniqueOrThrow({ where: { id: credential.id } });
+    const oldCredential = await prisma.credential.findUniqueOrThrow({
+      where: { id: credential.id },
+    });
     const parsedKey = zoomTokenSchema.safeParse(oldCredential.key);
     if (!parsedKey.success) {
       return Promise.reject(new Error("Invalid credentials were saved in the DB"));
@@ -249,7 +251,9 @@ const ZoomVideoApiAdapter = (credential: CredentialPayload): VideoApiAdapter => 
         const data = zoomMeetingsSchema.parse(responseBody);
         return data.meetings.map((meeting) => ({
           start: meeting.start_time,
-          end: new Date(new Date(meeting.start_time).getTime() + meeting.duration * 60000).toISOString(),
+          end: new Date(
+            new Date(meeting.start_time).getTime() + meeting.duration * 60000,
+          ).toISOString(),
         }));
       } catch (err) {
         console.error(err);
@@ -300,7 +304,10 @@ const ZoomVideoApiAdapter = (credential: CredentialPayload): VideoApiAdapter => 
         return Promise.reject(new Error("Failed to delete meeting"));
       }
     },
-    updateMeeting: async (bookingRef: PartialReference, event: CalendarEvent): Promise<VideoCallData> => {
+    updateMeeting: async (
+      bookingRef: PartialReference,
+      event: CalendarEvent,
+    ): Promise<VideoCallData> => {
       try {
         await fetchZoomApi(`meetings/${bookingRef.uid}`, {
           method: "PATCH",

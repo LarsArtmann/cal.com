@@ -2,7 +2,7 @@ export function isPasswordValid(password: string): boolean;
 export function isPasswordValid(
   password: string,
   breakdown: boolean,
-  strict?: boolean
+  strict?: boolean,
 ): { caplow: boolean; num: boolean; min: boolean; admin_min: boolean };
 export function isPasswordValid(password: string, breakdown?: boolean, strict?: boolean) {
   let cap = false, // Has uppercase characters

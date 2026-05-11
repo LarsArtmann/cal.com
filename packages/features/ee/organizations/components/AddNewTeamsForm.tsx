@@ -19,7 +19,7 @@ const schema = z.object({
     .array(
       z.object({
         name: z.string().min(2, "org_team_name_min_2_chars").trim(),
-      })
+      }),
     )
     .min(1, "At least one team is required"),
 });
@@ -70,7 +70,10 @@ export const AddNewTeamsForm = () => {
   const createTeamsMutation = trpc.viewer.organizations.createTeams.useMutation({
     async onSuccess(data) {
       if (data.duplicatedSlugs.length) {
-        showToast(t("duplicated_slugs_warning", { slugs: data.duplicatedSlugs.join(", ") }), "warning");
+        showToast(
+          t("duplicated_slugs_warning", { slugs: data.duplicatedSlugs.join(", ") }),
+          "warning",
+        );
         // Server will return array of duplicated slugs, so we need to wait for user to read the warning
         // before pushing to next page
         setTimeout(() => {
@@ -117,7 +120,8 @@ export const AddNewTeamsForm = () => {
                     color="minimal"
                     className="group/remove mx-2 px-0 hover:bg-transparent"
                     onClick={() => handleRemoveInput(index)}
-                    aria-label="Remove Team">
+                    aria-label="Remove Team"
+                  >
                     <X className="bg-subtle text group-hover/remove:text-inverted group-hover/remove:bg-inverted h-5 w-5 rounded-full p-1" />
                   </Button>
                 )
@@ -135,7 +139,8 @@ export const AddNewTeamsForm = () => {
             disabled={createTeamsMutation.isLoading}
             onClick={handleCounterIncrease}
             aria-label={t("add_a_team")}
-            className="my-1">
+            className="my-1"
+          >
             {t("add_a_team")}
           </Button>
         )}
@@ -143,8 +148,11 @@ export const AddNewTeamsForm = () => {
           EndIcon={ArrowRight}
           color="primary"
           className="mt-6 w-full justify-center"
-          disabled={!formState.isValid || createTeamsMutation.isLoading || createTeamsMutation.isSuccess}
-          onClick={handleFormSubmit}>
+          disabled={
+            !formState.isValid || createTeamsMutation.isLoading || createTeamsMutation.isSuccess
+          }
+          onClick={handleFormSubmit}
+        >
           {t("continue")}
         </Button>
       </form>

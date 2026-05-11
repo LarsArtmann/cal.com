@@ -12,7 +12,7 @@ export const createPaymentsFixture = (page: Page) => {
   return {
     create: async (
       bookingId: number,
-      { success = false, refunded = false }: { success?: boolean; refunded?: boolean } = {}
+      { success = false, refunded = false }: { success?: boolean; refunded?: boolean } = {},
     ) => {
       const payment = await prisma.payment.create({
         data: {

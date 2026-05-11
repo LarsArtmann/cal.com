@@ -13,7 +13,7 @@ export const eventOwnerProcedure = authedProcedure
     z.object({
       id: z.number(),
       users: z.array(z.number()).optional().default([]),
-    })
+    }),
   )
   .use(async ({ ctx, input, next }) => {
     // Prevent non-owners to update/delete a team event
@@ -43,7 +43,10 @@ export const eventOwnerProcedure = authedProcedure
         const isOrgAdmin = !!ctx.user?.organization?.isOrgAdmin;
         return (
           event.team.members
-            .filter((member) => member.role === MembershipRole.OWNER || member.role === MembershipRole.ADMIN)
+            .filter(
+              (member) =>
+                member.role === MembershipRole.OWNER || member.role === MembershipRole.ADMIN,
+            )
             .map((member) => member.userId)
             .includes(ctx.user.id) || isOrgAdmin
         );
@@ -52,7 +55,9 @@ export const eventOwnerProcedure = authedProcedure
     })();
 
     if (!isAuthorized) {
-      console.warn(`User ${ctx.user.id} attempted to an access an event ${event.id} they do not own.`);
+      console.warn(
+        `User ${ctx.user.id} attempted to an access an event ${event.id} they do not own.`,
+      );
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
 
@@ -66,7 +71,7 @@ export const eventOwnerProcedure = authedProcedure
 
     if (!isAllowed) {
       console.warn(
-        `User ${ctx.user.id} attempted to an create an event for users ${input.users.join(", ")}.`
+        `User ${ctx.user.id} attempted to an create an event for users ${input.users.join(", ")}.`,
       );
       throw new TRPCError({ code: "FORBIDDEN" });
     }
@@ -124,21 +129,26 @@ export function handleCustomInputs(customInputs: CustomInputSchema[], eventTypeI
   };
 }
 
-export function ensureUniqueBookingFields(fields: z.infer<typeof EventTypeUpdateInput>["bookingFields"]) {
+export function ensureUniqueBookingFields(
+  fields: z.infer<typeof EventTypeUpdateInput>["bookingFields"],
+) {
   if (!fields) {
     return;
   }
 
-  fields.reduce((discoveredFields, field) => {
-    if (discoveredFields[field.name]) {
-      throw new TRPCError({
-        code: "BAD_REQUEST",
-        message: `Duplicate booking field name: ${field.name}`,
-      });
-    }
+  fields.reduce(
+    (discoveredFields, field) => {
+      if (discoveredFields[field.name]) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: `Duplicate booking field name: ${field.name}`,
+        });
+      }
 
-    discoveredFields[field.name] = true;
+      discoveredFields[field.name] = true;
 
-    return discoveredFields;
-  }, {} as Record<string, true>);
+      return discoveredFields;
+    },
+    {} as Record<string, true>,
+  );
 }

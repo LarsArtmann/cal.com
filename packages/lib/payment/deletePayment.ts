@@ -13,7 +13,7 @@ const deletePayment = async (
       dirName: string;
       categories: AppCategories[];
     } | null;
-  }
+  },
 ): Promise<boolean> => {
   const paymentApp = (await appStore[
     paymentAppCredentials?.app?.dirName as keyof typeof appStore

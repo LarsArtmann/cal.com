@@ -15,7 +15,7 @@ type TeamInvite = {
 };
 
 export const TeamInviteEmail = (
-  props: TeamInvite & Partial<React.ComponentProps<typeof V2BaseEmailHtml>>
+  props: TeamInvite & Partial<React.ComponentProps<typeof V2BaseEmailHtml>>,
 ) => {
   return (
     <V2BaseEmailHtml
@@ -24,7 +24,8 @@ export const TeamInviteEmail = (
         team: props.teamName,
         appName: APP_NAME,
         entity: props.language(props.isOrg ? "organization" : "team").toLowerCase(),
-      })}>
+      })}
+    >
       <p style={{ fontSize: "24px", marginBottom: "16px", textAlign: "center" }}>
         <>
           {props.language(`email_no_user_invite_heading_${props.isOrg ? "org" : "team"}`, {
@@ -54,7 +55,8 @@ export const TeamInviteEmail = (
           marginBottom: "32px",
           marginTop: "32px",
           lineHeightStep: "24px",
-        }}>
+        }}
+      >
         <>
           {props.language(`email_user_invite_subheading_${props.isOrg ? "org" : "team"}`, {
             invitedBy: props.from,
@@ -77,7 +79,8 @@ export const TeamInviteEmail = (
           marginBottom: "32px",
           marginTop: "48px",
           lineHeightStep: "24px",
-        }}>
+        }}
+      >
         <>
           {props.language("email_no_user_invite_steps_intro", {
             entity: props.language(props.isOrg ? "organization" : "team").toLowerCase(),
@@ -112,7 +115,9 @@ export const TeamInviteEmail = (
             }
           />
           <EmailStep
-            translationString={props.language("email_no_user_step_four", { teamName: props.teamName })}
+            translationString={props.language("email_no_user_step_four", {
+              teamName: props.teamName,
+            })}
             iconsrc={
               IS_PRODUCTION
                 ? WEBAPP_URL + "/emails/user-check@2x.png"
@@ -130,7 +135,8 @@ export const TeamInviteEmail = (
             marginBottom: "32px",
             marginTop: "32px",
             lineHeightStep: "24px",
-          }}>
+          }}
+        >
           <>
             {props.language("email_no_user_signoff", {
               appName: APP_NAME,
@@ -143,7 +149,12 @@ export const TeamInviteEmail = (
         <p style={{ fontWeight: 400, margin: 0 }}>
           <>
             {props.language("have_any_questions")}{" "}
-            <a href="mailto:support@cal.com" style={{ color: "#3E3E3E" }} target="_blank" rel="noreferrer">
+            <a
+              href="mailto:support@cal.com"
+              style={{ color: "#3E3E3E" }}
+              target="_blank"
+              rel="noreferrer"
+            >
               <>{props.language("contact")}</>
             </a>{" "}
             {props.language("our_support_team")}
@@ -168,7 +179,8 @@ const EmailStep = (props: { translationString: string; iconsrc: string }) => {
           alignItems: "center",
           color: "white",
           marginRight: "16px",
-        }}>
+        }}
+      >
         <img src={props.iconsrc} alt="#" style={{ height: "24px", width: "auto" }} />
       </div>
       <p
@@ -178,7 +190,8 @@ const EmailStep = (props: { translationString: string; iconsrc: string }) => {
           fontSize: "18px",
           lineHeight: "20px",
           color: "#black",
-        }}>
+        }}
+      >
         <>{props.translationString}</>
       </p>
     </div>

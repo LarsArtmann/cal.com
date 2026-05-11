@@ -96,7 +96,8 @@ export const FormBuilderField = ({
                   return (
                     <div
                       data-testid={`error-message-${field.name}`}
-                      className="mt-2 flex items-center text-sm text-red-700 ">
+                      className="mt-2 flex items-center text-sm text-red-700 "
+                    >
                       <Info className="h-3 w-3 ltr:mr-2 rtl:ml-2" />
                       <p>{t(message || "invalid_input")}</p>
                     </div>
@@ -173,7 +174,10 @@ function getAndUpdateNormalizedValues(field: RhfFormFields[number], t: TFunction
   /**
    * Instead of passing labelAsSafeHtml props to all the components, FormBuilder components can assume that the label is safe html and use it on a case by case basis after adding checks here
    */
-  if (fieldsThatSupportLabelAsSafeHtml.includes(field.type) && field.labelAsSafeHtml === undefined) {
+  if (
+    fieldsThatSupportLabelAsSafeHtml.includes(field.type) &&
+    field.labelAsSafeHtml === undefined
+  ) {
     throw new Error(`${field.name}:${field.type} type must have labelAsSafeHtml set`);
   }
 
@@ -185,7 +189,8 @@ function getAndUpdateNormalizedValues(field: RhfFormFields[number], t: TFunction
       variant.fields.forEach((variantField) => {
         const fieldTypeVariantsConfig = fieldTypesConfigMap[field.type]?.variantsConfig;
         const defaultVariantFieldLabel =
-          fieldTypeVariantsConfig?.variants?.[variantName]?.fieldsMap[variantField.name]?.defaultLabel;
+          fieldTypeVariantsConfig?.variants?.[variantName]?.fieldsMap[variantField.name]
+            ?.defaultLabel;
 
         variantField.label = variantField.label || t(defaultVariantFieldLabel || "");
       });
@@ -219,7 +224,7 @@ export const ComponentForField = ({
   // So, code following this uses type assertion to tell TypeScript that everything has been validated
   if (value !== undefined && !isValueOfPropsType(value, componentConfig.propsType)) {
     throw new Error(
-      `Value ${value} is not valid for type ${componentConfig.propsType} for field ${field.name}`
+      `Value ${value} is not valid for type ${componentConfig.propsType} for field ${field.name}`,
     );
   }
   if (componentConfig.propsType === "text") {

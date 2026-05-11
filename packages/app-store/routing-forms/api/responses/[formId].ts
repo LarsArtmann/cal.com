@@ -13,7 +13,7 @@ function escapeCsvText(str: string) {
 }
 async function* getResponses(
   formId: string,
-  headerFields: NonNullable<SerializableForm<App_RoutingForms_Form>["fields"]>
+  headerFields: NonNullable<SerializableForm<App_RoutingForms_Form>["fields"]>,
 ) {
   let responses;
   let skip = 0;
@@ -100,7 +100,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   res.setHeader("Content-Type", "text/csv; charset=UTF-8");
   res.setHeader(
     "Content-Disposition",
-    `attachment; filename="${serializableForm.name}-${serializableForm.id}.csv"`
+    `attachment; filename="${serializableForm.name}-${serializableForm.id}.csv"`,
   );
   res.setHeader("Transfer-Encoding", "chunked");
   const headerFields = serializableForm.fields || [];
@@ -111,7 +111,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     headerFields
       .map((field) => `${field.label}${field.deleted ? "(Deleted)" : ""}`)
       .concat(["Submission Time"])
-      .join(",") + "\n"
+      .join(",") + "\n",
   );
 
   for await (const partialCsv of csvIterator) {

@@ -2,7 +2,7 @@ import { SENDER_ID } from "@calcom/lib/constants";
 
 export function getSenderId(phoneNumber?: string | null, sender?: string | null) {
   const isAlphanumericSenderIdSupported = !noAlphanumericSenderIdSupport.find(
-    (code) => code === phoneNumber?.substring(0, code.length)
+    (code) => code === phoneNumber?.substring(0, code.length),
   );
 
   const senderID = isAlphanumericSenderIdSupported ? sender || SENDER_ID : "";

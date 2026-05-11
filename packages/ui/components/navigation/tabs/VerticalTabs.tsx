@@ -30,10 +30,11 @@ const NavTabs = function ({
     <nav
       className={classNames(
         `no-scrollbar flex flex-col space-y-0.5 overflow-scroll ${className}`,
-        sticky && "sticky top-0 -mt-7"
+        sticky && "sticky top-0 -mt-7",
       )}
       aria-label="Tabs"
-      {...props}>
+      {...props}
+    >
       {/* padding top for sticky */}
       {sticky && <div className="pt-6" />}
       {props.children}

@@ -183,7 +183,6 @@ echo 'NEXT_PUBLIC_DEBUG=1' >> .env
 
    <details>
    <summary>If you don't know how to configure the DATABASE_URL, then follow the steps here to create a quick local DB</summary>
-
    1. [Download](https://www.postgresql.org/download/) and install postgres in your local (if you don't have it already).
 
    2. Create your own local db by executing `createDB <DB name>`
@@ -199,7 +198,6 @@ echo 'NEXT_PUBLIC_DEBUG=1' >> .env
    </details>
 
    If you don't want to create a local DB. Then you can also consider using services like railway.app or render.
-
    - [Setup postgres DB with railway.app](https://arctype.com/postgres/setup/railway-postgres)
    - [Setup postgres DB with render](https://render.com/docs/databases)
 
@@ -221,6 +219,7 @@ echo 'NEXT_PUBLIC_DEBUG=1' >> .env
    ```
 
 1. Run [mailhog](https://github.com/mailhog/MailHog) to view emails sent during development
+
    > **_NOTE:_** Required when `E2E_TEST_MAILHOG_ENABLED` is "1"
 
    ```sh
@@ -470,9 +469,8 @@ following
 4. Select Basecamp 4 as the product to integrate with.
 5. Set the Redirect URL for OAuth `<Cal.com URL>/api/integrations/basecamp3/callback` replacing Cal.com URL with the URI at which your application runs.
 6. Click on done and copy the Client ID and secret into the `BASECAMP3_CLIENT_ID` and `BASECAMP3_CLIENT_SECRET` fields.
-7. Set the `BASECAMP3_CLIENT_SECRET` env variable to `{your_domain} ({support_email})`. 
-For example, `Cal.com (support@cal.com)`.
-
+7. Set the `BASECAMP3_CLIENT_SECRET` env variable to `{your_domain} ({support_email})`.
+   For example, `Cal.com (support@cal.com)`.
 
 ### Obtaining HubSpot Client ID and Secret
 

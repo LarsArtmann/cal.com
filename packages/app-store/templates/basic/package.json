@@ -1,14 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "private": true,
   "name": "@calcom/basic",
   "version": "0.0.0",
+  "private": true,
+  "description": "It is a template for an app that can be installed and provides no other feature.",
   "main": "./index.ts",
   "dependencies": {
     "@calcom/lib": "*"
   },
   "devDependencies": {
     "@calcom/types": "*"
-  },
-  "description": "It is a template for an app that can be installed and provides no other feature."
+  }
 }

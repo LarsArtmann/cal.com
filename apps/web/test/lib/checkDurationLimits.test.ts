@@ -21,13 +21,13 @@ describe("Check Duration Limits Tests", () => {
   it("Should return no errors if limit is not reached", async () => {
     prismaMock.$queryRaw.mockResolvedValue([{ totalMinutes: 0 }]);
     await expect(
-      checkDurationLimits({ PER_DAY: 60 }, MOCK_DATA.startDate, MOCK_DATA.id)
+      checkDurationLimits({ PER_DAY: 60 }, MOCK_DATA.startDate, MOCK_DATA.id),
     ).resolves.toBeTruthy();
   });
   it("Should throw an error if limit is reached", async () => {
     prismaMock.$queryRaw.mockResolvedValue([{ totalMinutes: 60 }]);
     await expect(
-      checkDurationLimits({ PER_DAY: 60 }, MOCK_DATA.startDate, MOCK_DATA.id)
+      checkDurationLimits({ PER_DAY: 60 }, MOCK_DATA.startDate, MOCK_DATA.id),
     ).rejects.toThrowError();
   });
   it("Should pass with multiple duration limits", async () => {
@@ -39,8 +39,8 @@ describe("Check Duration Limits Tests", () => {
           PER_WEEK: 120,
         },
         MOCK_DATA.startDate,
-        MOCK_DATA.id
-      )
+        MOCK_DATA.id,
+      ),
     ).resolves.toBeTruthy();
   });
   it("Should pass with multiple duration limits with one undefined", async () => {
@@ -52,8 +52,8 @@ describe("Check Duration Limits Tests", () => {
           PER_WEEK: undefined,
         },
         MOCK_DATA.startDate,
-        MOCK_DATA.id
-      )
+        MOCK_DATA.id,
+      ),
     ).resolves.toBeTruthy();
   });
   it("Should return no errors if limit is not reached with multiple bookings", async () => {
@@ -65,8 +65,8 @@ describe("Check Duration Limits Tests", () => {
           PER_WEEK: 120,
         },
         MOCK_DATA.startDate,
-        MOCK_DATA.id
-      )
+        MOCK_DATA.id,
+      ),
     ).resolves.toBeTruthy();
   });
   it("Should throw an error if one of the limit is reached with multiple bookings", async () => {
@@ -78,8 +78,8 @@ describe("Check Duration Limits Tests", () => {
           PER_WEEK: 120,
         },
         MOCK_DATA.startDate,
-        MOCK_DATA.id
-      )
+        MOCK_DATA.id,
+      ),
     ).rejects.toThrowError();
   });
 });
@@ -94,7 +94,7 @@ describe("Check Duration Limit Tests", () => {
         limitingNumber: 90,
         eventStartDate: MOCK_DATA.startDate,
         eventId: MOCK_DATA.id,
-      })
+      }),
     ).resolves.toBeUndefined();
   });
 });

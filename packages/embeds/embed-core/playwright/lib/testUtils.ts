@@ -70,7 +70,7 @@ export const getEmbedIframe = async ({
         }, hardTimeout);
       });
     },
-    !process.env.CI ? 150000 : 15000
+    !process.env.CI ? 150000 : 15000,
   );
   if (!iframeReady) {
     return null;
@@ -83,7 +83,10 @@ export const getEmbedIframe = async ({
   if (u.pathname === pathname + "/embed") {
     return embedIframe;
   }
-  console.log('Embed iframe url pathname match. Expected: "' + pathname + '/embed"', "Actual: " + u.pathname);
+  console.log(
+    'Embed iframe url pathname match. Expected: "' + pathname + '/embed"',
+    "Actual: " + u.pathname,
+  );
   return null;
 };
 

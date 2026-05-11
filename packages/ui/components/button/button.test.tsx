@@ -142,7 +142,7 @@ describe("Tests for Button component", () => {
     render(
       <Button variant="fab" StartIcon={Plus} data-testid="start-icon">
         Test Button
-      </Button>
+      </Button>,
     );
     expect(screen.getByTestId("start-icon")).toBeInTheDocument();
     expect(screen.getByTestId("plus")).toBeInTheDocument();
@@ -152,7 +152,7 @@ describe("Tests for Button component", () => {
     render(
       <Button StartIcon={Plus} data-testid="start-icon">
         Test Button
-      </Button>
+      </Button>,
     );
     expect(screen.getByTestId("start-icon")).toBeInTheDocument();
     expect(screen.queryByTestId("plus")).not.toBeInTheDocument();
@@ -162,7 +162,7 @@ describe("Tests for Button component", () => {
     render(
       <Button variant="fab" EndIcon={Plus} data-testid="end-icon">
         Test Button
-      </Button>
+      </Button>,
     );
     expect(screen.getByTestId("end-icon")).toBeInTheDocument();
     expect(screen.getByTestId("plus")).toBeInTheDocument();
@@ -172,7 +172,7 @@ describe("Tests for Button component", () => {
     render(
       <Button EndIcon={Plus} data-testid="end-icon">
         Test Button
-      </Button>
+      </Button>,
     );
     expect(screen.getByTestId("end-icon")).toBeInTheDocument();
     expect(screen.queryByTestId("plus")).not.toBeInTheDocument();
@@ -230,7 +230,11 @@ describe("Tests for Button component", () => {
     test("Should render default button correctly", () => {
       render(<Button loading={false}>Default Button</Button>);
       const buttonClass = screen.getByText("Default Button").className;
-      const buttonComponentClass = buttonClasses({ variant: "button", color: "primary", size: "base" });
+      const buttonComponentClass = buttonClasses({
+        variant: "button",
+        color: "primary",
+        size: "base",
+      });
       const buttonClassArray = buttonClass.split(" ");
       const hasMatchingClassNames = buttonComponentClass
         .split(" ")

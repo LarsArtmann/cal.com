@@ -57,15 +57,16 @@ const VerticalTabItem = ({
               props.disabled && "pointer-events-none !opacity-30",
               (isChild || !props.icon) && "ml-7 w-auto ltr:mr-5 rtl:ml-5",
               !info ? "h-6" : "h-14",
-              props.className
+              props.className,
             )}
             data-testid={`vertical-tab-${name}`}
-            aria-current={isCurrent ? "page" : undefined}>
+            aria-current={isCurrent ? "page" : undefined}
+          >
             {props.icon && (
               <props.icon
                 className={classNames(
                   "mr-2 h-[16px] w-[16px] stroke-[2px] ltr:mr-2 rtl:ml-2 md:mt-0",
-                  props.iconClassName
+                  props.iconClassName,
                 )}
                 data-testid="icon-component"
               />
@@ -78,7 +79,11 @@ const VerticalTabItem = ({
                 {props.isExternalLink ? <ExternalLink data-testid="external-link" /> : null}
               </span>
               {info && (
-                <Skeleton as="p" title={t(info)} className="max-w-44 mt-1 truncate text-xs font-normal">
+                <Skeleton
+                  as="p"
+                  title={t(info)}
+                  className="max-w-44 mt-1 truncate text-xs font-normal"
+                >
                   {t(info)}
                 </Skeleton>
               )}

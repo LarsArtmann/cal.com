@@ -55,29 +55,35 @@ function getiCalEventAsString(evt: BookingInfo, status?: ParticipationStatus) {
     recurrenceRule = new RRule(evt.eventType.recurringEvent).toString().replace("RRULE:", "");
   }
 
-  const icsEvent = createEvent(({
-	uid,
-	startInputType: 'utc',
-	start: dayjs(evt.startTime).utc().toArray().slice(0, 6).map((v, i) => i === 1 ? v + 1 : v) as DateArray,
-	duration: { minutes: dayjs(evt.endTime).diff(dayjs(evt.startTime), 'minute') },
-	title: evt.title,
-	description: evt.additionalNotes || '',
-	location: evt.location || '',
-	organizer: {
-		email: evt.organizer.email || '',
-		name: evt.organizer.name
-	},
-	attendees: [{
-		name: preprocessNameFieldDataWithVariant('fullName', evt.attendees[0].name) as string,
-		email: evt.attendees[0].email,
-		partstat: status,
-		role: 'REQ-PARTICIPANT',
-		rsvp: true
-	}],
-	method: 'REQUEST',
-	recurrenceRule,
-	status: 'CONFIRMED'
-}));
+  const icsEvent = createEvent({
+    uid,
+    startInputType: "utc",
+    start: dayjs(evt.startTime)
+      .utc()
+      .toArray()
+      .slice(0, 6)
+      .map((v, i) => (i === 1 ? v + 1 : v)) as DateArray,
+    duration: { minutes: dayjs(evt.endTime).diff(dayjs(evt.startTime), "minute") },
+    title: evt.title,
+    description: evt.additionalNotes || "",
+    location: evt.location || "",
+    organizer: {
+      email: evt.organizer.email || "",
+      name: evt.organizer.name,
+    },
+    attendees: [
+      {
+        name: preprocessNameFieldDataWithVariant("fullName", evt.attendees[0].name) as string,
+        email: evt.attendees[0].email,
+        partstat: status,
+        role: "REQ-PARTICIPANT",
+        rsvp: true,
+      },
+    ],
+    method: "REQUEST",
+    recurrenceRule,
+    status: "CONFIRMED",
+  });
 
   if (icsEvent.error) {
     throw icsEvent.error;
@@ -107,18 +113,20 @@ export const scheduleEmailReminder = async (
   sender: string,
   hideBranding?: boolean,
   seatReferenceUid?: string,
-  includeCalendarEvent?: boolean
+  includeCalendarEvent?: boolean,
 ) => {
   if (action === WorkflowActions.EMAIL_ADDRESS) return;
   const { startTime, endTime } = evt;
   const uid = evt.uid as string;
   const currentDate = dayjs();
-  const timeUnit: timeUnitLowerCase | undefined = timeSpan.timeUnit?.toLocaleLowerCase() as timeUnitLowerCase;
+  const timeUnit: timeUnitLowerCase | undefined =
+    timeSpan.timeUnit?.toLocaleLowerCase() as timeUnitLowerCase;
 
   let scheduledDate = null;
 
   if (triggerEvent === WorkflowTriggerEvents.BEFORE_EVENT) {
-    scheduledDate = timeSpan.time && timeUnit ? dayjs(startTime).subtract(timeSpan.time, timeUnit) : null;
+    scheduledDate =
+      timeSpan.time && timeUnit ? dayjs(startTime).subtract(timeSpan.time, timeUnit) : null;
   } else if (triggerEvent === WorkflowTriggerEvents.AFTER_EVENT) {
     scheduledDate = timeSpan.time && timeUnit ? dayjs(endTime).add(timeSpan.time, timeUnit) : null;
   }
@@ -164,7 +172,7 @@ export const scheduleEmailReminder = async (
 
       // check if first attendee of sendTo is present in the attendees list, if not take the evt attendee
       const attendeeEmailToBeUsedInMailFromEvt = evt.attendees.find(
-        (attendee) => attendee.email === attendeeEmailToBeUsedInMail
+        (attendee) => attendee.email === attendeeEmailToBeUsedInMail,
       );
       attendeeToBeUsedInMail = attendeeEmailToBeUsedInMailFromEvt
         ? attendeeEmailToBeUsedInMailFromEvt
@@ -203,14 +211,19 @@ export const scheduleEmailReminder = async (
         ? attendeeToBeUsedInMail.language?.locale
         : evt.organizer.language.locale;
 
-    const emailSubjectTemplate = customTemplate(emailSubject, variables, locale, evt.organizer.timeFormat);
+    const emailSubjectTemplate = customTemplate(
+      emailSubject,
+      variables,
+      locale,
+      evt.organizer.timeFormat,
+    );
     emailContent.emailSubject = emailSubjectTemplate.text;
     emailContent.emailBody = customTemplate(
       emailBody,
       variables,
       locale,
       evt.organizer.timeFormat,
-      hideBranding
+      hideBranding,
     ).html;
   } else if (template === WorkflowTemplates.REMINDER) {
     emailContent = emailReminderTemplate(
@@ -222,7 +235,7 @@ export const scheduleEmailReminder = async (
       evt.title,
       timeZone,
       attendeeName,
-      name
+      name,
     );
   }
 
@@ -241,8 +254,8 @@ export const scheduleEmailReminder = async (
       triggerEvent === WorkflowTriggerEvents.AFTER_EVENT
         ? "COMPLETED"
         : triggerEvent === WorkflowTriggerEvents.EVENT_CANCELLED
-        ? "DECLINED"
-        : "ACCEPTED";
+          ? "DECLINED"
+          : "ACCEPTED";
 
     return sgMail.send({
       to: data.to,
@@ -306,7 +319,7 @@ export const scheduleEmailReminder = async (
             to: sendTo,
             sendAt: scheduledDate.unix(),
           },
-          triggerEvent
+          triggerEvent,
         );
         await prisma.workflowReminder.create({
           data: {
@@ -338,7 +351,10 @@ export const scheduleEmailReminder = async (
   }
 };
 
-export const deleteScheduledEmailReminder = async (reminderId: number, referenceId: string | null) => {
+export const deleteScheduledEmailReminder = async (
+  reminderId: number,
+  referenceId: string | null,
+) => {
   try {
     if (!referenceId) {
       await prisma.workflowReminder.delete({

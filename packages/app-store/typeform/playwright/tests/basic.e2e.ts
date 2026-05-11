@@ -14,7 +14,7 @@ const installApps = async (page: Page, users: Fixtures["users"]) => {
     { username: "routing-forms" },
     {
       hasTeam: true,
-    }
+    },
   );
   await user.login();
   await page.goto(`/apps/typeform`);

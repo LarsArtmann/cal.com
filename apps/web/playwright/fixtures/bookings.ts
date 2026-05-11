@@ -34,7 +34,7 @@ export const createBookingsFixture = (page: Page) => {
         },
       }: Partial<Prisma.BookingCreateInput> = {},
       startDateParam?: Date,
-      endDateParam?: Date
+      endDateParam?: Date,
     ) => {
       const startDate = startDateParam || dayjs().add(1, "day").toDate();
       const seed = `${username}:${dayjs(startDate).utc().format()}:${new Date().getTime()}`;

@@ -14,9 +14,10 @@ export const SuccessToast = ({ message, toastVisible, onClose, toastId }: IToast
   <button
     className={classNames(
       "data-testid-toast-success bg-brand-default text-inverted mb-2 flex h-auto space-x-2 rounded-md p-3 text-sm font-semibold shadow-md rtl:space-x-reverse md:max-w-sm",
-      toastVisible && "animate-fade-in-up cursor-pointer"
+      toastVisible && "animate-fade-in-up cursor-pointer",
     )}
-    onClick={() => onClose(toastId)}>
+    onClick={() => onClose(toastId)}
+  >
     <span className="mt-0.5">
       <Check className="h-4 w-4" />
     </span>
@@ -30,9 +31,10 @@ export const ErrorToast = ({ message, toastVisible, onClose, toastId }: IToast) 
   <button
     className={classNames(
       "animate-fade-in-up bg-error text-error mb-2 flex h-auto space-x-2 rounded-md p-3 text-sm font-semibold shadow-md rtl:space-x-reverse md:max-w-sm",
-      toastVisible && "animate-fade-in-up cursor-pointer"
+      toastVisible && "animate-fade-in-up cursor-pointer",
     )}
-    onClick={() => onClose(toastId)}>
+    onClick={() => onClose(toastId)}
+  >
     <span className="mt-0.5">
       <Info className="h-4 w-4" />
     </span>
@@ -46,9 +48,10 @@ export const WarningToast = ({ message, toastVisible, onClose, toastId }: IToast
   <button
     className={classNames(
       "animate-fade-in-up bg-brand-default text-brand mb-2 flex h-auto space-x-2 rounded-md p-3 text-sm font-semibold shadow-md rtl:space-x-reverse md:max-w-sm",
-      toastVisible && "animate-fade-in-up cursor-pointer"
+      toastVisible && "animate-fade-in-up cursor-pointer",
     )}
-    onClick={() => onClose(toastId)}>
+    onClick={() => onClose(toastId)}
+  >
     <span className="mt-0.5">
       <Info className="h-4 w-4" />
     </span>
@@ -62,9 +65,10 @@ export const DefaultToast = ({ message, toastVisible, onClose, toastId }: IToast
   <button
     className={classNames(
       "animate-fade-in-up bg-brand-default text-inverted mb-2 flex h-auto space-x-2 rounded-md p-3 text-sm font-semibold shadow-md rtl:space-x-reverse md:max-w-sm",
-      toastVisible && "animate-fade-in-up cursor-pointer"
+      toastVisible && "animate-fade-in-up cursor-pointer",
     )}
-    onClick={() => onClose(toastId)}>
+    onClick={() => onClose(toastId)}
+  >
     <span className="mt-0.5">
       <Check className="h-4 w-4" />
     </span>
@@ -79,7 +83,7 @@ const TOAST_VISIBLE_DURATION = 6000;
 export function showToast(
   message: string,
   variant: "success" | "warning" | "error",
-  duration = TOAST_VISIBLE_DURATION
+  duration = TOAST_VISIBLE_DURATION,
 ) {
   const onClose = (toastId: string) => {
     toast.remove(toastId);
@@ -87,23 +91,46 @@ export function showToast(
   switch (variant) {
     case "success":
       return toast.custom(
-        (t) => <SuccessToast message={message} toastVisible={t.visible} onClose={onClose} toastId={t.id} />,
-        { duration }
+        (t) => (
+          <SuccessToast
+            message={message}
+            toastVisible={t.visible}
+            onClose={onClose}
+            toastId={t.id}
+          />
+        ),
+        { duration },
       );
     case "error":
       return toast.custom(
-        (t) => <ErrorToast message={message} toastVisible={t.visible} onClose={onClose} toastId={t.id} />,
-        { duration }
+        (t) => (
+          <ErrorToast message={message} toastVisible={t.visible} onClose={onClose} toastId={t.id} />
+        ),
+        { duration },
       );
     case "warning":
       return toast.custom(
-        (t) => <WarningToast message={message} toastVisible={t.visible} onClose={onClose} toastId={t.id} />,
-        { duration }
+        (t) => (
+          <WarningToast
+            message={message}
+            toastVisible={t.visible}
+            onClose={onClose}
+            toastId={t.id}
+          />
+        ),
+        { duration },
       );
     default:
       return toast.custom(
-        (t) => <DefaultToast message={message} toastVisible={t.visible} onClose={onClose} toastId={t.id} />,
-        { duration }
+        (t) => (
+          <DefaultToast
+            message={message}
+            toastVisible={t.visible}
+            onClose={onClose}
+            toastId={t.id}
+          />
+        ),
+        { duration },
       );
   }
 }

@@ -2,7 +2,13 @@ import React from "react";
 
 import { WEBAPP_URL } from "@calcom/lib/constants";
 
-export const CallToActionIcon = ({ iconName, style }: { iconName: string; style?: React.CSSProperties }) => (
+export const CallToActionIcon = ({
+  iconName,
+  style,
+}: {
+  iconName: string;
+  style?: React.CSSProperties;
+}) => (
   <img
     src={`${WEBAPP_URL}/emails/${iconName}.png`}
     srcSet={`${WEBAPP_URL}/emails/${iconName}.svg`}

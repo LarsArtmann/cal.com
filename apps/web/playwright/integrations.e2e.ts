@@ -18,7 +18,7 @@ const requestInterceptor = setupServer(
   rest.post("https://api.hubapi.com/oauth/v1/token", (req, res, ctx) => {
     console.log(req.body);
     return res(ctx.status(200));
-  })
+  }),
 );
 
 const addOauthBasedIntegration = async function ({
@@ -65,14 +65,18 @@ const addOauthBasedIntegration = async function ({
       const result = token.verify({ requestHeaders: req.headers, params, code });
 
       return res(ctx.status(result.status), ctx.json(result.body));
-    })
+    }),
   );
 
   await page.goto(`/apps/${slug}`);
   await page.click('[data-testid="install-app-button"]');
 };
 
-const addLocationIntegrationToFirstEvent = async function ({ user }: { user: { username: string | null } }) {
+const addLocationIntegrationToFirstEvent = async function ({
+  user,
+}: {
+  user: { username: string | null };
+}) {
   const eventType = await prisma.eventType.findFirst({
     where: {
       users: {
@@ -124,9 +128,9 @@ async function bookEvent(page: Page, calLink: string) {
           id: meetingId,
           password: "TestPass",
           join_url: `https://zoom.us/j/${meetingId}`,
-        })
+        }),
       );
-    })
+    }),
   );
   // --- fill form
   await page.fill('[name="name"]', "Integration User");
@@ -140,7 +144,9 @@ async function bookEvent(page: Page, calLink: string) {
   await expect(page.locator("[data-testid=success-page]")).toBeVisible();
   expect(global.E2E_EMAILS?.length).toBe(2);
   expect(
-    global.E2E_EMAILS?.every((email) => (email.text as string).includes(`https://zoom.us/j/${meetingId}`))
+    global.E2E_EMAILS?.every((email) =>
+      (email.text as string).includes(`https://zoom.us/j/${meetingId}`),
+    ),
   ).toBe(true);
   return bookingId;
 }
@@ -152,7 +158,7 @@ test.beforeAll(() =>
   requestInterceptor.listen({
     // Comment this to log which all requests are going that are unmocked
     onUnhandledRequest: "bypass",
-  })
+  }),
 );
 
 // Reset any runtime request handlers we may add during the tests.
@@ -292,7 +298,9 @@ test.fixme("Integrations", () => {
 
       await page.locator('[data-testid="zoom_video-integration-disconnect-button"]').click();
       await page.locator('[data-testid="confirm-button"]').click();
-      await expect(page.locator('[data-testid="confirm-integration-disconnect-button"]')).toHaveCount(0);
+      await expect(
+        page.locator('[data-testid="confirm-integration-disconnect-button"]'),
+      ).toHaveCount(0);
     });
   });
 
@@ -310,7 +318,7 @@ test.fixme("Integrations", () => {
             // TODO: We can check if client_id is correctly read from DB or not
             expect(params.get("client_id")).toBeTruthy();
             expect(params.get("scope")).toBe(
-              ["crm.objects.contacts.read", "crm.objects.contacts.write"].join(" ")
+              ["crm.objects.contacts.read", "crm.objects.contacts.write"].join(" "),
             );
 
             return {

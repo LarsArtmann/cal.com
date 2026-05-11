@@ -14,13 +14,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const redirectUri = encodeURI(WEBAPP_URL + "/api/integrations/zoomvideo/callback");
   const authHeader = "Basic " + Buffer.from(client_id + ":" + client_secret).toString("base64");
   const result = await fetch(
-    "https://zoom.us/oauth/token?grant_type=authorization_code&code=" + code + "&redirect_uri=" + redirectUri,
+    "https://zoom.us/oauth/token?grant_type=authorization_code&code=" +
+      code +
+      "&redirect_uri=" +
+      redirectUri,
     {
       method: "POST",
       headers: {
         Authorization: authHeader,
       },
-    }
+    },
   );
 
   if (result.status !== 200) {

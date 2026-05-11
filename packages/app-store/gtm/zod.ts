@@ -10,7 +10,7 @@ export const appDataSchema = eventTypeAppCardZod.merge(
       trackingId = !trackingId.startsWith("GTM-") ? `GTM-${trackingId}` : trackingId;
       return trackingId;
     }),
-  })
+  }),
 );
 
 export const appKeysSchema = z.object({});

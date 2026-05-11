@@ -39,7 +39,7 @@ export async function getCroppedImg(imageSrc: string, pixelCrop: Area): Promise<
     0,
     0,
     canvas.width,
-    canvas.height
+    canvas.height,
   );
 
   // on very low ratios, the quality of the resize becomes awful. For this reason the resizeRatio is limited to 0.75

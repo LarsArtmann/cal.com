@@ -43,10 +43,15 @@ type AvailabilityFormValues = {
 };
 
 const DateOverride = ({ workingHours }: { workingHours: WorkingHours[] }) => {
-  const { remove, append, replace, fields } = useFieldArray<AvailabilityFormValues, "dateOverrides">({
+  const { remove, append, replace, fields } = useFieldArray<
+    AvailabilityFormValues,
+    "dateOverrides"
+  >({
     name: "dateOverrides",
   });
-  const excludedDates = fields.map((field) => dayjs(field.ranges[0].start).utc().format("YYYY-MM-DD"));
+  const excludedDates = fields.map((field) =>
+    dayjs(field.ranges[0].start).utc().format("YYYY-MM-DD"),
+  );
   const { t } = useLocale();
   return (
     <div className="p-6">
@@ -96,7 +101,7 @@ export default function Availability() {
     { scheduleId },
     {
       enabled: !!scheduleId,
-    }
+    },
   );
 
   const form = useForm<AvailabilityFormValues>({
@@ -121,7 +126,7 @@ export default function Availability() {
         t("availability_updated_successfully", {
           scheduleName: data.schedule.name,
         }),
-        "success"
+        "success",
       );
     },
     onError: (err) => {
@@ -167,7 +172,10 @@ export default function Availability() {
             .filter((availability) => !!availability.days.length)
             .map((availability) => (
               <span key={availability.id}>
-                {availabilityAsString(availability, { locale: i18n.language, hour12: timeFormat === 12 })}
+                {availabilityAsString(availability, {
+                  locale: i18n.language,
+                  hour12: timeFormat === 12,
+                })}
                 <br />
               </span>
             ))
@@ -182,7 +190,8 @@ export default function Availability() {
               as={Label}
               htmlFor="hiddenSwitch"
               className="mt-2 cursor-pointer self-center pe-2"
-              loadingClassName="me-4">
+              loadingClassName="me-4"
+            >
               {t("set_to_default")}
             </Skeleton>
             <Switch
@@ -205,7 +214,9 @@ export default function Availability() {
                 aria-label={t("delete")}
                 className="hidden sm:inline"
                 disabled={schedule?.isLastSchedule}
-                tooltip={schedule?.isLastSchedule ? t("requires_at_least_one_schedule") : t("delete")}
+                tooltip={
+                  schedule?.isLastSchedule ? t("requires_at_least_one_schedule") : t("delete")
+                }
               />
             </DialogTrigger>
             <ConfirmationDialogContent
@@ -216,7 +227,8 @@ export default function Availability() {
               loadingText={t("delete")}
               onConfirm={() => {
                 scheduleId && deleteMutation.mutate({ scheduleId });
-              }}>
+              }}
+            >
               {t("delete_schedule_description")}
             </ConfirmationDialogContent>
           </Dialog>
@@ -225,15 +237,21 @@ export default function Availability() {
             className={classNames(
               openSidebar
                 ? "fadeIn fixed inset-0 z-50 bg-neutral-800 bg-opacity-70 transition-opacity dark:bg-opacity-70 sm:hidden"
-                : ""
-            )}>
+                : "",
+            )}
+          >
             <div
               className={classNames(
                 "bg-default fixed right-0 z-20 flex h-screen w-80 flex-col space-y-2 overflow-x-hidden rounded-md px-2 pb-3 transition-transform",
-                openSidebar ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
-              )}>
+                openSidebar ? "translate-x-0 opacity-100" : "translate-x-full opacity-0",
+              )}
+            >
               <div className="flex flex-row items-center pt-5">
-                <Button StartIcon={ArrowLeft} color="minimal" onClick={() => setOpenSidebar(false)} />
+                <Button
+                  StartIcon={ArrowLeft}
+                  color="minimal"
+                  onClick={() => setOpenSidebar(false)}
+                />
                 <p className="-ml-2">{t("availability_settings")}</p>
                 <Dialog>
                   <DialogTrigger asChild>
@@ -244,7 +262,9 @@ export default function Availability() {
                       aria-label={t("delete")}
                       className="ml-16 inline"
                       disabled={schedule?.isLastSchedule}
-                      tooltip={schedule?.isLastSchedule ? t("requires_at_least_one_schedule") : t("delete")}
+                      tooltip={
+                        schedule?.isLastSchedule ? t("requires_at_least_one_schedule") : t("delete")
+                      }
                     />
                   </DialogTrigger>
                   <ConfirmationDialogContent
@@ -256,7 +276,8 @@ export default function Availability() {
                     onConfirm={() => {
                       scheduleId && deleteMutation.mutate({ scheduleId });
                       setOpenSidebar(false);
-                    }}>
+                    }}
+                  >
                     {t("delete_schedule_description")}
                   </ConfirmationDialogContent>
                 </Dialog>
@@ -278,7 +299,8 @@ export default function Availability() {
                 <Skeleton
                   as={Label}
                   htmlFor="hiddenSwitch"
-                  className="mt-2 cursor-pointer self-center pr-2 sm:inline">
+                  className="mt-2 cursor-pointer self-center pr-2 sm:inline"
+                >
                   {t("set_to_default")}
                 </Skeleton>
                 <Switch
@@ -294,7 +316,11 @@ export default function Availability() {
               <div className="min-w-40 col-span-3 space-y-2 px-2 py-4 lg:col-span-1">
                 <div className="xl:max-w-80 w-full pr-4 sm:ml-0 sm:mr-36 sm:p-0">
                   <div>
-                    <Skeleton as={Label} htmlFor="timeZone" className="mb-0 inline-block leading-none">
+                    <Skeleton
+                      as={Label}
+                      htmlFor="timeZone"
+                      className="mb-0 inline-block leading-none"
+                    >
                       {t("timezone")}
                     </Skeleton>
                     <Controller
@@ -333,7 +359,8 @@ export default function Availability() {
             className="ml-4 lg:ml-0"
             type="submit"
             form="availability-form"
-            loading={updateMutation.isLoading}>
+            loading={updateMutation.isLoading}
+          >
             {t("save")}
           </Button>
           <Button
@@ -344,7 +371,8 @@ export default function Availability() {
             onClick={() => setOpenSidebar(true)}
           />
         </div>
-      }>
+      }
+    >
       <div className="mt-4 w-full md:mt-0">
         <Form
           form={form}
@@ -357,7 +385,8 @@ export default function Availability() {
                 ...values,
               });
           }}
-          className="flex flex-col sm:mx-0 xl:flex-row xl:space-x-6">
+          className="flex flex-col sm:mx-0 xl:flex-row xl:space-x-6"
+        >
           <div className="flex-1 flex-row xl:mr-0">
             <div className="border-subtle mb-6 rounded-md border">
               <div>
@@ -366,9 +395,15 @@ export default function Availability() {
                     control={form.control}
                     name="schedule"
                     weekStart={
-                      ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].indexOf(
-                        me.data?.weekStart
-                      ) as 0 | 1 | 2 | 3 | 4 | 5 | 6
+                      [
+                        "Sunday",
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                      ].indexOf(me.data?.weekStart) as 0 | 1 | 2 | 3 | 4 | 5 | 6
                     }
                   />
                 )}

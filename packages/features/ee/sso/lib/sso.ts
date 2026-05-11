@@ -32,7 +32,7 @@ export const ssoTenantProduct = async (prisma: PrismaClient, email: string) => {
     connectionController.getConnections({
       tenant: `${tenantPrefix}${teamId}`,
       product: samlProductID,
-    })
+    }),
   );
 
   const connectionResults = await Promise.allSettled(promises);

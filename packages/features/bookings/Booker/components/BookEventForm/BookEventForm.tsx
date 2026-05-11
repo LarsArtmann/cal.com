@@ -85,9 +85,12 @@ export const BookEventForm = ({ onCancel }: BookEventFormProps) => {
   useEffect(() => {
     reserveSlot();
 
-    const interval = setInterval(() => {
-      reserveSlot();
-    }, parseInt(MINUTES_TO_BOOK) * 60 * 1000 - 2000);
+    const interval = setInterval(
+      () => {
+        reserveSlot();
+      },
+      parseInt(MINUTES_TO_BOOK) * 60 * 1000 - 2000,
+    );
 
     return () => {
       if (eventType) {
@@ -177,7 +180,7 @@ export const BookEventFormChild = ({
       {
         // bookingFormSchema is an async schema, so inform RHF to do async validation.
         mode: "async",
-      }
+      },
     ),
   });
   const createBookingMutation = useMutation(createBooking, {
@@ -192,7 +195,7 @@ export const BookEventFormChild = ({
             name: fullName,
             email: bookingForm.getValues("responses.email"),
             absolute: false,
-          })
+          }),
         );
       }
 
@@ -207,7 +210,9 @@ export const BookEventFormChild = ({
         eventTypeSlug: eventSlug,
         seatReferenceUid: "seatReferenceUid" in responseData ? responseData.seatReferenceUid : null,
         formerTime:
-          isRescheduling && bookingData?.startTime ? dayjs(bookingData.startTime).toString() : undefined,
+          isRescheduling && bookingData?.startTime
+            ? dayjs(bookingData.startTime).toString()
+            : undefined,
       };
 
       return bookingSuccessRedirect({
@@ -237,7 +242,9 @@ export const BookEventFormChild = ({
         email: bookingForm.getValues("responses.email"),
         eventTypeSlug: eventSlug,
         formerTime:
-          isRescheduling && bookingData?.startTime ? dayjs(bookingData.startTime).toString() : undefined,
+          isRescheduling && bookingData?.startTime
+            ? dayjs(bookingData.startTime).toString()
+            : undefined,
       };
 
       return bookingSuccessRedirect({
@@ -330,13 +337,13 @@ export const BookEventFormChild = ({
             ...metadata,
             [key.substring("metadata[".length, key.length - 1)]: searchParams?.get(key),
           }),
-          {}
+          {},
         ),
     };
 
     if (eventQuery.data?.recurringEvent?.freq && recurringEventCount) {
       createRecurringBookingMutation.mutate(
-        mapRecurringBookingToMutationInput(bookingInput, recurringEventCount)
+        mapRecurringBookingToMutationInput(bookingInput, recurringEventCount),
       );
     } else {
       createBookingMutation.mutate(mapBookingToMutationInput(bookingInput));
@@ -349,7 +356,8 @@ export const BookEventFormChild = ({
   }
 
   const renderConfirmNotVerifyEmailButtonCond =
-    !eventType?.requiresBookerEmailVerification || (email && verifiedEmail && verifiedEmail === email);
+    !eventType?.requiresBookerEmailVerification ||
+    (email && verifiedEmail && verifiedEmail === email);
 
   return (
     <div className="flex h-full flex-col">
@@ -364,7 +372,8 @@ export const BookEventFormChild = ({
         }}
         form={bookingForm}
         handleSubmit={renderConfirmNotVerifyEmailButtonCond ? bookEvent : verifyEmail}
-        noValidate>
+        noValidate
+      >
         <BookingFields
           isDynamicGroupBooking={!!(username && username.indexOf("+") > -1)}
           fields={eventType.bookingFields}
@@ -384,7 +393,7 @@ export const BookEventFormChild = ({
                 bookingForm.formState.errors["globalError"],
                 createBookingMutation,
                 createRecurringBookingMutation,
-                t
+                t,
               )}
             />
           </div>
@@ -399,12 +408,13 @@ export const BookEventFormChild = ({
             type="submit"
             color="primary"
             loading={createBookingMutation.isLoading || createRecurringBookingMutation.isLoading}
-            data-testid={rescheduleUid ? "confirm-reschedule-button" : "confirm-book-button"}>
+            data-testid={rescheduleUid ? "confirm-reschedule-button" : "confirm-book-button"}
+          >
             {rescheduleUid
               ? t("reschedule")
               : renderConfirmNotVerifyEmailButtonCond
-              ? t("confirm")
-              : t("verify_email_email_button")}
+                ? t("confirm")
+                : t("verify_email_email_button")}
           </Button>
         </div>
       </Form>
@@ -431,7 +441,7 @@ const getError = (
   bookingMutation: UseMutationResult<any, any, any, any>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   recurringBookingMutation: UseMutationResult<any, any, any, any>,
-  t: TFunction
+  t: TFunction,
 ) => {
   if (globalError) return globalError.message;
 

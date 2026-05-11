@@ -87,7 +87,11 @@ const DisableTwoFactorAuthModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent title={t("disable_2fa")} description={t("disable_2fa_recommendation")} type="creation">
+      <DialogContent
+        title={t("disable_2fa")}
+        description={t("disable_2fa_recommendation")}
+        type="creation"
+      >
         <Form form={form} handleSubmit={handleDisable}>
           <div className="mb-8">
             {!disablePassword && (
@@ -116,7 +120,8 @@ const DisableTwoFactorAuthModal = ({
               onClick={() => {
                 setTwoFactorLostAccess(!twoFactorLostAccess);
                 resetForm(false);
-              }}>
+              }}
+            >
               {twoFactorLostAccess ? t("go_back") : t("lost_access")}
             </Button>
             <Button color="secondary" onClick={onCancel}>
@@ -127,7 +132,8 @@ const DisableTwoFactorAuthModal = ({
               className="me-2 ms-2"
               data-testid="disable-2fa"
               loading={isDisabling}
-              disabled={isDisabling}>
+              disabled={isDisabling}
+            >
               {t("disable")}
             </Button>
           </DialogFooter>

@@ -23,10 +23,12 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
     currencyOptions.find((c) => c.value === currency) || {
       label: currencyOptions[0].label,
       value: currencyOptions[0].value,
-    }
+    },
   );
   const paymentOption = getAppData("paymentOption");
-  const paymentOptionSelectValue = paymentOptions?.find((option) => paymentOption === option.value) || {
+  const paymentOptionSelectValue = paymentOptions?.find(
+    (option) => paymentOption === option.value,
+  ) || {
     label: paymentOptions[0].label,
     value: paymentOptions[0].value,
   };
@@ -43,7 +45,8 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
       switchOnClick={(enabled) => {
         setRequirePayment(enabled);
       }}
-      description={<>Add Paypal payment to your events</>}>
+      description={<>Add Paypal payment to your events</>}
+    >
       <>
         {recurringEventDefined ? (
           <Alert className="mt-2" severity="warning" title={t("warning_recurring_event_payment")} />
@@ -111,7 +114,11 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
                 />
               </div>
               {seatsEnabled && paymentOption === "HOLD" && (
-                <Alert className="mt-2" severity="warning" title={t("seats_and_no_show_fee_error")} />
+                <Alert
+                  className="mt-2"
+                  severity="warning"
+                  title={t("seats_and_no_show_fee_error")}
+                />
               )}
             </>
           )

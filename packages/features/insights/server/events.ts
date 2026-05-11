@@ -13,7 +13,7 @@ type TimeViewType = "week" | "month" | "year" | "day";
 class EventsInsights {
   static getBookingsInTimeRange = async (
     timeRange: ITimeRange,
-    where: Prisma.BookingTimeStatusWhereInput
+    where: Prisma.BookingTimeStatusWhereInput,
   ) => {
     const { start, end } = timeRange;
 
@@ -32,7 +32,7 @@ class EventsInsights {
 
   static getCreatedEventsInTimeRange = async (
     timeRange: ITimeRange,
-    where: Prisma.BookingTimeStatusWhereInput
+    where: Prisma.BookingTimeStatusWhereInput,
   ) => {
     const result = await this.getBookingsInTimeRange(timeRange, where);
 
@@ -41,7 +41,7 @@ class EventsInsights {
 
   static getCancelledEventsInTimeRange = async (
     timeRange: ITimeRange,
-    where: Prisma.BookingTimeStatusWhereInput
+    where: Prisma.BookingTimeStatusWhereInput,
   ) => {
     const result = await this.getBookingsInTimeRange(timeRange, {
       ...where,
@@ -53,7 +53,7 @@ class EventsInsights {
 
   static getCompletedEventsInTimeRange = async (
     timeRange: ITimeRange,
-    where: Prisma.BookingTimeStatusWhereInput
+    where: Prisma.BookingTimeStatusWhereInput,
   ) => {
     const result = await this.getBookingsInTimeRange(timeRange, {
       ...where,
@@ -65,7 +65,7 @@ class EventsInsights {
 
   static getRescheduledEventsInTimeRange = async (
     timeRange: ITimeRange,
-    where: Prisma.BookingTimeStatusWhereInput
+    where: Prisma.BookingTimeStatusWhereInput,
   ) => {
     const result = await this.getBookingsInTimeRange(timeRange, {
       ...where,
@@ -92,7 +92,9 @@ class EventsInsights {
     });
   };
 
-  static getTotalRescheduledEvents = async (whereConditional: Prisma.BookingTimeStatusWhereInput) => {
+  static getTotalRescheduledEvents = async (
+    whereConditional: Prisma.BookingTimeStatusWhereInput,
+  ) => {
     return await prisma.bookingTimeStatus.count({
       where: {
         ...whereConditional,
@@ -153,7 +155,10 @@ class EventsInsights {
     const endOfDay = now.endOf("day");
     let pivotDate = dayjs(startDate);
     const dates: string[] = [];
-    while ((pivotDate.isBefore(endDate) || pivotDate.isSame(endDate)) && pivotDate.isBefore(endOfDay)) {
+    while (
+      (pivotDate.isBefore(endDate) || pivotDate.isSame(endDate)) &&
+      pivotDate.isBefore(endOfDay)
+    ) {
       dates.push(pivotDate.format("YYYY-MM-DD"));
       pivotDate = pivotDate.add(1, "day");
     }

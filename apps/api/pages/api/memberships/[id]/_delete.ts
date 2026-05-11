@@ -90,7 +90,8 @@ async function checkPermissions(req: NextApiRequest) {
 
   // If Role that is being deleted comes before the current User's Role, or it's the same ROLE, throw error
   if (
-    PRIVILEGE_ORDER.indexOf(memberShipToBeDeleted.role) <= PRIVILEGE_ORDER.indexOf(currentUserMembership.role)
+    PRIVILEGE_ORDER.indexOf(memberShipToBeDeleted.role) <=
+    PRIVILEGE_ORDER.indexOf(currentUserMembership.role)
   ) {
     throw new HttpError({
       statusCode: 403,

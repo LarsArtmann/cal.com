@@ -28,7 +28,9 @@ export function EmptyCell(props: EmptyCellProps) {
 
   const minuesFromStart = (cellToDate.hour() - props.startHour) * 60 + cellToDate.minute();
 
-  return <Cell topOffsetMinutes={minuesFromStart} timeSlot={dayjs(cellToDate).tz(props.timezone)} />;
+  return (
+    <Cell topOffsetMinutes={minuesFromStart} timeSlot={dayjs(cellToDate).tz(props.timezone)} />
+  );
 }
 
 type AvailableCellProps = {
@@ -47,9 +49,10 @@ export function AvailableCellsForDay({ availableSlots, day, startHour }: Availab
       slotsForToday?.map((slot) => ({
         slot,
         topOffsetMinutes:
-          (dayjs(slot.start).tz(timezone).hour() - startHour) * 60 + dayjs(slot.start).tz(timezone).minute(),
+          (dayjs(slot.start).tz(timezone).hour() - startHour) * 60 +
+          dayjs(slot.start).tz(timezone).minute(),
       })),
-    [slotsForToday, startHour, timezone]
+    [slotsForToday, startHour, timezone],
   );
 
   if (!availableSlots) return null;
@@ -83,7 +86,7 @@ function Cell({ isDisabled, topOffsetMinutes, timeSlot }: CellProps) {
       onEmptyCellClick: state.onEmptyCellClick,
       hoverEventDuration: state.hoverEventDuration,
     }),
-    shallow
+    shallow,
   );
 
   return (
@@ -92,7 +95,7 @@ function Cell({ isDisabled, topOffsetMinutes, timeSlot }: CellProps) {
         "group flex w-[calc(100%-1px)] items-center justify-center",
         isDisabled && "pointer-events-none",
         !isDisabled && "bg-default dark:bg-muted",
-        topOffsetMinutes && "absolute"
+        topOffsetMinutes && "absolute",
       )}
       data-disabled={isDisabled}
       data-slot={timeSlot.toISOString()}
@@ -104,13 +107,14 @@ function Cell({ isDisabled, topOffsetMinutes, timeSlot }: CellProps) {
       }}
       onClick={() => {
         onEmptyCellClick && onEmptyCellClick(timeSlot.toDate());
-      }}>
+      }}
+    >
       {!isDisabled && hoverEventDuration !== 0 && (
         <div
           className={classNames(
             "opacity-4 bg-brand-default hover:bg-brand-default text-brand dark:border-emphasis absolute hidden rounded-[4px] p-[6px] text-xs font-semibold leading-5 group-hover:flex group-hover:cursor-pointer",
             hoverEventDuration && hoverEventDuration > 15 && "items-start pt-3",
-            hoverEventDuration && hoverEventDuration < 15 && "items-center"
+            hoverEventDuration && hoverEventDuration < 15 && "items-center",
           )}
           style={{
             height: `calc(${hoverEventDuration}*var(--one-minute-height) - 2px)`,
@@ -118,7 +122,8 @@ function Cell({ isDisabled, topOffsetMinutes, timeSlot }: CellProps) {
             // @TODO: This used to be 90% as per Sean's work. I think this was needed when
             // multiple events are stacked next to each other. We might need to add this back later.
             width: "calc(100% - 2px)",
-          }}>
+          }}
+        >
           <div className="overflow-ellipsis leading-[0]">{timeSlot.format(timeFormat)}</div>
         </div>
       )}

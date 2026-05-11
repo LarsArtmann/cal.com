@@ -13,6 +13,6 @@ export function groupBy<T>(array: Iterable<T>, keySelector: KeySelector<T>): Rec
       }
       return acc;
     },
-    {} // start with empty object
+    {}, // start with empty object
   );
 }

@@ -50,7 +50,9 @@ const refreshTokenResponseSchema = z.object({
   access_token: z.string(),
   expires_in: z
     .number()
-    .transform((currentTimeOffsetInSeconds) => Math.round(+new Date() / 1000 + currentTimeOffsetInSeconds)),
+    .transform((currentTimeOffsetInSeconds) =>
+      Math.round(+new Date() / 1000 + currentTimeOffsetInSeconds),
+    ),
   refresh_token: z.string().optional(),
 });
 
@@ -72,8 +74,8 @@ export default class Office365CalendarService implements Calendar {
 
   async createEvent(event: CalendarEvent, credentialId: number): Promise<NewCalendarEventType> {
     const mainHostDestinationCalendar = event.destinationCalendar
-      ? event.destinationCalendar.find((cal) => cal.credentialId === credentialId) ??
-        event.destinationCalendar[0]
+      ? (event.destinationCalendar.find((cal) => cal.credentialId === credentialId) ??
+        event.destinationCalendar[0])
       : undefined;
     try {
       const eventsUrl = mainHostDestinationCalendar?.externalId
@@ -85,7 +87,9 @@ export default class Office365CalendarService implements Calendar {
         body: JSON.stringify(this.translateEvent(event)),
       });
 
-      const responseJson = await handleErrorsJson<NewCalendarEventType & { iCalUId: string }>(response);
+      const responseJson = await handleErrorsJson<NewCalendarEventType & { iCalUId: string }>(
+        response,
+      );
 
       return { ...responseJson, iCalUID: responseJson.iCalUId };
     } catch (error) {
@@ -102,7 +106,9 @@ export default class Office365CalendarService implements Calendar {
         body: JSON.stringify(this.translateEvent(event)),
       });
 
-      const responseJson = await handleErrorsJson<NewCalendarEventType & { iCalUId: string }>(response);
+      const responseJson = await handleErrorsJson<NewCalendarEventType & { iCalUId: string }>(
+        response,
+      );
 
       return { ...responseJson, iCalUID: responseJson.iCalUId };
     } catch (error) {
@@ -129,13 +135,13 @@ export default class Office365CalendarService implements Calendar {
   async getAvailability(
     dateFrom: string,
     dateTo: string,
-    selectedCalendars: IntegrationCalendar[]
+    selectedCalendars: IntegrationCalendar[],
   ): Promise<EventBusyDate[]> {
     const dateFromParsed = new Date(dateFrom);
     const dateToParsed = new Date(dateTo);
 
     const filter = `?startDateTime=${encodeURIComponent(
-      dateFromParsed.toISOString()
+      dateFromParsed.toISOString(),
     )}&endDateTime=${encodeURIComponent(dateToParsed.toISOString())}`;
 
     const calendarSelectParams = "$select=showAs,start,end";
@@ -151,7 +157,9 @@ export default class Office365CalendarService implements Calendar {
       }
 
       const ids = await (selectedCalendarIds.length === 0
-        ? this.listCalendars().then((cals) => cals.map((e_2) => e_2.externalId).filter(Boolean) || [])
+        ? this.listCalendars().then(
+            (cals) => cals.map((e_2) => e_2.externalId).filter(Boolean) || [],
+          )
         : Promise.resolve(selectedCalendarIds));
       const requests = ids.map((calendarId, id) => ({
         id,
@@ -171,7 +179,11 @@ export default class Office365CalendarService implements Calendar {
         !!responseBatchApi?.responses && this.findRetryAfterResponse(responseBatchApi.responses);
 
       if (retryAfter && responseBatchApi.responses) {
-        responseBatchApi = await this.fetchRequestWithRetryAfter(requests, responseBatchApi.responses, 2);
+        responseBatchApi = await this.fetchRequestWithRetryAfter(
+          requests,
+          responseBatchApi.responses,
+          2,
+        );
       }
 
       // Recursively fetch nextLink responses
@@ -195,9 +207,10 @@ export default class Office365CalendarService implements Calendar {
 
     while (!finishedParsingCalendars) {
       const response = await this.fetcher(requestLink);
-      let responseBody = await handleErrorsJson<{ value: OfficeCalendar[]; "@odata.nextLink"?: string }>(
-        response
-      );
+      let responseBody = await handleErrorsJson<{
+        value: OfficeCalendar[];
+        "@odata.nextLink"?: string;
+      }>(response);
       // If responseBody is valid then parse the JSON text
       if (typeof responseBody === "string") {
         responseBody = JSON.parse(responseBody) as { value: OfficeCalendar[] };
@@ -254,13 +267,16 @@ export default class Office365CalendarService implements Calendar {
       });
       const responseJson = await handleErrorsJson(response);
       const tokenResponse = refreshTokenResponseSchema.safeParse(responseJson);
-      o365AuthCredentials = { ...o365AuthCredentials, ...(tokenResponse.success && tokenResponse.data) };
+      o365AuthCredentials = {
+        ...o365AuthCredentials,
+        ...(tokenResponse.success && tokenResponse.data),
+      };
       if (!tokenResponse.success) {
         console.error(
           "Outlook error grabbing new tokens ~ zodError:",
           tokenResponse.error,
           "MS response:",
-          responseJson
+          responseJson,
         );
       }
       await prisma.credential.update({
@@ -303,8 +319,8 @@ export default class Office365CalendarService implements Calendar {
         {
           emailAddress: {
             address: event.destinationCalendar
-              ? event.destinationCalendar.find((cal) => cal.userId === event.organizer.id)?.externalId ??
-                event.organizer.email
+              ? (event.destinationCalendar.find((cal) => cal.userId === event.organizer.id)
+                  ?.externalId ?? event.organizer.email)
               : event.organizer.email,
             name: event.organizer.name,
           },
@@ -350,7 +366,7 @@ export default class Office365CalendarService implements Calendar {
   };
 
   private fetchResponsesWithNextLink = async (
-    settledResponses: ISettledResponse[]
+    settledResponses: ISettledResponse[],
   ): Promise<ISettledResponse[]> => {
     const alreadySuccess = [] as ISettledResponse[];
     const newLinkRequest = [] as IRequest[];
@@ -395,7 +411,7 @@ export default class Office365CalendarService implements Calendar {
     originalRequests: IRequest[],
     settledPromises: ISettledResponse[],
     maxRetries: number,
-    retryCount = 0
+    retryCount = 0,
   ): Promise<IBatchResponse> => {
     let retryAfterTimeout = 0;
     if (retryCount >= maxRetries) {
@@ -425,14 +441,15 @@ export default class Office365CalendarService implements Calendar {
     if (typeof newResponseBody === "string") {
       newResponseBody = this.handleTextJsonResponseWithHtmlInBody(newResponseBody);
     }
-    const retryAfter = !!newResponseBody?.responses && this.findRetryAfterResponse(newResponseBody.responses);
+    const retryAfter =
+      !!newResponseBody?.responses && this.findRetryAfterResponse(newResponseBody.responses);
 
     if (retryAfter && newResponseBody.responses) {
       newResponseBody = await this.fetchRequestWithRetryAfter(
         failedRequest,
         newResponseBody.responses,
         maxRetries,
-        retryCount + 1
+        retryCount + 1,
       );
     }
     return { responses: [...alreadySuccessRequest, ...(newResponseBody?.responses || [])] };
@@ -472,7 +489,10 @@ export default class Office365CalendarService implements Calendar {
 
   private processBusyTimes = (responses: ISettledResponse[]) => {
     return responses.reduce(
-      (acc: BufferedBusyTime[], subResponse: { body: { value?: BodyValue[]; error?: Error[] } }) => {
+      (
+        acc: BufferedBusyTime[],
+        subResponse: { body: { value?: BodyValue[]; error?: Error[] } },
+      ) => {
         if (!subResponse.body?.value) return acc;
         return acc.concat(
           subResponse.body.value.reduce((acc: BufferedBusyTime[], evt: BodyValue) => {
@@ -481,10 +501,10 @@ export default class Office365CalendarService implements Calendar {
               start: evt.start.dateTime + "Z",
               end: evt.end.dateTime + "Z",
             });
-          }, [])
+          }, []),
         );
       },
-      []
+      [],
     );
   };
 

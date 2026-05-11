@@ -18,7 +18,7 @@ export const slotsRouter = router({
   getSchedule: publicProcedure.input(ZGetScheduleInputSchema).query(async ({ input, ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.getSchedule) {
       UNSTABLE_HANDLER_CACHE.getSchedule = await import("./getSchedule.handler").then(
-        (mod) => mod.getScheduleHandler
+        (mod) => mod.getScheduleHandler,
       );
     }
 
@@ -35,7 +35,7 @@ export const slotsRouter = router({
   reserveSlot: publicProcedure.input(ZReserveSlotInputSchema).mutation(async ({ input, ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.reserveSlot) {
       UNSTABLE_HANDLER_CACHE.reserveSlot = await import("./reserveSlot.handler").then(
-        (mod) => mod.reserveSlotHandler
+        (mod) => mod.reserveSlotHandler,
       );
     }
 

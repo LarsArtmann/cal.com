@@ -87,7 +87,7 @@ test("Calendar Cache is being called", async () => {
           data: testFreeBusyResponse,
         }),
       },
-    }
+    },
   );
 
   await calendarService.getAvailability(new Date().toISOString(), new Date().toISOString(), [

@@ -25,7 +25,7 @@ const LicenseRequired = ({ children, as = "", ...rest }: LicenseRequiredProps) =
     if (process.env.NODE_ENV === "development" && hasValidLicense === false) {
       // Very few people will see this, so we don't need to translate it
       console.info(
-        `You're using a feature that requires a valid license. Please go to ${WEBAPP_URL}/auth/setup to enter a license key.`
+        `You're using a feature that requires a valid license. Please go to ${WEBAPP_URL}/auth/setup to enter a license key.`,
       );
     }
   }, []);
@@ -82,11 +82,10 @@ const LicenseRequired = ({ children, as = "", ...rest }: LicenseRequiredProps) =
 export const withLicenseRequired =
   <T extends JSX.IntrinsicAttributes>(Component: ComponentType<T>) =>
   // eslint-disable-next-line react/display-name
-  (hocProps: T) =>
-    (
-      <LicenseRequired>
-        <Component {...hocProps} />
-      </LicenseRequired>
-    );
+  (hocProps: T) => (
+    <LicenseRequired>
+      <Component {...hocProps} />
+    </LicenseRequired>
+  );
 
 export default LicenseRequired;

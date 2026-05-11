@@ -13,7 +13,7 @@ export const kycVerificationRouter = router({
   isVerified: authedAdminProcedure.query(async ({ ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.isVerified) {
       UNSTABLE_HANDLER_CACHE.isVerified = await import("./isVerified.handler").then(
-        (mod) => mod.isVerifiedHandler
+        (mod) => mod.isVerifiedHandler,
       );
     }
     // Unreachable code but required for type safety
@@ -27,7 +27,9 @@ export const kycVerificationRouter = router({
   }),
   verify: authedAdminProcedure.input(ZVerifyInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.verify) {
-      UNSTABLE_HANDLER_CACHE.verify = await import("./verify.handler").then((mod) => mod.verifyHandler);
+      UNSTABLE_HANDLER_CACHE.verify = await import("./verify.handler").then(
+        (mod) => mod.verifyHandler,
+      );
     }
     // Unreachable code but required for type safety
     if (!UNSTABLE_HANDLER_CACHE.verify) {

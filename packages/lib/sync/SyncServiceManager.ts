@@ -21,7 +21,7 @@ export const createConsoleUser = async (user: ConsoleUserInfoType | null | undef
               await service.console.user.create(user);
             }
           }
-        })
+        }),
       );
     } catch (e) {
       log.warn("createConsoleUser", e);
@@ -45,7 +45,7 @@ export const createWebUser = async (user: WebUserInfoType | null | undefined) =>
               await service.web.user.create(user);
             }
           }
-        })
+        }),
       );
     } catch (e) {
       log.warn("createWebUser", e);
@@ -69,7 +69,7 @@ export const updateWebUser = async (user: WebUserInfoType | null | undefined) =>
               await service.web.user.update(user);
             }
           }
-        })
+        }),
       );
     } catch (e) {
       log.warn("updateWebUser", e);
@@ -89,7 +89,7 @@ export const deleteWebUser = async (user: WebUserInfoType | null | undefined) =>
           if (service.ready()) {
             await service.web.user.delete(user);
           }
-        })
+        }),
       );
     } catch (e) {
       log.warn("deleteWebUser", e);
@@ -102,7 +102,7 @@ export const deleteWebUser = async (user: WebUserInfoType | null | undefined) =>
 export const closeComUpsertTeamUser = async (
   team: TeamInfoType,
   user: WebUserInfoType | null | undefined,
-  role: MembershipRole
+  role: MembershipRole,
 ) => {
   if (user && team && role) {
     log.debug("closeComUpsertTeamUser", { team, user, role });

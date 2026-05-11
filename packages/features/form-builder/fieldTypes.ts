@@ -150,7 +150,10 @@ const configMap: Record<FieldType, Omit<z.infer<typeof fieldTypeConfigSchema>, "
   },
 };
 
-export const fieldTypesConfigMap = configMap as Record<FieldType, z.infer<typeof fieldTypeConfigSchema>>;
+export const fieldTypesConfigMap = configMap as Record<
+  FieldType,
+  z.infer<typeof fieldTypeConfigSchema>
+>;
 
 Object.entries(fieldTypesConfigMap).forEach(([fieldType, config]) => {
   config.propsType = propsTypes[fieldType as keyof typeof fieldTypesConfigMap];

@@ -83,7 +83,7 @@ const createBookingTool = (apiKey: string, userId: number) => {
           status,
           timeZone,
           title,
-        })
+        }),
       );
     },
     name: "createBookingIfAvailable",

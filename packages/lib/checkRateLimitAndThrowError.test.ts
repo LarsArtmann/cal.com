@@ -43,7 +43,9 @@ describe("checkRateLimitAndThrowError", () => {
     const identifier = "test-identifier";
     const rateLimitingType = "core";
 
-    await expect(checkRateLimitAndThrowError({ rateLimitingType, identifier })).resolves.not.toThrow();
+    await expect(
+      checkRateLimitAndThrowError({ rateLimitingType, identifier }),
+    ).resolves.not.toThrow();
   });
   it("should notthrow even if upstash is not enabled", async () => {
     // returned value when upstash env vars are not set
@@ -59,6 +61,8 @@ describe("checkRateLimitAndThrowError", () => {
     const identifier = "test-identifier";
     const rateLimitingType = "core";
 
-    await expect(checkRateLimitAndThrowError({ rateLimitingType, identifier })).resolves.not.toThrow();
+    await expect(
+      checkRateLimitAndThrowError({ rateLimitingType, identifier }),
+    ).resolves.not.toThrow();
   });
 });

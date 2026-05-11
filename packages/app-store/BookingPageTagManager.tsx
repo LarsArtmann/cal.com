@@ -38,7 +38,7 @@ export default function BookingPageTagManager({
               // Replace if value is available. It can possible not be a template variable that just matches the regex.
               val = val.replace(
                 new RegExp(`{${variableName}}`, "g"),
-                appData[variableName]
+                appData[variableName],
               ) as NonNullable<T>;
             }
           }

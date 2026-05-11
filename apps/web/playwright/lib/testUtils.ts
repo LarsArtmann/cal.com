@@ -69,7 +69,10 @@ export function createHttpServer(opts: { requestHandler?: RequestHandler } = {})
 /**
  * When in need to wait for any period of time you can use waitFor, to wait for your expectations to pass.
  */
-export async function waitFor(fn: () => Promise<unknown> | unknown, opts: { timeout?: number } = {}) {
+export async function waitFor(
+  fn: () => Promise<unknown> | unknown,
+  opts: { timeout?: number } = {},
+) {
   let finished = false;
   const timeout = opts.timeout ?? 5000; // 5s
   const timeStart = Date.now();
@@ -220,7 +223,10 @@ export async function expectEmailsToHaveSubject({
   eventTitle: string;
 }) {
   if (!emails) return null;
-  const emailsOrganizerReceived = await getEmailsReceivedByUser({ emails, userEmail: organizer.email });
+  const emailsOrganizerReceived = await getEmailsReceivedByUser({
+    emails,
+    userEmail: organizer.email,
+  });
   const emailsBookerReceived = await getEmailsReceivedByUser({ emails, userEmail: booker.email });
 
   expect(emailsOrganizerReceived?.total).toBe(1);
@@ -257,7 +263,7 @@ async function createUserWithSeatedEvent(users: Fixtures["users"]) {
 
 export async function createUserWithSeatedEventAndAttendees(
   fixtures: Pick<Fixtures, "users" | "bookings">,
-  attendees: Prisma.AttendeeCreateManyBookingInput[]
+  attendees: Prisma.AttendeeCreateManyBookingInput[],
 ) {
   const { user, eventType } = await createUserWithSeatedEvent(fixtures.users);
 

@@ -18,11 +18,11 @@ export const DropdownMenuTrigger = forwardRef<HTMLButtonElement, DropdownMenuTri
       {...props}
       className={classNames(
         !props.asChild &&
-          `focus:bg-subtle hover:bg-muted text-default group-hover:text-emphasis inline-flex items-center rounded-md bg-transparent px-3 py-2 text-sm font-medium ring-0 ${className}`
+          `focus:bg-subtle hover:bg-muted text-default group-hover:text-emphasis inline-flex items-center rounded-md bg-transparent px-3 py-2 text-sm font-medium ring-0 ${className}`,
       )}
       ref={forwardedRef}
     />
-  )
+  ),
 );
 DropdownMenuTrigger.displayName = "DropdownMenuTrigger";
 
@@ -41,13 +41,14 @@ export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuConten
         className={classNames(
           "shadow-dropdown w-50 bg-default border-subtle relative z-10 ml-1.5 origin-top-right rounded-md border text-sm",
           "[&>*:first-child]:mt-1 [&>*:last-child]:mb-1",
-          props.className
+          props.className,
         )}
-        ref={forwardedRef}>
+        ref={forwardedRef}
+      >
         {children}
       </DropdownMenuPrimitive.Content>
     );
-  }
+  },
 );
 DropdownMenuContent.displayName = "DropdownMenuContent";
 
@@ -64,7 +65,7 @@ export const DropdownMenuItem = forwardRef<HTMLDivElement, DropdownMenuItemProps
       {...props}
       ref={forwardedRef}
     />
-  )
+  ),
 );
 DropdownMenuItem.displayName = "DropdownMenuItem";
 
@@ -81,7 +82,7 @@ export const DropdownMenuCheckboxItem = forwardRef<HTMLDivElement, DropdownMenuC
         </DropdownMenuPrimitive.ItemIndicator>
       </DropdownMenuPrimitive.CheckboxItem>
     );
-  }
+  },
 );
 DropdownMenuCheckboxItem.displayName = "DropdownMenuCheckboxItem";
 
@@ -98,7 +99,7 @@ export const DropdownMenuRadioItem = forwardRef<HTMLDivElement, DropdownMenuRadi
         </DropdownMenuPrimitive.ItemIndicator>
       </DropdownMenuPrimitive.RadioItem>
     );
-  }
+  },
 );
 DropdownMenuRadioItem.displayName = "DropdownMenuRadioItem";
 
@@ -141,11 +142,14 @@ export const DropdownItem = (props: DropdownItemProps) => {
         color === "destructive"
           ? "hover:bg-error hover:text-red-700 dark:hover:text-red-100"
           : "hover:bg-subtle",
-        props.className
-      )}>
+        props.className,
+      )}
+    >
       <>
         {StartIcon && <StartIcon className="h-4 w-4" />}
-        <div className={classNames("text-sm font-medium leading-5", childrenClassName)}>{children}</div>
+        <div className={classNames("text-sm font-medium leading-5", childrenClassName)}>
+          {children}
+        </div>
         {EndIcon && <EndIcon className="h-4 w-4" />}
       </>
     </ButtonOrLink>
@@ -162,7 +166,7 @@ export const DropdownMenuSeparator = forwardRef<HTMLDivElement, DropdownMenuSepa
         ref={forwardedRef}
       />
     );
-  }
+  },
 );
 DropdownMenuSeparator.displayName = "DropdownMenuSeparator";
 

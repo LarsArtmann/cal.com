@@ -67,6 +67,6 @@ export const routingFormOrderHandler = async ({ ctx, input }: RoutingFormOrderOp
           position,
         },
       });
-    })
+    }),
   );
 };

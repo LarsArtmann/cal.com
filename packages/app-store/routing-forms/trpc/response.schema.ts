@@ -7,7 +7,7 @@ export const ZResponseInputSchema = z.object({
     z.object({
       label: z.string(),
       value: z.union([z.string(), z.number(), z.array(z.string())]),
-    })
+    }),
   ),
 });
 

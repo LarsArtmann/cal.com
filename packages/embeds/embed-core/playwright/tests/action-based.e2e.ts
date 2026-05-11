@@ -82,7 +82,11 @@ test.describe("Popup Tests", () => {
     await deleteAllBookingsByEmail("embed-user@example.com");
   });
 
-  test("should be able to reschedule", async ({ page, addEmbedListeners, getActionFiredDetails }) => {
+  test("should be able to reschedule", async ({
+    page,
+    addEmbedListeners,
+    getActionFiredDetails,
+  }) => {
     const booking = await test.step("Create a booking", async () => {
       return await bookFirstFreeUserEventThroughEmbed({
         page,
@@ -123,7 +127,7 @@ test.describe("Popup Tests", () => {
     });
     expect(embedIframe).toBeFalsy();
     await page.click(
-      `[data-cal-namespace=${calNamespace}][data-cal-link="forms/948ae412-d995-4865-875a-48302588de03"]`
+      `[data-cal-namespace=${calNamespace}][data-cal-link="forms/948ae412-d995-4865-875a-48302588de03"]`,
     );
     embedIframe = await getEmbedIframe({
       calNamespace,

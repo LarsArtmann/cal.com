@@ -103,7 +103,7 @@ export function mergeOverlappingDateRanges(dateRanges: TimeRange[]) {
 export function calculateHourSizeInPx(
   gridElementRef: HTMLOListElement | null,
   startHour: number,
-  endHour: number
+  endHour: number,
 ) {
   // Gap added at bottom to give calendar some breathing room.
   // I guess we could come up with a better way to do this in the future.

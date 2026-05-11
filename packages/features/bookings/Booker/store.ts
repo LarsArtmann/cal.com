@@ -77,7 +77,9 @@ export type BookerStore = {
    * Multiple Selected Dates and Times
    */
   selectedDatesAndTimes: { [key: string]: { [key: string]: string[] } } | null;
-  setSelectedDatesAndTimes: (selectedDatesAndTimes: { [key: string]: { [key: string]: string[] } }) => void;
+  setSelectedDatesAndTimes: (selectedDatesAndTimes: {
+    [key: string]: { [key: string]: string[] };
+  }) => void;
   /**
    * Multiple duration configuration
    */

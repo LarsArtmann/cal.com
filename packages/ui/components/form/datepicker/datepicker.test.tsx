@@ -9,7 +9,9 @@ describe("Tests for DatePicker component", () => {
   const date = new Date("2023-07-15");
 
   test("Should display the selected date correctly and call the onDatesChange callback when the selected date changes", () => {
-    const mockOnDatesChange = vi.fn((changedDate: Date) => format(new Date(changedDate), "yyyy-MM-dd"));
+    const mockOnDatesChange = vi.fn((changedDate: Date) =>
+      format(new Date(changedDate), "yyyy-MM-dd"),
+    );
     const { container } = render(<DatePicker date={date} onDatesChange={mockOnDatesChange} />);
 
     const day = container.querySelector('input[name="day"]') as HTMLInputElement;

@@ -21,7 +21,10 @@ const runtimeMock = async (data: Array<any>) => {
   mockedLib.trpc = updatedTrpc;
 };
 const renderCreateButton = (
-  props: Omit<CreateBtnProps, "options"> & { onlyShowWithTeams?: boolean; onlyShowWithNoTeams?: boolean }
+  props: Omit<CreateBtnProps, "options"> & {
+    onlyShowWithTeams?: boolean;
+    onlyShowWithNoTeams?: boolean;
+  },
 ) => {
   return render(<CreateButtonWithTeamsList {...props} />);
 };

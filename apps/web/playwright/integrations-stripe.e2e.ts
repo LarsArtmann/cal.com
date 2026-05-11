@@ -82,7 +82,10 @@ test.describe("Stripe integration", () => {
     await user.bookAndPayEvent(eventType);
 
     // Rescheduling the event
-    await Promise.all([page.waitForURL("/booking/*"), page.click('[data-testid="reschedule-link"]')]);
+    await Promise.all([
+      page.waitForURL("/booking/*"),
+      page.click('[data-testid="reschedule-link"]'),
+    ]);
 
     await selectFirstAvailableTimeSlotNextMonth(page);
 

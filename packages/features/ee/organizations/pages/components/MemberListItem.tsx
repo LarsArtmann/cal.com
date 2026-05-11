@@ -60,7 +60,8 @@ export default function MemberListItem(props: Props) {
                     <a
                       target="_blank"
                       href={`${bookerUrl}/${user.username}`}
-                      className="text-default block truncate text-sm">
+                      className="text-default block truncate text-sm"
+                    >
                       {bookingLink}
                     </a>
                   </>
@@ -97,7 +98,8 @@ export default function MemberListItem(props: Props) {
                       href={"/" + user.username}
                       target="_blank"
                       type="button"
-                      StartIcon={ExternalLink}>
+                      StartIcon={ExternalLink}
+                    >
                       {t("view_public_page")}
                     </DropdownItem>
                   </DropdownMenuItem>

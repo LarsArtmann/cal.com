@@ -11,7 +11,7 @@ export const getAggregateWorkingHours = (
     "currentSeats" | "dateRanges"
   > & { user?: { isFixed?: boolean } })[],
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  schedulingType: SchedulingType | null
+  schedulingType: SchedulingType | null,
 ): WorkingHours[] => {
   // during personal events, just flatMap.
   if (!schedulingType) {
@@ -22,7 +22,7 @@ export const getAggregateWorkingHours = (
     .flatMap((s) => s.workingHours);
 
   const fixedHostSchedules = usersWorkingHoursAndBusySlots.filter(
-    ({ user }) => schedulingType === SchedulingType.COLLECTIVE || user?.isFixed
+    ({ user }) => schedulingType === SchedulingType.COLLECTIVE || user?.isFixed,
   );
   // return early when there are no fixed hosts.
   if (!fixedHostSchedules.length) {
@@ -33,7 +33,7 @@ export const getAggregateWorkingHours = (
 
     s.workingHours.forEach((workingHour) => {
       const sameDayWorkingHours = currentWorkingHours.filter((compare) =>
-        compare.days.find((day) => workingHour.days.includes(day))
+        compare.days.find((day) => workingHour.days.includes(day)),
       );
       if (!sameDayWorkingHours.length) {
         updatedWorkingHours.push(workingHour); // the first day is always added.
@@ -52,7 +52,7 @@ export const getAggregateWorkingHours = (
             retVal.userId = compare.userId;
           }
           return retVal;
-        })
+        }),
       );
     });
     return updatedWorkingHours;

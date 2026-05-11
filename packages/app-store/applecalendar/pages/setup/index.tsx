@@ -40,7 +40,8 @@ export default function AppleCalendarSetup() {
                 className="text-indigo-400"
                 href="https://appleid.apple.com/account/manage"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 https://appleid.apple.com/account/manage
               </a>
               . {t("credentials_stored_encrypted")}
@@ -63,11 +64,13 @@ export default function AppleCalendarSetup() {
                   } else {
                     router.push(json.url);
                   }
-                }}>
+                }}
+              >
                 <fieldset
                   className="space-y-2"
                   disabled={form.formState.isSubmitting}
-                  data-testid="apple-calendar-form">
+                  data-testid="apple-calendar-form"
+                >
                   <TextField
                     required
                     type="text"
@@ -95,7 +98,8 @@ export default function AppleCalendarSetup() {
                   <Button
                     type="submit"
                     loading={form.formState.isSubmitting}
-                    data-testid="apple-calendar-login-button">
+                    data-testid="apple-calendar-login-button"
+                  >
                     {t("save")}
                   </Button>
                 </div>

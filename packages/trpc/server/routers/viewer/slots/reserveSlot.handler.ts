@@ -59,7 +59,9 @@ export const reserveSlotHandler = async ({ ctx, input }: ReserveSlotOptions) => 
       await Promise.all(
         eventType.users.map((user) =>
           prisma.selectedSlots.upsert({
-            where: { selectedSlotUnique: { userId: user.id, slotUtcStartDate, slotUtcEndDate, uid } },
+            where: {
+              selectedSlotUnique: { userId: user.id, slotUtcStartDate, slotUtcEndDate, uid },
+            },
             update: {
               slotUtcStartDate,
               slotUtcEndDate,
@@ -75,8 +77,8 @@ export const reserveSlotHandler = async ({ ctx, input }: ReserveSlotOptions) => 
               releaseAt,
               isSeat: eventType.seatsPerTimeSlot !== null,
             },
-          })
-        )
+          }),
+        ),
       );
     } catch {
       throw new TRPCError({

@@ -34,12 +34,12 @@ export const Codes = {
 	  calLink="${calLink}"
 	  style={{width:"${width}",height:"${height}",overflow:"scroll"}}
 	  ${previewState.layout ? "config={{layout: '" + previewState.layout + "'}}" : ""}${
-        IS_SELF_HOSTED
-          ? `
+      IS_SELF_HOSTED
+        ? `
 	  calOrigin="${embedCalOrigin}"
 	  calJsUrl="${embedLibUrl}"`
-          : ""
-      }
+        : ""
+    }
 	/>;
   };`;
     },

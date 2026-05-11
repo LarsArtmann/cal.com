@@ -74,7 +74,10 @@ export const requestRescheduleHandler = async ({ ctx, input }: RequestReschedule
   });
 
   if (!bookingToReschedule.userId) {
-    throw new TRPCError({ code: "FORBIDDEN", message: "Booking to reschedule doesn't have an owner" });
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Booking to reschedule doesn't have an owner",
+    });
   }
 
   if (!bookingToReschedule.eventType) {
@@ -149,7 +152,10 @@ export const requestRescheduleHandler = async ({ ctx, input }: RequestReschedule
   const [mainAttendee] = bookingToReschedule.attendees;
   // @NOTE: Should we assume attendees language?
   const tAttendees = await getTranslation(mainAttendee.locale ?? "en", "common");
-  const usersToPeopleType = (users: PersonAttendeeCommonFields[], selectedLanguage: TFunction): Person[] => {
+  const usersToPeopleType = (
+    users: PersonAttendeeCommonFields[],
+    selectedLanguage: TFunction,
+  ): Person[] => {
     return users?.map((user) => {
       return {
         email: user.email || "",
@@ -173,7 +179,7 @@ export const requestRescheduleHandler = async ({ ctx, input }: RequestReschedule
     attendees: usersToPeopleType(
       // username field doesn't exists on attendee but could be in the future
       bookingToReschedule.attendees as unknown as PersonAttendeeCommonFields[],
-      tAttendees
+      tAttendees,
     ),
     organizer: userAsPeopleType,
   });
@@ -196,7 +202,7 @@ export const requestRescheduleHandler = async ({ ctx, input }: RequestReschedule
     credentialsMap.set(credential.type, credential);
   });
   const bookingRefsFiltered: BookingReference[] = bookingToReschedule.references.filter((ref) =>
-    credentialsMap.has(ref.type)
+    credentialsMap.has(ref.type),
   );
 
   // FIXME: error-handling
@@ -206,11 +212,15 @@ export const requestRescheduleHandler = async ({ ctx, input }: RequestReschedule
 
       if (bookingRef.type.endsWith("_calendar")) {
         const calendar = await getCalendar(credentialsMap.get(bookingRef.type));
-        return calendar?.deleteEvent(bookingRef.uid, builder.calendarEvent, bookingRef.externalCalendarId);
+        return calendar?.deleteEvent(
+          bookingRef.uid,
+          builder.calendarEvent,
+          bookingRef.externalCalendarId,
+        );
       } else if (bookingRef.type.endsWith("_video")) {
         return deleteMeeting(credentialsMap.get(bookingRef.type), bookingRef.uid);
       }
-    })
+    }),
   );
 
   // Send emails
@@ -233,7 +243,7 @@ export const requestRescheduleHandler = async ({ ctx, input }: RequestReschedule
     attendees: usersToPeopleType(
       // username field doesn't exists on attendee but could be in the future
       bookingToReschedule.attendees as unknown as PersonAttendeeCommonFields[],
-      tAttendees
+      tAttendees,
     ),
     uid: bookingToReschedule?.uid,
     location: bookingToReschedule?.location,
@@ -268,8 +278,11 @@ export const requestRescheduleHandler = async ({ ctx, input }: RequestReschedule
       ...evt,
       smsReminderNumber: bookingToReschedule.smsReminderNumber || undefined,
     }).catch((e) => {
-      console.error(`Error executing webhook for event: ${eventTrigger}, URL: ${webhook.subscriberUrl}`, e);
-    })
+      console.error(
+        `Error executing webhook for event: ${eventTrigger}, URL: ${webhook.subscriberUrl}`,
+        e,
+      );
+    }),
   );
   await Promise.all(promises);
 };

@@ -168,7 +168,7 @@ function EventTypeSingleLayout({
   const { isManagedEventType, isChildrenManagedEventType } = useLockedFieldsManager(
     eventType,
     t("locked_fields_admin_description"),
-    t("locked_fields_member_description")
+    t("locked_fields_member_description"),
   );
 
   // Define tab navigation here
@@ -191,13 +191,13 @@ function EventTypeSingleLayout({
           ? eventType.schedule === null
             ? "members_default_schedule"
             : isChildrenManagedEventType
-            ? `${
-                eventType.scheduleName
-                  ? `${eventType.scheduleName} - ${t("managed")}`
-                  : `default_schedule_name`
-              }`
-            : eventType.scheduleName ?? `default_schedule_name`
-          : eventType.scheduleName ?? `default_schedule_name`,
+              ? `${
+                  eventType.scheduleName
+                    ? `${eventType.scheduleName} - ${t("managed")}`
+                    : `default_schedule_name`
+                }`
+              : (eventType.scheduleName ?? `default_schedule_name`)
+          : (eventType.scheduleName ?? `default_schedule_name`),
     });
     // If there is a team put this navigation item within the tabs
     if (team) {
@@ -257,20 +257,25 @@ function EventTypeSingleLayout({
                 className={classNames(
                   "sm:hover:bg-muted hidden cursor-pointer items-center rounded-md",
                   formMethods.watch("hidden") ? "px-2" : "",
-                  "lg:flex"
-                )}>
+                  "lg:flex",
+                )}
+              >
                 {formMethods.watch("hidden") && (
                   <Skeleton
                     as={Label}
                     htmlFor="hiddenSwitch"
-                    className="mt-2 hidden cursor-pointer self-center whitespace-nowrap pr-2 sm:inline">
+                    className="mt-2 hidden cursor-pointer self-center whitespace-nowrap pr-2 sm:inline"
+                  >
                     {t("hidden")}
                   </Skeleton>
                 )}
                 <Tooltip
                   content={
-                    formMethods.watch("hidden") ? t("show_eventtype_on_profile") : t("hide_from_profile")
-                  }>
+                    formMethods.watch("hidden")
+                      ? t("show_eventtype_on_profile")
+                      : t("hide_from_profile")
+                  }
+                >
                   <div className="self-center rounded-md p-2">
                     <Switch
                       id="hiddenSwitch"
@@ -339,7 +344,12 @@ function EventTypeSingleLayout({
 
           <Dropdown>
             <DropdownMenuTrigger asChild>
-              <Button className="lg:hidden" StartIcon={MoreHorizontal} variant="icon" color="secondary" />
+              <Button
+                className="lg:hidden"
+                StartIcon={MoreHorizontal}
+                variant="icon"
+                color="secondary"
+              />
             </DropdownMenuTrigger>
             <DropdownMenuContent style={{ minWidth: "200px" }}>
               <DropdownMenuItem className="focus:ring-muted">
@@ -348,7 +358,8 @@ function EventTypeSingleLayout({
                   type="button"
                   StartIcon={ExternalLink}
                   href={permalink}
-                  rel="noreferrer">
+                  rel="noreferrer"
+                >
                   {t("preview")}
                 </DropdownItem>
               </DropdownMenuItem>
@@ -359,7 +370,8 @@ function EventTypeSingleLayout({
                   onClick={() => {
                     navigator.clipboard.writeText(permalink);
                     showToast("Link copied!", "success");
-                  }}>
+                  }}
+                >
                   {t("copy_link")}
                 </DropdownItem>
               </DropdownMenuItem>
@@ -369,7 +381,8 @@ function EventTypeSingleLayout({
                   color="destructive"
                   StartIcon={Trash}
                   disabled={!hasPermsToDelete}
-                  onClick={() => setDeleteDialogOpen(true)}>
+                  onClick={() => setDeleteDialogOpen(true)}
+                >
                   {t("delete")}
                 </DropdownItem>
               </DropdownMenuItem>
@@ -378,8 +391,11 @@ function EventTypeSingleLayout({
                 <Skeleton
                   as={Label}
                   htmlFor="hiddenSwitch"
-                  className="mt-2 inline cursor-pointer self-center pr-2 ">
-                  {formMethods.watch("hidden") ? t("show_eventtype_on_profile") : t("hide_from_profile")}
+                  className="mt-2 inline cursor-pointer self-center pr-2 "
+                >
+                  {formMethods.watch("hidden")
+                    ? t("show_eventtype_on_profile")
+                    : t("hide_from_profile")}
                 </Skeleton>
                 <Switch
                   id="hiddenSwitch"
@@ -397,11 +413,13 @@ function EventTypeSingleLayout({
             type="submit"
             loading={isUpdateMutationLoading}
             data-testid="update-eventtype"
-            form="event-type-form">
+            form="event-type-form"
+          >
             {t("save")}
           </Button>
         </div>
-      }>
+      }
+    >
       <Suspense fallback={<Loader />}>
         <div className="flex flex-col xl:flex-row xl:space-x-6">
           <div className="hidden xl:block">
@@ -421,8 +439,9 @@ function EventTypeSingleLayout({
             <div
               className={classNames(
                 "bg-default border-subtle  mt-4 rounded-md sm:mx-0 xl:mt-0",
-                disableBorder ? "border-0 " : "p-2 md:border md:p-6"
-              )}>
+                disableBorder ? "border-0 " : "p-2 md:border md:p-6",
+              )}
+            >
               {children}
             </div>
           </div>
@@ -438,15 +457,20 @@ function EventTypeSingleLayout({
           onConfirm={(e) => {
             e.preventDefault();
             deleteMutation.mutate({ id: eventType.id });
-          }}>
+          }}
+        >
           <p className="mt-5">
             <Trans
               i18nKey={`delete${isManagedEvent}_event_type_description`}
-              components={{ li: <li />, ul: <ul className="ml-4 list-disc" /> }}>
+              components={{ li: <li />, ul: <ul className="ml-4 list-disc" /> }}
+            >
               <ul>
-                <li>Members assigned to this event type will also have their event types deleted.</li>
                 <li>
-                  Anyone who they&apos;ve shared their link with will no longer be able to book using it.
+                  Members assigned to this event type will also have their event types deleted.
+                </li>
+                <li>
+                  Anyone who they&apos;ve shared their link with will no longer be able to book
+                  using it.
                 </li>
               </ul>
             </Trans>

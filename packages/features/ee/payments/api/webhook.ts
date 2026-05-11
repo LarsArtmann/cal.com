@@ -6,7 +6,11 @@ import type Stripe from "stripe";
 import stripe from "@calcom/app-store/stripepayment/lib/server";
 import EventManager from "@calcom/core/EventManager";
 import dayjs from "@calcom/dayjs";
-import { sendAttendeeRequestEmail, sendOrganizerRequestEmail, sendScheduledEmails } from "@calcom/emails";
+import {
+  sendAttendeeRequestEmail,
+  sendOrganizerRequestEmail,
+  sendScheduledEmails,
+} from "@calcom/emails";
 import { getCalEventResponses } from "@calcom/features/bookings/lib/getCalEventResponses";
 import { handleConfirmation } from "@calcom/features/bookings/lib/handleConfirmation";
 import { isPrismaObjOrUndefined, parseRecurringEvent } from "@calcom/lib";
@@ -79,7 +83,10 @@ async function getBooking(bookingId: number) {
     eventTypeRaw = await getEventType(booking.eventTypeId);
   }
 
-  const eventType = { ...eventTypeRaw, metadata: EventTypeMetaDataSchema.parse(eventTypeRaw?.metadata) };
+  const eventType = {
+    ...eventTypeRaw,
+    metadata: EventTypeMetaDataSchema.parse(eventTypeRaw?.metadata),
+  };
 
   const { user } = booking;
 
@@ -294,7 +301,8 @@ const handleSetupSuccess = async (event: Stripe.Event) => {
     },
   });
 
-  if (!payment?.data || !payment?.id) throw new HttpCode({ statusCode: 204, message: "Payment not found" });
+  if (!payment?.data || !payment?.id)
+    throw new HttpCode({ statusCode: 204, message: "Payment not found" });
 
   const { booking, user, evt, eventType } = await getBooking(payment.bookingId);
 
@@ -323,7 +331,10 @@ const handleSetupSuccess = async (event: Stripe.Event) => {
   let requiresConfirmation = eventType?.requiresConfirmation;
   const rcThreshold = eventType?.metadata?.requiresConfirmationThreshold;
   if (rcThreshold) {
-    if (dayjs(dayjs(booking.startTime).utc().format()).diff(dayjs(), rcThreshold.unit) > rcThreshold.time) {
+    if (
+      dayjs(dayjs(booking.startTime).utc().format()).diff(dayjs(), rcThreshold.unit) >
+      rcThreshold.time
+    ) {
       requiresConfirmation = false;
     }
   }

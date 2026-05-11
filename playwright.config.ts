@@ -159,7 +159,7 @@ expect.extend({
     //TODO: Move it to testUtil, so that it doesn't need to be passed
     // eslint-disable-next-line
     getActionFiredDetails: (a: { calNamespace: string; actionType: string }) => Promise<any>,
-    expectedUrlDetails: ExpectedUrlDetails = {}
+    expectedUrlDetails: ExpectedUrlDetails = {},
   ) {
     if (!iframe || !iframe.url) {
       return {
@@ -243,12 +243,14 @@ expect.extend({
     expect(visibilityBefore).toBe("hidden");
     expect(backgroundBefore).toBe("transparent");
 
-    const { visibility: visibilityAfter, background: backgroundAfter } = await iframe.evaluate(() => {
-      return {
-        visibility: document.body.style.visibility,
-        background: document.body.style.background,
-      };
-    });
+    const { visibility: visibilityAfter, background: backgroundAfter } = await iframe.evaluate(
+      () => {
+        return {
+          visibility: document.body.style.visibility,
+          background: document.body.style.background,
+        };
+      },
+    );
 
     expect(visibilityAfter).toBe("visible");
     expect(backgroundAfter).toBe("transparent");

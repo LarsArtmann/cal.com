@@ -19,7 +19,9 @@ export const verifyApiKey: NextMiddleware = async (req, res, next) => {
   const { prisma, isCustomPrisma, isAdmin } = req;
   const hasValidLicense = await checkLicense(prisma);
   if (!hasValidLicense && IS_PRODUCTION)
-    return res.status(401).json({ error: "Invalid or missing CALCOM_LICENSE_KEY environment variable" });
+    return res
+      .status(401)
+      .json({ error: "Invalid or missing CALCOM_LICENSE_KEY environment variable" });
   // If the user is an admin and using a license key (from customPrisma), skip the apiKey check.
   if (isCustomPrisma && isAdmin) {
     await next();

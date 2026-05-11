@@ -81,7 +81,8 @@ export const Editor = (props: TextEditorProps) => {
           />
           <div
             className={classNames("editor-inner scroll-bar", !editable && "!bg-subtle")}
-            style={{ height: props.height }}>
+            style={{ height: props.height }}
+          >
             <RichTextPlugin
               contentEditable={
                 <ContentEditable

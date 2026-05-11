@@ -29,14 +29,14 @@ function Component({ webhookId }: { webhookId: string }) {
     {
       suspense: true,
       enabled: !!webhookId,
-    }
+    },
   );
   const { data: webhook } = trpc.viewer.webhook.get.useQuery(
     { webhookId },
     {
       suspense: true,
       enabled: !!webhookId,
-    }
+    },
   );
   const { data: webhooks } = trpc.viewer.webhook.list.useQuery(undefined, {
     suspense: true,

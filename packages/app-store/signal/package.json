@@ -1,10 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "private": true,
   "name": "@calcom/signal",
   "version": "0.0.0",
-  "main": "./index.ts",
+  "private": true,
   "description": "Schedule a chat with your guests or have a Signal Video call.",
+  "main": "./index.ts",
   "dependencies": {
     "@calcom/lib": "*"
   },

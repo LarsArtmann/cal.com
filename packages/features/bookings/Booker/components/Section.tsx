@@ -42,7 +42,7 @@ const gridAreaClassNameMap: { [key in BookerAreas]: string } = {
  */
 export const BookerSection = forwardRef<HTMLDivElement, BookerSectionProps>(function BookerSection(
   { children, area, visible, className, ...props },
-  ref
+  ref,
 ) {
   const layout = useBookerStore((state) => state.layout);
   let gridClassName: string;

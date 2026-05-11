@@ -72,7 +72,7 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
   const trpcContext = trpc.useContext();
 
   const [modalImportMode, setModalInputMode] = useState<ModalMode>(
-    props?.orgMembers && props.orgMembers?.length > 0 ? "ORGANIZATION" : "INDIVIDUAL"
+    props?.orgMembers && props.orgMembers?.length > 0 ? "ORGANIZATION" : "INDIVIDUAL",
   );
 
   const createInviteMutation = trpc.viewer.teams.createInvite.useMutation({
@@ -163,7 +163,8 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
       onOpenChange={() => {
         props.onExit();
         newMemberFormMethods.reset();
-      }}>
+      }}
+    >
       <DialogContent
         enableOverflow
         type="creation"
@@ -172,12 +173,14 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
           IS_TEAM_BILLING_ENABLED ? (
             <span className="text-subtle text-sm leading-tight">
               <Trans i18nKey="invite_new_member_description">
-                Note: This will <span className="text-emphasis font-medium">cost an extra seat ($15/m)</span>{" "}
-                on your subscription.
+                Note: This will{" "}
+                <span className="text-emphasis font-medium">cost an extra seat ($15/m)</span> on
+                your subscription.
               </Trans>
             </span>
           ) : null
-        }>
+        }
+      >
         <div>
           <Label className="sr-only" htmlFor="role">
             {t("import_mode")}
@@ -190,7 +193,10 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
           />
         </div>
 
-        <Form form={newMemberFormMethods} handleSubmit={(values) => props.onSubmit(values, resetFields)}>
+        <Form
+          form={newMemberFormMethods}
+          handleSubmit={(values) => props.onSubmit(values, resetFields)}
+        >
           <div className="mb-10 mt-6 space-y-6">
             {/* Indivdual Invite */}
             {modalImportMode === "INDIVIDUAL" && (
@@ -268,7 +274,8 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
                     }
                   }}
                   StartIcon={PaperclipIcon}
-                  className="mt-3 justify-center stroke-2">
+                  className="mt-3 justify-center stroke-2"
+                >
                   {t("upload_csv_file")}
                 </Button>
                 <input
@@ -334,7 +341,9 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
                   className="mr-0"
                   defaultChecked={true}
                   description={t("send_invite_email")}
-                  onChange={(e) => newMemberFormMethods.setValue("sendInviteEmail", e.target.checked)}
+                  onChange={(e) =>
+                    newMemberFormMethods.setValue("sendInviteEmail", e.target.checked)
+                  }
                 />
               )}
             />
@@ -348,7 +357,8 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
                     props.onSettingsOpen && props.onSettingsOpen();
                     newMemberFormMethods.reset();
                   }}
-                  data-testid="edit-invite-link-button">
+                  data-testid="edit-invite-link-button"
+                >
                   {t("edit_invite_link")}
                 </Button>
               </div>
@@ -367,7 +377,8 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
                       : createInviteMutation.mutate({ teamId: props.teamId })
                   }
                   className={classNames("gap-2", props.token && "opacity-50")}
-                  data-testid="copy-invite-link-button">
+                  data-testid="copy-invite-link-button"
+                >
                   <Link className="text-default h-4 w-4" aria-hidden="true" />
                   <span className="hidden sm:inline">{t("copy_invite_link")}</span>
                 </Button>
@@ -379,7 +390,8 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
               onClick={() => {
                 props.onExit();
                 resetFields();
-              }}>
+              }}
+            >
               {t("cancel")}
             </Button>
             <Button
@@ -387,7 +399,8 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
               type="submit"
               color="primary"
               className="me-2 ms-2"
-              data-testid="invite-new-member-button">
+              data-testid="invite-new-member-button"
+            >
               {t("send_invite")}
             </Button>
           </DialogFooter>

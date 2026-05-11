@@ -1,11 +1,11 @@
 {
   "name": "@calcom/atoms",
-  "private": true,
-  "sideEffects": false,
-  "type": "module",
-  "description": "Cal.com Atoms",
-  "authors": "Cal.com, Inc.",
   "version": "1.0.0",
+  "private": true,
+  "description": "Cal.com Atoms",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./index",
   "scripts": {
     "build": "node build.mjs"
   },
@@ -16,7 +16,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "rollup-plugin-node-builtins": "^2.1.2",
     "typescript": "^6.0.3",
-    "vite": "^8.0.10"
+    "vite": "^8.0.12"
   },
-  "main": "./index"
+  "authors": "Cal.com, Inc."
 }

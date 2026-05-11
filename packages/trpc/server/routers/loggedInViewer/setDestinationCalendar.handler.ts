@@ -14,20 +14,30 @@ type SetDestinationCalendarOptions = {
   input: TSetDestinationCalendarInputSchema;
 };
 
-export const setDestinationCalendarHandler = async ({ ctx, input }: SetDestinationCalendarOptions) => {
+export const setDestinationCalendarHandler = async ({
+  ctx,
+  input,
+}: SetDestinationCalendarOptions) => {
   const { user } = ctx;
   const { integration, externalId, eventTypeId } = input;
   const credentials = await getUsersCredentials(user.id);
   const calendarCredentials = getCalendarCredentials(credentials);
-  const { connectedCalendars } = await getConnectedCalendars(calendarCredentials, user.selectedCalendars);
+  const { connectedCalendars } = await getConnectedCalendars(
+    calendarCredentials,
+    user.selectedCalendars,
+  );
   const allCals = connectedCalendars.map((cal) => cal.calendars ?? []).flat();
 
   const credentialId = allCals.find(
-    (cal) => cal.externalId === externalId && cal.integration === integration && cal.readOnly === false
+    (cal) =>
+      cal.externalId === externalId && cal.integration === integration && cal.readOnly === false,
   )?.credentialId;
 
   if (!credentialId) {
-    throw new TRPCError({ code: "BAD_REQUEST", message: `Could not find calendar ${input.externalId}` });
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: `Could not find calendar ${input.externalId}`,
+    });
   }
 
   let where;

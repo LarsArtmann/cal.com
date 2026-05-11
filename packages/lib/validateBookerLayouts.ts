@@ -10,14 +10,14 @@ export const validateBookerLayouts = (settings: BookerLayoutSettings) => {
 
   // Default layout should also be enabled.
   const defaultLayoutIsInEnabledLayouts = settings?.enabledLayouts.find(
-    (layout) => layout === settings.defaultLayout
+    (layout) => layout === settings.defaultLayout,
   );
 
   if (!defaultLayoutIsInEnabledLayouts) return "bookerlayout_error_default_not_enabled";
 
   // Validates that users don't try to insert an unknown layout into DB.
   const enabledLayoutsDoesntContainUnknownLayout = settings?.enabledLayouts.every((layout) =>
-    bookerLayoutOptions.includes(layout)
+    bookerLayoutOptions.includes(layout),
   );
   const defaultLayoutIsKnown = bookerLayoutOptions.includes(settings.defaultLayout);
 

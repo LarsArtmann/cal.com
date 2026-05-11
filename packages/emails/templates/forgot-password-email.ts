@@ -43,7 +43,7 @@ ${this.passwordEvent.language("someone_requested_password_reset")}
 ${this.passwordEvent.language("change_password")}: ${this.passwordEvent.resetLink}
 ${this.passwordEvent.language("password_reset_instructions")}
 ${this.passwordEvent.language("have_any_questions")} ${this.passwordEvent.language(
-      "contact_our_support_team"
+      "contact_our_support_team",
     )}
 `.replace(/(<([^>]+)>)/gi, "");
   }

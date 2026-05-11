@@ -19,7 +19,9 @@ interface AdditionalCalendarSelectorProps {
   isLoading?: boolean;
 }
 
-const AdditionalCalendarSelector = ({ isLoading }: AdditionalCalendarSelectorProps): JSX.Element | null => {
+const AdditionalCalendarSelector = ({
+  isLoading,
+}: AdditionalCalendarSelectorProps): JSX.Element | null => {
   const { t } = useLocale();
   const query = trpc.viewer.integrations.useQuery({ variant: "calendar", onlyInstalled: true });
 
@@ -57,11 +59,15 @@ const AdditionalCalendarSelector = ({ isLoading }: AdditionalCalendarSelectorPro
                     <InstallAppButton
                       type={data.type}
                       render={(installProps) => {
-                        const props = { ...installProps } as FunctionComponent<SVGProps<SVGSVGElement>>;
+                        const props = { ...installProps } as FunctionComponent<
+                          SVGProps<SVGSVGElement>
+                        >;
                         return (
                           <DropdownItem {...props} color="minimal" type="button">
                             <span className="flex items-center gap-x-2">
-                              {data.image && <img className="h-5 w-5" src={data.image} alt={data.label} />}
+                              {data.image && (
+                                <img className="h-5 w-5" src={data.image} alt={data.label} />
+                              )}
                               {`${t("add")} ${data.label}`}
                             </span>
                           </DropdownItem>

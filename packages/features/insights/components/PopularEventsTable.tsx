@@ -29,7 +29,7 @@ export const PopularEventsTable = () => {
         context: { skipBatch: true },
       },
       enabled: !!(initialConfig?.teamId || initialConfig?.userId || initialConfig?.isAll),
-    }
+    },
   );
 
   if (isLoading) return <LoadingInsight />;

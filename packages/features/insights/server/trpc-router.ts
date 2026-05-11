@@ -120,7 +120,7 @@ export const insightsRouter = router({
         memberUserId: z.coerce.number().optional(),
         userId: z.coerce.number().optional(),
         isAll: z.boolean().optional(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const { teamId, startDate, endDate, eventTypeId, memberUserId, userId, isAll } = input;
@@ -229,7 +229,8 @@ export const insightsRouter = router({
         },
       };
 
-      const baseBookingsCount = await EventsInsights.getBaseBookingCountForEventStatus(baseWhereCondition);
+      const baseBookingsCount =
+        await EventsInsights.getBaseBookingCountForEventStatus(baseWhereCondition);
 
       const startTimeEndTimeDiff = dayjs(endDate).diff(dayjs(startDate), "day");
 
@@ -251,26 +252,28 @@ export const insightsRouter = router({
         teamId: teamId,
       };
 
-      const lastPeriodBaseBookingsCount = await EventsInsights.getBaseBookingCountForEventStatus(
-        lastPeriodBaseCondition
-      );
+      const lastPeriodBaseBookingsCount =
+        await EventsInsights.getBaseBookingCountForEventStatus(lastPeriodBaseCondition);
 
-      const lastPeriodTotalRescheduled = await EventsInsights.getTotalRescheduledEvents(
-        lastPeriodBaseCondition
-      );
+      const lastPeriodTotalRescheduled =
+        await EventsInsights.getTotalRescheduledEvents(lastPeriodBaseCondition);
 
-      const lastPeriodTotalCancelled = await EventsInsights.getTotalCancelledEvents(lastPeriodBaseCondition);
+      const lastPeriodTotalCancelled =
+        await EventsInsights.getTotalCancelledEvents(lastPeriodBaseCondition);
       const result = {
         empty: false,
         created: {
           count: baseBookingsCount,
-          deltaPrevious: EventsInsights.getPercentage(baseBookingsCount, lastPeriodBaseBookingsCount),
+          deltaPrevious: EventsInsights.getPercentage(
+            baseBookingsCount,
+            lastPeriodBaseBookingsCount,
+          ),
         },
         completed: {
           count: totalCompleted,
           deltaPrevious: EventsInsights.getPercentage(
             baseBookingsCount - totalCancelled - totalRescheduled,
-            lastPeriodBaseBookingsCount - lastPeriodTotalCancelled - lastPeriodTotalRescheduled
+            lastPeriodBaseBookingsCount - lastPeriodTotalCancelled - lastPeriodTotalRescheduled,
           ),
         },
         rescheduled: {
@@ -308,7 +311,7 @@ export const insightsRouter = router({
         timeView: z.enum(["week", "month", "year", "day"]),
         userId: z.coerce.number().optional(),
         isAll: z.boolean().optional(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const {
@@ -446,7 +449,8 @@ export const insightsRouter = router({
         return [];
       }
 
-      const dateFormat: string = timeView === "year" ? "YYYY" : timeView === "month" ? "MMM YYYY" : "ll";
+      const dateFormat: string =
+        timeView === "year" ? "YYYY" : timeView === "month" ? "MMM YYYY" : "ll";
       const result = [];
 
       for (const date of timeline) {
@@ -470,28 +474,28 @@ export const insightsRouter = router({
               start: startDate,
               end: endDate,
             },
-            whereConditional
+            whereConditional,
           ),
           EventsInsights.getCompletedEventsInTimeRange(
             {
               start: startDate,
               end: endDate,
             },
-            whereConditional
+            whereConditional,
           ),
           EventsInsights.getRescheduledEventsInTimeRange(
             {
               start: startDate,
               end: endDate,
             },
-            whereConditional
+            whereConditional,
           ),
           EventsInsights.getCancelledEventsInTimeRange(
             {
               start: startDate,
               end: endDate,
             },
-            whereConditional
+            whereConditional,
           ),
         ]);
         EventData["Created"] = promisesResult[0];
@@ -512,7 +516,7 @@ export const insightsRouter = router({
         endDate: z.string(),
         userId: z.coerce.number().optional(),
         isAll: z.boolean().optional(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const { teamId, startDate, endDate, memberUserId, userId, isAll } = input;
@@ -715,7 +719,7 @@ export const insightsRouter = router({
         endDate: z.string(),
         userId: z.coerce.number().optional(),
         isAll: z.boolean().optional(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const {
@@ -863,7 +867,7 @@ export const insightsRouter = router({
         endDate: z.string(),
         eventTypeId: z.coerce.number().optional(),
         isAll: z.boolean().optional(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const { teamId, startDate, endDate, eventTypeId, isAll } = input;
@@ -1008,7 +1012,7 @@ export const insightsRouter = router({
         endDate: z.string(),
         eventTypeId: z.coerce.number().optional(),
         isAll: z.boolean().optional(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const { teamId, startDate, endDate, eventTypeId, isAll } = input;
@@ -1200,11 +1204,15 @@ export const insightsRouter = router({
           isOrg: true,
         },
         ...teamsFromOrg.map(
-          (team: Prisma.TeamGetPayload<{ select: { id: true; slug: true; name: true; logo: true } }>) => {
+          (
+            team: Prisma.TeamGetPayload<{
+              select: { id: true; slug: true; name: true; logo: true };
+            }>,
+          ) => {
             return {
               ...team,
             };
-          }
+          },
         ),
       ];
 
@@ -1242,7 +1250,7 @@ export const insightsRouter = router({
       z.object({
         teamId: z.coerce.number().nullable(),
         isAll: z.boolean().nullable(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const user = ctx.user;
@@ -1311,7 +1319,7 @@ export const insightsRouter = router({
         teamId: z.coerce.number().optional().nullable(),
         userId: z.coerce.number().optional().nullable(),
         isAll: z.boolean().optional(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const { prisma, user } = ctx;
@@ -1361,7 +1369,12 @@ export const insightsRouter = router({
       }
 
       const eventTypeWhereConditional: Prisma.EventTypeWhereInput = {};
-      if (isAll && childrenTeamIds.length > 0 && user.organizationId && user.isOwnerAdminOfParentTeam) {
+      if (
+        isAll &&
+        childrenTeamIds.length > 0 &&
+        user.organizationId &&
+        user.isOwnerAdminOfParentTeam
+      ) {
         eventTypeWhereConditional["teamId"] = {
           in: [user.organizationId, ...childrenTeamIds],
         };

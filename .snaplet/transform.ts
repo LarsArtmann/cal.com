@@ -39,7 +39,8 @@ function replaceSensitiveKeys(record: object) {
   };
 }
 
-const generateUsername = (x: string) => `${c.firstName(x)}-${c.lastName(x)}${c.int(x, { min: 2, max: 99 })}`;
+const generateUsername = (x: string) =>
+  `${c.firstName(x)}-${c.lastName(x)}${c.int(x, { min: 2, max: 99 })}`;
 
 const config: Transform = () => ({
   public: {

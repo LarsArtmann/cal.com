@@ -173,7 +173,9 @@ export async function getTeamWithMembers(args: {
   return {
     ...teamWithoutInviteTokens,
     /** To prevent breaking we only return non-email attached token here, if we have one */
-    inviteToken: inviteTokens.find((token) => token.identifier === "invite-link-for-teamId-" + team.id),
+    inviteToken: inviteTokens.find(
+      (token) => token.identifier === "invite-link-for-teamId-" + team.id,
+    ),
     metadata: teamMetadataSchema.parse(team.metadata),
     eventTypes,
     members,

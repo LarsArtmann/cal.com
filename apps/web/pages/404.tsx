@@ -59,7 +59,7 @@ export default function Custom404() {
         setUsername(splitPath[2]);
         setCurrentPageType(pageType.TEAM);
         setUrl(
-          `${WEBSITE_URL}/signup?callbackUrl=settings/teams/new%3Fslug%3D${splitPath[2].replace("/", "")}`
+          `${WEBSITE_URL}/signup?callbackUrl=settings/teams/new%3Fslug%3D${splitPath[2].replace("/", "")}`,
         );
       } else {
         setUsername(routerUsername);
@@ -71,8 +71,8 @@ export default function Custom404() {
       setUrl(
         `${WEBSITE_URL}/signup?callbackUrl=settings/organizations/new%3Fslug%3D${currentOrgDomain.replace(
           "/",
-          ""
-        )}`
+          "",
+        )}`,
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -100,7 +100,9 @@ export default function Custom404() {
         <div className="min-h-screen bg-white px-4" data-testid="404-page">
           <main className="mx-auto max-w-xl pb-6 pt-16 sm:pt-24">
             <div className="text-center">
-              <p className="text-sm font-semibold uppercase tracking-wide text-black">{t("error_404")}</p>
+              <p className="text-sm font-semibold uppercase tracking-wide text-black">
+                {t("error_404")}
+              </p>
               <h1 className="font-cal mt-2 text-4xl font-extrabold text-gray-900 sm:text-5xl">
                 Feature is currently disabled
               </h1>
@@ -142,7 +144,9 @@ export default function Custom404() {
                 <h1 className="font-cal text-emphasis mt-2 text-3xl font-extrabold">
                   {t("signup_requires")}
                 </h1>
-                <p className="mt-4">{t("signup_requires_description", { companyName: "Cal.com" })}</p>
+                <p className="mt-4">
+                  {t("signup_requires_description", { companyName: "Cal.com" })}
+                </p>
               </div>
               <div className="mt-12">
                 <h2 className="text-subtle text-sm font-semibold uppercase tracking-wide">
@@ -152,7 +156,8 @@ export default function Custom404() {
                   <li className="border-2 border-green-500 px-4 py-2">
                     <a
                       href="https://console.cal.com"
-                      className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse">
+                      className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse"
+                    >
                       <div className="flex-shrink-0">
                         <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-50">
                           <Check className="h-6 w-6 text-green-500" aria-hidden="true" />
@@ -180,7 +185,8 @@ export default function Custom404() {
                   <li className="px-4 py-2">
                     <Link
                       href="https://cal.com/self-hosting/installation"
-                      className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse">
+                      className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse"
+                    >
                       <div className="flex-shrink-0">
                         <span className="bg-muted flex h-12 w-12 items-center justify-center rounded-lg">
                           <FileText className="text-default h-6 w-6" aria-hidden="true" />
@@ -193,7 +199,9 @@ export default function Custom404() {
                             {t("prisma_studio_tip")}
                           </span>
                         </h3>
-                        <p className="text-subtle text-base">{t("prisma_studio_tip_description")}</p>
+                        <p className="text-subtle text-base">
+                          {t("prisma_studio_tip_description")}
+                        </p>
                       </div>
                       <div className="flex-shrink-0 self-center">
                         <ChevronRight className="text-muted h-5 w-5" aria-hidden="true" />
@@ -203,7 +211,8 @@ export default function Custom404() {
                   <li className="px-4 py-2">
                     <a
                       href={JOIN_DISCORD}
-                      className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse">
+                      className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse"
+                    >
                       <div className="flex-shrink-0">
                         <span className="bg-muted flex h-12 w-12 items-center justify-center rounded-lg">
                           <Discord className="text-default h-6 w-6" />
@@ -227,7 +236,8 @@ export default function Custom404() {
                 <div className="mt-8">
                   <Link
                     href={`${WEBSITE_URL}/enterprise`}
-                    className="hover:text-subtle text-emphasis text-base font-medium">
+                    className="hover:text-subtle text-emphasis text-base font-medium"
+                  >
                     {t("contact_sales")}
                     <span aria-hidden="true"> &rarr;</span>
                   </Link>
@@ -248,13 +258,19 @@ export default function Custom404() {
                     {t("check_spelling_mistakes_or_go_back")}
                   </span>
                 ) : IS_CALCOM ? (
-                  <a target="_blank" href={url} className="mt-2 inline-block text-lg" rel="noreferrer">
+                  <a
+                    target="_blank"
+                    href={url}
+                    className="mt-2 inline-block text-lg"
+                    rel="noreferrer"
+                  >
                     {t(`404_the_${currentPageType.toLowerCase()}`)}{" "}
                     <strong className="text-blue-500">
                       {new URL(WEBSITE_URL).hostname}
                       {username}
                     </strong>{" "}
-                    {t("is_still_available")} <span className="text-blue-500">{t("register_now")}</span>.
+                    {t("is_still_available")}{" "}
+                    <span className="text-blue-500">{t("register_now")}</span>.
                   </a>
                 ) : (
                   <span className="mt-2 inline-block text-lg">
@@ -274,7 +290,8 @@ export default function Custom404() {
                         href={url}
                         target="_blank"
                         className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse"
-                        rel="noreferrer">
+                        rel="noreferrer"
+                      >
                         <div className="flex-shrink-0">
                           <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-50">
                             <Check className="h-6 w-6 text-green-500" aria-hidden="true" />
@@ -317,7 +334,8 @@ export default function Custom404() {
                       <li key={linkIdx} className="px-4 py-2">
                         <a
                           href={link.href}
-                          className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse">
+                          className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse"
+                        >
                           <div className="flex-shrink-0">
                             <span className="bg-muted flex h-12 w-12 items-center justify-center rounded-lg">
                               <link.icon className="text-default h-6 w-6" aria-hidden="true" />
@@ -341,7 +359,8 @@ export default function Custom404() {
                   <li className="px-4 py-2">
                     <a
                       href={JOIN_DISCORD}
-                      className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse">
+                      className="relative flex items-start space-x-4 py-6 rtl:space-x-reverse"
+                    >
                       <div className="flex-shrink-0">
                         <span className="bg-muted flex h-12 w-12 items-center justify-center rounded-lg">
                           <Discord className="text-default h-6 w-6" />

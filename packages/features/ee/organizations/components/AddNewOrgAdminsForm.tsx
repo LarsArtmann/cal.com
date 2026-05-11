@@ -29,14 +29,14 @@ export const AddNewOrgAdminsForm = () => {
             t("email_invite_team_bulk", {
               userCount: data.usernameOrEmail.length,
             }),
-            "success"
+            "success",
           );
         } else {
           showToast(
             t("email_invite_team", {
               email: data.usernameOrEmail,
             }),
-            "success"
+            "success",
           );
         }
       }
@@ -59,7 +59,8 @@ export const AddNewOrgAdminsForm = () => {
           sendEmailInvitation: true,
           isOrg: true,
         });
-      }}>
+      }}
+    >
       <div className="flex flex-col rounded-md">
         <Controller
           name="emails"
@@ -96,7 +97,8 @@ export const AddNewOrgAdminsForm = () => {
           color="primary"
           type="submit"
           className="mt-6 w-full justify-center"
-          disabled={inviteMemberMutation.isLoading}>
+          disabled={inviteMemberMutation.isLoading}
+        >
           Continue
         </Button>
       </div>

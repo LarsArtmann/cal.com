@@ -29,7 +29,7 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
                     }
                   : {}),
               },
-              label
+              label,
             )}
           </div>
         )}
@@ -40,7 +40,7 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
               {
                 className: classNames(
                   "relative flex items-start",
-                  descriptionAsLabel ? "text-default" : "text-emphasis"
+                  descriptionAsLabel ? "text-default" : "text-emphasis",
                 ),
               },
               <>
@@ -53,14 +53,14 @@ const CheckboxField = forwardRef<HTMLInputElement, Props>(
                   />
                 </div>
                 <span className="ms-3 text-sm">{description}</span>
-              </>
+              </>,
             )}
             {informationIconText && <InfoBadge content={informationIconText} />}
           </div>
         </div>
       </div>
     );
-  }
+  },
 );
 
 CheckboxField.displayName = "CheckboxField";

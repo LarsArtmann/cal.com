@@ -42,6 +42,6 @@ it("can find lucky user with maximize availability", async () => {
     getLuckyUser("MAXIMIZE_AVAILABILITY", {
       availableUsers: users,
       eventTypeId: 1,
-    })
+    }),
   ).resolves.toStrictEqual(users[1]);
 });

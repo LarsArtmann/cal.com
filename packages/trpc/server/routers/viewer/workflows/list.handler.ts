@@ -61,7 +61,7 @@ export const listHandler = async ({ ctx, input }: ListOptions) => {
     });
     const workflowsWithReadOnly = workflows.map((workflow) => {
       const readOnly = !!workflow.team?.members?.find(
-        (member) => member.userId === ctx.user.id && member.role === MembershipRole.MEMBER
+        (member) => member.userId === ctx.user.id && member.role === MembershipRole.MEMBER,
       );
       return { ...workflow, readOnly };
     });
@@ -159,7 +159,7 @@ export const listHandler = async ({ ctx, input }: ListOptions) => {
 
   const workflowsWithReadOnly: WorkflowType[] = workflows.map((workflow) => {
     const readOnly = !!workflow.team?.members?.find(
-      (member) => member.userId === ctx.user.id && member.role === MembershipRole.MEMBER
+      (member) => member.userId === ctx.user.id && member.role === MembershipRole.MEMBER,
     );
 
     return { readOnly, ...workflow };

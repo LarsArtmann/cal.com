@@ -32,7 +32,8 @@ function BlockedBeforeToday({ day, startHour, endHour }: BlockedDayProps) {
             top: `var(--one-minute-height)`,
             zIndex: 60,
             height: `calc(${(endHour + 1 - startHour) * 60} * var(--one-minute-height))`, // Add 1 to endHour to include the last hour that we add to display the last vertical line
-          }}>
+          }}
+        >
           <BlockedTimeCell />
         </div>
       )}
@@ -63,9 +64,10 @@ function BlockedToday({
             zIndex: 60,
             height: `calc(${roundX(
               nowComparedToDayStart,
-              60 / gridCellsPerHour
+              60 / gridCellsPerHour,
             )} * var(--one-minute-height) - 2px)`, // We minus the border width to make it 🧹
-          }}>
+          }}
+        >
           <BlockedTimeCell />
         </div>
       )}
@@ -81,13 +83,18 @@ export function BlockedList({ day }: Props) {
       blockingDates: state.blockingDates,
       gridCellsPerHour: state.gridCellsPerHour || 4,
     }),
-    shallow
+    shallow,
   );
 
   return (
     <>
       <BlockedBeforeToday day={day} startHour={startHour} endHour={endHour} />
-      <BlockedToday gridCellsPerHour={gridCellsPerHour} day={day} startHour={startHour} endHour={endHour} />
+      <BlockedToday
+        gridCellsPerHour={gridCellsPerHour}
+        day={day}
+        startHour={startHour}
+        endHour={endHour}
+      />
       {blockingDates &&
         blockingDates.map((event, i) => {
           const dayStart = day.startOf("day").hour(startHour);
@@ -119,7 +126,8 @@ export function BlockedList({ day }: Props) {
                 zIndex: 60,
                 top: `calc(${eventStartDiff}*var(--one-minute-height))`,
                 height: `calc(${eventDuration}*var(--one-minute-height))`,
-              }}>
+              }}
+            >
               <BlockedTimeCell />
             </div>
           );

@@ -54,7 +54,7 @@ const agent = async (input: string, user: User, apiKey: string, userId: number) 
                 (w: WorkingHours) =>
                   `Days: ${w.days.join(", ")}, Start Time (minutes in UTC): ${
                     w.startTime
-                  }, End Time (minutes in UTC): ${w.endTime}`
+                  }, End Time (minutes in UTC): ${w.endTime}`,
               )
               .join("\n")}
             `,

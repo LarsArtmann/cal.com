@@ -111,7 +111,10 @@ async function getInfoForAllTeams({ ctx, input }: GetOptions) {
     .then((memberships) => memberships.map((membership) => membership.teamId));
 
   if (!teamIds.length) {
-    throw new TRPCError({ code: "NOT_FOUND", message: "User is not part of any organization or team." });
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: "User is not part of any organization or team.",
+    });
   }
 
   const teamMembers = await getTeamMembers({

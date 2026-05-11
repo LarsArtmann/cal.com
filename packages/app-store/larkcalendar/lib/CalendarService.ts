@@ -80,7 +80,7 @@ export default class LarkCalendarService implements Calendar {
         "LarkCalendarService refreshAccessToken data refresh_expires_in",
         data.data.refresh_expires_in,
         "and access token expire in",
-        data.data.expires_in
+        data.data.expires_in,
       );
       const newLarkAuthCredentials: LarkAuthCredentials = {
         refresh_token: data.data.refresh_token,
@@ -128,18 +128,21 @@ export default class LarkCalendarService implements Calendar {
     let eventId = "";
     let eventRespData;
     const mainHostDestinationCalendar = event.destinationCalendar
-      ? event.destinationCalendar.find((cal) => cal.credentialId === this.credential.id) ??
-        event.destinationCalendar[0]
+      ? (event.destinationCalendar.find((cal) => cal.credentialId === this.credential.id) ??
+        event.destinationCalendar[0])
       : undefined;
     const calendarId = mainHostDestinationCalendar?.externalId;
     if (!calendarId) {
       throw new Error("no calendar id");
     }
     try {
-      const eventResponse = await this.fetcher(`/calendar/v4/calendars/${calendarId}/events/create_event`, {
-        method: "POST",
-        body: JSON.stringify(this.translateEvent(event)),
-      });
+      const eventResponse = await this.fetcher(
+        `/calendar/v4/calendars/${calendarId}/events/create_event`,
+        {
+          method: "POST",
+          body: JSON.stringify(this.translateEvent(event)),
+        },
+      );
       eventRespData = await handleLarkError<CreateEventResp>(eventResponse, this.log);
       eventId = eventRespData.data.event.event_id as string;
     } catch (error) {
@@ -167,8 +170,8 @@ export default class LarkCalendarService implements Calendar {
 
   private createAttendees = async (event: CalendarEvent, eventId: string, credentialId: number) => {
     const mainHostDestinationCalendar = event.destinationCalendar
-      ? event.destinationCalendar.find((cal) => cal.credentialId === credentialId) ??
-        event.destinationCalendar[0]
+      ? (event.destinationCalendar.find((cal) => cal.credentialId === credentialId) ??
+        event.destinationCalendar[0])
       : undefined;
     const calendarId = mainHostDestinationCalendar?.externalId;
     if (!calendarId) {
@@ -183,7 +186,7 @@ export default class LarkCalendarService implements Calendar {
           attendees: this.translateAttendees(event),
           need_notification: false,
         }),
-      }
+      },
     );
 
     return handleLarkError<CreateAttendeesResp>(attendeeResponse, this.log);
@@ -198,7 +201,7 @@ export default class LarkCalendarService implements Calendar {
     const eventId = uid;
     let eventRespData;
     const mainHostDestinationCalendar = event.destinationCalendar?.find(
-      (cal) => cal.externalId === externalCalendarId
+      (cal) => cal.externalId === externalCalendarId,
     );
     const calendarId = externalCalendarId || mainHostDestinationCalendar?.externalId;
     if (!calendarId) {
@@ -211,7 +214,7 @@ export default class LarkCalendarService implements Calendar {
         {
           method: "PATCH",
           body: JSON.stringify(this.translateEvent(event)),
-        }
+        },
       );
       eventRespData = await handleLarkError<CreateEventResp>(eventResponse, this.log);
     } catch (error) {
@@ -245,7 +248,7 @@ export default class LarkCalendarService implements Calendar {
    */
   async deleteEvent(uid: string, event: CalendarEvent, externalCalendarId?: string) {
     const mainHostDestinationCalendar = event.destinationCalendar?.find(
-      (cal) => cal.externalId === externalCalendarId
+      (cal) => cal.externalId === externalCalendarId,
     );
     const calendarId = externalCalendarId || mainHostDestinationCalendar?.externalId;
     if (!calendarId) {
@@ -266,7 +269,7 @@ export default class LarkCalendarService implements Calendar {
   async getAvailability(
     dateFrom: string,
     dateTo: string,
-    selectedCalendars: IntegrationCalendar[]
+    selectedCalendars: IntegrationCalendar[],
   ): Promise<EventBusyDate[]> {
     const selectedCalendarIds = selectedCalendars
       .filter((e) => e.integration === this.integrationName)

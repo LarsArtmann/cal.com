@@ -70,7 +70,10 @@ export class FloatingButton extends HTMLElement {
     } else if (name === "data-hide-button-icon") {
       buttonIconEl.style.display = newValue == "true" ? "none" : "block";
     } else if (name === "data-button-position") {
-      buttonWrapperEl.className = FloatingButton.updatedClassString(newValue, buttonWrapperEl.className);
+      buttonWrapperEl.className = FloatingButton.updatedClassString(
+        newValue,
+        buttonWrapperEl.className,
+      );
     } else if (name === "data-button-color") {
       buttonWrapperEl.style.backgroundColor = newValue;
     } else if (name === "data-button-text-color") {

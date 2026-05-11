@@ -69,7 +69,9 @@ const PremiumTextfield = (props: ICustomUsernameProps) => {
   const [openDialogSaveUsername, setOpenDialogSaveUsername] = useState(false);
   const { data: stripeCustomer } = trpc.viewer.stripeCustomer.useQuery();
   const isCurrentUsernamePremium =
-    user && user.metadata && hasKeyInMetadata(user, "isPremium") ? !!user.metadata.isPremium : false;
+    user && user.metadata && hasKeyInMetadata(user, "isPremium")
+      ? !!user.metadata.isPremium
+      : false;
   const [isInputUsernamePremium, setIsInputUsernamePremium] = useState(false);
   const debouncedApiCall = useMemo(
     () =>
@@ -79,7 +81,7 @@ const PremiumTextfield = (props: ICustomUsernameProps) => {
         setIsInputUsernamePremium(data.premium);
         setUsernameIsAvailable(data.available);
       }, 150),
-    [currentUsername]
+    [currentUsername],
   );
 
   useEffect(() => {
@@ -130,7 +132,8 @@ const PremiumTextfield = (props: ICustomUsernameProps) => {
             color="primary"
             className="mx-2"
             href={paymentLink}
-            data-testid="reserve-username-btn">
+            data-testid="reserve-username-btn"
+          >
             {t("Reserve")}
           </Button>
         </div>
@@ -144,7 +147,8 @@ const PremiumTextfield = (props: ICustomUsernameProps) => {
             color="primary"
             className="mx-2"
             onClick={() => setOpenDialogSaveUsername(true)}
-            data-testid="update-username-btn">
+            data-testid="update-username-btn"
+          >
             {t("update")}
           </Button>
           <Button
@@ -154,7 +158,8 @@ const PremiumTextfield = (props: ICustomUsernameProps) => {
               if (currentUsername) {
                 setInputUsernameValue(currentUsername);
               }
-            }}>
+            }}
+          >
             {t("cancel")}
           </Button>
         </div>
@@ -195,8 +200,9 @@ const PremiumTextfield = (props: ICustomUsernameProps) => {
         <span
           className={classNames(
             isInputUsernamePremium ? "border border-orange-400 " : "",
-            "border-default bg-muted text-subtle hidden h-9 items-center rounded-l-md border border-r-0 px-3 text-sm md:inline-flex"
-          )}>
+            "border-default bg-muted text-subtle hidden h-9 items-center rounded-l-md border border-r-0 px-3 text-sm md:inline-flex",
+          )}
+        >
           {process.env.NEXT_PUBLIC_WEBSITE_URL.replace("https://", "").replace("http://", "")}/
         </span>
 
@@ -216,7 +222,7 @@ const PremiumTextfield = (props: ICustomUsernameProps) => {
               markAsError
                 ? "focus:shadow-0 focus:ring-shadow-0 border-red-500  focus:border-red-500 focus:outline-none"
                 : "border-l-default",
-              disabled ? "bg-subtle text-muted focus:border-0" : ""
+              disabled ? "bg-subtle text-muted focus:border-0" : "",
             )}
             value={inputUsernameValue}
             onChange={(event) => {
@@ -236,9 +242,14 @@ const PremiumTextfield = (props: ICustomUsernameProps) => {
               className={classNames(
                 "mx-2 py-2",
                 isInputUsernamePremium ? "text-transparent" : "",
-                usernameIsAvailable ? "" : ""
-              )}>
-              {isInputUsernamePremium ? <StarSolid className="mt-[2px] h-4 w-4 fill-orange-400" /> : <></>}
+                usernameIsAvailable ? "" : "",
+              )}
+            >
+              {isInputUsernamePremium ? (
+                <StarSolid className="mt-[2px] h-4 w-4 fill-orange-400" />
+              ) : (
+                <></>
+              )}
               {!isInputUsernamePremium && usernameIsAvailable ? (
                 <Check className="mt-[2px] h-4 w-4" />
               ) : (
@@ -248,11 +259,12 @@ const PremiumTextfield = (props: ICustomUsernameProps) => {
           </div>
         </div>
 
-        {(usernameIsAvailable || isInputUsernamePremium) && currentUsername !== inputUsernameValue && (
-          <div className="flex justify-end">
-            <ActionButtons />
-          </div>
-        )}
+        {(usernameIsAvailable || isInputUsernamePremium) &&
+          currentUsername !== inputUsernameValue && (
+            <div className="flex justify-end">
+              <ActionButtons />
+            </div>
+          )}
       </div>
       {paymentMsg}
       {markAsError && <p className="mt-1 text-xs text-red-500">Username is already taken</p>}
@@ -263,11 +275,15 @@ const PremiumTextfield = (props: ICustomUsernameProps) => {
           title={t("confirm_username_change_dialog_title")}
           description={
             <>
-              {usernameChangeCondition && usernameChangeCondition === UsernameChangeStatusEnum.UPGRADE && (
-                <p className="text-default mb-4 text-sm">{t("change_username_standard_to_premium")}</p>
-              )}
+              {usernameChangeCondition &&
+                usernameChangeCondition === UsernameChangeStatusEnum.UPGRADE && (
+                  <p className="text-default mb-4 text-sm">
+                    {t("change_username_standard_to_premium")}
+                  </p>
+                )}
             </>
-          }>
+          }
+        >
           <div className="flex flex-row">
             <div className="mb-4 w-full px-4 pt-1">
               <div className="bg-subtle flex w-full flex-wrap rounded-sm py-3 text-sm">
@@ -294,7 +310,8 @@ const PremiumTextfield = (props: ICustomUsernameProps) => {
                 type="button"
                 loading={updateUsername.isLoading}
                 data-testid="go-to-billing"
-                href={paymentLink}>
+                href={paymentLink}
+              >
                 <>
                   {t("go_to_stripe_billing")} <ExternalLink className="ml-1 h-4 w-4" />
                 </>
@@ -308,7 +325,8 @@ const PremiumTextfield = (props: ICustomUsernameProps) => {
                 data-testid="save-username"
                 onClick={() => {
                   saveUsername();
-                }}>
+                }}
+              >
                 {t("save")}
               </Button>
             )}

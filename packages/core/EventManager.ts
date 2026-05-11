@@ -13,7 +13,11 @@ import logger from "@calcom/lib/logger";
 import prisma from "@calcom/prisma";
 import { credentialForCalendarServiceSelect } from "@calcom/prisma/selects/credential";
 import { createdEventSchema } from "@calcom/prisma/zod-utils";
-import type { AdditionalInformation, CalendarEvent, NewCalendarEventType } from "@calcom/types/Calendar";
+import type {
+  AdditionalInformation,
+  CalendarEvent,
+  NewCalendarEventType,
+} from "@calcom/types/Calendar";
 import type { CredentialPayload } from "@calcom/types/Credential";
 import type { Event } from "@calcom/types/Event";
 import type {
@@ -81,7 +85,7 @@ export default class EventManager {
    */
   constructor(user: EventManagerUser) {
     const appCredentials = getApps(user.credentials, true).flatMap((app) =>
-      app.credentials.map((creds) => ({ ...creds, appName: app.name }))
+      app.credentials.map((creds) => ({ ...creds, appName: app.name })),
     );
     // This includes all calendar-related apps, traditional calendars such as Google Calendar
     // (type google_calendar) and non-traditional calendars such as CRMs like Close.com
@@ -120,7 +124,10 @@ export default class EventManager {
     // Fallback to Cal Video if Google Meet is selected w/o a Google Cal
     // @NOTE: destinationCalendar it's an array now so as a fallback we will only check the first one
     const [mainHostDestinationCalendar] = evt.destinationCalendar ?? [];
-    if (evt.location === MeetLocationType && mainHostDestinationCalendar.integration !== "google_calendar") {
+    if (
+      evt.location === MeetLocationType &&
+      mainHostDestinationCalendar.integration !== "google_calendar"
+    ) {
       evt["location"] = "integrations:daily";
     }
     const isDedicated = evt.location ? isDedicatedIntegration(evt.location) : null;
@@ -148,7 +155,7 @@ export default class EventManager {
     // Since the result can be a new calendar event or video event, we have to create a type guard
     // https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates
     const isCalendarResult = (
-      result: (typeof results)[number]
+      result: (typeof results)[number],
     ): result is EventResult<NewCalendarEventType> => {
       return result.type.includes("_calendar");
     };
@@ -166,7 +173,7 @@ export default class EventManager {
 
       return {
         type: result.type,
-        uid: createdEventObj ? createdEventObj.id : result.createdEvent?.id?.toString() ?? "",
+        uid: createdEventObj ? createdEventObj.id : (result.createdEvent?.id?.toString() ?? ""),
         meetingId: createdEventObj ? createdEventObj.id : result.createdEvent?.id?.toString(),
         meetingPassword: createdEventObj ? createdEventObj.password : result.createdEvent?.password,
         meetingUrl: createdEventObj ? createdEventObj.onlineMeetingUrl : result.createdEvent?.url,
@@ -181,7 +188,10 @@ export default class EventManager {
     };
   }
 
-  public async updateLocation(event: CalendarEvent, booking: PartialBooking): Promise<CreateUpdateResult> {
+  public async updateLocation(
+    event: CalendarEvent,
+    booking: PartialBooking,
+  ): Promise<CreateUpdateResult> {
     const evt = processLocation(event);
     const isDedicated = evt.location ? isDedicatedIntegration(evt.location) : null;
 
@@ -197,7 +207,9 @@ export default class EventManager {
     }
 
     // Update the calendar event with the proper video call data
-    const calendarReference = booking.references.find((reference) => reference.type.includes("_calendar"));
+    const calendarReference = booking.references.find((reference) =>
+      reference.type.includes("_calendar"),
+    );
     if (calendarReference) {
       results.push(...(await this.updateAllCalendarEvents(evt, booking)));
     }
@@ -229,12 +241,14 @@ export default class EventManager {
   public async reschedule(
     event: CalendarEvent,
     rescheduleUid: string,
-    newBookingId?: number
+    newBookingId?: number,
   ): Promise<CreateUpdateResult> {
     const originalEvt = processLocation(event);
     const evt = cloneDeep(originalEvt);
     if (!rescheduleUid) {
-      throw new Error("You called eventManager.update without an `rescheduleUid`. This should never happen.");
+      throw new Error(
+        "You called eventManager.update without an `rescheduleUid`. This should never happen.",
+      );
     }
 
     // Get details of existing booking.
@@ -280,7 +294,9 @@ export default class EventManager {
     // If and only if event type is a dedicated meeting, update the dedicated video meeting.
     if (isDedicated) {
       const result = await this.updateVideoEvent(evt, booking);
-      const [updatedEvent] = Array.isArray(result.updatedEvent) ? result.updatedEvent : [result.updatedEvent];
+      const [updatedEvent] = Array.isArray(result.updatedEvent)
+        ? result.updatedEvent
+        : [result.updatedEvent];
 
       if (updatedEvent) {
         evt.videoCallData = updatedEvent;
@@ -357,7 +373,7 @@ export default class EventManager {
           }
           return destinationCals;
         },
-        [] as DestinationCalendar[]
+        [] as DestinationCalendar[],
       );
       for (const destination of destinationCalendars) {
         if (destination.credentialId) {
@@ -391,10 +407,12 @@ export default class EventManager {
           }
         } else {
           const destinationCalendarCredentials = this.calendarCredentials.filter(
-            (c) => c.type === destination.integration
+            (c) => c.type === destination.integration,
           );
           createdEvents = createdEvents.concat(
-            await Promise.all(destinationCalendarCredentials.map(async (c) => await createEvent(c, event)))
+            await Promise.all(
+              destinationCalendarCredentials.map(async (c) => await createEvent(c, event)),
+            ),
           );
         }
       }
@@ -417,8 +435,8 @@ export default class EventManager {
       await Promise.all(
         this.calendarCredentials
           .filter((cred) => cred.type.includes("other_calendar"))
-          .map(async (cred) => await createEvent(cred, event))
-      )
+          .map(async (cred) => await createEvent(cred, event)),
+      ),
     );
 
     return createdEvents;
@@ -457,7 +475,7 @@ export default class EventManager {
       logger.warn(
         'Falling back to "daily" video integration for event with location: ' +
           event.location +
-          " because credential is missing for the app"
+          " because credential is missing for the app",
       );
       videoCredential = { ...FAKE_DAILY_CREDENTIAL };
     }
@@ -480,7 +498,7 @@ export default class EventManager {
       return createMeeting(credential, event);
     } else {
       return Promise.reject(
-        `No suitable credentials given for the requested integration name:${event.location}`
+        `No suitable credentials given for the requested integration name:${event.location}`,
       );
     }
   }
@@ -498,7 +516,7 @@ export default class EventManager {
   private async updateAllCalendarEvents(
     event: CalendarEvent,
     booking: PartialBooking,
-    newBookingId?: number
+    newBookingId?: number,
   ): Promise<Array<EventResult<NewCalendarEventType>>> {
     let calendarReference: PartialReference[] | undefined = undefined,
       credential;
@@ -534,7 +552,7 @@ export default class EventManager {
 
         if (reference.credentialId) {
           credential = this.calendarCredentials.filter(
-            (credential) => credential.id === reference?.credentialId
+            (credential) => credential.id === reference?.credentialId,
           )[0];
           if (!credential) {
             // Fetch credential from DB
@@ -560,7 +578,7 @@ export default class EventManager {
           result.push(updateEvent(credential, event, bookingRefUid, calenderExternalId));
         } else {
           const credentials = this.calendarCredentials.filter(
-            (credential) => credential.type === reference?.type
+            (credential) => credential.type === reference?.type,
           );
           for (const credential of credentials) {
             result.push(updateEvent(credential, event, bookingRefUid, calenderExternalId));
@@ -569,7 +587,9 @@ export default class EventManager {
       }
       // If we are merging two calendar events we should delete the old calendar event
       if (newBookingId) {
-        const oldCalendarEvent = booking.references.find((reference) => reference.type.includes("_calendar"));
+        const oldCalendarEvent = booking.references.find((reference) =>
+          reference.type.includes("_calendar"),
+        );
 
         if (oldCalendarEvent?.credentialId) {
           const calendarCredential = await prisma.credential.findUnique({
@@ -579,7 +599,11 @@ export default class EventManager {
             select: credentialForCalendarServiceSelect,
           });
           const calendar = await getCalendar(calendarCredential);
-          await calendar?.deleteEvent(oldCalendarEvent.uid, event, oldCalendarEvent.externalCalendarId);
+          await calendar?.deleteEvent(
+            oldCalendarEvent.uid,
+            event,
+            oldCalendarEvent.externalCalendarId,
+          );
         }
       }
 
@@ -602,8 +626,13 @@ export default class EventManager {
             }
             const { externalCalendarId: bookingExternalCalendarId, meetingId: bookingRefUid } =
               calendarReference;
-            return await updateEvent(cred, event, bookingRefUid ?? null, bookingExternalCalendarId ?? null);
-          })
+            return await updateEvent(
+              cred,
+              event,
+              bookingRefUid ?? null,
+              bookingExternalCalendarId ?? null,
+            );
+          }),
       );
 
       return Promise.all(result);
@@ -623,7 +652,7 @@ export default class EventManager {
             originalEvent: event,
             credentialId: 0,
           };
-        }) ?? ([] as Array<EventResult<NewCalendarEventType>>)
+        }) ?? ([] as Array<EventResult<NewCalendarEventType>>),
       );
     }
   }
@@ -639,11 +668,13 @@ export default class EventManager {
     const credential = this.getVideoCredential(event);
 
     if (credential) {
-      const bookingRef = booking ? booking.references.filter((ref) => ref.type === credential.type)[0] : null;
+      const bookingRef = booking
+        ? booking.references.filter((ref) => ref.type === credential.type)[0]
+        : null;
       return updateMeeting(credential, event, bookingRef);
     } else {
       return Promise.reject(
-        `No suitable credentials given for the requested integration name:${event.location}`
+        `No suitable credentials given for the requested integration name:${event.location}`,
       );
     }
   }
@@ -663,7 +694,7 @@ export default class EventManager {
   public async rescheduleBookingWithSeats(
     originalBooking: Booking,
     newTimeSlotBooking?: Booking,
-    owner?: boolean
+    owner?: boolean,
   ) {
     // Get originalBooking
     // If originalBooking has only one attendee we should do normal reschedule

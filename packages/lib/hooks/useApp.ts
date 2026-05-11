@@ -9,6 +9,6 @@ export default function useApp(appId: string) {
     { appId },
     {
       enabled: status === "authenticated",
-    }
+    },
   );
 }

@@ -40,7 +40,7 @@ export default class OrganizerRequestedToRescheduleEmail extends OrganizerSchedu
         }),
         this.t("request_reschedule_subtitle_organizer", {
           attendee: this.calEvent.attendees[0].name,
-        })
+        }),
       ),
     };
   }
@@ -65,9 +65,11 @@ export default class OrganizerRequestedToRescheduleEmail extends OrganizerSchedu
         }),
         this.t("request_reschedule_subtitle_organizer", {
           attendee: this.calEvent.attendees[0].name,
-        })
+        }),
       ),
-      duration: { minutes: dayjs(this.calEvent.endTime).diff(dayjs(this.calEvent.startTime), "minute") },
+      duration: {
+        minutes: dayjs(this.calEvent.endTime).diff(dayjs(this.calEvent.startTime), "minute"),
+      },
       organizer: { name: this.calEvent.organizer.name, email: this.calEvent.organizer.email },
       attendees: this.calEvent.attendees.map((attendee: Person) => ({
         name: attendee.name,

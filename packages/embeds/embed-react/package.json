@@ -1,6 +1,5 @@
 {
   "name": "@calcom/embed-react",
-  "sideEffects": false,
   "version": "1.3.0",
   "description": "Embed Cal Link as a React Component",
   "license": "SEE LICENSE IN LICENSE",
@@ -8,6 +7,19 @@
     "type": "git",
     "url": "https://github.com/calcom/cal.com",
     "directory": "packages/embeds/embed-react"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "main": "./dist/Cal.umd.js",
+  "module": "./dist/Cal.es.mjs",
+  "types": "./dist/embed-react/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/Cal.es.mjs",
+      "require": "./dist/Cal.umd.js"
+    }
   },
   "scripts": {
     "dev": "vite --port=3101 --open",
@@ -26,34 +38,22 @@
     "embed-dev": "yarn workspace @calcom/embed-react dev",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
-  "main": "./dist/Cal.umd.js",
-  "module": "./dist/Cal.es.mjs",
-  "types": "./dist/embed-react/src/index.d.ts",
-  "peerDependencies": {
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
-  },
-  "files": [
-    "dist"
-  ],
-  "exports": {
-    ".": {
-      "import": "./dist/Cal.es.mjs",
-      "require": "./dist/Cal.umd.js"
-    }
+  "dependencies": {
+    "@calcom/embed-core": "workspace:*",
+    "@calcom/embed-snippet": "workspace:*"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
     "@types/react": "19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "eslint": "^10.2.1",
+    "eslint": "^10.3.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^6.0.3",
-    "vite": "^8.0.10"
+    "vite": "^8.0.12"
   },
-  "dependencies": {
-    "@calcom/embed-core": "workspace:*",
-    "@calcom/embed-snippet": "workspace:*"
+  "peerDependencies": {
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
   }
 }

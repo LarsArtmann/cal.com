@@ -31,7 +31,8 @@ function VerifyEmailBanner() {
             onClick={() => {
               mutation.mutate();
               showToast(t("email_sent"), "success");
-            }}>
+            }}
+          >
             {t("resend_email")}
           </a>
         }

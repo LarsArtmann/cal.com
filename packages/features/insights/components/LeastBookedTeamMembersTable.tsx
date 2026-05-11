@@ -28,7 +28,7 @@ export const LeastBookedTeamMembersTable = () => {
         context: { skipBatch: true },
       },
       enabled: !!(initialConfig?.teamId || initialConfig?.userId || initialConfig?.isAll),
-    }
+    },
   );
 
   if (isLoading) return <LoadingInsight />;

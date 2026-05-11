@@ -13,15 +13,22 @@ export function getEnumKeyByEnumValue(myEnum: any, enumValue: number | string): 
   return keys.length > 0 ? keys[0] : "";
 }
 
-const BrokenVideoIntegration = (props: { location: string; eventTypeId?: number | null; t: TFunction }) => {
+const BrokenVideoIntegration = (props: {
+  location: string;
+  eventTypeId?: number | null;
+  t: TFunction;
+}) => {
   return (
     <Trans i18nKey="broken_video_action" t={props.t}>
-      We could not add the <span>{props.location}</span> meeting link to your scheduled event. Contact your
-      invitees or update your calendar event to add the details. You can either&nbsp;
+      We could not add the <span>{props.location}</span> meeting link to your scheduled event.
+      Contact your invitees or update your calendar event to add the details. You can either&nbsp;
       <a
         href={
-          props.eventTypeId ? `${WEBAPP_URL}/event-types/${props.eventTypeId}` : `${WEBAPP_URL}/event-types`
-        }>
+          props.eventTypeId
+            ? `${WEBAPP_URL}/event-types/${props.eventTypeId}`
+            : `${WEBAPP_URL}/event-types`
+        }
+      >
         change your location on the event type
       </a>
       &nbsp;or try&nbsp;
@@ -52,7 +59,7 @@ export const BrokenIntegrationEmail = (
     calEvent: CalendarEvent;
     attendee: Person;
     type: "video" | "calendar";
-  } & Partial<React.ComponentProps<typeof BaseScheduledEmail>>
+  } & Partial<React.ComponentProps<typeof BaseScheduledEmail>>,
 ) => {
   const { calEvent, type } = props;
   const t = calEvent.organizer.language.translate;
@@ -60,7 +67,9 @@ export const BrokenIntegrationEmail = (
   const timeFormat = calEvent.organizer?.timeFormat;
 
   if (type === "video") {
-    let location = calEvent.location ? getEnumKeyByEnumValue(AppStoreLocationType, calEvent.location) : " ";
+    let location = calEvent.location
+      ? getEnumKeyByEnumValue(AppStoreLocationType, calEvent.location)
+      : " ";
     if (location === "Daily") {
       location = "Cal Video";
     }
@@ -76,7 +85,9 @@ export const BrokenIntegrationEmail = (
         locale={locale}
         subject={t("broken_integration")}
         title={t("problem_adding_video_link")}
-        subtitle={<BrokenVideoIntegration location={location} eventTypeId={calEvent.eventTypeId} t={t} />}
+        subtitle={
+          <BrokenVideoIntegration location={location} eventTypeId={calEvent.eventTypeId} t={t} />
+        }
         headerType="xCircle"
         {...props}
       />
@@ -103,7 +114,9 @@ export const BrokenIntegrationEmail = (
         locale={locale}
         subject={t("broken_integration")}
         title={t("problem_updating_calendar")}
-        subtitle={<BrokenCalendarIntegration calendar={calendar} eventTypeId={calEvent.eventTypeId} t={t} />}
+        subtitle={
+          <BrokenCalendarIntegration calendar={calendar} eventTypeId={calEvent.eventTypeId} t={t} />
+        }
         headerType="xCircle"
         {...props}
       />

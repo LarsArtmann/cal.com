@@ -109,14 +109,16 @@ export function DataTable<TData, TValue>({
         style={{
           height: "calc(100vh - 30vh)",
           overflow: "auto",
-        }}>
+        }}
+      >
         <Table>
           <TableHeader
             style={{
               position: "sticky",
               top: 0,
               zIndex: 1,
-            }}>
+            }}
+          >
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -146,7 +148,8 @@ export function DataTable<TData, TValue>({
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                     onClick={() => onRowMouseclick && onRowMouseclick(row)}
-                    className={classNames(onRowMouseclick && "hover:cursor-pointer")}>
+                    className={classNames(onRowMouseclick && "hover:cursor-pointer")}
+                  >
                     {row.getVisibleCells().map((cell) => {
                       return (
                         <TableCell key={cell.id}>

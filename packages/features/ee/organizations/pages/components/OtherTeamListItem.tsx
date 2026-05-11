@@ -16,7 +16,13 @@ import {
   showToast,
   Tooltip,
 } from "@calcom/ui";
-import { Edit2, ExternalLink, Link as LinkIcon, MoreHorizontal, Trash } from "@calcom/ui/components/icon";
+import {
+  Edit2,
+  ExternalLink,
+  Link as LinkIcon,
+  MoreHorizontal,
+  Trash,
+} from "@calcom/ui/components/icon";
 
 import { useOrgBranding } from "../../../organizations/context/provider";
 
@@ -78,7 +84,7 @@ export default function OtherTeamListItem(props: Props) {
                           orgBranding
                             ? `${orgBranding.fullDomain}`
                             : process.env.NEXT_PUBLIC_WEBSITE_URL + "/team"
-                        }/${team.slug}`
+                        }/${team.slug}`,
                       );
                       showToast(t("link_copied"), "success");
                     }}
@@ -102,7 +108,8 @@ export default function OtherTeamListItem(props: Props) {
                     <DropdownItem
                       type="button"
                       href={"/settings/teams/other/" + team.id + "/profile"}
-                      StartIcon={Edit2}>
+                      StartIcon={Edit2}
+                    >
                       {t("edit_team") as string}
                     </DropdownItem>
                   </DropdownMenuItem>
@@ -117,7 +124,8 @@ export default function OtherTeamListItem(props: Props) {
                             ? `${orgBranding.fullDomain}`
                             : `${process.env.NEXT_PUBLIC_WEBSITE_URL}/team/other`
                         }/${team.slug}`}
-                        StartIcon={ExternalLink}>
+                        StartIcon={ExternalLink}
+                      >
                         {t("preview_team") as string}
                       </DropdownItem>
                     </DropdownMenuItem>
@@ -132,7 +140,8 @@ export default function OtherTeamListItem(props: Props) {
                           StartIcon={Trash}
                           onClick={(e) => {
                             e.stopPropagation();
-                          }}>
+                          }}
+                        >
                           {t("disband_team")}
                         </DropdownItem>
                       </DialogTrigger>
@@ -143,7 +152,8 @@ export default function OtherTeamListItem(props: Props) {
                         isLoading={props.isLoading}
                         onConfirm={() => {
                           props.onActionSelect("disband");
-                        }}>
+                        }}
+                      >
                         {t("disband_team_confirmation_message")}
                       </ConfirmationDialogContent>
                     </Dialog>

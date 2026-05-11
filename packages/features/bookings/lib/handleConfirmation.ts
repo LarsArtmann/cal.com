@@ -179,7 +179,7 @@ export async function handleConfirmation(args: {
           id: true,
           scheduledJobs: true,
         },
-      })
+      }),
     );
 
     const updatedBookingsResult = await Promise.all(updateBookingsPromise);
@@ -269,11 +269,11 @@ export async function handleConfirmation(args: {
         await scheduleWorkflowReminders({
           workflows: updatedBookings[index]?.eventType?.workflows || [],
           smsReminderNumber: updatedBookings[index].smsReminderNumber,
-          calendarEvent: ({
-	...evtOfBooking,
-	metadata: { videoCallUrl },
-	eventType: { slug: eventTypeSlug }
-}),
+          calendarEvent: {
+            ...evtOfBooking,
+            metadata: { videoCallUrl },
+            eventType: { slug: eventTypeSlug },
+          },
           isFirstRecurringEvent: isFirstBooking,
           hideBranding: !!updatedBookings[index].eventType?.owner?.hideBranding,
           eventTypeRequiresConfirmation: true,
@@ -335,9 +335,9 @@ export async function handleConfirmation(args: {
       }).catch((e) => {
         console.error(
           `Error executing webhook for event: ${WebhookTriggerEvents.BOOKING_CREATED}, URL: ${sub.subscriberUrl}`,
-          e
+          e,
         );
-      })
+      }),
     );
 
     await Promise.all(promises);
@@ -392,9 +392,9 @@ export async function handleConfirmation(args: {
         }).catch((e) => {
           console.error(
             `Error executing webhook for event: ${WebhookTriggerEvents.BOOKING_PAID}, URL: ${sub.subscriberUrl}`,
-            e
+            e,
           );
-        })
+        }),
       );
 
       // I don't need to await for this

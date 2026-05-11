@@ -74,7 +74,7 @@ export async function addBulkTeamsHandler({ ctx, input }: AddBulkTeamsHandler) {
         role: MembershipRole.MEMBER,
         accepted: accepted || false,
       } as Prisma.MembershipCreateManyInput;
-    })
+    }),
   );
 
   await prisma.membership.createMany({

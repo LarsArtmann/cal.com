@@ -83,7 +83,10 @@ export async function deleteStripeCustomer(user: UserType): Promise<string | nul
   return deletedCustomer.id;
 }
 
-export async function retrieveOrCreateStripeCustomerByEmail(email: string, stripeAccountId: string) {
+export async function retrieveOrCreateStripeCustomerByEmail(
+  email: string,
+  stripeAccountId: string,
+) {
   const customer = await stripe.customers.list(
     {
       email,
@@ -91,7 +94,7 @@ export async function retrieveOrCreateStripeCustomerByEmail(email: string, strip
     },
     {
       stripeAccount: stripeAccountId,
-    }
+    },
   );
 
   if (customer.data[0]?.id) {
@@ -101,7 +104,7 @@ export async function retrieveOrCreateStripeCustomerByEmail(email: string, strip
       { email },
       {
         stripeAccount: stripeAccountId,
-      }
+      },
     );
     return newCustomer;
   }

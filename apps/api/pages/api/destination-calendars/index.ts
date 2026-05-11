@@ -9,7 +9,7 @@ import {
 
 async function createOrlistAllDestinationCalendars(
   { method, body, userId, prisma }: NextApiRequest,
-  res: NextApiResponse<DestinationCalendarsResponse | DestinationCalendarResponse>
+  res: NextApiResponse<DestinationCalendarsResponse | DestinationCalendarResponse>,
 ) {
   if (method === "GET") {
     /**
@@ -36,7 +36,7 @@ async function createOrlistAllDestinationCalendars(
      */
     const data = await prisma.destinationCalendar.findMany({ where: { userId } });
     const destination_calendars = data.map((destinationCalendar) =>
-      schemaDestinationCalendarReadPublic.parse(destinationCalendar)
+      schemaDestinationCalendarReadPublic.parse(destinationCalendar),
     );
     if (data) res.status(200).json({ destination_calendars });
     else
@@ -101,7 +101,9 @@ async function createOrlistAllDestinationCalendars(
     const destination_calendar = schemaDestinationCalendarReadPublic.parse(data);
 
     if (destination_calendar)
-      res.status(201).json({ destination_calendar, message: "DestinationCalendar created successfully" });
+      res
+        .status(201)
+        .json({ destination_calendar, message: "DestinationCalendar created successfully" });
     else
       (error: Error) =>
         res.status(400).json({

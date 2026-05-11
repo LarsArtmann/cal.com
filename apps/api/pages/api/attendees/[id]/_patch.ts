@@ -61,7 +61,10 @@ export async function patchHandler(req: NextApiRequest) {
   return { attendee: schemaAttendeeReadPublic.parse(attendee) };
 }
 
-async function checkPermissions(req: NextApiRequest, body: z.infer<typeof schemaAttendeeEditBodyParams>) {
+async function checkPermissions(
+  req: NextApiRequest,
+  body: z.infer<typeof schemaAttendeeEditBodyParams>,
+) {
   const { isAdmin, prisma } = req;
   if (isAdmin) return;
   const { userId } = req;
@@ -69,7 +72,8 @@ async function checkPermissions(req: NextApiRequest, body: z.infer<typeof schema
   if (bookingId) {
     // Ensure that the booking the attendee is being added to belongs to the user
     const booking = await prisma.booking.findFirst({ where: { id: bookingId, userId } });
-    if (!booking) throw new HttpError({ statusCode: 403, message: "You don't have access to the booking" });
+    if (!booking)
+      throw new HttpError({ statusCode: 403, message: "You don't have access to the booking" });
   }
 }
 

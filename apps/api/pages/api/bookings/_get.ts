@@ -122,7 +122,7 @@ function buildWhereClause(
   userId: number,
   attendeeEmails: string[],
   userIds: number[] = [],
-  userEmails: string[] = []
+  userEmails: string[] = [],
 ) {
   const filterByAttendeeEmails = attendeeEmails.length > 0;
   const userFilter = userIds.length > 0 ? { userId: { in: userIds } } : { userId };
@@ -173,8 +173,8 @@ async function handler(req: NextApiRequest) {
   const attendeeEmails = Array.isArray(queryFilterForAttendeeEmails.attendeeEmail)
     ? queryFilterForAttendeeEmails.attendeeEmail
     : typeof queryFilterForAttendeeEmails.attendeeEmail === "string"
-    ? [queryFilterForAttendeeEmails.attendeeEmail]
-    : [];
+      ? [queryFilterForAttendeeEmails.attendeeEmail]
+      : [];
   const filterByAttendeeEmails = attendeeEmails.length > 0;
 
   /** Only admins can query other users */

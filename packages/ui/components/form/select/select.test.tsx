@@ -38,7 +38,7 @@ const renderSelectWithForm = (newProps?: any) => {
       <label htmlFor="test">Test</label>
       <Select {...props} {...newProps} inputId="test" />
       <p>Click Outside</p>
-    </form>
+    </form>,
   );
 };
 
@@ -81,7 +81,7 @@ describe("Tests for Select File", () => {
             action: "select-option",
             name: "test",
             option: undefined,
-          })
+          }),
         );
         expect(screen.getByRole("form")).toHaveFormValues({ test: "option2" });
       });
@@ -198,7 +198,7 @@ describe("Tests for Select File", () => {
         const option2 = screen.getByText(options[1].label);
         const menuIsOpenEl = option2.parentElement?.parentElement?.nextSibling;
         expect(menuIsOpenEl).toHaveClass(
-          "[&>*:last-child]:rotate-180 [&>*:last-child]:transition-transform "
+          "[&>*:last-child]:rotate-180 [&>*:last-child]:transition-transform ",
         );
       });
 
@@ -232,7 +232,7 @@ describe("Tests for Select File", () => {
       render(
         <form aria-label="test-form">
           <SelectField {...{ ...props, ...newProps }} />
-        </form>
+        </form>,
       );
     };
 
@@ -268,7 +268,7 @@ describe("Tests for Select File", () => {
           <label htmlFor="test">Test</label>
           <SelectWithValidation {...props} required={required} inputId="test" />
           <button type="submit">Submit</button>
-        </form>
+        </form>,
       );
     };
 

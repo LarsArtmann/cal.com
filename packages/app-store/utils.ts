@@ -16,19 +16,22 @@ type LocationOption = {
   disabled?: boolean;
 };
 
-const ALL_APPS_MAP = Object.keys(appStoreMetadata).reduce((store, key) => {
-  const metadata = appStoreMetadata[key as keyof typeof appStoreMetadata] as AppMeta;
+const ALL_APPS_MAP = Object.keys(appStoreMetadata).reduce(
+  (store, key) => {
+    const metadata = appStoreMetadata[key as keyof typeof appStoreMetadata] as AppMeta;
 
-  store[key] = metadata;
+    store[key] = metadata;
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
-  delete store[key]["/*"];
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
-  delete store[key]["__createdUsingCli"];
-  return store;
-}, {} as Record<string, AppMeta>);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    delete store[key]["/*"];
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    delete store[key]["__createdUsingCli"];
+    return store;
+  },
+  {} as Record<string, AppMeta>,
+);
 
 export type CredentialDataWithTeamName = CredentialPayload & {
   team?: {
@@ -43,55 +46,62 @@ export const ALL_APPS = Object.values(ALL_APPS_MAP);
  * credentials, this should also get globally available apps.
  */
 function getApps(credentials: CredentialDataWithTeamName[], filterOnCredentials?: boolean) {
-  const apps = ALL_APPS.reduce((reducedArray, appMeta) => {
-    const appCredentials = credentials.filter((credential) => credential.type === appMeta.type);
+  const apps = ALL_APPS.reduce(
+    (reducedArray, appMeta) => {
+      const appCredentials = credentials.filter((credential) => credential.type === appMeta.type);
 
-    if (filterOnCredentials && !appCredentials.length && !appMeta.isGlobal) return reducedArray;
+      if (filterOnCredentials && !appCredentials.length && !appMeta.isGlobal) return reducedArray;
 
-    let locationOption: LocationOption | null = null;
+      let locationOption: LocationOption | null = null;
 
-    /** If the app is a globally installed one, let's inject it's key */
-    if (appMeta.isGlobal) {
-      appCredentials.push({
-        id: 0,
-        type: appMeta.type,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        key: appMeta.key!,
-        userId: 0,
-        user: { email: "" },
-        teamId: null,
-        appId: appMeta.slug,
-        invalid: false,
-        team: {
-          name: "Global",
-        },
+      /** If the app is a globally installed one, let's inject it's key */
+      if (appMeta.isGlobal) {
+        appCredentials.push({
+          id: 0,
+          type: appMeta.type,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          key: appMeta.key!,
+          userId: 0,
+          user: { email: "" },
+          teamId: null,
+          appId: appMeta.slug,
+          invalid: false,
+          team: {
+            name: "Global",
+          },
+        });
+      }
+
+      /** Check if app has location option AND add it if user has credentials for it */
+      if (appCredentials.length > 0 && appMeta?.appData?.location) {
+        locationOption = {
+          value: appMeta.appData.location.type,
+          label: appMeta.appData.location.label || "No label set",
+          disabled: false,
+        };
+      }
+
+      const credential: (typeof appCredentials)[number] | null = appCredentials[0] || null;
+
+      reducedArray.push({
+        ...appMeta,
+        /**
+         * @deprecated use `credentials`
+         */
+        credential,
+        credentials: appCredentials,
+        /** Option to display in `location` field while editing event types */
+        locationOption,
       });
-    }
 
-    /** Check if app has location option AND add it if user has credentials for it */
-    if (appCredentials.length > 0 && appMeta?.appData?.location) {
-      locationOption = {
-        value: appMeta.appData.location.type,
-        label: appMeta.appData.location.label || "No label set",
-        disabled: false,
-      };
-    }
-
-    const credential: (typeof appCredentials)[number] | null = appCredentials[0] || null;
-
-    reducedArray.push({
-      ...appMeta,
-      /**
-       * @deprecated use `credentials`
-       */
-      credential,
-      credentials: appCredentials,
-      /** Option to display in `location` field while editing event types */
-      locationOption,
-    });
-
-    return reducedArray;
-  }, [] as (App & { credential: CredentialDataWithTeamName; credentials: CredentialDataWithTeamName[]; locationOption: LocationOption | null })[]);
+      return reducedArray;
+    },
+    [] as (App & {
+      credential: CredentialDataWithTeamName;
+      credentials: CredentialDataWithTeamName[];
+      locationOption: LocationOption | null;
+    })[],
+  );
 
   return apps;
 }
@@ -136,12 +146,12 @@ export function getAppFromLocationValue(type: string): AppMeta | undefined {
  */
 export function doesAppSupportTeamInstall(
   appCategories: string[],
-  concurrentMeetings: boolean | undefined = undefined
+  concurrentMeetings: boolean | undefined = undefined,
 ) {
   return !appCategories.some(
     (category) =>
       category === "calendar" ||
-      (defaultVideoAppCategories.includes(category as AppCategories) && !concurrentMeetings)
+      (defaultVideoAppCategories.includes(category as AppCategories) && !concurrentMeetings),
   );
 }
 

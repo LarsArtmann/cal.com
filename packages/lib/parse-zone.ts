@@ -9,7 +9,7 @@ export function parseZone(
   date?: dayjs.ConfigType,
   format?: dayjs.OptionType,
   locale?: string,
-  strict?: boolean
+  strict?: boolean,
 ) {
   if (typeof date !== "string") {
     return dayjs(date, format, locale, strict);
@@ -26,7 +26,7 @@ export function parseZone(
         ...(typeof format === "string" ? { format } : { ...format }),
       },
       locale,
-      strict
+      strict,
     );
   }
   const [, dateTime, sign, tzHour, tzMinute] = match;
@@ -40,6 +40,6 @@ export function parseZone(
       ...(typeof format === "string" ? { format } : { ...format }),
     } as dayjs.OptionType & { $offset: number },
     locale,
-    strict
+    strict,
   );
 }

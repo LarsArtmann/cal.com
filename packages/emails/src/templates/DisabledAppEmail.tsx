@@ -11,7 +11,7 @@ export const DisabledAppEmail = (
     t: TFunction;
     title?: string;
     eventTypeId?: number;
-  } & Partial<React.ComponentProps<typeof BaseEmailHtml>>
+  } & Partial<React.ComponentProps<typeof BaseEmailHtml>>,
 ) => {
   const { title, appName, eventTypeId, t, appType } = props;
 

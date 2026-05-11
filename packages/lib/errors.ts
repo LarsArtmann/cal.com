@@ -1,4 +1,6 @@
-export function getErrorFromUnknown(cause: unknown): Error & { statusCode?: number; code?: string } {
+export function getErrorFromUnknown(
+  cause: unknown,
+): Error & { statusCode?: number; code?: string } {
   if (cause instanceof Error) {
     return cause;
   }

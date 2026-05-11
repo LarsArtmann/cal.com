@@ -93,9 +93,9 @@ const ConferencingLayout = () => {
 
   const [deleteAppModal, setDeleteAppModal] = useState(false);
   const [bulkUpdateModal, setBulkUpdateModal] = useState(false);
-  const [locationType, setLocationType] = useState<(EventLocationType & { slug: string }) | undefined>(
-    undefined
-  );
+  const [locationType, setLocationType] = useState<
+    (EventLocationType & { slug: string }) | undefined
+  >(undefined);
   const [deleteCredentialId, setDeleteCredentialId] = useState<number>(0);
 
   if (isLoading || defaultConferencingAppLoading)
@@ -139,7 +139,7 @@ const ConferencingLayout = () => {
                                 StartIcon={Video}
                                 onClick={() => {
                                   const locationType = getEventLocationTypeFromApp(
-                                    app?.locationOption?.value ?? ""
+                                    app?.locationOption?.value ?? "",
                                   );
                                   if (locationType?.linkType === "static") {
                                     setLocationType({ ...locationType, slug: appSlug });
@@ -148,7 +148,8 @@ const ConferencingLayout = () => {
                                       appSlug,
                                     });
                                   }
-                                }}>
+                                }}
+                              >
                                 {t("set_as_default")}
                               </DropdownItem>
                             </DropdownMenuItem>
@@ -162,7 +163,8 @@ const ConferencingLayout = () => {
                               onClick={() => {
                                 setDeleteCredentialId(app.userCredentialIds[0]);
                                 setDeleteAppModal(true);
-                              }}>
+                              }}
+                            >
                               {t("remove_app")}
                             </DropdownItem>
                           </DropdownMenuItem>
@@ -180,9 +182,13 @@ const ConferencingLayout = () => {
           title={t("Remove app")}
           description={t("are_you_sure_you_want_to_remove_this_app")}
           type="confirmation"
-          Icon={AlertCircle}>
+          Icon={AlertCircle}
+        >
           <DialogFooter>
-            <Button color="primary" onClick={() => deleteAppMutation.mutate({ id: deleteCredentialId })}>
+            <Button
+              color="primary"
+              onClick={() => deleteAppMutation.mutate({ id: deleteCredentialId })}
+            >
               {t("yes_remove_app")}
             </Button>
             <DialogClose />

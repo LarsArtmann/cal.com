@@ -109,7 +109,7 @@ export const getPublicEvent = async (
   eventSlug: string,
   isTeamEvent: boolean | undefined,
   org: string | null,
-  prisma: PrismaClient
+  prisma: PrismaClient,
 ) => {
   const usernameList = getUsernameList(username);
   const orgQuery = org ? getSlugOrRequestedSlug(org) : null;
@@ -178,7 +178,7 @@ export const getPublicEvent = async (
         darkBrandColor: users[0].darkBrandColor,
         theme: null,
         bookerLayouts: bookerLayoutsSchema.parse(
-          firstUsersMetadata?.defaultBookerLayouts || defaultEventBookerLayouts
+          firstUsersMetadata?.defaultBookerLayouts || defaultEventBookerLayouts,
         ),
       },
       entity: {
@@ -233,7 +233,9 @@ export const getPublicEvent = async (
     customInputs: customInputSchema.array().parse(event.customInputs || []),
     locations: privacyFilteredLocations((event.locations || []) as LocationObject[]),
     bookingFields: getBookingFieldsWithSystemFields(event),
-    recurringEvent: isRecurringEvent(event.recurringEvent) ? parseRecurringEvent(event.recurringEvent) : null,
+    recurringEvent: isRecurringEvent(event.recurringEvent)
+      ? parseRecurringEvent(event.recurringEvent)
+      : null,
     // Sets user data on profile object for easier access
     profile: getProfileFromEvent(event),
     users,
@@ -244,7 +246,8 @@ export const getPublicEvent = async (
         event.team?.parent?.slug === null,
       orgSlug: org,
       teamSlug: (event.team?.slug || teamMetadata?.requestedSlug) ?? null,
-      name: (event.owner?.organization?.name || event.team?.parent?.name || event.team?.name) ?? null,
+      name:
+        (event.owner?.organization?.name || event.team?.parent?.name || event.team?.name) ?? null,
     },
     isDynamic: false,
   };
@@ -278,7 +281,9 @@ function getProfileFromEvent(event: Event) {
     theme: profile.theme,
     bookerLayouts: bookerLayoutsSchema.parse(
       eventMetaData?.bookerLayouts ||
-        (userMetaData && "defaultBookerLayouts" in userMetaData ? userMetaData.defaultBookerLayouts : null)
+        (userMetaData && "defaultBookerLayouts" in userMetaData
+          ? userMetaData.defaultBookerLayouts
+          : null),
     ),
   };
 }

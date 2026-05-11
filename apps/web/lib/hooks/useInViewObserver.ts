@@ -1,6 +1,7 @@
 import React from "react";
 
-const isInteractionObserverSupported = typeof window !== "undefined" && "IntersectionObserver" in window;
+const isInteractionObserverSupported =
+  typeof window !== "undefined" && "IntersectionObserver" in window;
 
 export const useInViewObserver = (onInViewCallback: () => void) => {
   const [node, setRef] = React.useState<HTMLElement | null>(null);
@@ -24,7 +25,7 @@ export const useInViewObserver = (onInViewCallback: () => void) => {
         },
         {
           root: document.body,
-        }
+        },
       );
       observer.observe(node);
     }

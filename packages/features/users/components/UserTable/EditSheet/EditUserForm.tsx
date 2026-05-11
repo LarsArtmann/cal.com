@@ -91,11 +91,14 @@ export function EditForm({
           bio: values.bio,
           timeZone: values.timeZone,
         });
-      }}>
+      }}
+    >
       <div className="mt-4 flex items-center gap-2">
         <Avatar size="lg" alt={`${selectedUser?.name} avatar`} imageSrc={avatarUrl} />
         <div className="space-between flex flex-col leading-none">
-          <span className="text-emphasis text-lg font-semibold">{selectedUser?.name ?? "Nameless User"}</span>
+          <span className="text-emphasis text-lg font-semibold">
+            {selectedUser?.name ?? "Nameless User"}
+          </span>
           <p className="subtle text-sm font-normal">
             {domainUrl}/{selectedUser?.username}
           </p>

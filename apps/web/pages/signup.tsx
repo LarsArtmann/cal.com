@@ -71,7 +71,9 @@ export default function Signup({ prepopulateFormValues, token, orgSlug }: Signup
       .then(handleErrors)
       .then(async () => {
         telemetry.event(telemetryEventTypes.signup, collectPageParameters());
-        const verifyOrGettingStarted = flags["email-verification"] ? "auth/verify-email" : "getting-started";
+        const verifyOrGettingStarted = flags["email-verification"]
+          ? "auth/verify-email"
+          : "getting-started";
         await signIn<"credentials">("credentials", {
           ...data,
           callbackUrl: `${
@@ -100,7 +102,8 @@ export default function Signup({ prepopulateFormValues, token, orgSlug }: Signup
         }
         aria-labelledby="modal-title"
         role="dialog"
-        aria-modal="true">
+        aria-modal="true"
+      >
         <HeadSeo title={t("sign_up")} description={t("sign_up")} />
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="font-cal text-emphasis text-center text-3xl font-extrabold">
@@ -120,7 +123,8 @@ export default function Signup({ prepopulateFormValues, token, orgSlug }: Signup
                   }
                   methods.handleSubmit(signUp)(event);
                 }}
-                className="bg-default space-y-6">
+                className="bg-default space-y-6"
+              >
                 {errors.apiError && <Alert severity="error" message={errors.apiError?.message} />}
                 <div className="space-y-4">
                   <TextField
@@ -161,7 +165,8 @@ export default function Signup({ prepopulateFormValues, token, orgSlug }: Signup
                             ? `${WEBAPP_URL}/${searchParams.get("callbackUrl")}`
                             : `${WEBAPP_URL}/getting-started`,
                         })
-                      }>
+                      }
+                    >
                       {t("login_instead")}
                     </Button>
                   )}

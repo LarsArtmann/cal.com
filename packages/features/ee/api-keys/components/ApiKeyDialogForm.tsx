@@ -6,14 +6,25 @@ import type { TApiKeys } from "@calcom/ee/api-keys/components/ApiKeyListItem";
 import LicenseRequired from "@calcom/ee/common/components/LicenseRequired";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { trpc } from "@calcom/trpc/react";
-import { Button, DialogFooter, Form, showToast, Switch, TextField, Tooltip, SelectField } from "@calcom/ui";
+import {
+  Button,
+  DialogFooter,
+  Form,
+  showToast,
+  Switch,
+  TextField,
+  Tooltip,
+  SelectField,
+} from "@calcom/ui";
 import { Clipboard } from "@calcom/ui/components/icon";
 
 export default function ApiKeyDialogForm({
   defaultValues,
   handleClose,
 }: {
-  defaultValues?: Omit<TApiKeys, "userId" | "createdAt" | "lastUsedAt"> & { neverExpires?: boolean };
+  defaultValues?: Omit<TApiKeys, "userId" | "createdAt" | "lastUsedAt"> & {
+    neverExpires?: boolean;
+  };
   handleClose: () => void;
 }) {
   const { t } = useLocale();
@@ -32,7 +43,7 @@ export default function ApiKeyDialogForm({
   type Option = { value: Date | null | undefined; label: string };
   const [apiKey, setApiKey] = useState("");
   const [expiryDate, setExpiryDate] = useState<Date | null | undefined>(
-    () => defaultValues?.expiresAt || dayjs().add(30, "day").toDate()
+    () => defaultValues?.expiresAt || dayjs().add(30, "day").toDate(),
   );
   const [successfulNewApiKeyModal, setSuccessfulNewApiKeyModal] = useState(false);
   const [apiKeyDetails, setApiKeyDetails] = useState({
@@ -96,7 +107,8 @@ export default function ApiKeyDialogForm({
                   }}
                   type="button"
                   className="rounded-l-none text-base"
-                  StartIcon={Clipboard}>
+                  StartIcon={Clipboard}
+                >
                   {t("copy")}
                 </Button>
               </Tooltip>
@@ -128,7 +140,8 @@ export default function ApiKeyDialogForm({
               setSuccessfulNewApiKeyModal(true);
             }
           }}
-          className="space-y-4">
+          className="space-y-4"
+        >
           <div className="mb-4 mt-1">
             <h2 className="font-semi-bold font-cal text-emphasis text-xl tracking-wide">
               {defaultValues ? t("edit_api_key") : t("create_api_key")}

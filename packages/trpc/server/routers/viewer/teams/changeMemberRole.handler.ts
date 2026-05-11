@@ -16,7 +16,8 @@ type ChangeMemberRoleOptions = {
 };
 
 export const changeMemberRoleHandler = async ({ ctx, input }: ChangeMemberRoleOptions) => {
-  if (!(await isTeamAdmin(ctx.user?.id, input.teamId))) throw new TRPCError({ code: "UNAUTHORIZED" });
+  if (!(await isTeamAdmin(ctx.user?.id, input.teamId)))
+    throw new TRPCError({ code: "UNAUTHORIZED" });
   // Only owners can award owner role.
   if (input.role === MembershipRole.OWNER && !(await isTeamOwner(ctx.user?.id, input.teamId)))
     throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -30,7 +31,10 @@ export const changeMemberRoleHandler = async ({ ctx, input }: ChangeMemberRoleOp
   const myMembership = memberships.find((m) => m.userId === ctx.user.id);
   const teamHasMoreThanOneOwner = memberships.some((m) => m.role === MembershipRole.OWNER);
 
-  if (myMembership?.role === MembershipRole.ADMIN && targetMembership?.role === MembershipRole.OWNER) {
+  if (
+    myMembership?.role === MembershipRole.ADMIN &&
+    targetMembership?.role === MembershipRole.OWNER
+  ) {
     throw new TRPCError({
       code: "FORBIDDEN",
       message: "You can not change the role of an owner if you are an admin.",

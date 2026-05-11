@@ -19,8 +19,9 @@ const ColumnTitle = ({ children, widthClassNames }: TableProps & DynamicWidth) =
     scope="col"
     className={classNames(
       "text-default p-3 text-left text-xs font-medium uppercase",
-      !widthClassNames ? "w-auto" : widthClassNames
-    )}>
+      !widthClassNames ? "w-auto" : widthClassNames,
+    )}
+  >
     {children}
   </th>
 );
@@ -35,8 +36,9 @@ const Cell = ({ children, widthClassNames }: TableProps & DynamicWidth) => (
   <td
     className={classNames(
       "text-default relative px-3 py-2 text-sm font-medium",
-      !widthClassNames ? "w-auto" : widthClassNames
-    )}>
+      !widthClassNames ? "w-auto" : widthClassNames,
+    )}
+  >
     {children}
   </td>
 );

@@ -36,7 +36,8 @@ async function getHandler(req: NextApiRequest) {
   const args: Prisma.SelectedCalendarFindManyArgs = isAdmin ? {} : { where: { userId } };
 
   /** Only admins can query other users */
-  if (!isAdmin && req.query.userId) throw new HttpError({ statusCode: 403, message: "ADMIN required" });
+  if (!isAdmin && req.query.userId)
+    throw new HttpError({ statusCode: 403, message: "ADMIN required" });
   if (isAdmin && req.query.userId) {
     const query = schemaQuerySingleOrMultipleUserIds.parse(req.query);
     const userIds = Array.isArray(query.userId) ? query.userId : [query.userId || userId];

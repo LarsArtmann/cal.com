@@ -1,7 +1,11 @@
 import { create } from "zustand";
 
 import dayjs from "@calcom/dayjs";
-import { TimeFormat, detectBrowserTimeFormat, setIs24hClockInLocalStorage } from "@calcom/lib/timeFormat";
+import {
+  TimeFormat,
+  detectBrowserTimeFormat,
+  setIs24hClockInLocalStorage,
+} from "@calcom/lib/timeFormat";
 import { localStorage } from "@calcom/lib/webstorage";
 
 type TimePreferencesStore = {

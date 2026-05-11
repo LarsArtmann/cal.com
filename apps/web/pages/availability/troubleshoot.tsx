@@ -33,7 +33,7 @@ const AvailabilityView = ({ user }: { user: User }) => {
     },
     {
       enabled: !!user.username,
-    }
+    },
   );
 
   const overrides =
@@ -82,18 +82,26 @@ const AvailabilityView = ({ user }: { user: User }) => {
                   <div
                     key={dayjs(slot.start).format("HH:mm")}
                     className="bg-subtle overflow-hidden rounded-md"
-                    data-testid="troubleshooter-busy-time">
+                    data-testid="troubleshooter-busy-time"
+                  >
                     <div className="text-emphasis px-4 py-5 sm:p-6">
                       {t("calendar_shows_busy_between")}{" "}
-                      <span className="text-default font-medium" title={dayjs(slot.start).format("HH:mm")}>
+                      <span
+                        className="text-default font-medium"
+                        title={dayjs(slot.start).format("HH:mm")}
+                      >
                         {dayjs(slot.start).format("HH:mm")}
                       </span>{" "}
                       {t("and")}{" "}
-                      <span className="text-default font-medium" title={dayjs(slot.end).format("HH:mm")}>
+                      <span
+                        className="text-default font-medium"
+                        title={dayjs(slot.end).format("HH:mm")}
+                      >
                         {dayjs(slot.end).format("HH:mm")}
                       </span>{" "}
                       {t("on")} {dayjs(slot.start).format("D")}{" "}
-                      {t(dayjs(slot.start).format("MMMM").toLowerCase())} {dayjs(slot.start).format("YYYY")}
+                      {t(dayjs(slot.start).format("MMMM").toLowerCase())}{" "}
+                      {dayjs(slot.start).format("YYYY")}
                       {slot.title && ` - (${slot.title})`}
                       {slot.source && <small>{` - (source: ${slot.source})`}</small>}
                     </div>
@@ -122,7 +130,11 @@ export default function Troubleshoot() {
   const { t } = useLocale();
   return (
     <div>
-      <Shell heading={t("troubleshoot")} hideHeadingOnMobile subtitle={t("troubleshoot_description")}>
+      <Shell
+        heading={t("troubleshoot")}
+        hideHeadingOnMobile
+        subtitle={t("troubleshoot_description")}
+      >
         {!isLoading && data && <AvailabilityView user={data} />}
       </Shell>
     </div>

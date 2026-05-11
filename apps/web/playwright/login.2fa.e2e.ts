@@ -72,7 +72,7 @@ test.describe("2FA Tests", async () => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         userWith2FaSecret!.twoFactorSecret!,
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        process.env.CALENDSO_ENCRYPTION_KEY!
+        process.env.CALENDSO_ENCRYPTION_KEY!,
       );
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       await fillOtp({ page, secret: secret! });
@@ -125,7 +125,9 @@ test.describe("2FA Tests", async () => {
       // close backup code dialog
       await page.getByTestId("backup-codes-close").click();
 
-      await expect(page.locator(`[data-testid=two-factor-switch][data-state="checked"]`)).toBeVisible();
+      await expect(
+        page.locator(`[data-testid=two-factor-switch][data-state="checked"]`),
+      ).toBeVisible();
 
       return user;
     });
@@ -149,20 +151,30 @@ test.describe("2FA Tests", async () => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         userWith2FaSecret!.twoFactorSecret!,
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        process.env.CALENDSO_ENCRYPTION_KEY!
+        process.env.CALENDSO_ENCRYPTION_KEY!,
       );
 
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       await fillOtp({ page, secret: secret! });
       await page.click('[data-testid="disable-2fa"]');
-      await expect(page.locator(`[data-testid=two-factor-switch][data-state="unchecked"]`)).toBeVisible();
+      await expect(
+        page.locator(`[data-testid=two-factor-switch][data-state="unchecked"]`),
+      ).toBeVisible();
 
       return user;
     });
   });
 });
 
-async function fillOtp({ page, secret, noRetry }: { page: Page; secret: string; noRetry?: boolean }) {
+async function fillOtp({
+  page,
+  secret,
+  noRetry,
+}: {
+  page: Page;
+  secret: string;
+  noRetry?: boolean;
+}) {
   let token = authenticator.generate(secret);
   if (!noRetry && !totpAuthenticatorCheck(token, secret)) {
     console.log("Token expired, Renerating.");

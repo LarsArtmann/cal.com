@@ -20,7 +20,10 @@ const samlAdmins = (process.env.SAML_ADMINS || "").split(",");
 
 export const isSAMLAdmin = (email: string) => {
   for (const admin of samlAdmins) {
-    if (admin.toLowerCase() === email.toLowerCase() && admin.toUpperCase() === email.toUpperCase()) {
+    if (
+      admin.toLowerCase() === email.toLowerCase() &&
+      admin.toUpperCase() === email.toUpperCase()
+    ) {
       return true;
     }
   }
@@ -33,7 +36,8 @@ export const canAccess = async (user: { id: number; email: string }, teamId: num
 
   if (!isSAMLLoginEnabled) {
     return {
-      message: "To enable this feature, add value for `SAML_DATABASE_URL` and `SAML_ADMINS` to your `.env`",
+      message:
+        "To enable this feature, add value for `SAML_DATABASE_URL` and `SAML_ADMINS` to your `.env`",
       access: false,
     };
   }

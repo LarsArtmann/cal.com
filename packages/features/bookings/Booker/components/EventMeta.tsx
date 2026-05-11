@@ -3,7 +3,12 @@ import dynamic from "next/dynamic";
 import { shallow } from "zustand/shallow";
 
 import { useEmbedUiConfig, useIsEmbed } from "@calcom/embed-core/embed-iframe";
-import { EventDetails, EventMembers, EventMetaSkeleton, EventTitle } from "@calcom/features/bookings";
+import {
+  EventDetails,
+  EventMembers,
+  EventMetaSkeleton,
+  EventTitle,
+} from "@calcom/features/bookings";
 import { SeatsAvailabilityText } from "@calcom/features/bookings/components/SeatsAvailabilityText";
 import { EventMetaBlock } from "@calcom/features/bookings/components/event-meta/Details";
 import { useTimePreferences } from "@calcom/features/bookings/lib";
@@ -28,7 +33,7 @@ export const EventMeta = () => {
   const rescheduleUid = useBookerStore((state) => state.rescheduleUid);
   const [seatedEventData, setSeatedEventData] = useBookerStore(
     (state) => [state.seatedEventData, state.setSeatedEventData],
-    shallow
+    shallow,
   );
   const { i18n, t } = useLocale();
   const { data: event, isLoading } = useEvent();
@@ -52,8 +57,8 @@ export const EventMeta = () => {
   const colorClass = isNearlyFull
     ? "text-rose-600"
     : isHalfFull
-    ? "text-yellow-500"
-    : "text-bookinghighlight";
+      ? "text-yellow-500"
+      : "text-bookinghighlight";
 
   return (
     <div className="relative z-10 p-6">
@@ -107,7 +112,8 @@ export const EventMeta = () => {
             <EventMetaBlock
               className="cursor-pointer [&_.current-timezone:before]:focus-within:opacity-100 [&_.current-timezone:before]:hover:opacity-100"
               contentClassName="relative max-w-[90%]"
-              icon={Globe}>
+              icon={Globe}
+            >
               {bookerState === "booking" ? (
                 <>{timezone}</>
               ) : (
@@ -115,7 +121,8 @@ export const EventMeta = () => {
                   <TimezoneSelect
                     menuPosition="fixed"
                     classNames={{
-                      control: () => "!min-h-0 p-0 w-full border-0 bg-transparent focus-within:ring-0",
+                      control: () =>
+                        "!min-h-0 p-0 w-full border-0 bg-transparent focus-within:ring-0",
                       menu: () => "!w-64 max-w-[90vw]",
                       singleValue: () => "text-text py-1",
                       indicatorsContainer: () => "ml-auto",

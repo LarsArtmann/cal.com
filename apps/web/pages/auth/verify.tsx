@@ -64,7 +64,10 @@ export default function Verify() {
     stripeCustomerId,
     checkoutSessionId: sessionId,
   });
-  useSendFirstVerificationLogin({ email: data?.customer?.email, username: data?.customer?.username });
+  useSendFirstVerificationLogin({
+    email: data?.customer?.email,
+    username: data?.customer?.username,
+  });
   // @note: check for t=timestamp and apply disabled state and secondsLeft accordingly
   // to avoid refresh to skip waiting 30 seconds to re-send email
   useEffect(() => {
@@ -113,8 +116,8 @@ export default function Verify() {
           {hasPaymentFailed
             ? "Your payment failed"
             : sessionId
-            ? "Payment successful!"
-            : "Verify your email" + " | " + APP_NAME}
+              ? "Payment successful!"
+              : "Verify your email" + " | " + APP_NAME}
         </title>
       </Head>
       <div className="flex min-h-screen flex-col items-center justify-center px-6">
@@ -132,11 +135,13 @@ export default function Verify() {
             {hasPaymentFailed
               ? "Your payment failed"
               : sessionId
-              ? "Payment successful!"
-              : "Check your Inbox"}
+                ? "Payment successful!"
+                : "Check your Inbox"}
           </h3>
           {hasPaymentFailed && (
-            <p className="my-6">Your account has been created, but your premium has not been reserved.</p>
+            <p className="my-6">
+              Your account has been created, but your premium has not been reserved.
+            </p>
           )}
           <p>
             We have sent an email to <b>{customer?.email} </b>with a link to activate your account.{" "}
@@ -162,7 +167,8 @@ export default function Verify() {
                 _searchParams.set("t", `${Date.now()}`);
                 router.replace(`${pathname}?${_searchParams.toString()}`);
                 return await sendVerificationLogin(customer.email, customer.username);
-              }}>
+              }}
+            >
               {secondsLeft > 0 ? `Resend in ${secondsLeft} seconds` : "Send another mail"}
             </Button>
             <Button color="primary" href={`${WEBAPP_URL || "https://app.cal.com"}/auth/login`}>

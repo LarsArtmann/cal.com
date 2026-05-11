@@ -56,7 +56,9 @@ export const ErrorPage: React.FC<Props> = (props) => {
       <div className="bg-default min-h-screen px-4">
         <main className="mx-auto max-w-xl pb-6 pt-16 sm:pt-24">
           <div className="text-center">
-            <p className="text-emphasis text-sm font-semibold uppercase tracking-wide">{statusCode}</p>
+            <p className="text-emphasis text-sm font-semibold uppercase tracking-wide">
+              {statusCode}
+            </p>
             <h1 className="text-emphasis mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">
               {message}
             </h1>

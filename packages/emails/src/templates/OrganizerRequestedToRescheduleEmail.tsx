@@ -1,7 +1,7 @@
 import { OrganizerScheduledEmail } from "./OrganizerScheduledEmail";
 
 export const OrganizerRequestedToRescheduleEmail = (
-  props: React.ComponentProps<typeof OrganizerScheduledEmail>
+  props: React.ComponentProps<typeof OrganizerScheduledEmail>,
 ) => (
   <OrganizerScheduledEmail
     title={props.calEvent.organizer.language.translate("request_reschedule_title_organizer", {

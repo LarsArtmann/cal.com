@@ -14,7 +14,10 @@ import type { Person } from "@calcom/types/Calendar";
 
 import { getCalendar } from "../../_utils/getCalendar";
 
-type PersonAttendeeCommonFields = Pick<User, "id" | "email" | "name" | "locale" | "timeZone" | "username">;
+type PersonAttendeeCommonFields = Pick<
+  User,
+  "id" | "email" | "name" | "locale" | "timeZone" | "username"
+>;
 
 const Reschedule = async (bookingUid: string, cancellationReason: string) => {
   const bookingToReschedule = await prisma.booking.findFirstOrThrow({
@@ -80,7 +83,7 @@ const Reschedule = async (bookingUid: string, cancellationReason: string) => {
     const tAttendees = await getTranslation(mainAttendee.locale ?? "en", "common");
     const usersToPeopleType = (
       users: PersonAttendeeCommonFields[],
-      selectedLanguage: TFunction
+      selectedLanguage: TFunction,
     ): Person[] => {
       return users?.map((user) => {
         return {
@@ -103,7 +106,7 @@ const Reschedule = async (bookingUid: string, cancellationReason: string) => {
       attendees: usersToPeopleType(
         // username field doesn't exists on attendee but could be in the future
         bookingToReschedule.attendees as unknown as PersonAttendeeCommonFields[],
-        tAttendees
+        tAttendees,
       ),
       organizer: userOwnerAsPeopleType,
     });
@@ -119,7 +122,7 @@ const Reschedule = async (bookingUid: string, cancellationReason: string) => {
       credentialsMap.set(credential.type, credential);
     });
     const bookingRefsFiltered: BookingReference[] = bookingToReschedule.references.filter(
-      (ref) => !!credentialsMap.get(ref.type)
+      (ref) => !!credentialsMap.get(ref.type),
     );
 
     const promises = bookingRefsFiltered.map(async (bookingRef) => {

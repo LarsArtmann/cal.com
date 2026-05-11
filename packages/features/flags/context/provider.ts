@@ -22,7 +22,8 @@ const FeatureContext = createContext<Flags | null>(null);
  */
 export function useFlagMap() {
   const flagMapContext = useContext(FeatureContext);
-  if (flagMapContext === null) throw new Error("Error: useFlagMap was used outside of FeatureProvider.");
+  if (flagMapContext === null)
+    throw new Error("Error: useFlagMap was used outside of FeatureProvider.");
   return flagMapContext as Flags;
 }
 

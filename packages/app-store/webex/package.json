@@ -1,14 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "private": true,
   "name": "@calcom/webex",
   "version": "0.0.0",
+  "private": true,
+  "description": "Create meetings with Cisco Webex",
   "main": "./index.ts",
   "dependencies": {
     "@calcom/lib": "*"
   },
   "devDependencies": {
     "@calcom/types": "*"
-  },
-  "description": "Create meetings with Cisco Webex"
+  }
 }

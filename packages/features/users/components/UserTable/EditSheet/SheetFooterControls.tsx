@@ -17,11 +17,17 @@ function EditModeFooter() {
         className="justify-center md:w-1/5"
         onClick={() => {
           setEditMode(false);
-        }}>
+        }}
+      >
         {t("cancel")}
       </Button>
 
-      <Button type="submit" className="w-full justify-center" form="edit-user-form" loading={isLoading}>
+      <Button
+        type="submit"
+        className="w-full justify-center"
+        form="edit-user-form"
+        loading={isLoading}
+      >
         {t("update")}
       </Button>
     </>
@@ -47,7 +53,8 @@ function MoreInfoFooter() {
         className="w-full justify-center gap-2"
         variant="icon"
         key="EDIT_BUTTON"
-        StartIcon={Pencil}>
+        StartIcon={Pencil}
+      >
         {t("edit")}
       </Button>
     </>

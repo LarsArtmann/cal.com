@@ -71,7 +71,10 @@ const WebhookForm = (props: {
       }
     }
   }
-  const translatedTriggerOptions = triggerOptions.map((option) => ({ ...option, label: t(option.label) }));
+  const translatedTriggerOptions = triggerOptions.map((option) => ({
+    ...option,
+    label: t(option.label),
+  }));
 
   const formMethods = useForm({
     defaultValues: {
@@ -101,7 +104,8 @@ const WebhookForm = (props: {
     <>
       <Form
         form={formMethods}
-        handleSubmit={(values) => props.onSubmit({ ...values, changeSecret, newSecret })}>
+        handleSubmit={(values) => props.onSubmit({ ...values, changeSecret, newSecret })}
+      >
         <Controller
           name="subscriberUrl"
           control={formMethods.control}
@@ -118,7 +122,10 @@ const WebhookForm = (props: {
                   formMethods.setValue("subscriberUrl", e?.target.value);
                   if (hasTemplateIntegration({ url: e.target.value })) {
                     setUseCustomTemplate(true);
-                    formMethods.setValue("payloadTemplate", customTemplate({ url: e.target.value }));
+                    formMethods.setValue(
+                      "payloadTemplate",
+                      customTemplate({ url: e.target.value }),
+                    );
                   }
                 }}
               />
@@ -145,7 +152,9 @@ const WebhookForm = (props: {
           name="eventTriggers"
           control={formMethods.control}
           render={({ field: { onChange, value } }) => {
-            const selectValue = translatedTriggerOptions.filter((option) => value.includes(option.value));
+            const selectValue = translatedTriggerOptions.filter((option) =>
+              value.includes(option.value),
+            );
             return (
               <div className="mt-8">
                 <Label className="font-sm text-emphasis mt-8 font-medium">
@@ -181,7 +190,8 @@ const WebhookForm = (props: {
                         type="button"
                         onClick={() => {
                           setChangeSecret(true);
-                        }}>
+                        }}
+                      >
                         {t("change_secret")}
                       </Button>
                     </div>
@@ -206,7 +216,8 @@ const WebhookForm = (props: {
                     className="py-1 text-xs"
                     onClick={() => {
                       setChangeSecret(false);
-                    }}>
+                    }}
+                  >
                     {t("cancel")}
                   </Button>
                 </>
@@ -274,12 +285,14 @@ const WebhookForm = (props: {
             type="button"
             color="minimal"
             onClick={props.onCancel}
-            {...(!props.onCancel ? { href: `${WEBAPP_URL}/settings/developer/webhooks` } : {})}>
+            {...(!props.onCancel ? { href: `${WEBAPP_URL}/settings/developer/webhooks` } : {})}
+          >
             {t("cancel")}
           </Button>
           <Button
             type="submit"
-            loading={formMethods.formState.isSubmitting || formMethods.formState.isSubmitted}>
+            loading={formMethods.formState.isSubmitting || formMethods.formState.isSubmitted}
+          >
             {props?.webhook?.id ? t("save") : t("create_webhook")}
           </Button>
         </DialogFooter>

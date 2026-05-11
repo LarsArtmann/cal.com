@@ -110,114 +110,133 @@ export const buttonClasses = cva(
       color: "primary",
       size: "base",
     },
-  }
+  },
 );
 
-export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>(function Button(
-  props: ButtonProps,
-  forwardedRef
-) {
-  const {
-    loading = false,
-    color = "primary",
-    size,
-    variant = "button",
-    type = "button",
-    StartIcon,
-    EndIcon,
-    shallow,
-    // attributes propagated from `HTMLAnchorProps` or `HTMLButtonProps`
-    ...passThroughProps
-  } = props;
-  // Buttons are **always** disabled if we're in a `loading` state
-  const disabled = props.disabled || loading;
-  // If pass an `href`-attr is passed it's `<a>`, otherwise it's a `<button />`
-  const isLink = typeof props.href !== "undefined";
-  const elementType = isLink ? "a" : "button";
-  const element = React.createElement(
-    elementType,
-    {
-      ...passThroughProps,
-      disabled,
-      type: !isLink ? type : undefined,
-      ref: forwardedRef,
-      className: classNames(buttonClasses({ color, size, loading, variant }), props.className),
-      // if we click a disabled button, we prevent going through the click handler
-      onClick: disabled
-        ? (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-            e.preventDefault();
-          }
-        : props.onClick,
-    },
-    <>
-      {StartIcon && (
-        <>
-          {variant === "fab" ? (
-            <>
-              <StartIcon className="hidden h-4 w-4 stroke-[1.5px] ltr:-ml-1 ltr:mr-2 rtl:-mr-1 rtl:ml-2 md:inline-flex" />
-              <Plus data-testid="plus" className="inline h-6 w-6 md:hidden" />
-            </>
-          ) : (
-            <StartIcon
-              className={classNames(
-                variant === "icon" && "h-4 w-4",
-                variant === "button" && "h-4 w-4 stroke-[1.5px] ltr:-ml-1 ltr:mr-2 rtl:-mr-1 rtl:ml-2"
-              )}
-            />
-          )}
-        </>
-      )}
-      {variant === "fab" ? <span className="hidden md:inline">{props.children}</span> : props.children}
-      {loading && (
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-          <svg
-            className={classNames(
-              "mx-4 h-5 w-5 animate-spin",
-              color === "primary" ? "text-inverted" : "text-emphasis"
+export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonProps>(
+  function Button(props: ButtonProps, forwardedRef) {
+    const {
+      loading = false,
+      color = "primary",
+      size,
+      variant = "button",
+      type = "button",
+      StartIcon,
+      EndIcon,
+      shallow,
+      // attributes propagated from `HTMLAnchorProps` or `HTMLButtonProps`
+      ...passThroughProps
+    } = props;
+    // Buttons are **always** disabled if we're in a `loading` state
+    const disabled = props.disabled || loading;
+    // If pass an `href`-attr is passed it's `<a>`, otherwise it's a `<button />`
+    const isLink = typeof props.href !== "undefined";
+    const elementType = isLink ? "a" : "button";
+    const element = React.createElement(
+      elementType,
+      {
+        ...passThroughProps,
+        disabled,
+        type: !isLink ? type : undefined,
+        ref: forwardedRef,
+        className: classNames(buttonClasses({ color, size, loading, variant }), props.className),
+        // if we click a disabled button, we prevent going through the click handler
+        onClick: disabled
+          ? (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+              e.preventDefault();
+            }
+          : props.onClick,
+      },
+      <>
+        {StartIcon && (
+          <>
+            {variant === "fab" ? (
+              <>
+                <StartIcon className="hidden h-4 w-4 stroke-[1.5px] ltr:-ml-1 ltr:mr-2 rtl:-mr-1 rtl:ml-2 md:inline-flex" />
+                <Plus data-testid="plus" className="inline h-6 w-6 md:hidden" />
+              </>
+            ) : (
+              <StartIcon
+                className={classNames(
+                  variant === "icon" && "h-4 w-4",
+                  variant === "button" &&
+                    "h-4 w-4 stroke-[1.5px] ltr:-ml-1 ltr:mr-2 rtl:-mr-1 rtl:ml-2",
+                )}
+              />
             )}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            />
-          </svg>
-        </div>
-      )}
-      {EndIcon && (
-        <>
-          {variant === "fab" ? (
-            <>
-              <EndIcon className="-mr-1 me-2 ms-2 hidden h-5 w-5 md:inline" />
-              <Plus data-testid="plus" className="inline h-6 w-6 md:hidden" />
-            </>
-          ) : (
-            <EndIcon
+          </>
+        )}
+        {variant === "fab" ? (
+          <span className="hidden md:inline">{props.children}</span>
+        ) : (
+          props.children
+        )}
+        {loading && (
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+            <svg
               className={classNames(
-                "inline-flex",
-                variant === "icon" && "h-4 w-4",
-                variant === "button" && "h-4 w-4 stroke-[1.5px] ltr:-mr-1 ltr:ml-2 rtl:-ml-1 rtl:mr-2"
+                "mx-4 h-5 w-5 animate-spin",
+                color === "primary" ? "text-inverted" : "text-emphasis",
               )}
-            />
-          )}
-        </>
-      )}
-    </>
-  );
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+          </div>
+        )}
+        {EndIcon && (
+          <>
+            {variant === "fab" ? (
+              <>
+                <EndIcon className="-mr-1 me-2 ms-2 hidden h-5 w-5 md:inline" />
+                <Plus data-testid="plus" className="inline h-6 w-6 md:hidden" />
+              </>
+            ) : (
+              <EndIcon
+                className={classNames(
+                  "inline-flex",
+                  variant === "icon" && "h-4 w-4",
+                  variant === "button" &&
+                    "h-4 w-4 stroke-[1.5px] ltr:-mr-1 ltr:ml-2 rtl:-ml-1 rtl:mr-2",
+                )}
+              />
+            )}
+          </>
+        )}
+      </>,
+    );
 
-  return props.href ? (
-    <Link data-testid="link-component" passHref href={props.href} shallow={shallow && shallow} legacyBehavior>
-      {element}
-    </Link>
-  ) : (
-    <Wrapper data-testid="wrapper" tooltip={props.tooltip}>
-      {element}
-    </Wrapper>
-  );
-});
+    return props.href ? (
+      <Link
+        data-testid="link-component"
+        passHref
+        href={props.href}
+        shallow={shallow && shallow}
+        legacyBehavior
+      >
+        {element}
+      </Link>
+    ) : (
+      <Wrapper data-testid="wrapper" tooltip={props.tooltip}>
+        {element}
+      </Wrapper>
+    );
+  },
+);
 
 const Wrapper = ({ children, tooltip }: { tooltip?: string; children: React.ReactNode }) => {
   if (!tooltip) {

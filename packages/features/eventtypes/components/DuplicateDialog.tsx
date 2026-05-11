@@ -56,7 +56,7 @@ const DuplicateDialog = () => {
       form.setValue("title", (searchParams?.get("title") as string) || "");
       form.setValue(
         "slug",
-        t("event_type_duplicate_copy_text", { slug: searchParams?.get("slug") as string })
+        t("event_type_duplicate_copy_text", { slug: searchParams?.get("slug") as string }),
       );
       form.setValue("description", (searchParams?.get("description") as string) || "");
       form.setValue("length", Number(searchParams?.get("length")) || 30);
@@ -89,13 +89,15 @@ const DuplicateDialog = () => {
   return (
     <Dialog
       name="duplicate"
-      clearQueryParamsOnClose={["description", "title", "length", "slug", "name", "id", "pageSlug"]}>
+      clearQueryParamsOnClose={["description", "title", "length", "slug", "name", "id", "pageSlug"]}
+    >
       <DialogContent type="creation" className="overflow-y-auto" title="Duplicate Event Type">
         <Form
           form={form}
           handleSubmit={(values) => {
             duplicateMutation.mutate(values);
-          }}>
+          }}
+        >
           <div className="-mt-2 space-y-5">
             <TextField
               label={t("title")}

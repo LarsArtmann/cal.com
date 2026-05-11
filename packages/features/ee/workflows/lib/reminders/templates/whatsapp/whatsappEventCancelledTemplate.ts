@@ -11,7 +11,7 @@ export const whatsappEventCancelledTemplate = (
   eventName?: string,
   timeZone?: string,
   attendee?: string,
-  name?: string
+  name?: string,
 ) => {
   const currentTimeFormat = timeFormat || TimeFormat.TWELVE_HOUR;
   const dateTimeFormat = `ddd, MMM D, YYYY ${currentTimeFormat}`;

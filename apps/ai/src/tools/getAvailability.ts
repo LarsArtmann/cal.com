@@ -62,7 +62,7 @@ const getAvailabilityTool = (apiKey: string, userId: number) => {
           dateFrom,
           dateTo,
           eventTypeId,
-        })
+        }),
       );
     },
     name: "getAvailability",
@@ -73,7 +73,7 @@ const getAvailabilityTool = (apiKey: string, userId: number) => {
         .number()
         .optional()
         .describe(
-          "The ID of the event type to filter availability for if you've called getEventTypes, otherwise do not include."
+          "The ID of the event type to filter availability for if you've called getEventTypes, otherwise do not include.",
         ),
     }),
   });

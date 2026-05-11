@@ -11,7 +11,7 @@ export default function ModalContainer(
     noPadding?: boolean;
     isOpen: boolean;
     onExit: () => void;
-  }>
+  }>,
 ) {
   return (
     <div className="flex min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
@@ -25,8 +25,9 @@ export default function ModalContainer(
                 "sm:w-4xl sm:max-w-4xl": props.wide,
                 "overflow-auto": props.scroll,
                 "!p-0": props.noPadding,
-              }
-            )}>
+              },
+            )}
+          >
             {props.children}
           </div>
         </DialogContent>

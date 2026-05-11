@@ -1,6 +1,8 @@
 import { AttendeeScheduledEmail } from "./AttendeeScheduledEmail";
 
-export const AttendeeCancelledEmail = (props: React.ComponentProps<typeof AttendeeScheduledEmail>) => (
+export const AttendeeCancelledEmail = (
+  props: React.ComponentProps<typeof AttendeeScheduledEmail>,
+) => (
   <AttendeeScheduledEmail
     title="event_request_cancelled"
     headerType="xCircle"

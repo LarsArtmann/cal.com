@@ -20,7 +20,7 @@ export const daysInMonth = (date: Date | Dayjs) => {
 export const formatTime = (
   date: string | Date | Dayjs,
   timeFormat?: number | null,
-  timeZone?: string | null
+  timeZone?: string | null,
 ) => {
   // console.log(timeZone, date);
   return timeZone
@@ -54,7 +54,7 @@ export const isSupportedTimeZone = (timeZone: string) => {
 export const formatLocalizedDateTime = (
   date: Date | Dayjs,
   options: Intl.DateTimeFormatOptions = {},
-  locale: string | undefined = undefined
+  locale: string | undefined = undefined,
 ) => {
   const theDate = date instanceof dayjs ? (date as Dayjs).toDate() : (date as Date);
   return Intl.DateTimeFormat(locale, options).format(theDate);
@@ -69,7 +69,7 @@ export const formatToLocalizedDate = (
   date: Date | Dayjs,
   locale: string | undefined = undefined,
   dateStyle: Intl.DateTimeFormatOptions["dateStyle"] = "long",
-  timeZone?: string
+  timeZone?: string,
 ) => formatLocalizedDateTime(date, { dateStyle, timeZone }, locale);
 
 /**
@@ -82,7 +82,7 @@ export const formatToLocalizedTime = (
   locale: string | undefined = undefined,
   timeStyle: Intl.DateTimeFormatOptions["timeStyle"] = "short",
   hour12: Intl.DateTimeFormatOptions["hour12"] = undefined,
-  timeZone?: string
+  timeZone?: string,
 ) => formatLocalizedDateTime(date, { timeStyle, hour12, timeZone }, locale);
 
 /**
@@ -94,7 +94,7 @@ export const formatToLocalizedTimezone = (
   date: Date | Dayjs,
   locale: string | undefined = undefined,
   timeZone: Intl.DateTimeFormatOptions["timeZone"],
-  timeZoneName: Intl.DateTimeFormatOptions["timeZoneName"] = "long"
+  timeZoneName: Intl.DateTimeFormatOptions["timeZoneName"] = "long",
 ) => {
   // Intl.DateTimeFormat doesn't format into a timezone only, so we must
   //  formatToParts() and return the piece we want
@@ -146,7 +146,15 @@ export const isNextDayInTimezone = (time: string, timezoneA: string, timezoneB: 
   return hoursTimezoneBIsEarlier && timezoneBIsLaterTimezone;
 };
 
-const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as const;
+const weekDays = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+] as const;
 type WeekDays = (typeof weekDays)[number];
 type WeekDayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -157,7 +165,8 @@ type WeekDayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6;
  */
 export const weekdayToWeekIndex = (weekday: WeekDays | string | number | undefined) => {
   if (typeof weekday === "undefined") return 0;
-  if (typeof weekday === "number") return weekday >= 0 && weekday >= 6 ? (weekday as WeekDayIndex) : 0;
+  if (typeof weekday === "number")
+    return weekday >= 0 && weekday >= 6 ? (weekday as WeekDayIndex) : 0;
   return (weekDays.indexOf(weekday as WeekDays) as WeekDayIndex) || 0;
 };
 

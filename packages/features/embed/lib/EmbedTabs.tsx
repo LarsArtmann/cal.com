@@ -51,7 +51,7 @@ export const tabs = [
               `<!-- Cal ${embedType} embed code begins -->\n` +
               (embedType === "inline"
                 ? `<div style="width:${getDimension(previewState.inline.width)};height:${getDimension(
-                    previewState.inline.height
+                    previewState.inline.height,
                   )};overflow:scroll" id="my-cal-inline"></div>\n`
                 : "") +
               `<script type="text/javascript">
@@ -181,7 +181,9 @@ const getEmbedTypeSpecificString = ({
     };
   }
   if (!frameworkCodes[embedType]) {
-    throw new Error(`Code not available for framework:${embedFramework} and embedType:${embedType}`);
+    throw new Error(
+      `Code not available for framework:${embedFramework} and embedType:${embedType}`,
+    );
   }
   if (embedType === "inline") {
     return frameworkCodes[embedType]({

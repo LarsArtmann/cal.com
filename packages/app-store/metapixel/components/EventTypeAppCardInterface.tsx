@@ -16,7 +16,8 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
       app={app}
       switchOnClick={updateEnabled}
       switchChecked={enabled}
-      teamId={eventType.team?.id || undefined}>
+      teamId={eventType.team?.id || undefined}
+    >
       <TextField
         name="Pixel ID"
         value={trackingId}

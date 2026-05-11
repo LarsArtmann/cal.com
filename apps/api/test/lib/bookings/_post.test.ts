@@ -35,7 +35,7 @@ describe("POST /api/bookings", () => {
         expect.objectContaining({
           message:
             "invalid_type in 'eventTypeId': Required; invalid_type in 'title': Required; invalid_type in 'startTime': Required; invalid_type in 'startTime': Required; invalid_type in 'endTime': Required; invalid_type in 'endTime': Required",
-        })
+        }),
       );
     });
 
@@ -60,7 +60,7 @@ describe("POST /api/bookings", () => {
         expect.objectContaining({
           message:
             "'invalid_type' in 'email': Required; 'invalid_type' in 'end': Required; 'invalid_type' in 'location': Required; 'invalid_type' in 'name': Required; 'invalid_type' in 'start': Required; 'invalid_type' in 'timeZone': Required; 'invalid_type' in 'language': Required; 'invalid_type' in 'customInputs': Required; 'invalid_type' in 'metadata': Required",
-        })
+        }),
       );
     });
 
@@ -77,7 +77,7 @@ describe("POST /api/bookings", () => {
       });
 
       prismaMock.eventType.findUnique.mockResolvedValue(
-        buildEventType({ recurringEvent: { freq: 2, count: 12, interval: 1 } })
+        buildEventType({ recurringEvent: { freq: 2, count: 12, interval: 1 } }),
       );
 
       await handler(req, res);
@@ -87,7 +87,7 @@ describe("POST /api/bookings", () => {
         expect.objectContaining({
           message:
             "'invalid_type' in 'email': Required; 'invalid_type' in 'end': Required; 'invalid_type' in 'location': Required; 'invalid_type' in 'name': Required; 'invalid_type' in 'start': Required; 'invalid_type' in 'timeZone': Required; 'invalid_type' in 'language': Required; 'invalid_type' in 'customInputs': Required; 'invalid_type' in 'metadata': Required",
-        })
+        }),
       );
     });
 
@@ -105,7 +105,7 @@ describe("POST /api/bookings", () => {
       });
 
       prismaMock.eventType.findUnique.mockResolvedValue(
-        buildEventType({ recurringEvent: { freq: 2, count: 12, interval: 1 } })
+        buildEventType({ recurringEvent: { freq: 2, count: 12, interval: 1 } }),
       );
 
       await handler(req, res);
@@ -115,7 +115,7 @@ describe("POST /api/bookings", () => {
         expect.objectContaining({
           message:
             "'invalid_type' in 'email': Required; 'invalid_type' in 'end': Required; 'invalid_type' in 'location': Required; 'invalid_type' in 'name': Required; 'invalid_type' in 'start': Required; 'invalid_type' in 'timeZone': Required; 'invalid_type' in 'language': Required; 'invalid_type' in 'customInputs': Required; 'invalid_type' in 'metadata': Required",
-        })
+        }),
       );
     });
 
@@ -147,7 +147,7 @@ describe("POST /api/bookings", () => {
       expect(JSON.parse(res._getData())).toEqual(
         expect.objectContaining({
           message: "No available users found.",
-        })
+        }),
       );
     });
   });
@@ -198,7 +198,7 @@ describe("POST /api/bookings", () => {
         });
 
         prismaMock.eventType.findUnique.mockResolvedValue(
-          buildEventType({ recurringEvent: { freq: 2, count: 12, interval: 1 } })
+          buildEventType({ recurringEvent: { freq: 2, count: 12, interval: 1 } }),
         );
 
         Array.from(Array(12).keys()).map(async () => {
@@ -230,7 +230,7 @@ describe("POST /api/bookings", () => {
       });
 
       prismaMock.eventType.findUnique.mockResolvedValue(
-        buildEventType({ recurringEvent: { freq: 2, count: 12, interval: 1 } })
+        buildEventType({ recurringEvent: { freq: 2, count: 12, interval: 1 } }),
       );
 
       const createdAt = new Date();

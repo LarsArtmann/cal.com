@@ -67,7 +67,8 @@ function WorkflowsPage() {
             onlyShowWithNoTeams={true}
           />
         ) : null
-      }>
+      }
+    >
       <LicenseRequired>
         <>
           {queryRes.data?.totalCount ? (
@@ -88,7 +89,8 @@ function WorkflowsPage() {
             queryRes={queryRes}
             emptyScreen={<EmptyScreen isFilteredView={false} />}
             noResultsScreen={<EmptyScreen isFilteredView={true} />}
-            SkeletonLoader={SkeletonLoader}>
+            SkeletonLoader={SkeletonLoader}
+          >
             <WorkflowList workflows={queryRes.data?.filtered} />
           </FilterResults>
         </>
@@ -140,7 +142,8 @@ const Filter = (props: {
           />
           <label
             htmlFor="yourWorkflows"
-            className="text-default ml-2 mr-auto self-center truncate text-sm font-medium">
+            className="text-default ml-2 mr-auto self-center truncate text-sm font-medium"
+          >
             {user}
           </label>
 
@@ -166,7 +169,8 @@ const Filter = (props: {
         {teams.map((profile) => (
           <div
             className="item-center focus-within:bg-subtle hover:bg-muted flex px-4 py-[6px] hover:cursor-pointer"
-            key={`${profile.teamId || 0}`}>
+            key={`${profile.teamId || 0}`}
+          >
             <Avatar
               imageSrc={profile.image || ""}
               size="sm"
@@ -176,7 +180,8 @@ const Filter = (props: {
             />
             <label
               htmlFor={profile.slug || ""}
-              className="text-default ml-2 mr-auto select-none self-center truncate text-sm font-medium hover:cursor-pointer">
+              className="text-default ml-2 mr-auto select-none self-center truncate text-sm font-medium hover:cursor-pointer"
+            >
               {profile.slug}
             </label>
 

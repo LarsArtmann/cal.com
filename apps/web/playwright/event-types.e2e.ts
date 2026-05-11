@@ -5,7 +5,11 @@ import { WEBAPP_URL } from "@calcom/lib/constants";
 import { randomString } from "@calcom/lib/random";
 
 import { test } from "./lib/fixtures";
-import { bookTimeSlot, createNewEventType, selectFirstAvailableTimeSlotNextMonth } from "./lib/testUtils";
+import {
+  bookTimeSlot,
+  createNewEventType,
+  selectFirstAvailableTimeSlotNextMonth,
+} from "./lib/testUtils";
 
 test.describe.configure({ mode: "parallel" });
 
@@ -51,28 +55,34 @@ test.describe("Event Types tests", () => {
         await page
           .locator("[data-testid=recurring-event-collapsible] input[type=number]")
           .nth(0)
-          .getAttribute("value")
+          .getAttribute("value"),
       ).toBe("1");
       expect(
-        await page.locator("[data-testid=recurring-event-collapsible] div[class$=singleValue]").textContent()
+        await page
+          .locator("[data-testid=recurring-event-collapsible] div[class$=singleValue]")
+          .textContent(),
       ).toBe("week");
       expect(
         await page
           .locator("[data-testid=recurring-event-collapsible] input[type=number]")
           .nth(1)
-          .getAttribute("value")
+          .getAttribute("value"),
       ).toBe("12");
     });
 
     test("can duplicate an existing event type", async ({ page }) => {
       const firstElement = await page.waitForSelector(
-        '[data-testid="event-types"] a[href^="/event-types/"] >> nth=0'
+        '[data-testid="event-types"] a[href^="/event-types/"] >> nth=0',
       );
       const href = await firstElement.getAttribute("href");
       expect(href).toBeTruthy();
       const [eventTypeId] = new URL(WEBAPP_URL + href).pathname.split("/").reverse();
-      const firstTitle = await page.locator(`[data-testid=event-type-title-${eventTypeId}]`).innerText();
-      const firstFullSlug = await page.locator(`[data-testid=event-type-slug-${eventTypeId}]`).innerText();
+      const firstTitle = await page
+        .locator(`[data-testid=event-type-title-${eventTypeId}]`)
+        .innerText();
+      const firstFullSlug = await page
+        .locator(`[data-testid=event-type-slug-${eventTypeId}]`)
+        .innerText();
       const firstSlug = firstFullSlug.split("/")[2];
 
       await page.click(`[data-testid=event-type-options-${eventTypeId}]`);

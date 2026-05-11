@@ -13,7 +13,7 @@ export type OrganizationEmailVerify = {
 };
 
 export const OrganisationAccountVerifyEmail = (
-  props: OrganizationEmailVerify & Partial<React.ComponentProps<typeof BaseEmailHtml>>
+  props: OrganizationEmailVerify & Partial<React.ComponentProps<typeof BaseEmailHtml>>,
 ) => {
   return (
     <BaseEmailHtml subject={props.language("organization_verify_header", { appName: APP_NAME })}>
@@ -22,7 +22,8 @@ export const OrganisationAccountVerifyEmail = (
           fontWeight: 600,
           fontSize: "32px",
           lineHeight: "38px",
-        }}>
+        }}
+      >
         <>{props.language("organization_verify_header")}</>
       </p>
       <p style={{ fontWeight: 400 }}>
@@ -39,7 +40,8 @@ export const OrganisationAccountVerifyEmail = (
             backgroundColor: "#101010",
             padding: "6px 2px 6px 8px",
             flexShrink: 1,
-          }}>
+          }}
+        >
           <b style={{ fontWeight: 400, lineHeight: "24px", color: "white", letterSpacing: "6px" }}>
             {props.code}
           </b>
@@ -54,7 +56,8 @@ export const OrganisationAccountVerifyEmail = (
               href={`mailto:${SUPPORT_MAIL_ADDRESS}`}
               style={{ color: "#3E3E3E" }}
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               <>{props.language("the_calcom_team", { companyName: COMPANY_NAME })}</>
             </a>
           </>

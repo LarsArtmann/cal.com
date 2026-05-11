@@ -37,7 +37,7 @@ export async function getSerializableForm<TForm extends App_RoutingForms_Form>({
     form.settings || {
       // Would have really loved to do it using zod. But adding .default(true) throws type error in prisma/zod/app_routingforms_form.ts
       emailOwnerOnSubmission: true,
-    }
+    },
   );
 
   const parsedFields =
@@ -75,7 +75,10 @@ export async function getSerializableForm<TForm extends App_RoutingForms_Form>({
   /**
    * Enriches routes that are actually routers and returns a list of routers separately
    */
-  async function getEnrichedRoutesAndRouters(parsedRoutes: z.infer<typeof zodRoutes>, userId: number) {
+  async function getEnrichedRoutesAndRouters(
+    parsedRoutes: z.infer<typeof zodRoutes>,
+    userId: number,
+  ) {
     const routers: { name: string; description: string | null; id: string }[] = [];
     const routes: z.infer<typeof zodRoutesView> = [];
     if (!parsedRoutes) {
@@ -115,7 +118,7 @@ export async function getSerializableForm<TForm extends App_RoutingForms_Form>({
           if (!fieldsExistInForm[field.id]) {
             // Instead of throwing error, Log it instead of breaking entire routing forms feature
             console.error(
-              "This is an impossible state. A router field must always be present in the connected form."
+              "This is an impossible state. A router field must always be present in the connected form.",
             );
           } else {
             const currentFormField = fields.find((f) => f.id === field.id);

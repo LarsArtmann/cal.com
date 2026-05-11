@@ -16,7 +16,8 @@ export default function getIP(request: Request | NextApiRequest) {
       : request.headers["cf-connecting-ip"];
 
   if (!xff) {
-    xff = request instanceof Request ? request.headers.get("x-real-ip") : request.headers["x-real-ip"];
+    xff =
+      request instanceof Request ? request.headers.get("x-real-ip") : request.headers["x-real-ip"];
   }
 
   return xff ? parseIpFromHeaders(xff) : "127.0.0.1";

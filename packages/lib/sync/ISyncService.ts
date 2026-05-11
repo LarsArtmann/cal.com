@@ -41,7 +41,8 @@ export interface IUserUpsertion<T> {
 export interface ISyncService {
   ready(): boolean;
   web: {
-    user: (IUserCreation<WebUserInfoType> | IUserUpsertion<WebUserInfoType>) & IUserDeletion<WebUserInfoType>;
+    user: (IUserCreation<WebUserInfoType> | IUserUpsertion<WebUserInfoType>) &
+      IUserDeletion<WebUserInfoType>;
   };
   console: {
     user: IUserCreation<ConsoleUserInfoType> | IUserUpsertion<ConsoleUserInfoType>;
@@ -68,7 +69,9 @@ export default class SyncServiceCore {
     return this.service !== undefined;
   }
 
-  async getUserLastBooking(user: { email: string }): Promise<{ booking: { createdAt: Date } | null } | null> {
+  async getUserLastBooking(user: {
+    email: string;
+  }): Promise<{ booking: { createdAt: Date } | null } | null> {
     return await webPrisma.attendee.findFirst({
       where: {
         email: user.email,

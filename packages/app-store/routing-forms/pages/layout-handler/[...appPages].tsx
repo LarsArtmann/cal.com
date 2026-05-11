@@ -13,7 +13,10 @@ import RoutingFormsRoutingConfig from "../app-routing.config";
 type GetServerSidePropsRestArgs = [AppPrisma, AppUser, AppSsrInit];
 type Component = {
   default: React.ComponentType & Pick<AppProps["Component"], "getLayout">;
-  getServerSideProps?: (context: GetServerSidePropsContext, ...rest: GetServerSidePropsRestArgs) => void;
+  getServerSideProps?: (
+    context: GetServerSidePropsContext,
+    ...rest: GetServerSidePropsRestArgs
+  ) => void;
 };
 const getComponent = (route: string | NextAppProps["router"]): Component => {
   const defaultRoute = "forms";

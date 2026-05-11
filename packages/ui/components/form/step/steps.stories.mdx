@@ -24,7 +24,8 @@ The `Steps` component can be used to show the steps of the total in a process.
   <Story
     name="Steps"
     args={{ maxSteps: 4, currentStep: 2 }}
-    argTypes={{ maxSteps: { control: "number" }, currentStep: { control: "number" } }}>
+    argTypes={{ maxSteps: { control: "number" }, currentStep: { control: "number" } }}
+  >
     {({ maxSteps, currentStep }) => (
       <VariantsTable titles={["Default"]} columnMinWidth={150}>
         <VariantRow>

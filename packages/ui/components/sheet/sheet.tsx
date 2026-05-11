@@ -23,7 +23,8 @@ const portalVariants = cva("fixed inset-0 z-50 flex", {
   defaultVariants: { position: "right" },
 });
 
-interface SheetPortalProps extends SheetPrimitive.DialogPortalProps, VariantProps<typeof portalVariants> {}
+interface SheetPortalProps
+  extends SheetPrimitive.DialogPortalProps, VariantProps<typeof portalVariants> {}
 
 const SheetPortal = ({ position, className, children, ...props }: SheetPortalProps) => (
   <SheetPrimitive.Portal className={classNames(className)} {...props}>
@@ -40,7 +41,7 @@ const SheetOverlay = React.forwardRef<
   <SheetPrimitive.Overlay
     className={classNames(
       "data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:fade-in fixed inset-0 z-50 bg-neutral-800 bg-opacity-70 backdrop-blur-[1px] transition-all duration-100",
-      className
+      className,
     )}
     {...props}
     ref={ref}
@@ -133,47 +134,56 @@ const sheetVariants = cva(
       position: "right",
       size: "default",
     },
-  }
+  },
 );
 
 export interface DialogContentProps
-  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
+  extends
+    React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {
   bottomActions?: React.ReactNode;
 }
 
-const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Content>, DialogContentProps>(
-  ({ position, size, className, children, bottomActions, ...props }, ref) => (
-    <SheetPortal position={position}>
-      <SheetOverlay />
-      <SheetPrimitive.Content
-        ref={ref}
-        {...props}
-        className={classNames(sheetVariants({ position, size }), className)}>
-        <div className="h-full overflow-y-scroll">{children}</div>
-        {bottomActions && (
-          <div className="mt-auto flex justify-end">
-            <div className="flex gap-2">{bottomActions}</div>
-          </div>
-        )}
-        <SheetPrimitive.Close className="focus:ring-emphasis data-[state=open]:bg-deafult absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </SheetPrimitive.Close>
-      </SheetPrimitive.Content>
-    </SheetPortal>
-  )
-);
+const SheetContent = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Content>,
+  DialogContentProps
+>(({ position, size, className, children, bottomActions, ...props }, ref) => (
+  <SheetPortal position={position}>
+    <SheetOverlay />
+    <SheetPrimitive.Content
+      ref={ref}
+      {...props}
+      className={classNames(sheetVariants({ position, size }), className)}
+    >
+      <div className="h-full overflow-y-scroll">{children}</div>
+      {bottomActions && (
+        <div className="mt-auto flex justify-end">
+          <div className="flex gap-2">{bottomActions}</div>
+        </div>
+      )}
+      <SheetPrimitive.Close className="focus:ring-emphasis data-[state=open]:bg-deafult absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none">
+        <X className="h-4 w-4" />
+        <span className="sr-only">Close</span>
+      </SheetPrimitive.Close>
+    </SheetPrimitive.Content>
+  </SheetPortal>
+));
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 
 const SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={classNames("flex flex-col space-y-2 text-center sm:text-left", className)} {...props} />
+  <div
+    className={classNames("flex flex-col space-y-2 text-center sm:text-left", className)}
+    {...props}
+  />
 );
 SheetHeader.displayName = "SheetHeader";
 
 const SheetFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={classNames("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)}
+    className={classNames(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className,
+    )}
     {...props}
   />
 );

@@ -33,7 +33,11 @@ The `Editor` component offers a flexible rich text editing interface, complete w
     <Editor setText={() => {}} getText={() => ""} placeholder="placeholder" />
   </Example>
   <Example title="With variables">
-    <Editor setText={() => {}} getText={() => "Text"} variables={["variable1", "variable2", "variable3"]} />
+    <Editor
+      setText={() => {}}
+      getText={() => "Text"}
+      variables={["variable1", "variable2", "variable3"]}
+    />
   </Example>
 </Examples>
 
@@ -48,7 +52,9 @@ The `Editor` component offers a flexible rich text editing interface, complete w
       editable: true,
     }}
     argTypes={{
-      excludedToolbarItems: { control: { type: "check", options: ["blockType", "bold", "italic", "link"] } },
+      excludedToolbarItems: {
+        control: { type: "check", options: ["blockType", "bold", "italic", "link"] },
+      },
       variables: { control: { type: "check", options: ["variable1", "variable2", "variable3"] } },
       height: { control: { type: "text" } },
       placeholder: { control: { type: "text" } },
@@ -56,7 +62,8 @@ The `Editor` component offers a flexible rich text editing interface, complete w
       updateTemplate: { control: { type: "boolean" } },
       firstRender: { control: { type: "boolean" } },
       editable: { control: { type: "boolean" } },
-    }}>
+    }}
+  >
     {(props) => (
       <VariantsTable titles={["Default"]} columnMinWidth={150}>
         <VariantRow>

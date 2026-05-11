@@ -28,7 +28,8 @@ test.describe("user can login & logout succesfully", async () => {
     //
     await test.step("Log out", async () => {
       const signOutLabel = (await localize("en"))("sign_out");
-      const userDropdownDisclose = async () => page.locator("[data-testid=user-dropdown-trigger]").click();
+      const userDropdownDisclose = async () =>
+        page.locator("[data-testid=user-dropdown-trigger]").click();
 
       // disclose and click the sign out button from the user dropdown
       await userDropdownDisclose();

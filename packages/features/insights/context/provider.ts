@@ -37,6 +37,9 @@ export function useFilterContext() {
   return context;
 }
 
-export function FilterProvider<F extends FilterContextType>(props: { value: F; children: React.ReactNode }) {
+export function FilterProvider<F extends FilterContextType>(props: {
+  value: F;
+  children: React.ReactNode;
+}) {
   return React.createElement(FilterContext.Provider, { value: props.value }, props.children);
 }

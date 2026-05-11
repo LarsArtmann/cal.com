@@ -73,12 +73,13 @@ export const scheduleSMSReminder = async (
   userId?: number | null,
   teamId?: number | null,
   isVerificationPending = false,
-  seatReferenceUid?: string
+  seatReferenceUid?: string,
 ) => {
   const { startTime, endTime } = evt;
   const uid = evt.uid as string;
   const currentDate = dayjs();
-  const timeUnit: timeUnitLowerCase | undefined = timeSpan.timeUnit?.toLocaleLowerCase() as timeUnitLowerCase;
+  const timeUnit: timeUnitLowerCase | undefined =
+    timeSpan.timeUnit?.toLocaleLowerCase() as timeUnitLowerCase;
   let scheduledDate = null;
 
   const senderID = getSenderId(reminderPhone, sender);
@@ -101,7 +102,8 @@ export const scheduleSMSReminder = async (
   let attendeeToBeUsedInSMS: AttendeeInBookingInfo | null = null;
   if (action === WorkflowActions.SMS_ATTENDEE) {
     const attendeeWithReminderPhoneAsSMSReminderNumber =
-      reminderPhone && evt.attendees.find((attendee) => attendee.email === evt.responses?.email?.value);
+      reminderPhone &&
+      evt.attendees.find((attendee) => attendee.email === evt.responses?.email?.value);
     attendeeToBeUsedInSMS = attendeeWithReminderPhoneAsSMSReminderNumber
       ? attendeeWithReminderPhoneAsSMSReminderNumber
       : evt.attendees[0];
@@ -110,7 +112,8 @@ export const scheduleSMSReminder = async (
   }
 
   if (triggerEvent === WorkflowTriggerEvents.BEFORE_EVENT) {
-    scheduledDate = timeSpan.time && timeUnit ? dayjs(startTime).subtract(timeSpan.time, timeUnit) : null;
+    scheduledDate =
+      timeSpan.time && timeUnit ? dayjs(startTime).subtract(timeSpan.time, timeUnit) : null;
   } else if (triggerEvent === WorkflowTriggerEvents.AFTER_EVENT) {
     scheduledDate = timeSpan.time && timeUnit ? dayjs(endTime).add(timeSpan.time, timeUnit) : null;
   }
@@ -119,7 +122,9 @@ export const scheduleSMSReminder = async (
   const attendeeName =
     action === WorkflowActions.SMS_ATTENDEE ? evt.organizer.name : attendeeToBeUsedInSMS.name;
   const timeZone =
-    action === WorkflowActions.SMS_ATTENDEE ? attendeeToBeUsedInSMS.timeZone : evt.organizer.timeZone;
+    action === WorkflowActions.SMS_ATTENDEE
+      ? attendeeToBeUsedInSMS.timeZone
+      : evt.organizer.timeZone;
 
   const locale =
     action === WorkflowActions.SMS_ATTENDEE
@@ -156,7 +161,7 @@ export const scheduleSMSReminder = async (
         evt.title,
         timeZone,
         attendeeName,
-        name
+        name,
       ) || message;
   }
 
@@ -190,7 +195,7 @@ export const scheduleSMSReminder = async (
             reminderPhone,
             message,
             scheduledDate.toDate(),
-            senderID
+            senderID,
           );
 
           await prisma.workflowReminder.create({
@@ -224,7 +229,10 @@ export const scheduleSMSReminder = async (
   }
 };
 
-export const deleteScheduledSMSReminder = async (reminderId: number, referenceId: string | null) => {
+export const deleteScheduledSMSReminder = async (
+  reminderId: number,
+  referenceId: string | null,
+) => {
   try {
     if (referenceId) {
       await twilio.cancelSMS(referenceId);

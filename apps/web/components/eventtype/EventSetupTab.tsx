@@ -37,7 +37,7 @@ import LocationSelect from "@components/ui/form/LocationSelect";
 
 const getLocationFromType = (
   type: EventLocationType["type"],
-  locationOptions: Pick<EventTypeSetupProps, "locationOptions">["locationOptions"]
+  locationOptions: Pick<EventTypeSetupProps, "locationOptions">["locationOptions"],
 ) => {
   for (const locationOption of locationOptions) {
     const option = locationOption.options.find((option) => option.value === type);
@@ -52,7 +52,7 @@ const getLocationInfo = (props: Pick<EventTypeSetupProps, "eventType" | "locatio
     props.eventType.locations &&
     props.eventType.locations.length > 0 &&
     props.locationOptions.some((op) =>
-      op.options.find((opt) => opt.value === props.eventType.locations[0].type)
+      op.options.find((opt) => opt.value === props.eventType.locations[0].type),
     );
   const locationDetails = props.eventType.locations &&
     props.eventType.locations.length > 0 &&
@@ -107,7 +107,7 @@ export const EventSetupTab = (
   props: Pick<
     EventTypeSetupProps,
     "eventType" | "locationOptions" | "team" | "teamMembers" | "destinationCalendar"
-  >
+  >,
 ) => {
   const { t } = useLocale();
   const formMethods = useFormContext<FormValues>();
@@ -131,12 +131,12 @@ export const EventSetupTab = (
     };
   });
 
-  const multipleDurationOptions = [5, 10, 15, 20, 25, 30, 45, 50, 60, 75, 80, 90, 120, 150, 180].map(
-    (mins) => ({
-      value: mins,
-      label: t("multiple_duration_mins", { count: mins }),
-    })
-  );
+  const multipleDurationOptions = [
+    5, 10, 15, 20, 25, 30, 45, 50, 60, 75, 80, 90, 120, 150, 180,
+  ].map((mins) => ({
+    value: mins,
+    label: t("multiple_duration_mins", { count: mins }),
+  }));
 
   const [selectedMultipleDuration, setSelectedMultipleDuration] = useState<
     MultiValue<{
@@ -145,7 +145,7 @@ export const EventSetupTab = (
     }>
   >(multipleDurationOptions.filter((mdOpt) => multipleDuration?.includes(mdOpt.value)));
   const [defaultDuration, setDefaultDuration] = useState(
-    selectedMultipleDuration.find((opt) => opt.value === eventType.length) ?? null
+    selectedMultipleDuration.find((opt) => opt.value === eventType.length) ?? null,
   );
 
   const openLocationModal = (type: EventLocationType["type"], address = "") => {
@@ -171,13 +171,15 @@ export const EventSetupTab = (
         }
         return location.type !== selectedLocation.type;
       }),
-      { shouldValidate: true }
+      { shouldValidate: true },
     );
   };
 
   const saveLocation = (newLocationType: EventLocationType["type"], details = {}) => {
     const locationType = editingLocationType !== "" ? editingLocationType : newLocationType;
-    const existingIdx = formMethods.getValues("locations").findIndex((loc) => locationType === loc.type);
+    const existingIdx = formMethods
+      .getValues("locations")
+      .findIndex((loc) => locationType === loc.type);
     if (existingIdx !== -1) {
       const copy = formMethods.getValues("locations");
       if (editingLocationType !== "") {
@@ -196,7 +198,7 @@ export const EventSetupTab = (
     } else {
       formMethods.setValue(
         "locations",
-        formMethods.getValues("locations").concat({ type: newLocationType, ...details })
+        formMethods.getValues("locations").concat({ type: newLocationType, ...details }),
       );
     }
 
@@ -225,12 +227,16 @@ export const EventSetupTab = (
     resolver: zodResolver(locationFormSchema),
   });
 
-  const { isChildrenManagedEventType, isManagedEventType, shouldLockIndicator, shouldLockDisableProps } =
-    useLockedFieldsManager(
-      eventType,
-      t("locked_fields_admin_description"),
-      t("locked_fields_member_description")
-    );
+  const {
+    isChildrenManagedEventType,
+    isManagedEventType,
+    shouldLockIndicator,
+    shouldLockDisableProps,
+  } = useLockedFieldsManager(
+    eventType,
+    t("locked_fields_admin_description"),
+    t("locked_fields_member_description"),
+  );
 
   const Locations = () => {
     const { t } = useLocale();
@@ -296,7 +302,8 @@ export const EventSetupTab = (
               return (
                 <li
                   key={`${location.type}${index}`}
-                  className="border-default text-default mb-2 h-9 rounded-md border px-2 py-1.5 hover:cursor-pointer">
+                  className="border-default text-default mb-2 h-9 rounded-md border px-2 py-1.5 hover:cursor-pointer"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <img
@@ -324,10 +331,15 @@ export const EventSetupTab = (
                           openLocationModal(location.type, location.address);
                         }}
                         aria-label={t("edit")}
-                        className="hover:text-emphasis text-subtle mr-1 p-1">
+                        className="hover:text-emphasis text-subtle mr-1 p-1"
+                      >
                         <Edit2 className="h-4 w-4" />
                       </button>
-                      <button type="button" onClick={() => removeLocation(location)} aria-label={t("remove")}>
+                      <button
+                        type="button"
+                        onClick={() => removeLocation(location)}
+                        aria-label={t("remove")}
+                      >
                         <X className="border-l-1 hover:text-emphasis text-subtle h-6 w-6 pl-1 " />
                       </button>
                     </div>
@@ -337,17 +349,19 @@ export const EventSetupTab = (
             })}
             {validLocations.some(
               (location) =>
-                location.type === MeetLocationType && destinationCalendar?.integration !== "google_calendar"
+                location.type === MeetLocationType &&
+                destinationCalendar?.integration !== "google_calendar",
             ) && (
               <div className="text-default flex text-sm">
                 <Check className="mr-1.5 mt-0.5 h-2 w-2.5" />
                 <Trans i18nKey="event_type_requres_google_cal">
                   <p>
-                    The “Add to calendar” for this event type needs to be a Google Calendar for Meet to work.
-                    Change it{" "}
+                    The “Add to calendar” for this event type needs to be a Google Calendar for Meet
+                    to work. Change it{" "}
                     <Link
                       href={`${CAL_URL}/event-types/${eventType.id}?tabName=advanced`}
-                      className="underline">
+                      className="underline"
+                    >
                       here.
                     </Link>{" "}
                   </p>
@@ -368,7 +382,8 @@ export const EventSetupTab = (
                   data-testid="add-location"
                   StartIcon={Plus}
                   color="minimal"
-                  onClick={() => setShowLocationModal(true)}>
+                  onClick={() => setShowLocationModal(true)}
+                >
                   {t("add_location")}
                 </Button>
               </li>
@@ -478,7 +493,7 @@ export const EventSetupTab = (
                 options={selectedMultipleDuration}
                 onChange={(option) => {
                   setDefaultDuration(
-                    selectedMultipleDuration.find((opt) => opt.value === option?.value) ?? null
+                    selectedMultipleDuration.find((opt) => opt.value === option?.value) ?? null,
                   );
                   if (option) formMethods.setValue("length", option.value);
                 }}

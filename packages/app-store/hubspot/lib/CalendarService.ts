@@ -70,8 +70,8 @@ export default class HubspotCalendarService implements Calendar {
           } else {
             throw error;
           }
-        })
-      )
+        }),
+      ),
     );
   };
 
@@ -121,7 +121,10 @@ export default class HubspotCalendarService implements Calendar {
     return hubspotClient.crm.objects.meetings.basicApi.create(simplePublicObjectInput);
   };
 
-  private hubspotAssociate = async (meeting: SimplePublicObject, contacts: Array<{ id: string }>) => {
+  private hubspotAssociate = async (
+    meeting: SimplePublicObject,
+    contacts: Array<{ id: string }>,
+  ) => {
     const batchInputPublicAssociation: BatchInputPublicAssociation = {
       inputs: contacts.map((contact: { id: string }) => ({
         _from: { id: meeting.id },
@@ -132,7 +135,7 @@ export default class HubspotCalendarService implements Calendar {
     return hubspotClient.crm.associations.batchApi.create(
       "meetings",
       "contacts",
-      batchInputPublicAssociation
+      batchInputPublicAssociation,
     );
   };
 
@@ -160,7 +163,8 @@ export default class HubspotCalendarService implements Calendar {
     const appKeys = await getAppKeysFromSlug("hubspot");
     if (typeof appKeys.client_id === "string") this.client_id = appKeys.client_id;
     if (typeof appKeys.client_secret === "string") this.client_secret = appKeys.client_secret;
-    if (!this.client_id) throw new HttpError({ statusCode: 400, message: "Hubspot client_id missing." });
+    if (!this.client_id)
+      throw new HttpError({ statusCode: 400, message: "Hubspot client_id missing." });
     if (!this.client_secret)
       throw new HttpError({ statusCode: 400, message: "Hubspot client_secret missing." });
     const credentialKey = credential.key as unknown as HubspotToken;
@@ -179,11 +183,13 @@ export default class HubspotCalendarService implements Calendar {
           WEBAPP_URL + "/api/integrations/hubspot/callback",
           this.client_id,
           this.client_secret,
-          refreshToken
+          refreshToken,
         );
 
         // set expiry date as offset from current time.
-        hubspotRefreshToken.expiryDate = Math.round(Date.now() + hubspotRefreshToken.expiresIn * 1000);
+        hubspotRefreshToken.expiryDate = Math.round(
+          Date.now() + hubspotRefreshToken.expiresIn * 1000,
+        );
         await prisma.credential.update({
           where: {
             id: credential.id,
@@ -201,7 +207,9 @@ export default class HubspotCalendarService implements Calendar {
 
     return {
       getToken: () =>
-        !isTokenValid(credentialKey) ? Promise.resolve([]) : refreshAccessToken(credentialKey.refreshToken),
+        !isTokenValid(credentialKey)
+          ? Promise.resolve([])
+          : refreshAccessToken(credentialKey.refreshToken),
     };
   };
 
@@ -222,7 +230,9 @@ export default class HubspotCalendarService implements Calendar {
           additionalInfo: { contacts, associatedMeeting },
         });
       }
-      return Promise.reject("Something went wrong when associating the meeting and attendees in HubSpot");
+      return Promise.reject(
+        "Something went wrong when associating the meeting and attendees in HubSpot",
+      );
     }
     this.log.debug("meeting:creation:notOk", { meetingEvent, event, contacts });
     return Promise.reject("Something went wrong when creating a meeting in HubSpot");
@@ -245,7 +255,7 @@ export default class HubspotCalendarService implements Calendar {
         this.log.debug("contact:filter:existing", { existingContacts });
         // Get non existing contacts filtering out existing from attendees
         const nonExistingContacts = event.attendees.filter(
-          (attendee) => !existingContacts.includes(attendee.email)
+          (attendee) => !existingContacts.includes(attendee.email),
         );
         this.log.debug("contact:filter:nonExisting", { nonExistingContacts });
         // Only create contacts in HubSpot that were not present in the previous contact search
@@ -256,10 +266,12 @@ export default class HubspotCalendarService implements Calendar {
           this.log.debug("contact:creation:ok");
           return await this.handleMeetingCreation(
             event,
-            createContacts.concat(contacts) as SimplePublicObjectInput[]
+            createContacts.concat(contacts) as SimplePublicObjectInput[],
           );
         }
-        return Promise.reject("Something went wrong when creating non-existing attendees in HubSpot");
+        return Promise.reject(
+          "Something went wrong when creating non-existing attendees in HubSpot",
+        );
       }
     } else {
       this.log.debug("contact:search:none", { event, contacts });
@@ -289,7 +301,7 @@ export default class HubspotCalendarService implements Calendar {
   async getAvailability(
     _dateFrom: string,
     _dateTo: string,
-    _selectedCalendars: IntegrationCalendar[]
+    _selectedCalendars: IntegrationCalendar[],
   ): Promise<EventBusyDate[]> {
     return Promise.resolve([]);
   }

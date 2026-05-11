@@ -54,5 +54,5 @@ export const viewerRouter = mergeRouters(
     googleWorkspace: googleWorkspaceRouter,
     admin: adminRouter,
     kycVerification: kycVerificationRouter,
-  })
+  }),
 );

@@ -69,7 +69,7 @@ export default class CloseComCalendarService implements Calendar {
       this.closeCom = new CloseCom(api_key);
     } else {
       throw Error(
-        `No API Key found for userId ${credential.userId} and appId ${credential.appId}: ${parsedCredentialKey.error}`
+        `No API Key found for userId ${credential.userId} and appId ${credential.appId}: ${parsedCredentialKey.error}`,
       );
     }
   }
@@ -78,11 +78,11 @@ export default class CloseComCalendarService implements Calendar {
     const customActivityTypeInstanceData = await getCustomActivityTypeInstanceData(
       event,
       calComCustomActivityFields,
-      this.closeCom
+      this.closeCom,
     );
     // Create Custom Activity type instance
     const customActivityTypeInstance = await this.closeCom.activity.custom.create(
-      customActivityTypeInstanceData
+      customActivityTypeInstanceData,
     );
     return this.closeCom.activity.custom.update(uid, customActivityTypeInstance);
   };
@@ -95,11 +95,11 @@ export default class CloseComCalendarService implements Calendar {
     const customActivityTypeInstanceData = await getCustomActivityTypeInstanceData(
       event,
       calComCustomActivityFields,
-      this.closeCom
+      this.closeCom,
     );
     // Create Custom Activity type instance
     const customActivityTypeInstance = await this.closeCom.activity.custom.create(
-      customActivityTypeInstanceData
+      customActivityTypeInstanceData,
     );
     return Promise.resolve({
       uid: customActivityTypeInstance.id,
@@ -125,7 +125,7 @@ export default class CloseComCalendarService implements Calendar {
   async getAvailability(
     _dateFrom: string,
     _dateTo: string,
-    _selectedCalendars: IntegrationCalendar[]
+    _selectedCalendars: IntegrationCalendar[],
   ): Promise<EventBusyDate[]> {
     return Promise.resolve([]);
   }

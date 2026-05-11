@@ -41,7 +41,7 @@ export function Header({
       if (layout === newLayout || !newLayout) return;
       setLayout(newLayout as BookerLayout);
     },
-    [setLayout, layout]
+    [setLayout, layout],
   );
 
   if (isMobile || !enabledLayouts) return null;
@@ -50,7 +50,11 @@ export function Header({
   // and this way we can't forget to update one of the props in all places :)
   const LayoutToggleWithData = () => {
     return enabledLayouts.length <= 1 ? null : (
-      <LayoutToggle onLayoutToggle={onLayoutToggle} layout={layout} enabledLayouts={enabledLayouts} />
+      <LayoutToggle
+        onLayoutToggle={onLayoutToggle}
+        layout={layout}
+        enabledLayouts={enabledLayouts}
+      />
     );
   };
 
@@ -58,7 +62,10 @@ export function Header({
   if (isMonthView) {
     return <LayoutToggleWithData />;
   }
-  const endDate = selectedDate.add(layout === BookerLayouts.COLUMN_VIEW ? extraDays : extraDays - 1, "days");
+  const endDate = selectedDate.add(
+    layout === BookerLayouts.COLUMN_VIEW ? extraDays : extraDays - 1,
+    "days",
+  );
 
   const isSameMonth = () => {
     return selectedDate.format("MMM") === endDate.format("MMM");
@@ -92,7 +99,9 @@ export function Header({
             color="minimal"
             StartIcon={ChevronLeft}
             aria-label="Previous Day"
-            onClick={() => addToSelectedDate(layout === BookerLayouts.COLUMN_VIEW ? -nextSlots : -extraDays)}
+            onClick={() =>
+              addToSelectedDate(layout === BookerLayouts.COLUMN_VIEW ? -nextSlots : -extraDays)
+            }
           />
           <Button
             className="group rtl:mr-1 rtl:rotate-180"
@@ -100,13 +109,16 @@ export function Header({
             color="minimal"
             StartIcon={ChevronRight}
             aria-label="Next Day"
-            onClick={() => addToSelectedDate(layout === BookerLayouts.COLUMN_VIEW ? nextSlots : extraDays)}
+            onClick={() =>
+              addToSelectedDate(layout === BookerLayouts.COLUMN_VIEW ? nextSlots : extraDays)
+            }
           />
           {selectedDateMin3DaysDifference && (
             <Button
               className="capitalize ltr:ml-2 rtl:mr-2"
               color="secondary"
-              onClick={() => setSelectedDate(today.format("YYYY-MM-DD"))}>
+              onClick={() => setSelectedDate(today.format("YYYY-MM-DD"))}
+            >
               {t("today")}
             </Button>
           )}
@@ -171,5 +183,7 @@ const LayoutToggle = ({
     return null;
   }
 
-  return <ToggleGroup onValueChange={onLayoutToggle} defaultValue={layout} options={layoutOptions} />;
+  return (
+    <ToggleGroup onValueChange={onLayoutToggle} defaultValue={layout} options={layoutOptions} />
+  );
 };

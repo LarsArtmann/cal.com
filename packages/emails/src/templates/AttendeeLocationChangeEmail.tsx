@@ -1,6 +1,8 @@
 import { AttendeeScheduledEmail } from "./AttendeeScheduledEmail";
 
-export const AttendeeLocationChangeEmail = (props: React.ComponentProps<typeof AttendeeScheduledEmail>) => (
+export const AttendeeLocationChangeEmail = (
+  props: React.ComponentProps<typeof AttendeeScheduledEmail>,
+) => (
   <AttendeeScheduledEmail
     title="event_location_changed"
     headerType="calendarCircle"

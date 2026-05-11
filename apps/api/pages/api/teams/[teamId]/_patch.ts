@@ -63,7 +63,8 @@ export async function patchHandler(req: NextApiRequest) {
     include: { members: true },
     where: { id: teamId, members: { some: { userId, role: { in: ["OWNER", "ADMIN"] } } } },
   });
-  if (!_team) throw new HttpError({ statusCode: 401, message: "Unauthorized: OWNER or ADMIN required" });
+  if (!_team)
+    throw new HttpError({ statusCode: 401, message: "Unauthorized: OWNER or ADMIN required" });
   let paymentUrl;
   if (_team.slug === null && data.slug) {
     data.metadata = {

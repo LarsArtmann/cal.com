@@ -35,14 +35,16 @@ export default function MemberChangeRoleModal(props: {
         label: t("owner"),
         value: MembershipRole.OWNER,
       },
-    ].filter(({ value }) => value !== MembershipRole.OWNER || props.currentMember === MembershipRole.OWNER);
+    ].filter(
+      ({ value }) => value !== MembershipRole.OWNER || props.currentMember === MembershipRole.OWNER,
+    );
   }, [t, props.currentMember]);
 
   const [role, setRole] = useState<MembershipRoleOption>(
     options.find((option) => option.value === props.initialRole) || {
       label: t("member"),
       value: MembershipRole.MEMBER,
-    }
+    },
   );
   const [errorMessage, setErrorMessage] = useState("");
   const utils = trpc.useContext();
@@ -76,14 +78,18 @@ export default function MemberChangeRoleModal(props: {
             <div className="text-center sm:text-left">
               <h3
                 className="text-emphasis !font-cal text-semibold leading-20 text-xl font-medium"
-                id="modal-title">
+                id="modal-title"
+              >
                 {t("change_member_role")}
               </h3>
             </div>
           </div>
           <form onSubmit={changeRole}>
             <div className="mb-4">
-              <label className="text-default mb-2 block text-sm font-medium tracking-wide" htmlFor="role">
+              <label
+                className="text-default mb-2 block text-sm font-medium tracking-wide"
+                htmlFor="role"
+              >
                 {t("role")}
               </label>
               {/*<option value="OWNER">{t("owner")}</option> - needs dialog to confirm change of ownership */}

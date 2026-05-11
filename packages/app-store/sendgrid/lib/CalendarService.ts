@@ -44,7 +44,7 @@ export default class CloseComCalendarService implements Calendar {
       this.sendgrid = new Sendgrid(api_key);
     } else {
       throw Error(
-        `No API Key found for userId ${credential.userId} and appId ${credential.appId}: ${parsedCredentialKey.error}`
+        `No API Key found for userId ${credential.userId} and appId ${credential.appId}: ${parsedCredentialKey.error}`,
       );
     }
   }
@@ -90,7 +90,7 @@ export default class CloseComCalendarService implements Calendar {
   async getAvailability(
     _dateFrom: string,
     _dateTo: string,
-    _selectedCalendars: IntegrationCalendar[]
+    _selectedCalendars: IntegrationCalendar[],
   ): Promise<EventBusyDate[]> {
     return Promise.resolve([]);
   }

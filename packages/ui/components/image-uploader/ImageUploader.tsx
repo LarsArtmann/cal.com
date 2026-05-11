@@ -152,7 +152,7 @@ export default function ImageUploader({
         if (!croppedAreaPixels) return;
         const croppedImage = await getCroppedImg(
           result as string /* result is always string when using readAsDataUrl */,
-          croppedAreaPixels
+          croppedAreaPixels,
         );
         setImageSrc(croppedImage);
         handleAvatarChange(croppedImage);
@@ -160,14 +160,15 @@ export default function ImageUploader({
         console.error(e);
       }
     },
-    [result, handleAvatarChange]
+    [result, handleAvatarChange],
   );
 
   return (
     <Dialog
       onOpenChange={
         (opened) => !opened && setFile(null) // unset file on close
-      }>
+      }
+    >
       <DialogTrigger asChild>
         <Button color="secondary" type="button" className="py-1 text-sm">
           {buttonMsg}
@@ -189,7 +190,9 @@ export default function ImageUploader({
                 )}
               </div>
             )}
-            {result && <CropContainer imageSrc={result as string} onCropComplete={setCroppedAreaPixels} />}
+            {result && (
+              <CropContainer imageSrc={result as string} onCropComplete={setCroppedAreaPixels} />
+            )}
             <label className="bg-subtle hover:bg-muted hover:text-emphasis border-subtle text-default mt-8 rounded-sm border px-3 py-1 text-xs font-medium leading-4 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-1">
               <input
                 onInput={onInputFile}
@@ -246,7 +249,7 @@ async function getCroppedImg(imageSrc: string, pixelCrop: Area): Promise<string>
     0,
     0,
     canvas.width,
-    canvas.height
+    canvas.height,
   );
 
   // on very low ratios, the quality of the resize becomes awful. For this reason the resizeRatio is limited to 0.75
@@ -278,7 +281,8 @@ const Slider = ({
     value={[value]}
     aria-label={label}
     onValueChange={(value: number[]) => changeHandler(value[0] ?? value)}
-    {...props}>
+    {...props}
+  >
     <SliderPrimitive.Track className="slider-track">
       <SliderPrimitive.Range className="slider-range" />
     </SliderPrimitive.Track>

@@ -60,7 +60,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const handlerMap = (await import("@calcom/app-store/apps.server.generated")).apiHandlers;
     const handlerKey = deriveAppDictKeyFromType(appName, handlerMap);
     const handlers = await handlerMap[handlerKey as keyof typeof handlerMap];
-    if (!handlers) throw new HttpError({ statusCode: 404, message: `No handlers found for ${handlerKey}` });
+    if (!handlers)
+      throw new HttpError({ statusCode: 404, message: `No handlers found for ${handlerKey}` });
     const handler = handlers[apiEndpoint as keyof typeof handlers] as AppHandler;
     let redirectUrl = "/apps/installed";
     if (typeof handler === "undefined")
@@ -69,7 +70,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (typeof handler === "function") {
       await handler(req, res);
     } else {
-      await defaultIntegrationAddHandler({ user: req.session?.user, teamId: Number(teamId), ...handler });
+      await defaultIntegrationAddHandler({
+        user: req.session?.user,
+        teamId: Number(teamId),
+        ...handler,
+      });
       redirectUrl = handler.redirect?.url || getInstalledAppPath(handler);
       res.json({ url: redirectUrl, newTab: handler.redirect?.newTab });
     }

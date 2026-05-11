@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         Authorization: authHeader,
         "Content-Type": "application/x-www-form-urlencoded",
       },
-    }
+    },
   );
 
   if (result.status !== 200) {

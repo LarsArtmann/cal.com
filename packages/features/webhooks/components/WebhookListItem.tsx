@@ -69,8 +69,9 @@ export default function WebhookListItem(props: {
     <div
       className={classNames(
         "flex w-full justify-between p-4",
-        props.lastItem ? "" : "border-subtle border-b"
-      )}>
+        props.lastItem ? "" : "border-subtle border-b",
+      )}
+    >
       <div className="w-full truncate">
         <div className="flex">
           <p className="text-emphasis truncate text-sm font-medium">{webhook.subscriberUrl}</p>
@@ -87,7 +88,8 @@ export default function WebhookListItem(props: {
                 key={trigger}
                 className="mt-2.5 basis-1/5 ltr:mr-2 rtl:ml-2"
                 variant="gray"
-                startIcon={AlertCircle}>
+                startIcon={AlertCircle}
+              >
                 {t(`${trigger.toLowerCase()}`)}
               </Badge>
             ))}
@@ -123,7 +125,12 @@ export default function WebhookListItem(props: {
 
           <Dropdown>
             <DropdownMenuTrigger asChild>
-              <Button className="lg:hidden" StartIcon={MoreHorizontal} variant="icon" color="secondary" />
+              <Button
+                className="lg:hidden"
+                StartIcon={MoreHorizontal}
+                variant="icon"
+                color="secondary"
+              />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem>

@@ -6,7 +6,8 @@ export const schemaEventTypeCustomInputBaseBodyParams = EventTypeCustomInput.omi
 
 export const schemaEventTypeCustomInputPublic = EventTypeCustomInput.omit({});
 
-export const schemaEventTypeCustomInputBodyParams = schemaEventTypeCustomInputBaseBodyParams.strict();
+export const schemaEventTypeCustomInputBodyParams =
+  schemaEventTypeCustomInputBaseBodyParams.strict();
 
 export const schemaEventTypeCustomInputEditBodyParams = schemaEventTypeCustomInputBaseBodyParams
   .partial()

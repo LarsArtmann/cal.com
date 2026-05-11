@@ -143,7 +143,9 @@ export default class BiginCalendarService implements Calendar {
   private async contactSearch(event: CalendarEvent) {
     const token = await this.auth.getToken();
     const searchCriteria =
-      "(" + event.attendees.map((attendee) => `(Email:equals:${encodeURI(attendee.email)})`).join("or") + ")";
+      "(" +
+      event.attendees.map((attendee) => `(Email:equals:${encodeURI(attendee.email)})`).join("or") +
+      ")";
 
     return await axios({
       method: "get",
@@ -153,7 +155,9 @@ export default class BiginCalendarService implements Calendar {
       },
     })
       .then((data) => data.data)
-      .catch((e) => this.log.error("Error searching contact:", JSON.stringify(e), e.response?.data));
+      .catch((e) =>
+        this.log.error("Error searching contact:", JSON.stringify(e), e.response?.data),
+      );
   }
 
   /***
@@ -179,7 +183,9 @@ export default class BiginCalendarService implements Calendar {
       data: JSON.stringify({ data: [biginEvent] }),
     })
       .then((data) => data.data)
-      .catch((e) => this.log.error("Error creating bigin event", JSON.stringify(e), e.response?.data));
+      .catch((e) =>
+        this.log.error("Error creating bigin event", JSON.stringify(e), e.response?.data),
+      );
   }
 
   /***
@@ -187,7 +193,11 @@ export default class BiginCalendarService implements Calendar {
    */
   async handleEventCreation(event: CalendarEvent, contacts: CalendarEvent["attendees"]) {
     const meetingEvent = await this.createBiginEvent(event);
-    if (meetingEvent.data && meetingEvent.data.length && meetingEvent.data[0].status === "success") {
+    if (
+      meetingEvent.data &&
+      meetingEvent.data.length &&
+      meetingEvent.data[0].status === "success"
+    ) {
       this.log.debug("event:creation:ok", { meetingEvent });
       return Promise.resolve({
         uid: meetingEvent.data[0].details.id,
@@ -214,7 +224,7 @@ export default class BiginCalendarService implements Calendar {
 
     const existingContacts = contacts.map((contact: BiginContact) => contact.email);
     const newContacts: Person[] = event.attendees.filter(
-      (attendee) => !existingContacts.includes(attendee.email)
+      (attendee) => !existingContacts.includes(attendee.email),
     );
 
     if (newContacts.length === 0) {
@@ -269,13 +279,15 @@ export default class BiginCalendarService implements Calendar {
         },
       })
       .then((data) => data.data)
-      .catch((e) => this.log.error("Error deleting bigin event", JSON.stringify(e), e.response?.data));
+      .catch((e) =>
+        this.log.error("Error deleting bigin event", JSON.stringify(e), e.response?.data),
+      );
   }
 
   async getAvailability(
     _dateFrom: string,
     _dateTo: string,
-    _selectedCalendars: IntegrationCalendar[]
+    _selectedCalendars: IntegrationCalendar[],
   ): Promise<EventBusyDate[]> {
     return Promise.resolve([]);
   }

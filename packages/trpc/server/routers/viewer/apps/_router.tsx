@@ -23,7 +23,7 @@ export const appsRouter = router({
   listLocal: authedAdminProcedure.input(ZListLocalInputSchema).query(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.listLocal) {
       UNSTABLE_HANDLER_CACHE.listLocal = await import("./listLocal.handler").then(
-        (mod) => mod.listLocalHandler
+        (mod) => mod.listLocalHandler,
       );
     }
 
@@ -40,7 +40,9 @@ export const appsRouter = router({
 
   toggle: authedAdminProcedure.input(ZToggleInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.toggle) {
-      UNSTABLE_HANDLER_CACHE.toggle = await import("./toggle.handler").then((mod) => mod.toggleHandler);
+      UNSTABLE_HANDLER_CACHE.toggle = await import("./toggle.handler").then(
+        (mod) => mod.toggleHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -56,7 +58,9 @@ export const appsRouter = router({
 
   saveKeys: authedAdminProcedure.input(ZSaveKeysInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.saveKeys) {
-      UNSTABLE_HANDLER_CACHE.saveKeys = await import("./saveKeys.handler").then((mod) => mod.saveKeysHandler);
+      UNSTABLE_HANDLER_CACHE.saveKeys = await import("./saveKeys.handler").then(
+        (mod) => mod.saveKeysHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -73,7 +77,7 @@ export const appsRouter = router({
   checkForGCal: authedProcedure.query(async ({ ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.checkForGCal) {
       UNSTABLE_HANDLER_CACHE.checkForGCal = await import("./checkForGCal.handler").then(
-        (mod) => mod.checkForGCalHandler
+        (mod) => mod.checkForGCalHandler,
       );
     }
 
@@ -91,9 +95,10 @@ export const appsRouter = router({
     .input(ZUpdateAppCredentialsInputSchema)
     .mutation(async ({ ctx, input }) => {
       if (!UNSTABLE_HANDLER_CACHE.updateAppCredentials) {
-        UNSTABLE_HANDLER_CACHE.updateAppCredentials = await import("./updateAppCredentials.handler").then(
-          (mod) => mod.updateAppCredentialsHandler
-        );
+        UNSTABLE_HANDLER_CACHE.updateAppCredentials =
+          await import("./updateAppCredentials.handler").then(
+            (mod) => mod.updateAppCredentialsHandler,
+          );
       }
 
       // Unreachable code but required for type safety
@@ -111,9 +116,10 @@ export const appsRouter = router({
     .input(ZQueryForDependenciesInputSchema)
     .query(async ({ ctx, input }) => {
       if (!UNSTABLE_HANDLER_CACHE.queryForDependencies) {
-        UNSTABLE_HANDLER_CACHE.queryForDependencies = await import("./queryForDependencies.handler").then(
-          (mod) => mod.queryForDependenciesHandler
-        );
+        UNSTABLE_HANDLER_CACHE.queryForDependencies =
+          await import("./queryForDependencies.handler").then(
+            (mod) => mod.queryForDependenciesHandler,
+          );
       }
 
       // Unreachable code but required for type safety
@@ -129,7 +135,7 @@ export const appsRouter = router({
   checkGlobalKeys: authedProcedure.input(checkGlobalKeysSchema).query(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.checkGlobalKeys) {
       UNSTABLE_HANDLER_CACHE.checkGlobalKeys = await import("./checkGlobalKeys.handler").then(
-        (mod) => mod.checkForGlobalKeysHandler
+        (mod) => mod.checkForGlobalKeysHandler,
       );
     }
 

@@ -16,7 +16,11 @@ export const findKeyOfTypeHandler = async ({ ctx, input }: FindKeyOfTypeOptions)
   const { teamId, appId } = input;
   const userId = ctx.user.id;
   /** Only admin or owner can create apiKeys of team (if teamId is passed) */
-  await checkPermissions({ userId, teamId, role: { in: [MembershipRole.OWNER, MembershipRole.ADMIN] } });
+  await checkPermissions({
+    userId,
+    teamId,
+    role: { in: [MembershipRole.OWNER, MembershipRole.ADMIN] },
+  });
 
   return await prisma.apiKey.findMany({
     where: {

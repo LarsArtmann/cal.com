@@ -5,7 +5,7 @@ import type { schemaEventTypeCreateBodyParams } from "~/lib/validations/event-ty
 
 export default async function ensureOnlyMembersAsHosts(
   req: NextApiRequest,
-  body: Pick<z.infer<typeof schemaEventTypeCreateBodyParams>, "hosts" | "teamId">
+  body: Pick<z.infer<typeof schemaEventTypeCreateBodyParams>, "hosts" | "teamId">,
 ) {
   if (body.teamId && body.hosts && body.hosts.length > 0) {
     const teamMemberCount = await req.prisma.membership.count({

@@ -20,7 +20,7 @@ import type { InstallAppButtonProps } from "./types";
 export const InstallAppButtonWithoutPlanCheck = (
   props: {
     type: App["type"];
-  } & InstallAppButtonProps
+  } & InstallAppButtonProps,
 ) => {
   const mutation = useAddAppMutation(null);
   const key = deriveAppDictKeyFromType(props.type, InstallAppButtonMap);
@@ -54,7 +54,7 @@ export const InstallAppButton = (
     type: App["type"];
     wrapperClassName?: string;
     disableInstall?: boolean;
-  } & InstallAppButtonProps
+  } & InstallAppButtonProps,
 ) => {
   const { isLoading: isUserLoading, data: user } = trpc.viewer.me.useQuery();
   const router = useRouter();
@@ -71,7 +71,7 @@ export const InstallAppButton = (
       (e) => {
         if (!user) {
           router.push(
-            `${WEBAPP_URL}/auth/login?callbackUrl=${WEBAPP_URL + location.pathname + location.search}`
+            `${WEBAPP_URL}/auth/login?callbackUrl=${WEBAPP_URL + location.pathname + location.search}`,
           );
           e.stopPropagation();
           return;
@@ -84,7 +84,7 @@ export const InstallAppButton = (
           return;
         }
       },
-      true
+      true,
     );
   }, [isUserLoading, user, router, hasTeamPlan, props.teamsPlanRequired]);
 
@@ -114,8 +114,11 @@ export const AppDependencyComponent = ({
     <div
       className={classNames(
         "rounded-md px-4 py-3",
-        dependencyData && dependencyData.some((dependency) => !dependency.installed) ? "bg-info" : "bg-subtle"
-      )}>
+        dependencyData && dependencyData.some((dependency) => !dependency.installed)
+          ? "bg-info"
+          : "bg-subtle",
+      )}
+    >
       {dependencyData &&
         dependencyData.map((dependency) => {
           return dependency.installed ? (
@@ -149,7 +152,10 @@ export const AppDependencyComponent = ({
                 </div>
                 <div>
                   <span className="font-semibold">
-                    {t("this_app_requires_connected_account", { appName, dependencyName: dependency.name })}
+                    {t("this_app_requires_connected_account", {
+                      appName,
+                      dependencyName: dependency.name,
+                    })}
                   </span>
 
                   <div>
@@ -157,7 +163,8 @@ export const AppDependencyComponent = ({
                       <>
                         <Link
                           href={`${CAL_URL}/apps/${dependency.slug}`}
-                          className="text-info flex items-center underline">
+                          className="text-info flex items-center underline"
+                        >
                           <span className="mr-1">
                             {t("connect_app", { dependencyName: dependency.name })}
                           </span>

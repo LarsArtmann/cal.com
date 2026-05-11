@@ -90,7 +90,8 @@ export function TableActions({
                         },
                       })
                     }
-                    StartIcon={Edit2}>
+                    StartIcon={Edit2}
+                  >
                     {t("edit")}
                   </DropdownItem>
                 </DropdownMenuItem>
@@ -109,7 +110,8 @@ export function TableActions({
                           },
                         })
                       }
-                      StartIcon={Lock}>
+                      StartIcon={Lock}
+                    >
                       {t("impersonate")}
                     </DropdownItem>
                   </DropdownMenuItem>
@@ -130,7 +132,8 @@ export function TableActions({
                       })
                     }
                     color="destructive"
-                    StartIcon={UserX}>
+                    StartIcon={UserX}
+                  >
                     {t("remove")}
                   </DropdownItem>
                 </DropdownMenuItem>
@@ -147,7 +150,8 @@ export function TableActions({
                         isOrg: true,
                       });
                     }}
-                    StartIcon={SendIcon}>
+                    StartIcon={SendIcon}
+                  >
                     {t("resend_invitation")}
                   </DropdownItem>
                 </DropdownMenuItem>
@@ -181,7 +185,8 @@ export function TableActions({
                         },
                       })
                     }
-                    StartIcon={Edit2}>
+                    StartIcon={Edit2}
+                  >
                     {t("edit")}
                   </DropdownItem>
                 </DropdownMenuItem>
@@ -201,7 +206,8 @@ export function TableActions({
                       },
                     })
                   }
-                  StartIcon={UserX}>
+                  StartIcon={UserX}
+                >
                   {t("remove")}
                 </DropdownItem>
               </DropdownMenuItem>

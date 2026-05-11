@@ -79,14 +79,15 @@ export function CreateButton(props: CreateBtnProps) {
             !!CreateDialog
               ? openModal(options[0])
               : createFunction
-              ? createFunction(options[0].teamId || undefined)
-              : null
+                ? createFunction(options[0].teamId || undefined)
+                : null
           }
           data-testid="create-button"
           StartIcon={Plus}
           loading={isLoading}
           variant={disableMobileButton ? "button" : "fab"}
-          {...restProps}>
+          {...restProps}
+        >
           {buttonText ? buttonText : t("new")}
         </Button>
       ) : (
@@ -97,7 +98,8 @@ export function CreateButton(props: CreateBtnProps) {
               StartIcon={Plus}
               data-testid="create-button-dropdown"
               loading={isLoading}
-              {...restProps}>
+              {...restProps}
+            >
               {buttonText ? buttonText : t("new")}
             </Button>
           </DropdownMenuTrigger>
@@ -122,9 +124,10 @@ export function CreateButton(props: CreateBtnProps) {
                     !!CreateDialog
                       ? openModal(option)
                       : createFunction
-                      ? createFunction(option.teamId || undefined)
-                      : null
-                  }>
+                        ? createFunction(option.teamId || undefined)
+                        : null
+                  }
+                >
                   {" "}
                   {/*improve this code */}
                   <span>{option.label}</span>

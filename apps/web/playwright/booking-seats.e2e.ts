@@ -300,7 +300,11 @@ test.describe("Reschedule for booking with seats", () => {
     expect(oldBooking?.status).toBe(BookingStatus.CANCELLED);
   });
 
-  test("Should cancel with seats and have no attendees and cancelled", async ({ page, users, bookings }) => {
+  test("Should cancel with seats and have no attendees and cancelled", async ({
+    page,
+    users,
+    bookings,
+  }) => {
     const { user, booking } = await createUserWithSeatedEventAndAttendees({ users, bookings }, [
       { name: "John First", email: "first+seats@cal.com", timeZone: "Europe/Berlin" },
       { name: "Jane Second", email: "second+seats@cal.com", timeZone: "Europe/Berlin" },
@@ -375,7 +379,7 @@ test.describe("Reschedule for booking with seats", () => {
     });
 
     await page.goto(
-      `/booking/${references[0].referenceUid}?cancel=true&seatReferenceUid=${references[0].referenceUid}`
+      `/booking/${references[0].referenceUid}?cancel=true&seatReferenceUid=${references[0].referenceUid}`,
     );
 
     await page.locator('[data-testid="confirm_cancel"]').click();
@@ -430,7 +434,7 @@ test.describe("Reschedule for booking with seats", () => {
     // Now we cancel the booking as the first attendee
     // booking/${bookingUid}?cancel=true&allRemainingBookings=false&seatReferenceUid={bookingSeat.referenceUid}
     await page.goto(
-      `/booking/${booking.uid}?cancel=true&allRemainingBookings=false&seatReferenceUid=${bookingSeats[0].referenceUid}`
+      `/booking/${booking.uid}?cancel=true&allRemainingBookings=false&seatReferenceUid=${bookingSeats[0].referenceUid}`,
     );
 
     await page.locator('[data-testid="confirm_cancel"]').click();
@@ -440,7 +444,7 @@ test.describe("Reschedule for booking with seats", () => {
     await expect(page).toHaveURL(/\/booking\/.*/);
 
     await page.goto(
-      `/booking/${booking.uid}?cancel=true&allRemainingBookings=false&seatReferenceUid=${bookingSeats[1].referenceUid}`
+      `/booking/${booking.uid}?cancel=true&allRemainingBookings=false&seatReferenceUid=${bookingSeats[1].referenceUid}`,
     );
 
     // Page should not be 404
@@ -498,11 +502,11 @@ test.describe("Reschedule for booking with seats", () => {
     await page.goto(`/booking/${booking.uid}?cancel=true&allRemainingBookings=false`);
 
     const foundFirstAttendeeAsOwner = await page.locator(
-      'p[data-testid="attendee-email-first+seats@cal.com"]'
+      'p[data-testid="attendee-email-first+seats@cal.com"]',
     );
     await expect(foundFirstAttendeeAsOwner).toHaveCount(1);
     const foundSecondAttendeeAsOwner = await page.locator(
-      'p[data-testid="attendee-email-second+seats@cal.com"]'
+      'p[data-testid="attendee-email-second+seats@cal.com"]',
     );
     await expect(foundSecondAttendeeAsOwner).toHaveCount(1);
 
@@ -511,14 +515,18 @@ test.describe("Reschedule for booking with seats", () => {
     // Now we cancel the booking as the first attendee
     // booking/${bookingUid}?cancel=true&allRemainingBookings=false&seatReferenceUid={bookingSeat.referenceUid}
     await page.goto(
-      `/booking/${booking.uid}?cancel=true&allRemainingBookings=false&seatReferenceUid=${bookingSeats[0].referenceUid}`
+      `/booking/${booking.uid}?cancel=true&allRemainingBookings=false&seatReferenceUid=${bookingSeats[0].referenceUid}`,
     );
 
     // No attendees should be displayed only the one that it's cancelling
-    const notFoundSecondAttendee = await page.locator('p[data-testid="attendee-email-second+seats@cal.com"]');
+    const notFoundSecondAttendee = await page.locator(
+      'p[data-testid="attendee-email-second+seats@cal.com"]',
+    );
 
     await expect(notFoundSecondAttendee).toHaveCount(0);
-    const foundFirstAttendee = await page.locator('p[data-testid="attendee-email-first+seats@cal.com"]');
+    const foundFirstAttendee = await page.locator(
+      'p[data-testid="attendee-email-first+seats@cal.com"]',
+    );
     await expect(foundFirstAttendee).toHaveCount(1);
 
     await prisma.eventType.update({
@@ -531,11 +539,13 @@ test.describe("Reschedule for booking with seats", () => {
     });
 
     await page.goto(
-      `/booking/${booking.uid}?cancel=true&allRemainingBookings=false&seatReferenceUid=${bookingSeats[1].referenceUid}`
+      `/booking/${booking.uid}?cancel=true&allRemainingBookings=false&seatReferenceUid=${bookingSeats[1].referenceUid}`,
     );
 
     // Now attendees should be displayed
-    const foundSecondAttendee = await page.locator('p[data-testid="attendee-email-second+seats@cal.com"]');
+    const foundSecondAttendee = await page.locator(
+      'p[data-testid="attendee-email-second+seats@cal.com"]',
+    );
 
     await expect(foundSecondAttendee).toHaveCount(1);
     const foundFirstAttendeeAgain = await page

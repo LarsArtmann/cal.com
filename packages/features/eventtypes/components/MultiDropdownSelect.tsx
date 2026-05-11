@@ -9,7 +9,11 @@ const LimitedChipsContainer = <Option, IsMulti extends boolean, Group extends Gr
   ...props
 }: ValueContainerProps<Option, IsMulti, Group>) => {
   if (!props.hasValue) {
-    return <components.ValueContainer {...props}>{children as React.ReactNode[]}</components.ValueContainer>;
+    return (
+      <components.ValueContainer {...props}>
+        {children as React.ReactNode[]}
+      </components.ValueContainer>
+    );
   }
   const CHIPS_LIMIT = 2;
   // TODO:: fix the following ts error
@@ -24,7 +28,8 @@ const LimitedChipsContainer = <Option, IsMulti extends boolean, Group extends Gr
       {overflowCounter > 0 && (
         <span className="bg-subtle text-default flex items-center justify-center rounded-md px-2 py-[5px] text-[14px] font-medium leading-4">
           <>
-            <Plus className="mr-1 inline h-3 w-3 stroke-[3px]" /> <span>{overflowCounter} more</span>
+            <Plus className="mr-1 inline h-3 w-3 stroke-[3px]" />{" "}
+            <span>{overflowCounter} more</span>
           </>
         </span>
       )}

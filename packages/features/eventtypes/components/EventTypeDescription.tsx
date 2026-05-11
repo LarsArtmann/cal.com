@@ -9,7 +9,16 @@ import type { baseEventTypeSelect } from "@calcom/prisma";
 import { SchedulingType } from "@calcom/prisma/enums";
 import type { EventTypeModel } from "@calcom/prisma/zod";
 import { Badge } from "@calcom/ui";
-import { Clock, Users, RefreshCw, CreditCard, Clipboard, Plus, User, Lock } from "@calcom/ui/components/icon";
+import {
+  Clock,
+  Users,
+  RefreshCw,
+  CreditCard,
+  Clipboard,
+  Plus,
+  User,
+  Lock,
+} from "@calcom/ui/components/icon";
 
 export type EventTypeDescriptionProps = {
   eventType: Pick<
@@ -35,7 +44,7 @@ export const EventTypeDescription = ({
 
   const recurringEvent = useMemo(
     () => parseRecurringEvent(eventType.recurringEvent),
-    [eventType.recurringEvent]
+    [eventType.recurringEvent],
   );
 
   const paymentAppData = getPaymentAppData(eventType);
@@ -47,7 +56,7 @@ export const EventTypeDescription = ({
           <div
             className={classNames(
               "text-subtle line-clamp-3 break-words py-1 text-sm sm:max-w-[650px] [&_a]:text-blue-500 [&_a]:underline [&_a]:hover:text-blue-600",
-              shortenDescription ? "line-clamp-4 [&>*:not(:first-child)]:hidden" : ""
+              shortenDescription ? "line-clamp-4 [&>*:not(:first-child)]:hidden" : "",
             )}
             dangerouslySetInnerHTML={{
               __html: eventType.descriptionAsSafeHTML || "",
@@ -115,7 +124,9 @@ export const EventTypeDescription = ({
           {eventType.requiresConfirmation || (recurringEvent?.count && recurringEvent.count) ? (
             <li className="block xl:hidden">
               <Badge variant="gray" startIcon={Plus}>
-                <p>{[eventType.requiresConfirmation, recurringEvent?.count].filter(Boolean).length}</p>
+                <p>
+                  {[eventType.requiresConfirmation, recurringEvent?.count].filter(Boolean).length}
+                </p>
               </Badge>
             </li>
           ) : (

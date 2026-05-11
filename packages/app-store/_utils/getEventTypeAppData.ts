@@ -3,13 +3,15 @@ import type { z } from "zod";
 import type { EventTypeModel } from "@calcom/prisma/zod";
 import type { EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
 
-export type EventTypeApps = NonNullable<NonNullable<z.infer<typeof EventTypeMetaDataSchema>>["apps"]>;
+export type EventTypeApps = NonNullable<
+  NonNullable<z.infer<typeof EventTypeMetaDataSchema>>["apps"]
+>;
 export type EventTypeAppsList = keyof EventTypeApps;
 
 export const getEventTypeAppData = <T extends EventTypeAppsList>(
   eventType: Pick<z.infer<typeof EventTypeModel>, "price" | "currency" | "metadata">,
   appId: T,
-  forcedGet?: boolean
+  forcedGet?: boolean,
 ): EventTypeApps[T] => {
   const metadata = eventType.metadata;
   const appMetadata = metadata?.apps && metadata.apps[appId];

@@ -6,7 +6,7 @@ interface IRetrieveSubscriptionIdResponse {
 }
 
 export async function retrieveSubscriptionIdFromStripeCustomerId(
-  stripeCustomerId: string
+  stripeCustomerId: string,
 ): Promise<IRetrieveSubscriptionIdResponse> {
   const customer = await stripe.customers.retrieve(stripeCustomerId, {
     expand: ["subscriptions.data.plan"],

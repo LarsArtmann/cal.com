@@ -27,8 +27,8 @@ type SkeletonProps<T> = {
 } & (T extends React.FC<infer P>
   ? P
   : T extends keyof JSX.IntrinsicElements
-  ? JSX.IntrinsicElements[T]
-  : never);
+    ? JSX.IntrinsicElements[T]
+    : never);
 
 const Skeleton = <T extends keyof JSX.IntrinsicElements | React.FC>({
   as,
@@ -52,28 +52,30 @@ const Skeleton = <T extends keyof JSX.IntrinsicElements | React.FC>({
     <Component
       className={classNames(
         loading
-          ? classNames("font-size-0 bg-emphasis animate-pulse rounded-md text-transparent", loadingClassName)
+          ? classNames(
+              "font-size-0 bg-emphasis animate-pulse rounded-md text-transparent",
+              loadingClassName,
+            )
           : "",
-        className
+        className,
       )}
-      {...rest}>
+      {...rest}
+    >
       {children}
     </Component>
   );
 };
 
-const SkeletonText: React.FC<SkeletonBaseProps & { invisible?: boolean; style?: React.CSSProperties }> = ({
-  className = "",
-  invisible = false,
-  style,
-}) => {
+const SkeletonText: React.FC<
+  SkeletonBaseProps & { invisible?: boolean; style?: React.CSSProperties }
+> = ({ className = "", invisible = false, style }) => {
   return (
     <span
       style={style}
       className={classNames(
         `font-size-0 bg-emphasis inline-block animate-pulse rounded-md empty:before:inline-block empty:before:content-['']`,
         className,
-        invisible ? "invisible" : ""
+        invisible ? "invisible" : "",
       )}
     />
   );

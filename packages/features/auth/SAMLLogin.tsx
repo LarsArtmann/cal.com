@@ -62,7 +62,8 @@ export function SAMLLogin({ samlTenantID, samlProductID, setErrorMessage }: Prop
         mutation.mutate({
           email,
         });
-      }}>
+      }}
+    >
       {t("signin_with_saml_oidc")}
     </Button>
   );

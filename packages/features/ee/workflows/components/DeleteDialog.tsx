@@ -48,7 +48,8 @@ export const DeleteDialog = (props: IDeleteDialog) => {
         onConfirm={(e) => {
           e.preventDefault();
           deleteMutation.mutate({ id: workflowId });
-        }}>
+        }}
+      >
         {t("delete_workflow_description")}
       </ConfirmationDialogContent>
     </Dialog>

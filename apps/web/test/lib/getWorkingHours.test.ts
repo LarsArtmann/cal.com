@@ -15,7 +15,7 @@ it("correctly translates Availability (UTC+0) to UTC workingHours", async () => 
         startTime: new Date(Date.UTC(2021, 11, 16, 23)),
         endTime: new Date(Date.UTC(2021, 11, 16, 23, 59)),
       },
-    ])
+    ]),
   ).toStrictEqual([
     {
       days: [0],
@@ -34,7 +34,7 @@ it("correctly translates Availability in a positive UTC offset (Pacific/Auckland
         startTime: new Date(Date.UTC(2021, 11, 16, 0)),
         endTime: new Date(Date.UTC(2021, 11, 16, 23, 59)),
       },
-    ])
+    ]),
   ).toStrictEqual([
     {
       days: [1],
@@ -58,7 +58,7 @@ it("correctly translates Availability in a negative UTC offset (Pacific/Midway) 
         startTime: new Date(Date.UTC(2021, 11, 16, 0)),
         endTime: new Date(Date.UTC(2021, 11, 16, 23, 59)),
       },
-    ])
+    ]),
   ).toStrictEqual([
     {
       days: [2],
@@ -82,7 +82,7 @@ it("can do the same with UTC offsets", async () => {
         startTime: new Date(Date.UTC(2021, 11, 16, 0)),
         endTime: new Date(Date.UTC(2021, 11, 16, 23, 59)),
       },
-    ])
+    ]),
   ).toStrictEqual([
     {
       days: [2],
@@ -111,7 +111,7 @@ it("can also shift UTC into other timeZones", async () => {
         startTime: new Date(Date.UTC(2021, 11, 17, 0)),
         endTime: new Date(Date.UTC(2021, 11, 17, 16)),
       },
-    ])
+    ]),
   ).toStrictEqual([
     // TODO: Maybe the desired result is 0-1020 as a single entry, but this requires some post-processing to merge. It may work as is so leaving this as now.
     {
@@ -138,7 +138,7 @@ it("can also shift UTC into other timeZones", async () => {
         startTime: new Date(Date.UTC(2021, 11, 17, 0)),
         endTime: new Date(Date.UTC(2021, 11, 17, 1)),
       },
-    ])
+    ]),
   ).toStrictEqual([
     // TODO: Maybe the desired result is 1200-1439 as a single entry, but this requires some post-processing to merge. It may work as is so leaving this as now.
     {

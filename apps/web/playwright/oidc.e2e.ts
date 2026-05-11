@@ -29,7 +29,10 @@ test.describe("OIDC", () => {
   test.skip(SHOULD_SKIP_TESTS, "Skipping due to missing the testing variables");
   test("Setup with SAML admin and login", async ({ page, users }) => {
     // Add the admin user provided in the environment variables to the db
-    const samlAdminUser = await users.create({ email: SAML_ADMIN_EMAIL, password: SAML_ADMIN_PASSWORD });
+    const samlAdminUser = await users.create({
+      email: SAML_ADMIN_EMAIL,
+      password: SAML_ADMIN_PASSWORD,
+    });
     await samlAdminUser.apiLogin();
     await test.step("Connect with OIDC Provider", async () => {
       await page.goto("/settings/security/sso");
@@ -38,7 +41,7 @@ test.describe("OIDC", () => {
       await page.fill('[data-testid="sso-oidc-client-secret"]', OIDC_CLIENT_SECRET);
       await page.fill(
         '[data-testid="sso-oidc-well-known-url"]',
-        `https://${OIDC_PROVIDER_DOMAIN}/.well-known/openid-configuration`
+        `https://${OIDC_PROVIDER_DOMAIN}/.well-known/openid-configuration`,
       );
       await page.click('[data-testid="sso-oidc-save"]');
       await page.waitForSelector('[data-testid="toast-success"]');

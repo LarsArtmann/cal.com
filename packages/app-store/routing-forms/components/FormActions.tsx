@@ -6,7 +6,10 @@ import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 
 import { useOrgBranding } from "@calcom/features/ee/organizations/context/provider";
-import { RoutingFormEmbedButton, RoutingFormEmbedDialog } from "@calcom/features/embed/RoutingFormEmbed";
+import {
+  RoutingFormEmbedButton,
+  RoutingFormEmbedDialog,
+} from "@calcom/features/embed/RoutingFormEmbed";
 import { classNames } from "@calcom/lib";
 import { CAL_URL } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -94,7 +97,8 @@ function NewFormDialog({ appUrl }: { appUrl: string }) {
         <div className="mb-1">
           <h3
             className="text-emphasis !font-cal text-semibold leading-20 text-xl font-medium"
-            id="modal-title">
+            id="modal-title"
+          >
             {teamId ? t("add_new_team_form") : t("add_new_form")}
           </h3>
           <div>
@@ -113,9 +117,15 @@ function NewFormDialog({ appUrl }: { appUrl: string }) {
               teamId,
               duplicateFrom: formToDuplicate,
             });
-          }}>
+          }}
+        >
           <div className="mt-3 space-y-5">
-            <TextField label={t("title")} required placeholder={t("a_routing_form")} {...register("name")} />
+            <TextField
+              label={t("title")}
+              required
+              placeholder={t("a_routing_form")}
+              {...register("name")}
+            />
             <div className="mb-5">
               <TextAreaField
                 id="description"
@@ -206,7 +216,7 @@ function Dialogs({
           {
             ...previousValue,
             filtered,
-          }
+          },
         );
       }
       return { previousValue };
@@ -245,7 +255,8 @@ function Dialogs({
             deleteMutation.mutate({
               id: deleteDialogFormId,
             });
-          }}>
+          }}
+        >
           <ul className="list-disc pl-3">
             <li> {t("delete_form_confirmation")}</li>
             <li> {t("delete_form_confirmation_2")}</li>
@@ -271,7 +282,13 @@ const actionsCtx = createContext({
   },
 });
 
-export function FormActionsProvider({ appUrl, children }: { appUrl: string; children: React.ReactNode }) {
+export function FormActionsProvider({
+  appUrl,
+  children,
+}: {
+  appUrl: string;
+  children: React.ReactNode;
+}) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteDialogFormId, setDeleteDialogFormId] = useState<string | null>(null);
   const { t } = useLocale();
@@ -293,7 +310,7 @@ export function FormActionsProvider({ appUrl, children }: { appUrl: string; chil
           {
             filtered: previousListOfForms,
             totalCount: previousValue.totalCount,
-          }
+          },
         );
       }
       return { previousValue };
@@ -344,7 +361,8 @@ export function FormActionsProvider({ appUrl, children }: { appUrl: string; chil
             },
             isLoading: toggleMutation.isLoading,
           },
-        }}>
+        }}
+      >
         {children}
       </actionsCtx.Provider>
       <Dialogs
@@ -387,7 +405,7 @@ type FormActionProps<T> = {
 
 export const FormAction = forwardRef(function FormAction<T extends typeof Button>(
   props: FormActionProps<T>,
-  forwardedRef: React.ForwardedRef<HTMLAnchorElement | HTMLButtonElement>
+  forwardedRef: React.ForwardedRef<HTMLAnchorElement | HTMLButtonElement>,
 ) {
   const {
     action: actionName,
@@ -463,8 +481,9 @@ export const FormAction = forwardRef(function FormAction<T extends typeof Button
             {...restProps}
             className={classNames(
               "sm:hover:bg-subtle self-center rounded-md p-2 hover:bg-gray-200",
-              extraClassNames
-            )}>
+              extraClassNames,
+            )}
+          >
             <Switch
               disabled={!!disabled}
               checked={!routingForm.disabled}
@@ -508,8 +527,9 @@ export const FormAction = forwardRef(function FormAction<T extends typeof Button
         className={classNames(
           props.className,
           "w-full transition-none",
-          props.color === "destructive" && "border-0"
-        )}>
+          props.color === "destructive" && "border-0",
+        )}
+      >
         {children}
       </Component>
     </DropdownMenuItem>

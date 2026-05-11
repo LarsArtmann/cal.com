@@ -4,7 +4,12 @@ import { prisma } from "@calcom/prisma";
 import { SchedulingType } from "@calcom/prisma/enums";
 
 import { test } from "./lib/fixtures";
-import { bookTimeSlot, selectFirstAvailableTimeSlotNextMonth, testName, todo } from "./lib/testUtils";
+import {
+  bookTimeSlot,
+  selectFirstAvailableTimeSlotNextMonth,
+  testName,
+  todo,
+} from "./lib/testUtils";
 
 test.describe.configure({ mode: "parallel" });
 

@@ -16,7 +16,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // Bad Method when not POST
   if (req.method !== "POST") return res.status(405).end();
 
-  const { password: rawPassword, requestId: rawRequestId } = passwordResetRequestSchema.parse(req.body);
+  const { password: rawPassword, requestId: rawRequestId } = passwordResetRequestSchema.parse(
+    req.body,
+  );
   // rate-limited there is a low, very low chance that a password request stays valid long enough
   // to brute force 3.8126967e+40 options.
   const maybeRequest = await prisma.resetPasswordRequest.findFirstOrThrow({

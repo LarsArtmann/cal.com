@@ -24,14 +24,16 @@ export function WizardLayout({
   useEffect(() => {
     setMeta({
       title: window.document.title,
-      subtitle: window.document.querySelector('meta[name="description"]')?.getAttribute("content") || "",
+      subtitle:
+        window.document.querySelector('meta[name="description"]')?.getAttribute("content") || "",
     });
   }, [pathname]);
 
   return (
     <div
       className="dark:bg-brand dark:text-brand-contrast text-emphasis min-h-screen"
-      data-testid="onboarding">
+      data-testid="onboarding"
+    >
       <div>
         <Toaster position="bottom-right" />
       </div>

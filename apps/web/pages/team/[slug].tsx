@@ -46,7 +46,7 @@ function TeamPage({ team, isUnpublished, markdownStrippedBio, isValidOrgDomain }
   useEffect(() => {
     telemetry.event(
       telemetryEventTypes.pageView,
-      collectPageParameters("/team/[slug]", { isTeamBooking: true })
+      collectPageParameters("/team/[slug]", { isTeamBooking: true }),
     );
   }, [telemetry, pathname]);
 
@@ -72,8 +72,9 @@ function TeamPage({ team, isUnpublished, markdownStrippedBio, isValidOrgDomain }
           key={index}
           className={classNames(
             "dark:bg-darkgray-100 bg-default hover:bg-muted border-subtle group relative border-b first:rounded-t-md last:rounded-b-md last:border-b-0",
-            !isEmbed && "bg-default"
-          )}>
+            !isEmbed && "bg-default",
+          )}
+        >
           <div className="px-6 py-4 ">
             <Link
               href={{
@@ -86,7 +87,8 @@ function TeamPage({ team, isUnpublished, markdownStrippedBio, isValidOrgDomain }
                 });
               }}
               data-testid="event-type-link"
-              className="flex justify-between">
+              className="flex justify-between"
+            >
               <div className="flex-shrink">
                 <div className="flex flex-wrap items-center space-x-2 rtl:space-x-reverse">
                   <h2 className=" text-default text-sm font-semibold">{type.title}</h2>
@@ -180,7 +182,10 @@ function TeamPage({ team, isUnpublished, markdownStrippedBio, isValidOrgDomain }
               size="lg"
             />
           </div>
-          <p className="font-cal  text-emphasis mb-2 text-2xl tracking-wider" data-testid="team-name">
+          <p
+            className="font-cal  text-emphasis mb-2 text-2xl tracking-wider"
+            data-testid="team-name"
+          >
             {team.parent && `${team.parent.name} `}
             {teamName}
           </p>
@@ -200,7 +205,9 @@ function TeamPage({ team, isUnpublished, markdownStrippedBio, isValidOrgDomain }
             {(showMembers.isOn || !team.eventTypes.length) &&
               (team.isPrivate ? (
                 <div className="w-full text-center">
-                  <h2 className="text-emphasis font-semibold">{t("you_cannot_see_team_members")}</h2>
+                  <h2 className="text-emphasis font-semibold">
+                    {t("you_cannot_see_team_members")}
+                  </h2>
                 </div>
               ) : (
                 <Team team={team} />
@@ -235,7 +242,8 @@ function TeamPage({ team, isUnpublished, markdownStrippedBio, isValidOrgDomain }
                             members: "1",
                           },
                         }}
-                        shallow={true}>
+                        shallow={true}
+                      >
                         {t("book_a_team_member")}
                       </Button>
                     </aside>
@@ -255,7 +263,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   const slug = Array.isArray(context.query?.slug) ? context.query.slug.pop() : context.query.slug;
   const { isValidOrgDomain, currentOrgDomain } = orgDomainConfig(
     context.req.headers.host ?? "",
-    context.params?.orgSlug
+    context.params?.orgSlug,
   );
   const flags = await getFeatureFlagMap(prisma);
   const team = await getTeamWithMembers({ slug, orgSlug: currentOrgDomain });
@@ -277,14 +285,14 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
   if (!team || (team.parent && !team.parent.slug)) {
     const unpublishedTeam = await prisma.team.findFirst({
-      where: (team?.parent
-          ? { id: team.parent.id }
-          : {
-              metadata: {
-                path: ["requestedSlug"],
-                equals: slug,
-              },
-            }),
+      where: team?.parent
+        ? { id: team.parent.id }
+        : {
+            metadata: {
+              path: ["requestedSlug"],
+              equals: slug,
+            },
+          },
     });
 
     if (!unpublishedTeam) return { notFound: true } as const;

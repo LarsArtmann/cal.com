@@ -1,19 +1,19 @@
 {
   "name": "@calcom/config",
-  "sideEffects": false,
-  "private": true,
   "version": "0.0.0",
-  "main": "index.js",
+  "private": true,
   "license": "MIT",
   "files": [
     "eslint-preset.js",
     "prettier-preset.js"
   ],
+  "sideEffects": false,
+  "main": "index.js",
   "dependencies": {
     "@calcom/eslint-plugin-eslint": "*",
-    "eslint-config-next": "^16.2.4",
+    "eslint-config-next": "^16.2.6",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-config-turbo": "^2.9.7",
+    "eslint-config-turbo": "^2.9.12",
     "eslint-plugin-playwright": "^2.10.2",
     "eslint-plugin-prettier": "^5.5.5"
   },
@@ -23,15 +23,15 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.19",
     "@trivago/prettier-plugin-sort-imports": "6.0.2",
-    "@typescript-eslint/eslint-plugin": "^8.59.1",
-    "@typescript-eslint/parser": "^8.59.1",
-    "eslint": "^10.2.1",
+    "@typescript-eslint/eslint-plugin": "^8.59.2",
+    "@typescript-eslint/parser": "^8.59.2",
+    "eslint": "^10.3.0",
     "eslint-plugin-unused-imports": "^4.4.1",
     "eslint-plugin-you-dont-need-lodash-underscore": "^6.14.0",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "tailwind-scrollbar": "^4.0.2",
-    "tailwindcss": "^4.2.4",
+    "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3"
   }
 }

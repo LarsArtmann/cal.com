@@ -32,7 +32,9 @@ export function Dialog(props: DialogProps) {
   const { children, name, ...dialogProps } = props;
 
   // only used if name is set
-  const [dialogState, setDialogState] = useState(dialogProps.open ? DIALOG_STATE.OPEN : DIALOG_STATE.CLOSED);
+  const [dialogState, setDialogState] = useState(
+    dialogProps.open ? DIALOG_STATE.OPEN : DIALOG_STATE.CLOSED,
+  );
   const shouldOpenDialog = newSearchParams.get("dialog") === name;
   if (name) {
     const clearQueryParamsOnClose = ["dialog", ...(props.clearQueryParamsOnClose || [])];
@@ -93,15 +95,16 @@ export const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps
             props.size == "xl"
               ? "px-8 pt-8 sm:max-w-[90rem]"
               : props.size == "lg"
-              ? "px-8 pt-8 sm:max-w-[70rem]"
-              : props.size == "md"
-              ? "px-8 pt-8 sm:max-w-[48rem]"
-              : "px-8 pt-8 sm:max-w-[35rem]",
+                ? "px-8 pt-8 sm:max-w-[70rem]"
+                : props.size == "md"
+                  ? "px-8 pt-8 sm:max-w-[48rem]"
+                  : "px-8 pt-8 sm:max-w-[35rem]",
             "max-h-[95vh]",
             enableOverflow ? "overflow-auto" : "overflow-visible",
-            `${props.className || ""}`
+            `${props.className || ""}`,
           )}
-          ref={forwardedRef}>
+          ref={forwardedRef}
+        >
           {type === "creation" && (
             <div>
               <DialogHeader title={title} subtitle={props.description} />
@@ -127,7 +130,7 @@ export const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps
         </DialogPrimitive.Content>
       </DialogPrimitive.Portal>
     );
-  }
+  },
 );
 
 type DialogHeaderProps = {
@@ -143,7 +146,8 @@ export function DialogHeader(props: DialogHeaderProps) {
       <h3
         data-testid="dialog-title"
         className="leading-20 text-semibold font-cal text-emphasis pb-1 text-xl"
-        id="modal-title">
+        id="modal-title"
+      >
         {props.title}
       </h3>
       {props.subtitle && <div className="text-subtle text-sm">{props.subtitle}</div>}
@@ -151,7 +155,11 @@ export function DialogHeader(props: DialogHeaderProps) {
   );
 }
 
-export function DialogFooter(props: { children: ReactNode; className?: string; showDivider?: boolean }) {
+export function DialogFooter(props: {
+  children: ReactNode;
+  className?: string;
+  showDivider?: boolean;
+}) {
   return (
     <div className={classNames("bg-default sticky bottom-0", props.className)}>
       {props.showDivider && (
@@ -161,8 +169,9 @@ export function DialogFooter(props: { children: ReactNode; className?: string; s
       <div
         className={classNames(
           "flex justify-end space-x-2 pb-4 pt-4 rtl:space-x-reverse",
-          !props.showDivider && "pb-8"
-        )}>
+          !props.showDivider && "pb-8",
+        )}
+      >
         {props.children}
       </div>
     </div>
@@ -181,7 +190,7 @@ export function DialogClose(
     onClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
     disabled?: boolean;
     color?: ButtonProps["color"];
-  } & React.ComponentProps<typeof Button>
+  } & React.ComponentProps<typeof Button>,
 ) {
   const { t } = useLocale();
   return (

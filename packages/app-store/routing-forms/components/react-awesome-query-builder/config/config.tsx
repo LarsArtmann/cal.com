@@ -68,7 +68,7 @@ const widgets: Widgets & { [key in keyof Widgets]: Widgets[key] & { type: string
     factory: (
       props: SelectWidgetProps & {
         listValues: { title: string; value: string }[];
-      }
+      },
     ) => renderComponent(props, MultiSelectWidget),
   },
   select: {
@@ -76,7 +76,7 @@ const widgets: Widgets & { [key in keyof Widgets]: Widgets[key] & { type: string
     factory: (
       props: SelectWidgetProps & {
         listValues: { title: string; value: string }[];
-      }
+      },
     ) => renderComponent(props, SelectWidget),
   },
   phone: {

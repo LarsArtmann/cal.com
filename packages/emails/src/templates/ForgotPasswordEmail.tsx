@@ -13,7 +13,7 @@ export type PasswordReset = {
   resetLink: string;
 };
 export const ForgotPasswordEmail = (
-  props: PasswordReset & Partial<React.ComponentProps<typeof BaseEmailHtml>>
+  props: PasswordReset & Partial<React.ComponentProps<typeof BaseEmailHtml>>,
 ) => {
   return (
     <BaseEmailHtml subject={props.language("reset_password_subject", { appName: APP_NAME })}>
@@ -38,7 +38,8 @@ export const ForgotPasswordEmail = (
               href={`mailto:${SUPPORT_MAIL_ADDRESS}`}
               style={{ color: "#3E3E3E" }}
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               <>{props.language("contact_our_support_team")}</>
             </a>
           </>

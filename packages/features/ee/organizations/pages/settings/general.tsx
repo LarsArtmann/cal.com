@@ -47,14 +47,18 @@ const OrgGeneralView = () => {
   const { t } = useLocale();
   const router = useRouter();
 
-  const { data: currentOrg, isLoading } = trpc.viewer.organizations.listCurrent.useQuery(undefined, {
-    onError: () => {
-      router.push("/settings");
+  const { data: currentOrg, isLoading } = trpc.viewer.organizations.listCurrent.useQuery(
+    undefined,
+    {
+      onError: () => {
+        router.push("/settings");
+      },
     },
-  });
+  );
   const { data: user } = trpc.viewer.me.useQuery();
 
-  if (isLoading) return <SkeletonLoader title={t("general")} description={t("general_description")} />;
+  if (isLoading)
+    return <SkeletonLoader title={t("general")} description={t("general_description")} />;
   if (!currentOrg) {
     return null;
   }
@@ -105,7 +109,8 @@ const GeneralView = ({ currentOrg, isAdminOrOwner, localeProp }: GeneralViewProp
       timeZone: currentOrg.timeZone || "",
       timeFormat: {
         value: currentOrg.timeFormat || 12,
-        label: timeFormatOptions.find((option) => option.value === currentOrg.timeFormat)?.label || 12,
+        label:
+          timeFormatOptions.find((option) => option.value === currentOrg.timeFormat)?.label || 12,
       },
       weekStart: {
         value: currentOrg.weekStart,
@@ -130,7 +135,8 @@ const GeneralView = ({ currentOrg, isAdminOrOwner, localeProp }: GeneralViewProp
           timeFormat: values.timeFormat.value,
           weekStart: values.weekStart.value,
         });
-      }}>
+      }}
+    >
       <Meta title={t("general")} description={t("organization_general_description")} />
 
       <Controller

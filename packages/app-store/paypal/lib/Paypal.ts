@@ -153,7 +153,7 @@ class Paypal {
               success: true,
               data: Object.assign(
                 {},
-                { ...(payment?.data as Record<string, string | number>), capture: result.id }
+                { ...(payment?.data as Record<string, string | number>), capture: result.id },
               ) as unknown as Prisma.InputJsonValue,
             },
           });
@@ -272,7 +272,8 @@ class Paypal {
       webhook_id: options.body.webhook_id,
     });
 
-    const bodyToString = stringy.slice(0, -1) + `,"webhook_event":${options.body.webhook_event}` + "}";
+    const bodyToString =
+      stringy.slice(0, -1) + `,"webhook_event":${options.body.webhook_event}` + "}";
 
     try {
       const response = await this.fetcher(`/v1/notifications/verify-webhook-signature`, {

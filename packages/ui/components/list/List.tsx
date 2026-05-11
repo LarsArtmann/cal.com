@@ -23,8 +23,9 @@ export function List(props: ListProps) {
         props.roundContainer && "[&>*:first-child]:rounded-t-md [&>*:last-child]:rounded-b-md ",
         !props.noBorderTreatment &&
           "border-subtle divide-subtle divide-y rounded-md border border-l border-r ",
-        props.className
-      )}>
+        props.className,
+      )}
+    >
       {props.children}
     </ul>
   );
@@ -49,11 +50,11 @@ export function ListItem(props: ListItemProps) {
         // Pass rounded false to not round the corners -> Usefull when used in list we can use roundedContainer to create the right design
         rounded ? "rounded-md" : "rounded-none",
         props.className,
-        (props.onClick || href) && "hover:bg-muted"
+        (props.onClick || href) && "hover:bg-muted",
       ),
       "data-testid": "list-item",
     },
-    props.children
+    props.children,
   );
 
   return href ? (
@@ -74,7 +75,14 @@ export type ListLinkItemProps = {
 } & JSX.IntrinsicElements["li"];
 
 export function ListLinkItem(props: ListLinkItemProps) {
-  const { href, heading = "", children, disabled = false, actions = <div />, className = "" } = props;
+  const {
+    href,
+    heading = "",
+    children,
+    disabled = false,
+    actions = <div />,
+    className = "",
+  } = props;
   const { t } = useLocale();
   let subHeading = props.subHeading;
   if (!subHeading) {
@@ -86,15 +94,17 @@ export function ListLinkItem(props: ListLinkItemProps) {
       className={classNames(
         "group flex w-full items-center justify-between p-5 pb-4",
         className,
-        disabled ? "hover:bg-muted" : ""
-      )}>
+        disabled ? "hover:bg-muted" : "",
+      )}
+    >
       <Link
         passHref
         href={href}
         className={classNames(
           "text-default flex-grow truncate text-sm",
-          disabled ? "pointer-events-none cursor-not-allowed opacity-30" : ""
-        )}>
+          disabled ? "pointer-events-none cursor-not-allowed opacity-30" : "",
+        )}
+      >
         <div className="flex items-center">
           <h1 className="text-sm font-semibold leading-none">{heading}</h1>
           {disabled && (
@@ -115,7 +125,7 @@ export function ListLinkItem(props: ListLinkItemProps) {
 }
 
 export function ListItemTitle<TComponent extends keyof JSX.IntrinsicElements = "span">(
-  props: JSX.IntrinsicElements[TComponent] & { component?: TComponent }
+  props: JSX.IntrinsicElements[TComponent] & { component?: TComponent },
 ) {
   const { component = "span", ...passThroughProps } = props;
 
@@ -126,12 +136,12 @@ export function ListItemTitle<TComponent extends keyof JSX.IntrinsicElements = "
       className: classNames("text-sm font-medium text-emphasis truncate", props.className),
       "data-testid": "list-item-title",
     },
-    props.children
+    props.children,
   );
 }
 
 export function ListItemText<TComponent extends keyof JSX.IntrinsicElements = "span">(
-  props: JSX.IntrinsicElements[TComponent] & { component?: TComponent }
+  props: JSX.IntrinsicElements[TComponent] & { component?: TComponent },
 ) {
   const { component = "span", ...passThroughProps } = props;
 
@@ -142,6 +152,6 @@ export function ListItemText<TComponent extends keyof JSX.IntrinsicElements = "s
       className: classNames("text-sm text-subtle truncate", props.className),
       "data-testid": "list-item-text",
     },
-    props.children
+    props.children,
   );
 }

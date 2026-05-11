@@ -24,7 +24,7 @@ export class CalendarEventDirector {
       | "dynamicEventSlugRef"
       | "dynamicGroupSlugRef"
       | "location"
-    >
+    >,
   ) {
     this.existingBooking = booking;
   }

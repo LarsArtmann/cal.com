@@ -23,7 +23,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { code, state } = req.query;
   const parsedState = stateSchema.parse(JSON.parse(state as string));
   const { teamId } = parsedState;
-  await throwIfNotHaveAdminAccessToTeam({ teamId: Number(teamId) ?? null, userId: session.user.id });
+  await throwIfNotHaveAdminAccessToTeam({
+    teamId: Number(teamId) ?? null,
+    userId: session.user.id,
+  });
   if (code && typeof code !== "string") {
     res.status(400).json({ message: "`code` must be a string" });
     return;
@@ -58,7 +61,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   res.redirect(
-    getSafeRedirectUrl(WEBAPP_URL + `/settings/teams/${teamId}/members?inviteModal=true&bulk=true`) ??
-      `${WEBAPP_URL}/teams`
+    getSafeRedirectUrl(
+      WEBAPP_URL + `/settings/teams/${teamId}/members?inviteModal=true&bulk=true`,
+    ) ?? `${WEBAPP_URL}/teams`,
   );
 }

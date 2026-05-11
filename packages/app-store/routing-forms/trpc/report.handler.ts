@@ -23,8 +23,8 @@ export const reportHandler = async ({ ctx: { prisma }, input }: ReportHandlerOpt
   const take = 50;
   logger.debug(
     `Built Prisma where ${JSON.stringify(prismaWhere)} from jsonLogicQuery ${JSON.stringify(
-      input.jsonLogicQuery
-    )}`
+      input.jsonLogicQuery,
+    )}`,
   );
   const form = await prisma.app_RoutingForms_Form.findUnique({
     where: {

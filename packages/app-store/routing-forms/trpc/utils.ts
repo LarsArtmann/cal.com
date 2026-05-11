@@ -11,7 +11,7 @@ import type { Response, SerializableForm } from "../types/types";
 
 export async function onFormSubmission(
   form: Ensure<SerializableForm<App_RoutingForms_Form> & { user: User }, "fields">,
-  response: Response
+  response: Response,
 ) {
   const fieldResponsesByName: Record<
     string,
@@ -49,10 +49,13 @@ export async function onFormSubmission(
         teamId: form.teamId,
         responses: fieldResponsesByName,
       },
-      rootData: Object.entries(fieldResponsesByName).reduce((acc, [key, value]) => {
+      rootData: Object.entries(fieldResponsesByName).reduce(
+        (acc, [key, value]) => {
           acc[key] = value.value;
           return acc;
-        }, {} as Record<string, Response[keyof Response]["value"]>),
+        },
+        {} as Record<string, Response[keyof Response]["value"]>,
+      ),
     }).catch((e) => {
       console.error(`Error executing routing form webhook`, webhook, e);
     });
@@ -66,7 +69,7 @@ export async function onFormSubmission(
 
   if (form.settings?.emailOwnerOnSubmission) {
     logger.debug(
-      `Preparing to send Form Response email for Form:${form.id} to form owner: ${form.user.email}`
+      `Preparing to send Form Response email for Form:${form.id} to form owner: ${form.user.email}`,
     );
     await sendResponseEmail(form, orderedResponses, form.user.email);
   }
@@ -75,7 +78,7 @@ export async function onFormSubmission(
 export const sendResponseEmail = async (
   form: Pick<App_RoutingForms_Form, "id" | "name">,
   orderedResponses: OrderedResponses,
-  ownerEmail: string
+  ownerEmail: string,
 ) => {
   try {
     if (typeof window === "undefined") {

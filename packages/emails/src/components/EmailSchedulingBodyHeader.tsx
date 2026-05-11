@@ -28,21 +28,34 @@ export const getHeadImage = (headerType: BodyHeadType): string => {
   }
 };
 
-const EmailSchedulingBodyHeader = (props: { headerType: BodyHeadType; headStyles?: CSSProperties }) => {
+const EmailSchedulingBodyHeader = (props: {
+  headerType: BodyHeadType;
+  headStyles?: CSSProperties;
+}) => {
   const image = getHeadImage(props.headerType);
 
   return (
     <>
       <EmailCommonDivider
-        headStyles={{ padding: "30px 30px 0 30px", borderTop: "1px solid #E1E1E1", ...props.headStyles }}>
+        headStyles={{
+          padding: "30px 30px 0 30px",
+          borderTop: "1px solid #E1E1E1",
+          ...props.headStyles,
+        }}
+      >
         <td
           align="center"
           style={{
             fontSize: "0px",
             padding: "10px 25px",
             wordBreak: "break-word",
-          }}>
-          <Row border="0" role="presentation" style={{ borderCollapse: "collapse", borderSpacing: "0px" }}>
+          }}
+        >
+          <Row
+            border="0"
+            role="presentation"
+            style={{ borderCollapse: "collapse", borderSpacing: "0px" }}
+          >
             <td style={{ width: 64 }}>
               <img
                 height="64"

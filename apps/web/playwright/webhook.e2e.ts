@@ -417,7 +417,11 @@ test.describe("BOOKING_REQUESTED", async () => {
 });
 
 test.describe("BOOKING_RESCHEDULED", async () => {
-  test("can reschedule a booking and get a booking rescheduled event", async ({ page, users, bookings }) => {
+  test("can reschedule a booking and get a booking rescheduled event", async ({
+    page,
+    users,
+    bookings,
+  }) => {
     const user = await users.create();
     const [eventType] = user.eventTypes;
 
@@ -461,10 +465,13 @@ test.describe("BOOKING_RESCHEDULED", async () => {
     users,
     bookings,
   }) => {
-    const { user, eventType, booking } = await createUserWithSeatedEventAndAttendees({ users, bookings }, [
-      { name: "John First", email: "first+seats@cal.com", timeZone: "Europe/Berlin" },
-      { name: "Jane Second", email: "second+seats@cal.com", timeZone: "Europe/Berlin" },
-    ]);
+    const { user, eventType, booking } = await createUserWithSeatedEventAndAttendees(
+      { users, bookings },
+      [
+        { name: "John First", email: "first+seats@cal.com", timeZone: "Europe/Berlin" },
+        { name: "Jane Second", email: "second+seats@cal.com", timeZone: "Europe/Berlin" },
+      ],
+    );
 
     await prisma.eventType.update({
       where: { id: eventType.id },

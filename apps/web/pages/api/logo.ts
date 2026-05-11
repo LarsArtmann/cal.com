@@ -165,7 +165,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const teamLogos = await getTeamLogos(subdomain, isValidOrgDomain);
 
   // Resolve all icon types to team logos, falling back to Cal.com defaults.
-  const type: LogoType = parsedQuery?.type && isValidLogoType(parsedQuery.type) ? parsedQuery.type : "logo";
+  const type: LogoType =
+    parsedQuery?.type && isValidLogoType(parsedQuery.type) ? parsedQuery.type : "logo";
   const logoDefinition = logoDefinitions[type];
   const filteredLogo = teamLogos[logoDefinition.source] ?? logoDefinition.fallback;
 

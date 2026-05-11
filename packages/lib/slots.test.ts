@@ -33,7 +33,7 @@ describe("Tests the date-range slot logic", () => {
         eventLength: 60,
         organizerTimeZone: "Etc/GMT",
         dateRanges: dateRangesNextDay,
-      })
+      }),
     ).toHaveLength(24);
 
     expect(
@@ -44,7 +44,7 @@ describe("Tests the date-range slot logic", () => {
         eventLength: 60,
         organizerTimeZone: "America/Toronto",
         dateRanges: dateRangesNextDay,
-      })
+      }),
     ).toHaveLength(24);
   });
 
@@ -60,7 +60,7 @@ describe("Tests the date-range slot logic", () => {
         eventLength: 60,
         offsetStart: 0,
         organizerTimeZone: "America/Toronto",
-      })
+      }),
     ).toHaveLength(12);
   });
 
@@ -75,7 +75,7 @@ describe("Tests the date-range slot logic", () => {
         eventLength: 60,
         offsetStart: 0,
         organizerTimeZone: "America/Toronto",
-      })
+      }),
     ).toHaveLength(11);
   });
 
@@ -113,7 +113,7 @@ describe("Tests the slot logic", () => {
         eventLength: 60,
         offsetStart: 0,
         organizerTimeZone: "America/Toronto",
-      })
+      }),
     ).toHaveLength(24);
   });
 
@@ -136,7 +136,7 @@ describe("Tests the slot logic", () => {
         eventLength: 60,
         offsetStart: 0,
         organizerTimeZone: "America/Toronto",
-      })
+      }),
     ).toHaveLength(12);
   });
 
@@ -157,7 +157,7 @@ describe("Tests the slot logic", () => {
         eventLength: 60,
         offsetStart: 0,
         organizerTimeZone: "America/Toronto",
-      })
+      }),
     ).toHaveLength(0);
   });
 
@@ -179,7 +179,7 @@ describe("Tests the slot logic", () => {
         eventLength: 60,
         offsetStart: 0,
         organizerTimeZone: "America/Toronto",
-      })
+      }),
     ).toHaveLength(0);
   });
 
@@ -201,7 +201,7 @@ describe("Tests the slot logic", () => {
         eventLength: 60,
         offsetStart: 0,
         organizerTimeZone: "America/Toronto",
-      })
+      }),
     ).toHaveLength(11);
   });
 
@@ -210,7 +210,9 @@ describe("Tests the slot logic", () => {
       inviteeDate: dayjs().add(1, "day"),
       frequency: 20,
       minimumBookingNotice: 0,
-      dateRanges: [{ start: dayjs("2021-06-21T00:00:00.000Z"), end: dayjs("2021-06-21T23:45:00.000Z") }],
+      dateRanges: [
+        { start: dayjs("2021-06-21T00:00:00.000Z"), end: dayjs("2021-06-21T23:45:00.000Z") },
+      ],
       /*workingHours: [
         {
           userId: 1,
@@ -245,7 +247,7 @@ describe("Tests the slot logic", () => {
         eventLength: 25,
         offsetStart: 5,
         organizerTimeZone: "America/Toronto",
-      })
+      }),
     ).toHaveLength(48);
   });
 

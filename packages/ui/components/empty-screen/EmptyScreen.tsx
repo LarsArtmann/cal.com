@@ -37,10 +37,13 @@ export function EmptyScreen({
           "flex w-full select-none flex-col items-center justify-center rounded-lg p-7 lg:p-20",
           border && "border-subtle border",
           dashedBorder && "border-dashed",
-          className
-        )}>
+          className,
+        )}
+      >
         {!avatar ? null : (
-          <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full">{avatar}</div>
+          <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full">
+            {avatar}
+          </div>
         )}
         {!Icon ? null : (
           <div className="bg-emphasis flex h-[72px] w-[72px] items-center justify-center rounded-full ">
@@ -51,8 +54,9 @@ export function EmptyScreen({
           <h2
             className={classNames(
               "text-semibold font-cal text-emphasis text-center text-xl",
-              Icon && "mt-6"
-            )}>
+              Icon && "mt-6",
+            )}
+          >
             {headline}
           </h2>
           {description && (
@@ -60,7 +64,9 @@ export function EmptyScreen({
               {description}
             </div>
           )}
-          {buttonOnClick && buttonText && <Button onClick={(e) => buttonOnClick(e)}>{buttonText}</Button>}
+          {buttonOnClick && buttonText && (
+            <Button onClick={(e) => buttonOnClick(e)}>{buttonText}</Button>
+          )}
           {buttonRaw}
         </div>
       </div>

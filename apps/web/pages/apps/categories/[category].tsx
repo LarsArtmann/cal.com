@@ -27,7 +27,8 @@ export default function Apps({ apps }: InferGetStaticPropsType<typeof getStaticP
           <>
             <Link
               href="/apps"
-              className="text-emphasis inline-flex items-center justify-start gap-1 rounded-sm py-2">
+              className="text-emphasis inline-flex items-center justify-start gap-1 rounded-sm py-2"
+            >
               {isLocaleReady ? t("app_store") : <SkeletonText className="h-4 w-24" />}{" "}
             </Link>
             {category && (
@@ -37,7 +38,8 @@ export default function Apps({ apps }: InferGetStaticPropsType<typeof getStaticP
               </span>
             )}
           </>
-        }>
+        }
+      >
         <div className="mb-16">
           <div className="grid-col-1 grid grid-cols-1 gap-3 md:grid-cols-3">
             {apps

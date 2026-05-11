@@ -74,7 +74,7 @@ export const ConfirmDialog = (props: IConfirmDialogWipe) => {
       async onSettled() {
         await utils.viewer.bookings.invalidate();
       },
-    }
+    },
   );
 
   return (
@@ -113,7 +113,8 @@ export const ConfirmDialog = (props: IConfirmDialogWipe) => {
                   logger.error(error.message);
                 }
               }
-            }}>
+            }}
+          >
             {t("confirm")}
           </Button>
         </DialogFooter>

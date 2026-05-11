@@ -54,7 +54,9 @@ export const webhookRouter = router({
 
   create: webhookProcedure.input(ZCreateInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.create) {
-      UNSTABLE_HANDLER_CACHE.create = await import("./create.handler").then((mod) => mod.createHandler);
+      UNSTABLE_HANDLER_CACHE.create = await import("./create.handler").then(
+        (mod) => mod.createHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -86,7 +88,9 @@ export const webhookRouter = router({
 
   delete: webhookProcedure.input(ZDeleteInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.delete) {
-      UNSTABLE_HANDLER_CACHE.delete = await import("./delete.handler").then((mod) => mod.deleteHandler);
+      UNSTABLE_HANDLER_CACHE.delete = await import("./delete.handler").then(
+        (mod) => mod.deleteHandler,
+      );
     }
 
     // Unreachable code but required for type safety
@@ -103,7 +107,7 @@ export const webhookRouter = router({
   testTrigger: webhookProcedure.input(ZTestTriggerInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.testTrigger) {
       UNSTABLE_HANDLER_CACHE.testTrigger = await import("./testTrigger.handler").then(
-        (mod) => mod.testTriggerHandler
+        (mod) => mod.testTriggerHandler,
       );
     }
 
@@ -121,7 +125,7 @@ export const webhookRouter = router({
   getByViewer: webhookProcedure.query(async ({ ctx }) => {
     if (!UNSTABLE_HANDLER_CACHE.getByViewer) {
       UNSTABLE_HANDLER_CACHE.getByViewer = await import("./getByViewer.handler").then(
-        (mod) => mod.getByViewerHandler
+        (mod) => mod.getByViewerHandler,
       );
     }
 

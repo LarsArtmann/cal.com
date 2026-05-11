@@ -1,6 +1,11 @@
 import type { IntervalLimit, IntervalLimitUnit } from "@calcom/types/Calendar";
 
-export const ascendingLimitKeys: (keyof IntervalLimit)[] = ["PER_DAY", "PER_WEEK", "PER_MONTH", "PER_YEAR"];
+export const ascendingLimitKeys: (keyof IntervalLimit)[] = [
+  "PER_DAY",
+  "PER_WEEK",
+  "PER_MONTH",
+  "PER_YEAR",
+];
 
 export const descendingLimitKeys = [...ascendingLimitKeys].reverse();
 

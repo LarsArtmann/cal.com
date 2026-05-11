@@ -28,14 +28,16 @@ const customTemplate = (
   variables: VariablesType,
   locale: string,
   timeFormat?: TimeFormat,
-  isBrandingDisabled?: boolean
+  isBrandingDisabled?: boolean,
 ) => {
   const translatedDate = new Intl.DateTimeFormat(locale, {
     weekday: "long",
     month: "long",
     day: "numeric",
     year: "numeric",
-  }).format(variables.eventDate?.add(dayjs().tz(variables.timeZone).utcOffset(), "minute").toDate());
+  }).format(
+    variables.eventDate?.add(dayjs().tz(variables.timeZone).utcOffset(), "minute").toDate(),
+  );
 
   let locationString = variables.location || "";
 
@@ -53,13 +55,13 @@ const customTemplate = (
 
   const attendeeFirstName = variables.attendeeFirstName
     ? variables.attendeeFirstName
-    : attendeeNameWords?.[0] ?? "";
+    : (attendeeNameWords?.[0] ?? "");
 
   const attendeeLastName = variables.attendeeLastName
     ? variables.attendeeLastName
     : attendeeNameWordCount > 1
-    ? attendeeNameWords![attendeeNameWordCount - 1]
-    : "";
+      ? attendeeNameWords![attendeeNameWordCount - 1]
+      : "";
 
   let dynamicText = text
     .replaceAll("{EVENT_NAME}", variables.eventName || "")
@@ -120,7 +122,7 @@ const customTemplate = (
         ) {
           dynamicText = dynamicText.replace(
             `{${variable}}`,
-            variables.responses[customInput as keyof typeof variables.responses].value.toString()
+            variables.responses[customInput as keyof typeof variables.responses].value.toString(),
           );
         }
       });

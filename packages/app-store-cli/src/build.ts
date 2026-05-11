@@ -123,7 +123,7 @@ function generateFiles() {
         {
           fileToBeImported: string;
           importName: string;
-        }
+        },
       ];
 
   /**
@@ -140,18 +140,18 @@ function generateFiles() {
       importConfig: ImportConfig;
       entryObjectKeyGetter?: (arg: App, importName?: string) => string;
     },
-    filter?: (arg: App) => boolean
+    filter?: (arg: App) => boolean,
   ) {
     const output: string[] = [];
 
     const getLocalImportName = (
       app: { name: string },
-      chosenConfig: ReturnType<typeof getChosenImportConfig>
+      chosenConfig: ReturnType<typeof getChosenImportConfig>,
     ) => `${getVariableName(app.name)}_${getVariableName(chosenConfig.fileToBeImported)}`;
 
     const fileToBeImportedExists = (
       app: { path: string },
-      chosenConfig: ReturnType<typeof getChosenImportConfig>
+      chosenConfig: ReturnType<typeof getChosenImportConfig>,
     ) => fs.existsSync(path.join(APP_STORE_PATH, app.path, chosenConfig.fileToBeImported));
 
     addImportStatements();
@@ -170,16 +170,16 @@ function generateFiles() {
               output.push(
                 `import { ${importName} as ${getLocalImportName(app, chosenConfig)} } from "${getModulePath(
                   app.path,
-                  chosenConfig.fileToBeImported
-                )}"`
+                  chosenConfig.fileToBeImported,
+                )}"`,
               );
             } else {
               // Default Import
               output.push(
                 `import ${getLocalImportName(app, chosenConfig)} from "${getModulePath(
                   app.path,
-                  chosenConfig.fileToBeImported
-                )}"`
+                  chosenConfig.fileToBeImported,
+                )}"`,
               );
             }
           }
@@ -203,11 +203,13 @@ function generateFiles() {
               output.push(
                 `"${key}": dynamic(() => import("${getModulePath(
                   app.path,
-                  chosenConfig.fileToBeImported
-                )}")),`
+                  chosenConfig.fileToBeImported,
+                )}")),`,
               );
             } else {
-              output.push(`"${key}": import("${getModulePath(app.path, chosenConfig.fileToBeImported)}"),`);
+              output.push(
+                `"${key}": import("${getModulePath(app.path, chosenConfig.fileToBeImported)}"),`,
+              );
             }
           }
         }
@@ -238,7 +240,7 @@ function generateFiles() {
         fileToBeImported: "api/index.ts",
       },
       lazyImport: true,
-    })
+    }),
   );
 
   metadataOutput.push(
@@ -254,7 +256,7 @@ function generateFiles() {
           importName: "metadata",
         },
       ],
-    })
+    }),
   );
 
   bookerMetadataOutput.push(
@@ -273,8 +275,8 @@ function generateFiles() {
           },
         ],
       },
-      isBookerApp
-    )
+      isBookerApp,
+    ),
   );
   schemasOutput.push(
     ...getExportedObject("appDataSchemas", {
@@ -286,7 +288,7 @@ function generateFiles() {
       // HACK: Key must be appId as this is used by eventType metadata and lookup is by appId
       // This can be removed once we rename the ids of apps like stripe to that of their app folder name
       entryObjectKeyGetter: (app) => getAppId(app),
-    })
+    }),
   );
 
   appKeysSchemasOutput.push(
@@ -298,7 +300,7 @@ function generateFiles() {
       // HACK: Key must be appId as this is used by eventType metadata and lookup is by appId
       // This can be removed once we rename the ids of apps like stripe to that of their app folder name
       entryObjectKeyGetter: (app) => getAppId(app),
-    })
+    }),
   );
 
   browserOutput.push(
@@ -307,7 +309,7 @@ function generateFiles() {
         fileToBeImported: "components/InstallAppButton.tsx",
       },
       lazyImport: true,
-    })
+    }),
   );
 
   // TODO: Make a component map creator that accepts ComponentName and does the rest.
@@ -318,7 +320,7 @@ function generateFiles() {
         fileToBeImported: "components/AppSettingsInterface.tsx",
       },
       lazyImport: true,
-    })
+    }),
   );
 
   browserOutput.push(
@@ -327,7 +329,7 @@ function generateFiles() {
         fileToBeImported: "components/EventTypeAppCardInterface.tsx",
       },
       lazyImport: true,
-    })
+    }),
   );
 
   const banner = `/**
@@ -344,7 +346,10 @@ function generateFiles() {
     ["bookerApps.metadata.generated.ts", bookerMetadataOutput],
   ];
   filesToGenerate.forEach(([fileName, output]) => {
-    fs.writeFileSync(`${APP_STORE_PATH}/${fileName}`, formatOutput(`${banner}${output.join("\n")}`));
+    fs.writeFileSync(
+      `${APP_STORE_PATH}/${fileName}`,
+      formatOutput(`${banner}${output.join("\n")}`),
+    );
   });
   console.log(`Generated ${filesToGenerate.map(([fileName]) => fileName).join(", ")}`);
 }

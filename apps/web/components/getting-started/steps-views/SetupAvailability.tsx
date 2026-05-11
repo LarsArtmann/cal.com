@@ -25,7 +25,7 @@ const SetupAvailability = (props: ISetupAvailabilityProps) => {
     { scheduleId: defaultScheduleId ?? undefined },
     {
       enabled: !!scheduleId,
-    }
+    },
   );
 
   const availabilityForm = useForm({
@@ -68,7 +68,8 @@ const SetupAvailability = (props: ISetupAvailabilityProps) => {
             // @TODO: log error
           }
         }
-      }}>
+      }}
+    >
       <Schedule control={availabilityForm.control} name="schedule" weekStart={1} />
 
       <div>
@@ -76,7 +77,8 @@ const SetupAvailability = (props: ISetupAvailabilityProps) => {
           data-testid="save-availability"
           type="submit"
           className="mt-2 w-full justify-center p-2 text-sm sm:mt-8"
-          disabled={availabilityForm.formState.isSubmitting}>
+          disabled={availabilityForm.formState.isSubmitting}
+        >
           {t("next_step_text")} <ArrowRight className="ml-2 h-4 w-4 self-center" />
         </Button>
       </div>

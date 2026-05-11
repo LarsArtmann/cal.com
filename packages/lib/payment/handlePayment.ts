@@ -18,14 +18,19 @@ const handlePayment = async (
     } | null;
   },
   booking: {
-    user: { email: string | null; name: string | null; timeZone: string; username: string | null } | null;
+    user: {
+      email: string | null;
+      name: string | null;
+      timeZone: string;
+      username: string | null;
+    } | null;
     id: number;
     userId: number | null;
     startTime: { toISOString: () => string };
     uid: string;
   },
   bookerName: string,
-  bookerEmail: string
+  bookerEmail: string,
 ) => {
   const paymentApp = (await appStore[
     paymentAppCredentials?.app?.dirName as keyof typeof appStore
@@ -51,7 +56,7 @@ const handlePayment = async (
       },
       booking.id,
       bookerEmail,
-      paymentOption
+      paymentOption,
     );
   } else {
     paymentData = await paymentInstance.create(
@@ -66,7 +71,7 @@ const handlePayment = async (
       bookerEmail,
       paymentOption,
       selectedEventType.title,
-      evt.title
+      evt.title,
     );
   }
 

@@ -104,7 +104,9 @@ export const getAppsStatus = (calEvent: CalendarEvent, t: TFunction) => {
         return `\n- ${app.appName} ${
           app.success >= 1 ? `✅ ${app.success > 1 ? `(x${app.success})` : ""}` : ""
         }${
-          app.warnings && app.warnings.length >= 1 ? app.warnings.map((warning) => `\n   - ${warning}`) : ""
+          app.warnings && app.warnings.length >= 1
+            ? app.warnings.map((warning) => `\n   - ${warning}`)
+            : ""
         } ${app.failures && app.failures >= 1 ? `❌ ${app.failures > 1 ? `(x${app.failures})` : ""}` : ""} ${
           app.errors && app.errors.length >= 1 ? app.errors.map((error) => `\n   - ${error}`) : ""
         }`;
@@ -177,7 +179,10 @@ export const getRescheduleLink = (calEvent: CalendarEvent): string => {
   return `${calEvent.bookerUrl ?? WEBAPP_URL}/reschedule/${seatUid ? seatUid : Uid}`;
 };
 
-export const getRichDescription = (calEvent: CalendarEvent, t_?: TFunction /*, attendee?: Person*/) => {
+export const getRichDescription = (
+  calEvent: CalendarEvent,
+  t_?: TFunction /*, attendee?: Person*/,
+) => {
   const t = t_ ?? calEvent.organizer.language.translate;
 
   return `
@@ -237,5 +242,5 @@ export const getVideoCallUrlFromCalEvent = (calEvent: CalendarEvent): string => 
 };
 
 export const getVideoCallPassword = (calEvent: CalendarEvent): string => {
-  return isDailyVideoCall(calEvent) ? "" : calEvent?.videoCallData?.password ?? "";
+  return isDailyVideoCall(calEvent) ? "" : (calEvent?.videoCallData?.password ?? "");
 };

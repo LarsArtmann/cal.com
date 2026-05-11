@@ -47,12 +47,12 @@ interface handleChildrenEventTypesProps {
 const sendAllSlugReplacementEmails = async (
   persons: { email: string; name: string }[],
   slug: string,
-  teamName: string | null
+  teamName: string | null,
 ) => {
   const t = await getTranslation("en", "common");
   persons.map(
     async (person) =>
-      await sendSlugReplacementEmail({ email: person.email, name: person.name, teamName, slug, t })
+      await sendSlugReplacementEmail({ email: person.email, name: person.name, teamName, slug, t }),
   );
 };
 
@@ -67,7 +67,8 @@ const checkExistentEventTypes = async ({
   teamName: string | null;
 }) => {
   const replaceEventType = children?.filter(
-    (ch) => ch.owner.eventTypeSlugs.includes(updatedEventType.slug) && userIds.includes(ch.owner.id)
+    (ch) =>
+      ch.owner.eventTypeSlugs.includes(updatedEventType.slug) && userIds.includes(ch.owner.id),
   );
 
   // If so, delete their event type with the same slug to proceed to create a managed one
@@ -85,7 +86,7 @@ const checkExistentEventTypes = async ({
     await sendAllSlugReplacementEmails(
       replaceEventType.map((evTy) => evTy.owner),
       updatedEventType.slug,
-      teamName
+      teamName,
     );
 
     return deletedReplacedEventTypes;
@@ -153,8 +154,8 @@ export default async function handleChildrenEventTypes({
         ? { create: { link: generateHashedLink(userId) } }
         : undefined
       : connectedLink
-      ? { delete: true }
-      : undefined;
+        ? { delete: true }
+        : undefined;
   };
 
   // Store result for existent event types deletion process
@@ -179,12 +180,16 @@ export default async function handleChildrenEventTypes({
             ...managedEventTypeValues,
             ...unlockedEventTypeValues,
             bookingLimits:
-              (managedEventTypeValues.bookingLimits as unknown as Prisma.InputJsonObject) ?? undefined,
+              (managedEventTypeValues.bookingLimits as unknown as Prisma.InputJsonObject) ??
+              undefined,
             recurringEvent:
-              (managedEventTypeValues.recurringEvent as unknown as Prisma.InputJsonValue) ?? undefined,
+              (managedEventTypeValues.recurringEvent as unknown as Prisma.InputJsonValue) ??
+              undefined,
             metadata: (managedEventTypeValues.metadata as Prisma.InputJsonValue) ?? undefined,
-            bookingFields: (managedEventTypeValues.bookingFields as Prisma.InputJsonValue) ?? undefined,
-            durationLimits: (managedEventTypeValues.durationLimits as Prisma.InputJsonValue) ?? undefined,
+            bookingFields:
+              (managedEventTypeValues.bookingFields as Prisma.InputJsonValue) ?? undefined,
+            durationLimits:
+              (managedEventTypeValues.durationLimits as Prisma.InputJsonValue) ?? undefined,
             userId,
             users: {
               connect: [{ id: userId }],
@@ -204,7 +209,7 @@ export default async function handleChildrenEventTypes({
             hashedLink: hashedLinkQuery(userId),
           },
         });
-      })
+      }),
     );
   }
 
@@ -233,16 +238,20 @@ export default async function handleChildrenEventTypes({
             ...managedEventTypeValues,
             hidden: children?.find((ch) => ch.owner.id === userId)?.hidden ?? false,
             bookingLimits:
-              (managedEventTypeValues.bookingLimits as unknown as Prisma.InputJsonObject) ?? undefined,
+              (managedEventTypeValues.bookingLimits as unknown as Prisma.InputJsonObject) ??
+              undefined,
             recurringEvent:
-              (managedEventTypeValues.recurringEvent as unknown as Prisma.InputJsonValue) ?? undefined,
+              (managedEventTypeValues.recurringEvent as unknown as Prisma.InputJsonValue) ??
+              undefined,
             metadata: (managedEventTypeValues.metadata as Prisma.InputJsonValue) ?? undefined,
-            bookingFields: (managedEventTypeValues.bookingFields as Prisma.InputJsonValue) ?? undefined,
-            durationLimits: (managedEventTypeValues.durationLimits as Prisma.InputJsonValue) ?? undefined,
+            bookingFields:
+              (managedEventTypeValues.bookingFields as Prisma.InputJsonValue) ?? undefined,
+            durationLimits:
+              (managedEventTypeValues.durationLimits as Prisma.InputJsonValue) ?? undefined,
             hashedLink: hashedLinkQuery(userId),
           },
         });
-      })
+      }),
     );
 
     if (currentWorkflowIds?.length) {
@@ -263,7 +272,7 @@ export default async function handleChildrenEventTypes({
               },
             });
           });
-        })
+        }),
       );
     }
 

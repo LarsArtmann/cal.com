@@ -44,7 +44,8 @@ export const BookerLayoutSelector = ({
   const { control, getValues } = useFormContext();
   const { t } = useLocale();
   // Only fallback if event current does not have any settings, and the fallbackToUserSettings boolean is set.
-  const shouldShowUserSettings = (fallbackToUserSettings && !getValues(name || defaultFieldName)) || false;
+  const shouldShowUserSettings =
+    (fallbackToUserSettings && !getValues(name || defaultFieldName)) || false;
 
   const flags = useFlagMap();
   if (flags["booker-layouts"] !== true) return null;
@@ -83,7 +84,12 @@ type BookerLayoutFieldsProps = {
 
 type BookerLayoutState = { [key in BookerLayouts]: boolean };
 
-const BookerLayoutFields = ({ settings, onChange, showUserSettings, isDark }: BookerLayoutFieldsProps) => {
+const BookerLayoutFields = ({
+  settings,
+  onChange,
+  showUserSettings,
+  isDark,
+}: BookerLayoutFieldsProps) => {
   const { t } = useLocale();
   const { isLoading: isUserLoading, data: user } = useMeQuery();
   const [isOverridingSettings, setIsOverridingSettings] = useState(false);
@@ -119,19 +125,19 @@ const BookerLayoutFields = ({ settings, onChange, showUserSettings, isDark }: Bo
           : defaultLayout,
       });
     },
-    [defaultLayout, onChange, toggleValues]
+    [defaultLayout, onChange, toggleValues],
   );
 
   const onDefaultLayoutChange = useCallback(
     (newDefaultLayout: BookerLayouts) => {
       onChange({
         enabledLayouts: Object.keys(toggleValues).filter(
-          (layout) => toggleValues[layout as BookerLayouts] === true
+          (layout) => toggleValues[layout as BookerLayouts] === true,
         ) as BookerLayouts[],
         defaultLayout: newDefaultLayout,
       });
     },
-    [toggleValues, onChange]
+    [toggleValues, onChange],
   );
 
   const onOverrideSettings = () => {
@@ -146,8 +152,9 @@ const BookerLayoutFields = ({ settings, onChange, showUserSettings, isDark }: Bo
         className={classNames(
           "flex flex-col gap-5 transition-opacity sm:flex-row sm:gap-3",
           disableFields && "pointer-events-none opacity-40",
-          disableFields && isUserLoading && "animate-pulse"
-        )}>
+          disableFields && isUserLoading && "animate-pulse",
+        )}
+      >
         {bookerLayoutOptions.map((layout) => (
           <div className="w-full" key={layout}>
             <label>
@@ -172,20 +179,23 @@ const BookerLayoutFields = ({ settings, onChange, showUserSettings, isDark }: Bo
         className={classNames(
           "transition-opacity",
           disableFields && "pointer-events-none opacity-40",
-          disableFields && isUserLoading && "animate-pulse"
-        )}>
+          disableFields && isUserLoading && "animate-pulse",
+        )}
+      >
         <Label>{t("bookerlayout_default_title")}</Label>
         <RadioGroup.Root
           key={defaultLayout}
           className="border-default flex w-full gap-2 rounded-md border p-1"
           defaultValue={defaultLayout}
-          onValueChange={(layout: BookerLayouts) => onDefaultLayoutChange(layout)}>
+          onValueChange={(layout: BookerLayouts) => onDefaultLayoutChange(layout)}
+        >
           {bookerLayoutOptions.map((layout) => (
             <RadioGroup.Item
               className="aria-checked:bg-emphasis hover:[&:not(:disabled)]:bg-subtle focus:[&:not(:disabled)]:bg-subtle w-full rounded-[4px] p-1 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-40"
               disabled={toggleValues[layout] === false}
               key={layout}
-              value={layout}>
+              value={layout}
+            >
               {t(`bookerlayout_${layout}`)}
               <RadioGroup.Indicator />
             </RadioGroup.Item>
@@ -203,7 +213,8 @@ const BookerLayoutFields = ({ settings, onChange, showUserSettings, isDark }: Bo
             <Button
               onClick={onOverrideSettings}
               color="minimal"
-              className="p-0 font-normal underline hover:bg-transparent focus-visible:bg-transparent">
+              className="p-0 font-normal underline hover:bg-transparent focus-visible:bg-transparent"
+            >
               override for this event only
             </Button>
             .

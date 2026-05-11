@@ -25,7 +25,8 @@ AddNewTeamsPage.getLayout = (page: React.ReactElement, router: NextAppProps["rou
       maxSteps={5}
       isOptionalCallback={() => {
         router.push(`/event-types`);
-      }}>
+      }}
+    >
       {page}
     </WizardLayout>
   </>

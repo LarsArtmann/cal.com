@@ -25,7 +25,7 @@ export const telemetryEventTypes = {
 
 export function collectPageParameters(
   route?: string,
-  extraData: Record<string, unknown> = {}
+  extraData: Record<string, unknown> = {},
 ): Record<string, unknown> {
   const host = document.location.host;
   const docPath = route ?? "";
@@ -55,7 +55,9 @@ const reportUsage: EventHandler = async (event, { fetch }) => {
 
 export const nextCollectBasicSettings: CollectOpts = {
   drivers: [
-    process.env.CALCOM_LICENSE_KEY && process.env.NEXT_PUBLIC_IS_E2E !== "1" ? reportUsage : undefined,
+    process.env.CALCOM_LICENSE_KEY && process.env.NEXT_PUBLIC_IS_E2E !== "1"
+      ? reportUsage
+      : undefined,
     process.env.CALCOM_TELEMETRY_DISABLED === "1" || process.env.NEXT_PUBLIC_IS_E2E === "1"
       ? undefined
       : {
@@ -86,7 +88,7 @@ export const nextCollectBasicSettings: CollectOpts = {
 export const extendEventData = (
   req: NextRequest | NextApiRequest,
   res: NextResponse | NextApiResponse,
-  original: { page_url: string; isTeamBooking: boolean }
+  original: { page_url: string; isTeamBooking: boolean },
 ) => {
   const onVercel =
     typeof req.headers?.get === "function"
@@ -106,7 +108,8 @@ export const extendEventData = (
         : original?.isTeamBooking,
     referrer: "",
     onVercel,
-    isAuthorized: !!cookies["next-auth.session-token"] || !!cookies["__Secure-next-auth.session-token"],
+    isAuthorized:
+      !!cookies["next-auth.session-token"] || !!cookies["__Secure-next-auth.session-token"],
     utc_time: new Date().toISOString(),
   };
 };

@@ -66,7 +66,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Deleting old cookie manually, remove this code after all existing cookies have expired
   context.res.setHeader(
     "Set-Cookie",
-    "next-auth.session-token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"
+    "next-auth.session-token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;",
   );
 
   return {

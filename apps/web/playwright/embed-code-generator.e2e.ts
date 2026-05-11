@@ -33,7 +33,7 @@ async function clickFirstEventTypeEmbedButton(page: Page) {
 
 async function expectToBeNavigatingToEmbedTypesDialog(
   page: Page,
-  { embedUrl, basePage }: { embedUrl: string | null; basePage: string }
+  { embedUrl, basePage }: { embedUrl: string | null; basePage: string },
 ) {
   if (!embedUrl) {
     throw new Error("Couldn't find embedUrl");
@@ -57,7 +57,7 @@ async function expectToBeNavigatingToEmbedCodeAndPreviewDialog(
     embedUrl: string | null;
     embedType: string;
     basePage: string;
-  }
+  },
 ) {
   if (!embedUrl) {
     throw new Error("Couldn't find embedUrl");
@@ -88,11 +88,11 @@ async function expectToContainValidCode(page: Page, { embedType }: { embedType: 
  */
 async function expectToContainValidPreviewIframe(
   page: Page,
-  { embedType, calLink }: { embedType: string; calLink: string }
+  { embedType, calLink }: { embedType: string; calLink: string },
 ) {
   const bookerUrl = `${WEBAPP_URL}`;
   expect(await page.locator("[data-testid=embed-preview]").getAttribute("src")).toContain(
-    `/preview.html?embedType=${embedType}&calLink=${calLink}&embedLibUrl=${EMBED_LIB_URL}&bookerUrl=${bookerUrl}`
+    `/preview.html?embedType=${embedType}&calLink=${calLink}&embedLibUrl=${EMBED_LIB_URL}&bookerUrl=${bookerUrl}`,
   );
 }
 
@@ -137,7 +137,10 @@ test.describe("Embed Code Generator Tests", () => {
       });
     });
 
-    test("open Embed Dialog and choose floating-popup for First Event Type", async ({ page, users }) => {
+    test("open Embed Dialog and choose floating-popup for First Event Type", async ({
+      page,
+      users,
+    }) => {
       const [pro] = users.get();
       const embedUrl = await clickFirstEventTypeEmbedButton(page);
 
@@ -162,7 +165,10 @@ test.describe("Embed Code Generator Tests", () => {
       });
     });
 
-    test("open Embed Dialog and choose element-click for First Event Type", async ({ page, users }) => {
+    test("open Embed Dialog and choose element-click for First Event Type", async ({
+      page,
+      users,
+    }) => {
       const [pro] = users.get();
       const embedUrl = await clickFirstEventTypeEmbedButton(page);
 

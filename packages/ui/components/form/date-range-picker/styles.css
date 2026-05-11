@@ -116,7 +116,8 @@
   height: 36px;
 }
 
-.react-daterange-picker__wrapper > .react-daterange-picker__calendar-button.react-daterange-picker__button {
+.react-daterange-picker__wrapper
+  > .react-daterange-picker__calendar-button.react-daterange-picker__button {
   padding: 4px 0;
 }
 
@@ -164,8 +165,10 @@
   border-radius: 6px;
 }
 
-.react-calendar__navigation > .react-calendar__navigation__arrow.react-calendar__navigation__prev2-button,
-.react-calendar__navigation > .react-calendar__navigation__arrow.react-calendar__navigation__next2-button {
+.react-calendar__navigation
+  > .react-calendar__navigation__arrow.react-calendar__navigation__prev2-button,
+.react-calendar__navigation
+  > .react-calendar__navigation__arrow.react-calendar__navigation__next2-button {
   display: none;
 }
 

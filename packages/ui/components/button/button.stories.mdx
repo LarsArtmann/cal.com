@@ -36,7 +36,8 @@ Button are clickable elements that initiates user actions. Labels in the button 
       <li>Secondary: Gives visual weight to actions that are important</li>
       <li>Minimal: Used for actions that we want to give very little significane to</li>
     </ul>
-  }>
+  }
+>
   <Example title="Primary">
     <Button className="sb-fake-pseudo--focus">Button text</Button>
   </Example>
@@ -98,8 +99,8 @@ Button are clickable elements that initiates user actions. Labels in the button 
 
 <Note>In general, there should be only one Primary button in any application context</Note>
 <Note>
-  Aim to use maximum 2 words for the button label. Button size can be flexible based on the visual hierarchy
-  and devices.{" "}
+  Aim to use maximum 2 words for the button label. Button size can be flexible based on the visual
+  hierarchy and devices.{" "}
 </Note>
 <Note>Hover state variant for Mobile button is an option for assistive device.</Note>
 
@@ -107,7 +108,10 @@ Button are clickable elements that initiates user actions. Labels in the button 
 
 <Canvas>
   <Story name="All variants">
-    <VariantsTable titles={["Primary", "Secondary", "Minimal", "Destructive", "Icon"]} columnMinWidth={150}>
+    <VariantsTable
+      titles={["Primary", "Secondary", "Minimal", "Destructive", "Icon"]}
+      columnMinWidth={150}
+    >
       <VariantRow variant="Default">
         <Button>Button text</Button>
         <Button color="secondary">Button text</Button>
@@ -126,7 +130,12 @@ Button are clickable elements that initiates user actions. Labels in the button 
         <Button className="sb-pseudo--hover" color="destructive">
           Button text
         </Button>
-        <Button className="sb-pseudo--hover" color="destructive" variant="icon" StartIcon={X}></Button>
+        <Button
+          className="sb-pseudo--hover"
+          color="destructive"
+          variant="icon"
+          StartIcon={X}
+        ></Button>
       </VariantRow>
       <VariantRow variant="Focus">
         <Button className="sb-pseudo--focus">Button text</Button>
@@ -139,7 +148,12 @@ Button are clickable elements that initiates user actions. Labels in the button 
         <Button className="sb-pseudo--focus" color="destructive">
           Button text
         </Button>
-        <Button className="sb-pseudo--focus" color="destructive" variant="icon" StartIcon={X}></Button>
+        <Button
+          className="sb-pseudo--focus"
+          color="destructive"
+          variant="icon"
+          StartIcon={X}
+        ></Button>
       </VariantRow>
       <VariantRow variant="Loading">
         <Button loading>Button text</Button>
@@ -171,7 +185,7 @@ Button are clickable elements that initiates user actions. Labels in the button 
   </Story>
   <Story
     name="Button Playground"
-     play={({ canvasElement }) => {
+    play={({ canvasElement }) => {
       const darkVariantContainer = canvasElement.querySelector('[data-mode="dark"]');
       const buttonElement = darkVariantContainer.querySelector("button");
       buttonElement?.addEventListener("mouseover", () => {
@@ -228,7 +242,8 @@ Button are clickable elements that initiates user actions. Labels in the button 
           type: "text",
         },
       },
-    }}>
+    }}
+  >
     {({ children, ...args }) => (
       <VariantsTable titles={["Light & Dark Modes"]} columnMinWidth={150}>
         <VariantRow variant="Button">

@@ -55,9 +55,13 @@ export async function patchHandler(req: NextApiRequest) {
   const { prisma, query, isAdmin } = req;
   const userId_integration_externalId = selectedCalendarIdSchema.parse(query);
   const { userId: bodyUserId, ...data } = schemaSelectedCalendarUpdateBodyParams.parse(req.body);
-  const args: Prisma.SelectedCalendarUpdateArgs = { where: { userId_integration_externalId }, data };
+  const args: Prisma.SelectedCalendarUpdateArgs = {
+    where: { userId_integration_externalId },
+    data,
+  };
 
-  if (!isAdmin && bodyUserId) throw new HttpError({ statusCode: 403, message: `ADMIN required for userId` });
+  if (!isAdmin && bodyUserId)
+    throw new HttpError({ statusCode: 403, message: `ADMIN required for userId` });
 
   if (isAdmin && bodyUserId) {
     const where: Prisma.UserWhereInput = { id: bodyUserId };

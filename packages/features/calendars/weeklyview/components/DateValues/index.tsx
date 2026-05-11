@@ -17,7 +17,8 @@ export function DateValues({ days, containerNavRef }: Props) {
   return (
     <div
       ref={containerNavRef}
-      className="bg-default dark:bg-muted border-b-subtle rtl:border-r-default sticky top-[var(--calendar-dates-sticky-offset,0px)] z-[80] flex-none border-b border-r sm:pr-8">
+      className="bg-default dark:bg-muted border-b-subtle rtl:border-r-default sticky top-[var(--calendar-dates-sticky-offset,0px)] z-[80] flex-none border-b border-r sm:pr-8"
+    >
       <div className="text-subtle flex text-sm leading-6 sm:hidden" data-dayslength={days.length}>
         {days.map((day) => {
           const isToday = dayjs().isSame(day, "day");
@@ -25,13 +26,15 @@ export function DateValues({ days, containerNavRef }: Props) {
             <button
               key={day.toString()}
               type="button"
-              className="flex flex-1 flex-col items-center pb-3 pt-2">
+              className="flex flex-1 flex-col items-center pb-3 pt-2"
+            >
               {day.format("dd")}{" "}
               <span
                 className={classNames(
                   "text-emphasis mt-1 flex h-8 w-8 items-center justify-center font-semibold",
-                  isToday && "bg-inverted text-inverted rounded-full"
-                )}>
+                  isToday && "bg-inverted text-inverted rounded-full",
+                )}
+              >
                 {day.format("D")}
               </span>
             </button>
@@ -47,15 +50,17 @@ export function DateValues({ days, containerNavRef }: Props) {
               key={day.toString()}
               className={classNames(
                 "flex flex-1 items-center justify-center py-3 text-xs font-medium uppercase",
-                isToday && "font-bold"
-              )}>
+                isToday && "font-bold",
+              )}
+            >
               <span>
                 {formatDate(day)}{" "}
                 <span
                   className={classNames(
                     "items-center justify-center p-1",
-                    isToday && "bg-brand-default text-brand rounded-full"
-                  )}>
+                    isToday && "bg-brand-default text-brand rounded-full",
+                  )}
+                >
                   {day.format("DD")}
                 </span>
               </span>

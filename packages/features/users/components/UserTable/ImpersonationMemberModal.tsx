@@ -21,8 +21,13 @@ export function ImpersonationMemberModal(props: { state: State; dispatch: Dispat
         props.dispatch({
           type: "CLOSE_MODAL",
         })
-      }>
-      <DialogContent type="creation" title={t("impersonate")} description={t("impersonation_user_tip")}>
+      }
+    >
+      <DialogContent
+        type="creation"
+        title={t("impersonate")}
+        description={t("impersonation_user_tip")}
+      >
         <form
           onSubmit={async (e) => {
             e.preventDefault();
@@ -33,7 +38,8 @@ export function ImpersonationMemberModal(props: { state: State; dispatch: Dispat
             props.dispatch({
               type: "CLOSE_MODAL",
             });
-          }}>
+          }}
+        >
           <DialogFooter showDivider className="mt-8">
             <DialogClose color="secondary">{t("cancel")}</DialogClose>
             <Button color="primary" type="submit">

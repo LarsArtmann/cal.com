@@ -73,7 +73,8 @@ export const resizeAnimationConfig: ResizeAnimationConfig = {
       gridTemplateRows: "1fr 0fr",
     },
     selecting_time: {
-      width: "calc(var(--booker-meta-width) + var(--booker-main-width) + var(--booker-timeslots-width))",
+      width:
+        "calc(var(--booker-meta-width) + var(--booker-main-width) + var(--booker-timeslots-width))",
       minHeight: "450px",
       height: "auto",
       gridTemplateAreas: `
@@ -115,7 +116,7 @@ export const resizeAnimationConfig: ResizeAnimationConfig = {
 export const getBookerSizeClassNames = (
   layout: BookerLayout,
   bookerState: BookerState,
-  hideEventTypeDetails = false
+  hideEventTypeDetails = false,
 ) => {
   const getBookerMetaClass = (className: string) => {
     if (hideEventTypeDetails) {
@@ -142,7 +143,7 @@ export const getBookerSizeClassNames = (
     // Fullscreen view settings.
     layout !== BookerLayouts.MONTH_VIEW &&
       `[--booker-main-width:480px] [--booker-meta-width:340px] ${getBookerMetaClass(
-        "lg:[--booker-meta-width:424px]"
+        "lg:[--booker-meta-width:424px]",
       )}`,
   ];
 };
@@ -158,7 +159,8 @@ export const useBookerResizeAnimation = (layout: BookerLayout, state: BookerStat
   const isEmbed = typeof window !== "undefined" && window?.isEmbed?.();
   ``;
   useEffect(() => {
-    const animationConfig = resizeAnimationConfig[layout][state] || resizeAnimationConfig[layout].default;
+    const animationConfig =
+      resizeAnimationConfig[layout][state] || resizeAnimationConfig[layout].default;
 
     if (!animationScope.current) return;
 

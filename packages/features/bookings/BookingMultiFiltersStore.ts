@@ -39,11 +39,15 @@ export const useBookingMultiFilterStore = create<BookingMultiFilterStore>((set, 
   setState: (state: BookingMultiFilterStore) => set(state),
   toggleOption: (option: addFilterOption) => {
     const availableOptions = get().addFilterOptions;
-    const foundOption = availableOptions.find((activeOption) => activeOption.label === option.label);
+    const foundOption = availableOptions.find(
+      (activeOption) => activeOption.label === option.label,
+    );
 
     if (foundOption) {
       set({
-        addFilterOptions: availableOptions.filter((activeOption) => activeOption.label !== foundOption.label),
+        addFilterOptions: availableOptions.filter(
+          (activeOption) => activeOption.label !== foundOption.label,
+        ),
       });
     } else {
       set({ addFilterOptions: [...availableOptions, option] });

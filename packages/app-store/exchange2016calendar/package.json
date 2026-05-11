@@ -1,16 +1,16 @@
 {
-  "private": true,
   "name": "@calcom/exchange2016calendar",
   "version": "0.0.0",
-  "main": "./index.ts",
+  "private": true,
   "description": "For calendars hosted on on-premises Microsoft Exchange 2016 servers",
+  "main": "./index.ts",
   "dependencies": {
     "@calcom/core": "*",
     "@calcom/lib": "*",
     "@calcom/prisma": "*",
     "@calcom/ui": "*",
     "ews-javascript-api": "^0.15.3",
-    "react-hook-form": "^7.74.0"
+    "react-hook-form": "^7.75.0"
   },
   "devDependencies": {
     "@calcom/types": "*"

@@ -29,7 +29,8 @@ export default function AppSettings() {
         <RadioField label="°F Fahrenheit" id="imperial" value="imperial" />
       </Radio.Group> */}
       <Button
-        href={`webcal://weather-in-calendar.com/cal/weather-cal.php?city=${location}&units=${unit}&temperature=day`}>
+        href={`webcal://weather-in-calendar.com/cal/weather-cal.php?city=${location}&units=${unit}&temperature=day`}
+      >
         {t("add_to_calendar")}
       </Button>
     </div>

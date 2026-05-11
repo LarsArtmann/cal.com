@@ -3,7 +3,11 @@ import { NextSeo } from "next-seo";
 import { usePathname } from "next/navigation";
 
 import type { AppImageProps, MeetingImageProps } from "@calcom/lib/OgImages";
-import { constructAppImage, constructGenericImage, constructMeetingImage } from "@calcom/lib/OgImages";
+import {
+  constructAppImage,
+  constructGenericImage,
+  constructMeetingImage,
+} from "@calcom/lib/OgImages";
 import { APP_NAME, WEBSITE_URL, IS_CALCOM } from "@calcom/lib/constants";
 import { seoConfig, getSeoImage, buildCanonical } from "@calcom/lib/next-seo.config";
 import { truncateOnWord } from "@calcom/lib/text";

@@ -55,7 +55,8 @@ export default function CloseComSetup() {
                 className="text-indigo-400"
                 href="https://app.close.com/settings/api/"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 Close.com
               </a>
               . {t("it_stored_encrypted")}
@@ -78,7 +79,8 @@ export default function CloseComSetup() {
                   } else {
                     showToast(json.message, "error");
                   }
-                }}>
+                }}
+              >
                 <fieldset className="space-y-2" disabled={form.formState.isSubmitting}>
                   <Controller
                     name="api_key"
@@ -135,9 +137,14 @@ export default function CloseComSetup() {
                         setTestPassed(false);
                       }
                       setTestLoading(false);
-                    }}>
+                    }}
+                  >
                     {t(
-                      testPassed !== undefined ? (testPassed ? "test_passed" : "test_failed") : "test_api_key"
+                      testPassed !== undefined
+                        ? testPassed
+                          ? "test_passed"
+                          : "test_failed"
+                        : "test_api_key",
                     )}
                   </Button>
                   <Button type="submit" loading={form.formState.isSubmitting}>

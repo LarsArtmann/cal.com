@@ -10,7 +10,7 @@ export const verifyPhoneNumber = async (
   phoneNumber: string,
   code: string,
   userId?: number,
-  teamId?: number
+  teamId?: number,
 ) => {
   if (!userId && !teamId) return true;
 

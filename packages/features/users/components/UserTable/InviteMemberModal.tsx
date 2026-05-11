@@ -29,14 +29,14 @@ export function InviteMemberModal(props: Props) {
             t("email_invite_team_bulk", {
               userCount: data.usernameOrEmail.length,
             }),
-            "success"
+            "success",
           );
         } else {
           showToast(
             t("email_invite_team", {
               email: data.usernameOrEmail,
             }),
-            "success"
+            "success",
           );
         }
       }

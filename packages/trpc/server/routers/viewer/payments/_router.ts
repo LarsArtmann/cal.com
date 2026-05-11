@@ -12,7 +12,7 @@ export const paymentsRouter = router({
   chargeCard: authedProcedure.input(ZChargerCardInputSchema).mutation(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.chargeCard) {
       UNSTABLE_HANDLER_CACHE.chargeCard = await import("./chargeCard.handler").then(
-        (mod) => mod.chargeCardHandler
+        (mod) => mod.chargeCardHandler,
       );
     }
 

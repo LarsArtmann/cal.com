@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     `https://launchpad.37signals.com/authorization/token?${params.toString()}`,
     {
       method: "POST",
-    }
+    },
   );
 
   if (accessTokenResponse.status !== 200) {

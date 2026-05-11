@@ -70,9 +70,9 @@ type Component =
         } & {
           name?: string;
           required?: boolean;
-        }
+        },
       >(
-        props: TProps
+        props: TProps,
       ) => JSX.Element;
     }
   | {
@@ -83,9 +83,9 @@ type Component =
           variants: z.infer<typeof variantsConfigSchema>["variants"];
           value: Record<string, string> | string | undefined;
           setValue: (value: string | Record<string, string>) => void;
-        }
+        },
       >(
-        props: TProps
+        props: TProps,
       ) => JSX.Element;
     };
 
@@ -264,7 +264,8 @@ export const Components: Record<FieldType, Component> = {
                               onClick={() => {
                                 value.splice(index, 1);
                                 setValue(value);
-                              }}>
+                              }}
+                            >
                               <X width={12} className="text-default" />
                             </button>
                           </Tooltip>
@@ -284,7 +285,8 @@ export const Components: Record<FieldType, Component> = {
                   onClick={() => {
                     value.push("");
                     setValue(value);
-                  }}>
+                  }}
+                >
                   {t("add_another")}
                 </Button>
               )}
@@ -303,7 +305,8 @@ export const Components: Record<FieldType, Component> = {
                 value.push("");
                 setValue(value);
               }}
-              className="mr-auto">
+              className="mr-auto"
+            >
               {label}
             </Button>
           )}
@@ -370,7 +373,8 @@ export const Components: Record<FieldType, Component> = {
           value={value}
           onValueChange={(e) => {
             setValue(e);
-          }}>
+          }}
+        >
           <>
             {options.map((option, i) => (
               <RadioField
@@ -387,7 +391,14 @@ export const Components: Record<FieldType, Component> = {
   },
   radioInput: {
     propsType: propsTypes.radioInput,
-    factory: function RadioInputWithLabel({ name, options, optionsInputs, value, setValue, readOnly }) {
+    factory: function RadioInputWithLabel({
+      name,
+      options,
+      optionsInputs,
+      value,
+      setValue,
+      readOnly,
+    }) {
       useEffect(() => {
         if (!value) {
           setValue({

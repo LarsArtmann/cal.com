@@ -72,7 +72,9 @@ const WebhooksList = ({ webhooksByViewer }: { webhooksByViewer: WebhooksByViewer
                     <div className="items-centers flex ">
                       <Avatar
                         alt={group.profile.image || ""}
-                        imageSrc={group.profile.image || `${bookerUrl}/${group.profile.name}/avatar.png`}
+                        imageSrc={
+                          group.profile.image || `${bookerUrl}/${group.profile.name}/avatar.png`
+                        }
                         size="md"
                         className="inline-flex justify-center"
                       />

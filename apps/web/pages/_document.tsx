@@ -29,7 +29,8 @@ class MyDocument extends Document<Props> {
     const asPath = ctx.asPath || "";
     // Use a dummy URL as default so that URL parsing works for relative URLs as well. We care about searchParams and pathname only
     const parsedUrl = new URL(asPath, "https://dummyurl");
-    const isEmbed = parsedUrl.pathname.endsWith("/embed") || parsedUrl.searchParams.get("embedType") !== null;
+    const isEmbed =
+      parsedUrl.pathname.endsWith("/embed") || parsedUrl.searchParams.get("embedType") !== null;
     const embedColorScheme = parsedUrl.searchParams.get("ui.color-scheme");
     const initialProps = await Document.getInitialProps(ctx);
     return { isEmbed, embedColorScheme, nonce, ...initialProps };
@@ -41,7 +42,10 @@ class MyDocument extends Document<Props> {
     const nonceParsed = z.string().safeParse(this.props.nonce);
     const nonce = nonceParsed.success ? nonceParsed.data : "";
     return (
-      <Html lang={locale} style={embedColorScheme ? { colorScheme: embedColorScheme as string } : undefined}>
+      <Html
+        lang={locale}
+        style={embedColorScheme ? { colorScheme: embedColorScheme as string } : undefined}
+      >
         <Head nonce={nonce}>
           <link rel="apple-touch-icon" sizes="180x180" href="/api/logo?type=apple-touch-icon" />
           <link rel="icon" type="image/png" sizes="32x32" href="/api/logo?type=favicon-32" />
@@ -73,7 +77,8 @@ class MyDocument extends Document<Props> {
                   visibility: "hidden",
                 }
               : {}
-          }>
+          }
+        >
           <Main />
           <NextScript nonce={nonce} />
         </body>

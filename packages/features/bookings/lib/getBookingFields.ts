@@ -35,7 +35,7 @@ export const getSmsReminderNumberField = () =>
     defaultLabel: "number_text_notifications",
     defaultPlaceholder: "enter_phone_number",
     editable: "system",
-  } as const);
+  }) as const;
 
 export const getSmsReminderNumberSource = ({
   workflowId,
@@ -145,7 +145,7 @@ export const ensureBookingInputsHaveSystemFields = ({
           getSmsReminderNumberSource({
             workflowId,
             isSmsReminderNumberRequired: !!step.numberRequired,
-          })
+          }),
         );
       }
     });
@@ -288,7 +288,7 @@ export const ensureBookingInputsHaveSystemFields = ({
   const missingSystemBeforeFields = [];
   for (const field of systemBeforeFields) {
     const existingBookingFieldIndex = bookingFields.findIndex(
-      (f) => getFieldIdentifier(f.name) === getFieldIdentifier(field.name)
+      (f) => getFieldIdentifier(f.name) === getFieldIdentifier(field.name),
     );
     // Only do a push, we must not update existing system fields as user could have modified any property in it,
     if (existingBookingFieldIndex === -1) {
@@ -309,10 +309,12 @@ export const ensureBookingInputsHaveSystemFields = ({
   // Also, note that even if Workflows don't explicity add smsReminderNumber field to bookingFields, it would be added as a side effect of this backward compatibility logic
   if (
     smsNumberSources.length &&
-    !bookingFields.find((f) => getFieldIdentifier(f.name) !== getFieldIdentifier(SMS_REMINDER_NUMBER_FIELD))
+    !bookingFields.find(
+      (f) => getFieldIdentifier(f.name) !== getFieldIdentifier(SMS_REMINDER_NUMBER_FIELD),
+    )
   ) {
     const indexForLocation = bookingFields.findIndex(
-      (f) => getFieldIdentifier(f.name) === getFieldIdentifier("location")
+      (f) => getFieldIdentifier(f.name) === getFieldIdentifier("location"),
     );
     // Add the SMS Reminder Number field after `location` field always
     bookingFields.splice(indexForLocation + 1, 0, {
@@ -350,7 +352,7 @@ export const ensureBookingInputsHaveSystemFields = ({
   const missingSystemAfterFields = [];
   for (const field of systemAfterFields) {
     const existingBookingFieldIndex = bookingFields.findIndex(
-      (f) => getFieldIdentifier(f.name) === getFieldIdentifier(field.name)
+      (f) => getFieldIdentifier(f.name) === getFieldIdentifier(field.name),
     );
     // Only do a push, we must not update existing system fields as user could have modified any property in it,
     if (existingBookingFieldIndex === -1) {

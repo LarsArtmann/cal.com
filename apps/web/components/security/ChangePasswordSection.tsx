@@ -48,7 +48,9 @@ const ChangePasswordSection = () => {
       }
 
       const body = await response.json();
-      setErrorMessage(errorMessages[body.error] || `${t("something_went_wrong")}${t("please_try_again")}`);
+      setErrorMessage(
+        errorMessages[body.error] || `${t("something_went_wrong")}${t("please_try_again")}`,
+      );
     } catch (err) {
       console.error(t("error_changing_password"), err);
       setErrorMessage(`${t("something_went_wrong")}${t("please_try_again")}`);
@@ -62,7 +64,9 @@ const ChangePasswordSection = () => {
       <form className="divide-subtle divide-y lg:col-span-9" onSubmit={changePasswordHandler}>
         <div className="py-6 lg:pb-5">
           <div className="my-3">
-            <h2 className="font-cal text-emphasis text-lg font-medium leading-6">{t("change_password")}</h2>
+            <h2 className="font-cal text-emphasis text-lg font-medium leading-6">
+              {t("change_password")}
+            </h2>
           </div>
           <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0">
             <div className="w-full ltr:mr-2 rtl:ml-2 sm:w-1/2">

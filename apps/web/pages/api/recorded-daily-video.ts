@@ -56,8 +56,11 @@ const triggerWebhook = async ({
       ...evt,
       downloadLink,
     }).catch((e) => {
-      console.error(`Error executing webhook for event: ${eventTrigger}, URL: ${webhook.subscriberUrl}`, e);
-    })
+      console.error(
+        `Error executing webhook for event: ${eventTrigger}, URL: ${webhook.subscriberUrl}`,
+        e,
+      );
+    }),
   );
   await Promise.all(promises);
 };

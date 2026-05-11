@@ -1,4 +1,8 @@
-import type { Availability as AvailabilityModel, Schedule as ScheduleModel, User } from "@prisma/client";
+import type {
+  Availability as AvailabilityModel,
+  Schedule as ScheduleModel,
+  User,
+} from "@prisma/client";
 
 import type { PrismaClient } from "@calcom/prisma";
 import type { Schedule } from "@calcom/types/schedule";
@@ -45,7 +49,7 @@ export const hasDefaultSchedule = async (user: Partial<User>, prisma: PrismaClie
 };
 
 export const convertScheduleToAvailability = (
-  schedule: Partial<ScheduleModel> & { availability: AvailabilityModel[] }
+  schedule: Partial<ScheduleModel> & { availability: AvailabilityModel[] },
 ) => {
   return schedule.availability.reduce(
     (schedule: Schedule, availability) => {
@@ -57,8 +61,8 @@ export const convertScheduleToAvailability = (
               new Date().getUTCMonth(),
               new Date().getUTCDate(),
               availability.startTime.getUTCHours(),
-              availability.startTime.getUTCMinutes()
-            )
+              availability.startTime.getUTCMinutes(),
+            ),
           ),
           end: new Date(
             Date.UTC(
@@ -66,18 +70,22 @@ export const convertScheduleToAvailability = (
               new Date().getUTCMonth(),
               new Date().getUTCDate(),
               availability.endTime.getUTCHours(),
-              availability.endTime.getUTCMinutes()
-            )
+              availability.endTime.getUTCMinutes(),
+            ),
           ),
         });
       });
       return schedule;
     },
-    Array.from(Array(7)).map(() => [])
+    Array.from(Array(7)).map(() => []),
   );
 };
 
-export const setupDefaultSchedule = async (userId: number, scheduleId: number, prisma: PrismaClient) => {
+export const setupDefaultSchedule = async (
+  userId: number,
+  scheduleId: number,
+  prisma: PrismaClient,
+) => {
   return prisma.user.update({
     where: {
       id: userId,

@@ -25,7 +25,7 @@ const Switch = (
       thumb?: string;
     };
     LockedIcon?: React.ReactNode;
-  }
+  },
 ) => {
   const { label, fitToHeight, classNames, labelOnLeading, LockedIcon, ...primitiveProps } = props;
   const id = useId();
@@ -37,23 +37,25 @@ const Switch = (
           "flex h-auto w-auto flex-row items-center",
           fitToHeight && "h-fit",
           labelOnLeading && "flex-row-reverse",
-          classNames?.container
-        )}>
+          classNames?.container,
+        )}
+      >
         {LockedIcon && <div className="mr-2">{LockedIcon}</div>}
         <PrimitiveSwitch.Root
           className={cx(
             isChecked ? "bg-brand-default" : "bg-emphasis",
             primitiveProps.disabled && "cursor-not-allowed",
             "focus:ring-brand-default h-5 w-[34px] rounded-full shadow-none focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-800 focus:ring-offset-1",
-            props.className
+            props.className,
           )}
-          {...primitiveProps}>
+          {...primitiveProps}
+        >
           <PrimitiveSwitch.Thumb
             id={id}
             className={cx(
               "block h-[14px] w-[14px] rounded-full transition will-change-transform ltr:translate-x-[4px] rtl:-translate-x-[4px] ltr:[&[data-state='checked']]:translate-x-[17px] rtl:[&[data-state='checked']]:-translate-x-[17px]",
               isChecked ? "bg-brand-accent shadow-inner" : "bg-default",
-              classNames?.thumb
+              classNames?.thumb,
             )}
           />
         </PrimitiveSwitch.Root>
@@ -63,8 +65,9 @@ const Switch = (
             className={cx(
               "text-emphasis ms-2 align-text-top text-sm font-medium",
               primitiveProps.disabled ? "cursor-not-allowed opacity-25" : "cursor-pointer",
-              labelOnLeading && "flex-1"
-            )}>
+              labelOnLeading && "flex-1",
+            )}
+          >
             {label}
           </Label.Root>
         )}

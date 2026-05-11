@@ -10,7 +10,9 @@ describe("Tests for DateRangePicker component", () => {
   const endDate = new Date("2023-07-20");
 
   test("Should display the selected start and end dates", () => {
-    const { getByDisplayValue } = render(<DateRangePicker startDate={startDate} endDate={endDate} />);
+    const { getByDisplayValue } = render(
+      <DateRangePicker startDate={startDate} endDate={endDate} />,
+    );
 
     const expectedStartDate = format(new Date(startDate), "yyyy-MM-dd");
     const expectedEndDate = format(new Date(endDate), "yyyy-MM-dd");
@@ -21,7 +23,7 @@ describe("Tests for DateRangePicker component", () => {
 
   test("Should disable the DateRangePicker when disabled prop is true", () => {
     const { getByDisplayValue } = render(
-      <DateRangePicker startDate={startDate} endDate={endDate} disabled />
+      <DateRangePicker startDate={startDate} endDate={endDate} disabled />,
     );
 
     const startDateInput = getByDisplayValue(format(startDate, "yyyy-MM-dd")) as HTMLInputElement;
@@ -37,7 +39,7 @@ describe("Tests for DateRangePicker component", () => {
     const mockOnDatesChange = vi.fn();
 
     const { getByDisplayValue } = render(
-      <DateRangePicker startDate={startDate} endDate={endDate} onDatesChange={mockOnDatesChange} />
+      <DateRangePicker startDate={startDate} endDate={endDate} onDatesChange={mockOnDatesChange} />,
     );
 
     const startDateInput = getByDisplayValue(format(startDate, "yyyy-MM-dd")) as HTMLInputElement;

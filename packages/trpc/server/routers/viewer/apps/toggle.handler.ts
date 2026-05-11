@@ -26,7 +26,10 @@ export const toggleHandler = async ({ input, ctx }: ToggleOptions) => {
   const appMetadata = localApps.find((localApp) => localApp.slug === slug);
 
   if (!appMetadata) {
-    throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "App metadata could not be found" });
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "App metadata could not be found",
+    });
   }
 
   const app = await prisma.app.upsert({
@@ -55,8 +58,12 @@ export const toggleHandler = async ({ input, ctx }: ToggleOptions) => {
     if (
       app.categories.some((category) =>
         (
-          [AppCategories.calendar, AppCategories.video, AppCategories.conferencing] as AppCategories[]
-        ).includes(category)
+          [
+            AppCategories.calendar,
+            AppCategories.video,
+            AppCategories.conferencing,
+          ] as AppCategories[]
+        ).includes(category),
       )
     ) {
       // Find all users with the app credentials
@@ -94,7 +101,7 @@ export const toggleHandler = async ({ input, ctx }: ToggleOptions) => {
             appType: app.categories,
             t,
           });
-        })
+        }),
       );
     } else {
       const eventTypesWithApp = await prisma.eventType.findMany({
@@ -160,9 +167,9 @@ export const toggleHandler = async ({ input, ctx }: ToggleOptions) => {
                 title: eventType.title,
                 eventTypeId: eventType.id,
               });
-            })
+            }),
           );
-        })
+        }),
       );
     }
   }

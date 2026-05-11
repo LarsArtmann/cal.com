@@ -25,14 +25,14 @@ describe("Check Booking Limits Tests", () => {
   it("Should return no errors", async () => {
     prismaMock.booking.count.mockResolvedValue(0);
     expect(
-      checkBookingLimits(MOCK_DATA.bookingLimits, MOCK_DATA.startDate, MOCK_DATA.id)
+      checkBookingLimits(MOCK_DATA.bookingLimits, MOCK_DATA.startDate, MOCK_DATA.id),
     ).resolves.toBeTruthy();
   });
   it("Should throw an error", async () => {
     // Mock there being two a day
     prismaMock.booking.count.mockResolvedValue(2);
     expect(
-      checkBookingLimits(MOCK_DATA.bookingLimits, MOCK_DATA.startDate, MOCK_DATA.id)
+      checkBookingLimits(MOCK_DATA.bookingLimits, MOCK_DATA.startDate, MOCK_DATA.id),
     ).rejects.toThrowError();
   });
 
@@ -45,8 +45,8 @@ describe("Check Booking Limits Tests", () => {
           PER_WEEK: 2,
         },
         MOCK_DATA.startDate,
-        MOCK_DATA.id
-      )
+        MOCK_DATA.id,
+      ),
     ).resolves.toBeTruthy();
   });
   it("Should pass with multiple booking limits with one undefined", async () => {
@@ -58,8 +58,8 @@ describe("Check Booking Limits Tests", () => {
           PER_WEEK: undefined,
         },
         MOCK_DATA.startDate,
-        MOCK_DATA.id
-      )
+        MOCK_DATA.id,
+      ),
     ).resolves.toBeTruthy();
   });
   it("Should handle mutiple limits correctly", async () => {
@@ -70,7 +70,7 @@ describe("Check Booking Limits Tests", () => {
         limitingNumber: 2,
         eventStartDate: MOCK_DATA.startDate,
         eventId: MOCK_DATA.id,
-      })
+      }),
     ).resolves.not.toThrow();
     prismaMock.booking.count.mockResolvedValue(3);
     expect(
@@ -79,7 +79,7 @@ describe("Check Booking Limits Tests", () => {
         limitingNumber: 2,
         eventStartDate: MOCK_DATA.startDate,
         eventId: MOCK_DATA.id,
-      })
+      }),
     ).rejects.toThrowError();
   });
 });

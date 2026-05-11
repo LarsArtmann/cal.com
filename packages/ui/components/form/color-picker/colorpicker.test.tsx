@@ -55,7 +55,7 @@ describe("Tests for ColorPicker component", () => {
     });
 
     expect(screen.getByRole("button", { name: "pick colors" })).toHaveStyle(
-      `background-color: ${newColorValue}`
+      `background-color: ${newColorValue}`,
     );
   });
 
@@ -82,7 +82,11 @@ describe("Tests for ColorPicker component", () => {
     const onChange = vi.fn();
 
     render(
-      <ColorPicker defaultValue={defaultValue} resetDefaultValue={resetDefaultValue} onChange={onChange} />
+      <ColorPicker
+        defaultValue={defaultValue}
+        resetDefaultValue={resetDefaultValue}
+        onChange={onChange}
+      />,
     );
 
     const colorPickerButton = screen.getByRole("button", { name: "pick colors" });

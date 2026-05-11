@@ -41,16 +41,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     code,
     WEBAPP_URL + "/api/integrations/hubspot/callback",
     client_id,
-    client_secret
+    client_secret,
   );
 
   // set expiry date as offset from current time.
   hubspotToken.expiryDate = Math.round(Date.now() + hubspotToken.expiresIn * 1000);
 
-  await createOAuthAppCredential({ appId: "hubspot", type: "hubspot_other_calendar" }, hubspotToken, req);
+  await createOAuthAppCredential(
+    { appId: "hubspot", type: "hubspot_other_calendar" },
+    hubspotToken,
+    req,
+  );
 
   const state = decodeOAuthState(req);
   res.redirect(
-    getSafeRedirectUrl(state?.returnTo) ?? getInstalledAppPath({ variant: "other", slug: "hubspot" })
+    getSafeRedirectUrl(state?.returnTo) ??
+      getInstalledAppPath({ variant: "other", slug: "hubspot" }),
   );
 }

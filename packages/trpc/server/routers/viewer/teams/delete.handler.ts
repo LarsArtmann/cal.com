@@ -37,7 +37,7 @@ const deleteVercelDomain = async ({
         Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN_VERCEL}`,
       },
       method: "DELETE",
-    }
+    },
   );
 
   const data = await response.json();
@@ -54,7 +54,8 @@ const deleteVercelDomain = async ({
 };
 
 export const deleteHandler = async ({ ctx, input }: DeleteOptions) => {
-  if (!(await isTeamOwner(ctx.user?.id, input.teamId))) throw new TRPCError({ code: "UNAUTHORIZED" });
+  if (!(await isTeamOwner(ctx.user?.id, input.teamId)))
+    throw new TRPCError({ code: "UNAUTHORIZED" });
 
   if (IS_TEAM_BILLING_ENABLED) await cancelTeamSubscriptionFromStripe(input.teamId);
 

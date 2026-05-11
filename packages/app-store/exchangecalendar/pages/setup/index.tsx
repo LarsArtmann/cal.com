@@ -6,7 +6,16 @@ import { Toaster } from "react-hot-toast";
 import z from "zod";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Alert, Button, EmailField, Form, PasswordField, SelectField, Switch, TextField } from "@calcom/ui";
+import {
+  Alert,
+  Button,
+  EmailField,
+  Form,
+  PasswordField,
+  SelectField,
+  Switch,
+  TextField,
+} from "@calcom/ui";
 
 import { ExchangeAuthentication, ExchangeVersion } from "../../enums";
 
@@ -90,7 +99,8 @@ export default function ExchangeSetup() {
                     } else {
                       router.push(json.url);
                     }
-                  }}>
+                  }}
+                >
                   <fieldset className="space-y-4" disabled={form.formState.isSubmitting}>
                     <TextField
                       required

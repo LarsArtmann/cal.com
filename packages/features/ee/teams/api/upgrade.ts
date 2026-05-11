@@ -23,7 +23,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const checkoutSession = await stripe.checkout.sessions.retrieve(session_id, {
     expand: ["subscription"],
   });
-  if (!checkoutSession) throw new HttpError({ statusCode: 404, message: "Checkout session not found" });
+  if (!checkoutSession)
+    throw new HttpError({ statusCode: 404, message: "Checkout session not found" });
 
   const subscription = checkoutSession.subscription as Stripe.Subscription;
   if (checkoutSession.payment_status !== "paid")
@@ -40,7 +41,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const prevTeam = await prisma.team.findFirstOrThrow({ where: { id } });
 
     metadata = teamMetadataSchema.safeParse(prevTeam.metadata);
-    if (!metadata.success) throw new HttpError({ statusCode: 400, message: "Invalid team metadata" });
+    if (!metadata.success)
+      throw new HttpError({ statusCode: 400, message: "Invalid team metadata" });
 
     if (!metadata.data?.requestedSlug) {
       throw new HttpError({
@@ -80,7 +82,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (!metadata) {
     metadata = teamMetadataSchema.safeParse(team.metadata);
-    if (!metadata.success) throw new HttpError({ statusCode: 400, message: "Invalid team metadata" });
+    if (!metadata.success)
+      throw new HttpError({ statusCode: 400, message: "Invalid team metadata" });
   }
 
   const session = await getServerSession({ req, res });

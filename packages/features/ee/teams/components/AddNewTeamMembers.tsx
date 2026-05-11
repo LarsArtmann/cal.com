@@ -35,11 +35,13 @@ const AddNewTeamMembers = () => {
   const teamId = searchParams?.get("id") ? Number(searchParams.get("id")) : -1;
   const teamQuery = trpc.viewer.teams.get.useQuery(
     { teamId },
-    { enabled: session.status === "authenticated" }
+    { enabled: session.status === "authenticated" },
   );
   if (session.status === "loading" || !teamQuery.data) return <AddNewTeamMemberSkeleton />;
 
-  return <AddNewTeamMembersForm defaultValues={{ members: teamQuery.data.members }} teamId={teamId} />;
+  return (
+    <AddNewTeamMembersForm defaultValues={{ members: teamQuery.data.members }} teamId={teamId} />
+  );
 };
 
 export const AddNewTeamMembersForm = ({
@@ -60,7 +62,10 @@ export const AddNewTeamMembersForm = ({
   const [memberInviteModal, setMemberInviteModal] = useState(showDialog);
   const [inviteLinkSettingsModal, setInviteLinkSettingsModal] = useState(false);
 
-  const { data: team, isLoading } = trpc.viewer.teams.get.useQuery({ teamId }, { enabled: !!teamId });
+  const { data: team, isLoading } = trpc.viewer.teams.get.useQuery(
+    { teamId },
+    { enabled: !!teamId },
+  );
   const { data: orgMembersNotInThisTeam } = trpc.viewer.organizations.getMembers.useQuery(
     {
       teamIdToExclude: teamId,
@@ -68,7 +73,7 @@ export const AddNewTeamMembersForm = ({
     },
     {
       enabled: orgBranding !== null,
-    }
+    },
   );
 
   const inviteMemberMutation = trpc.viewer.teams.inviteMember.useMutation();
@@ -97,7 +102,11 @@ export const AddNewTeamMembersForm = ({
           data-testid="new-member-button"
           StartIcon={Plus}
           onClick={() => setMemberInviteModal(true)}
-          className={classNames("w-full justify-center", defaultValues.members.length > 0 && "mt-6")}>
+          className={classNames(
+            "w-full justify-center",
+            defaultValues.members.length > 0 && "mt-6",
+          )}
+        >
           {t("add_team_member")}
         </Button>
       </div>
@@ -131,7 +140,7 @@ export const AddNewTeamMembersForm = ({
                           t("email_invite_team_bulk", {
                             userCount: data.usernameOrEmail.length,
                           }),
-                          "success"
+                          "success",
                         );
                         resetFields();
                       } else {
@@ -139,7 +148,7 @@ export const AddNewTeamMembersForm = ({
                           t("email_invite_team", {
                             email: data.usernameOrEmail,
                           }),
-                          "success"
+                          "success",
                         );
                       }
                     }
@@ -147,7 +156,7 @@ export const AddNewTeamMembersForm = ({
                   onError: (error) => {
                     showToast(error.message, "error");
                   },
-                }
+                },
               );
             }}
             onSettingsOpen={() => {
@@ -182,7 +191,8 @@ export const AddNewTeamMembersForm = ({
           } else {
             publishTeamMutation.mutate({ teamId });
           }
-        }}>
+        }}
+      >
         {t(orgBranding ? "finish" : "team_publish")}
       </Button>
     </>
@@ -230,18 +240,24 @@ const PendingMemberItem = (props: { member: TeamMember; index: number; teamId: n
 
   const isOrgAdminOrOwner =
     currentOrg &&
-    (currentOrg.user.role === MembershipRole.OWNER || currentOrg.user.role === MembershipRole.ADMIN);
+    (currentOrg.user.role === MembershipRole.OWNER ||
+      currentOrg.user.role === MembershipRole.ADMIN);
 
   return (
     <li
       key={member.email}
       className={classNames(
         "flex items-center justify-between p-6 text-sm",
-        index !== 0 && "border-subtle border-t"
+        index !== 0 && "border-subtle border-t",
       )}
-      data-testid="pending-member-item">
+      data-testid="pending-member-item"
+    >
       <div className="mr-4 flex max-w-full space-x-2 overflow-hidden rtl:space-x-reverse">
-        <Avatar size="mdLg" imageSrc={bookerUrl + "/" + member.username + "/avatar.png"} alt="owner-avatar" />
+        <Avatar
+          size="mdLg"
+          imageSrc={bookerUrl + "/" + member.username + "/avatar.png"}
+          alt="owner-avatar"
+        />
         <div className="max-w-full overflow-hidden">
           <div className="flex space-x-1">
             <p>{member.name || member.email || t("team_member")}</p>

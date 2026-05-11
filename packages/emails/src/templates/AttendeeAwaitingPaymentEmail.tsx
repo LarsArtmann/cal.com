@@ -8,12 +8,18 @@ function ManageLink(props: React.ComponentProps<typeof AttendeeScheduledEmail>) 
 
   return (
     <CallToActionTable>
-      <CallToAction label={manageText} href={props.calEvent.paymentInfo.link} endIconName="linkIcon" />
+      <CallToAction
+        label={manageText}
+        href={props.calEvent.paymentInfo.link}
+        endIconName="linkIcon"
+      />
     </CallToActionTable>
   );
 }
 
-export const AttendeeAwaitingPaymentEmail = (props: React.ComponentProps<typeof AttendeeScheduledEmail>) => {
+export const AttendeeAwaitingPaymentEmail = (
+  props: React.ComponentProps<typeof AttendeeScheduledEmail>,
+) => {
   return props.calEvent.paymentInfo?.paymentOption === "HOLD" ? (
     <AttendeeScheduledEmail
       title="meeting_awaiting_payment_method"

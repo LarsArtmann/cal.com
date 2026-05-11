@@ -136,7 +136,9 @@ describe("jsonLogicToPrisma(Reporting)", () => {
         });
 
         expect(prismaWhere).toEqual({
-          AND: [{ response: { path: ["a0d113a8-8e40-49b7-87b1-7f4ab57d226f", "value"], gte: 100 } }],
+          AND: [
+            { response: { path: ["a0d113a8-8e40-49b7-87b1-7f4ab57d226f", "value"], gte: 100 } },
+          ],
         });
       });
       it("should support 'less than' operator", () => {
@@ -178,7 +180,9 @@ describe("jsonLogicToPrisma(Reporting)", () => {
         });
 
         expect(prismaWhere).toEqual({
-          AND: [{ response: { path: ["a0d113a8-8e40-49b7-87b1-7f4ab57d226f", "value"], lte: 100 } }],
+          AND: [
+            { response: { path: ["a0d113a8-8e40-49b7-87b1-7f4ab57d226f", "value"], lte: 100 } },
+          ],
         });
       });
       it("'Equals' operator should query with string as well as number", () => {
@@ -215,14 +219,22 @@ describe("jsonLogicToPrisma(Reporting)", () => {
       const prismaWhere = jsonLogicToPrisma({
         logic: {
           and: [
-            { all: [{ var: "267c7817-81a5-4bef-9d5b-d0faa4cd0d71" }, { in: [{ var: "" }, ["C", "D"]] }] },
+            {
+              all: [
+                { var: "267c7817-81a5-4bef-9d5b-d0faa4cd0d71" },
+                { in: [{ var: "" }, ["C", "D"]] },
+              ],
+            },
           ],
         },
       });
       expect(prismaWhere).toEqual({
         AND: [
           {
-            response: { path: ["267c7817-81a5-4bef-9d5b-d0faa4cd0d71", "value"], array_contains: ["C", "D"] },
+            response: {
+              path: ["267c7817-81a5-4bef-9d5b-d0faa4cd0d71", "value"],
+              array_contains: ["C", "D"],
+            },
           },
         ],
       });

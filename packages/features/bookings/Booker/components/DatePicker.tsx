@@ -12,10 +12,13 @@ import { useEvent, useScheduleForEvent } from "../utils/event";
 
 export const DatePicker = () => {
   const { i18n } = useLocale();
-  const [month, selectedDate] = useBookerStore((state) => [state.month, state.selectedDate], shallow);
+  const [month, selectedDate] = useBookerStore(
+    (state) => [state.month, state.selectedDate],
+    shallow,
+  );
   const [setSelectedDate, setMonth] = useBookerStore(
     (state) => [state.setSelectedDate, state.setMonth],
-    shallow
+    shallow,
   );
   const event = useEvent();
   const schedule = useScheduleForEvent();

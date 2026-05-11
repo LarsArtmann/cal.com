@@ -11,14 +11,20 @@ import type { GetRecordingsResponseSchema } from "@calcom/prisma/zod-utils";
 import type { CalendarEvent, EventBusyDate } from "@calcom/types/Calendar";
 import type { CredentialPayload } from "@calcom/types/Credential";
 import type { EventResult, PartialReference } from "@calcom/types/EventManager";
-import type { VideoApiAdapter, VideoApiAdapterFactory, VideoCallData } from "@calcom/types/VideoApiAdapter";
+import type {
+  VideoApiAdapter,
+  VideoApiAdapterFactory,
+  VideoCallData,
+} from "@calcom/types/VideoApiAdapter";
 
 const log = logger.getChildLogger({ prefix: ["[lib] videoClient"] });
 
 const translator = short();
 
 // factory
-const getVideoAdapters = async (withCredentials: CredentialPayload[]): Promise<VideoApiAdapter[]> => {
+const getVideoAdapters = async (
+  withCredentials: CredentialPayload[],
+): Promise<VideoApiAdapter[]> => {
   const videoAdapters: VideoApiAdapter[] = [];
 
   for (const cred of withCredentials) {
@@ -44,8 +50,12 @@ const getVideoAdapters = async (withCredentials: CredentialPayload[]): Promise<V
 };
 
 const getBusyVideoTimes = async (withCredentials: CredentialPayload[]) =>
-  Promise.all((await getVideoAdapters(withCredentials)).map((c) => c?.getAvailability())).then((results) =>
-    results.reduce((acc, availability) => acc.concat(availability), [] as (EventBusyDate | undefined)[])
+  Promise.all((await getVideoAdapters(withCredentials)).map((c) => c?.getAvailability())).then(
+    (results) =>
+      results.reduce(
+        (acc, availability) => acc.concat(availability),
+        [] as (EventBusyDate | undefined)[],
+      ),
   );
 
 const createMeeting = async (credential: CredentialPayload, calEvent: CalendarEvent) => {
@@ -53,7 +63,7 @@ const createMeeting = async (credential: CredentialPayload, calEvent: CalendarEv
 
   if (!credential || !credential.appId) {
     throw new Error(
-      "Credentials must be set! Video platforms are optional, so this method shouldn't even be called when no video credentials are set."
+      "Credentials must be set! Video platforms are optional, so this method shouldn't even be called when no video credentials are set.",
     );
   }
 
@@ -112,7 +122,7 @@ const createMeeting = async (credential: CredentialPayload, calEvent: CalendarEv
 const updateMeeting = async (
   credential: CredentialPayload,
   calEvent: CalendarEvent,
-  bookingRef: PartialReference | null
+  bookingRef: PartialReference | null,
 ): Promise<EventResult<VideoCallData>> => {
   const uid = translator.fromUUID(uuidv5(JSON.stringify(calEvent), uuidv5.URL));
 
@@ -186,7 +196,7 @@ const createMeetingWithCalVideo = async (calEvent: CalendarEvent) => {
 };
 
 const getRecordingsOfCalVideoByRoomName = async (
-  roomName: string
+  roomName: string,
 ): Promise<GetRecordingsResponseSchema | undefined> => {
   let dailyAppKeys: Awaited<ReturnType<typeof getDailyAppKeys>>;
   try {

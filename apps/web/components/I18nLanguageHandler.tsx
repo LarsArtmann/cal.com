@@ -16,7 +16,7 @@ function useViewerI18n(locale: string) {
       trpc: {
         context: { skipBatch: true },
       },
-    }
+    },
   );
 }
 

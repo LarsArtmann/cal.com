@@ -16,7 +16,15 @@ import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { ascendingLimitKeys, intervalLimitKeyToUnit } from "@calcom/lib/intervalLimit";
 import type { PeriodType } from "@calcom/prisma/enums";
 import type { IntervalLimit } from "@calcom/types/Calendar";
-import { Button, DateRangePicker, InputField, Label, Select, SettingsToggle, TextField } from "@calcom/ui";
+import {
+  Button,
+  DateRangePicker,
+  InputField,
+  Label,
+  Select,
+  SettingsToggle,
+  TextField,
+} from "@calcom/ui";
 import { Plus, Trash } from "@calcom/ui/components/icon";
 
 const MinimumBookingNoticeInput = React.forwardRef<
@@ -51,7 +59,7 @@ const MinimumBookingNoticeInput = React.forwardRef<
     value: convertToNewDurationType(
       "minutes",
       findDurationType(getValues(passThroughProps.name)),
-      getValues(passThroughProps.name)
+      getValues(passThroughProps.name),
     ),
   });
   // keep hidden field in sync with minimumBookingNoticeDisplayValues
@@ -61,8 +69,8 @@ const MinimumBookingNoticeInput = React.forwardRef<
       convertToNewDurationType(
         minimumBookingNoticeDisplayValues.type,
         "minutes",
-        minimumBookingNoticeDisplayValues.value
-      )
+        minimumBookingNoticeDisplayValues.value,
+      ),
     );
   }, [minimumBookingNoticeDisplayValues, setValue, passThroughProps.name]);
 
@@ -92,7 +100,7 @@ const MinimumBookingNoticeInput = React.forwardRef<
         isDisabled={passThroughProps.disabled}
         className="mb-0 ml-2 h-[38px] w-full capitalize md:min-w-[150px] md:max-w-[200px]"
         defaultValue={durationTypeOptions.find(
-          (option) => option.value === minimumBookingNoticeDisplayValues.type
+          (option) => option.value === minimumBookingNoticeDisplayValues.type,
         )}
         onChange={(input) => {
           if (input) {
@@ -144,7 +152,7 @@ export const EventLimitsTab = ({ eventType }: Pick<EventTypeSetupProps, "eventTy
   const { shouldLockIndicator, shouldLockDisableProps } = useLockedFieldsManager(
     eventType,
     t("locked_fields_admin_description"),
-    t("locked_fields_member_description")
+    t("locked_fields_member_description"),
   );
 
   const bookingLimitsLocked = shouldLockDisableProps("bookingLimits");
@@ -201,7 +209,8 @@ export const EventLimitsTab = ({ eventType }: Pick<EventTypeSetupProps, "eventTy
                       if (val) onChange(val.value);
                     }}
                     defaultValue={
-                      beforeBufferOptions.find((option) => option.value === value) || beforeBufferOptions[0]
+                      beforeBufferOptions.find((option) => option.value === value) ||
+                      beforeBufferOptions[0]
                     }
                     options={beforeBufferOptions}
                   />
@@ -237,7 +246,8 @@ export const EventLimitsTab = ({ eventType }: Pick<EventTypeSetupProps, "eventTy
                       if (val) onChange(val.value);
                     }}
                     defaultValue={
-                      afterBufferOptions.find((option) => option.value === value) || afterBufferOptions[0]
+                      afterBufferOptions.find((option) => option.value === value) ||
+                      afterBufferOptions[0]
                     }
                     options={afterBufferOptions}
                   />
@@ -281,11 +291,15 @@ export const EventLimitsTab = ({ eventType }: Pick<EventTypeSetupProps, "eventTy
                     isSearchable={false}
                     isDisabled={shouldLockDisableProps("slotInterval").disabled}
                     onChange={(val) => {
-                      formMethods.setValue("slotInterval", val && (val.value || 0) > 0 ? val.value : null);
+                      formMethods.setValue(
+                        "slotInterval",
+                        val && (val.value || 0) > 0 ? val.value : null,
+                      );
                     }}
                     defaultValue={
-                      slotIntervalOptions.find((option) => option.value === eventType.slotInterval) ||
-                      slotIntervalOptions[0]
+                      slotIntervalOptions.find(
+                        (option) => option.value === eventType.slotInterval,
+                      ) || slotIntervalOptions[0]
                     }
                     options={slotIntervalOptions}
                   />
@@ -313,7 +327,8 @@ export const EventLimitsTab = ({ eventType }: Pick<EventTypeSetupProps, "eventTy
               } else {
                 formMethods.setValue("bookingLimits", {});
               }
-            }}>
+            }}
+          >
             <IntervalLimitsManager
               disabled={bookingLimitsLocked.disabled}
               propertyName="bookingLimits"
@@ -341,7 +356,8 @@ export const EventLimitsTab = ({ eventType }: Pick<EventTypeSetupProps, "eventTy
               } else {
                 formMethods.setValue("durationLimits", {});
               }
-            }}>
+            }}
+          >
             <IntervalLimitsManager
               propertyName="durationLimits"
               defaultLimit={60}
@@ -362,27 +378,33 @@ export const EventLimitsTab = ({ eventType }: Pick<EventTypeSetupProps, "eventTy
             description={t("limit_future_bookings_description")}
             {...periodTypeLocked}
             checked={value && value !== "UNLIMITED"}
-            onCheckedChange={(bool) => formMethods.setValue("periodType", bool ? "ROLLING" : "UNLIMITED")}>
+            onCheckedChange={(bool) =>
+              formMethods.setValue("periodType", bool ? "ROLLING" : "UNLIMITED")
+            }
+          >
             <RadioGroup.Root
               defaultValue={watchPeriodType}
               value={watchPeriodType}
-              onValueChange={(val) => formMethods.setValue("periodType", val as PeriodType)}>
+              onValueChange={(val) => formMethods.setValue("periodType", val as PeriodType)}
+            >
               {PERIOD_TYPES.filter((opt) =>
-                periodTypeLocked.disabled ? watchPeriodType === opt.type : true
+                periodTypeLocked.disabled ? watchPeriodType === opt.type : true,
               ).map((period) => {
                 if (period.type === "UNLIMITED") return null;
                 return (
                   <div
                     className={classNames(
                       "text-default mb-2 flex flex-wrap items-center text-sm",
-                      watchPeriodType === "UNLIMITED" && "pointer-events-none opacity-30"
+                      watchPeriodType === "UNLIMITED" && "pointer-events-none opacity-30",
                     )}
-                    key={period.type}>
+                    key={period.type}
+                  >
                     {!periodTypeLocked.disabled && (
                       <RadioGroup.Item
                         id={period.type}
                         value={period.type}
-                        className="min-w-4 bg-default border-default flex h-4 w-4 cursor-pointer items-center rounded-full border focus:border-2 focus:outline-none ltr:mr-2 rtl:ml-2">
+                        className="min-w-4 bg-default border-default flex h-4 w-4 cursor-pointer items-center rounded-full border focus:border-2 focus:outline-none ltr:mr-2 rtl:ml-2"
+                      >
                         <RadioGroup.Indicator className="after:bg-inverted relative flex h-4 w-4 items-center justify-center after:block after:h-2 after:w-2 after:rounded-full" />
                       </RadioGroup.Item>
                     )}
@@ -405,12 +427,12 @@ export const EventLimitsTab = ({ eventType }: Pick<EventTypeSetupProps, "eventTy
                           onChange={(opt) => {
                             formMethods.setValue(
                               "periodCountCalendarDays",
-                              opt?.value.toString() as "0" | "1"
+                              opt?.value.toString() as "0" | "1",
                             );
                           }}
                           defaultValue={
                             optionsPeriod.find(
-                              (opt) => opt.value === (eventType.periodCountCalendarDays ? 1 : 0)
+                              (opt) => opt.value === (eventType.periodCountCalendarDays ? 1 : 0),
                             ) ?? optionsPeriod[0]
                           }
                         />
@@ -438,7 +460,9 @@ export const EventLimitsTab = ({ eventType }: Pick<EventTypeSetupProps, "eventTy
                         />
                       </div>
                     )}
-                    {period.suffix ? <span className="me-2 ms-2">&nbsp;{period.suffix}</span> : null}
+                    {period.suffix ? (
+                      <span className="me-2 ms-2">&nbsp;{period.suffix}</span>
+                    ) : null}
                   </div>
                 );
               })}
@@ -457,7 +481,8 @@ export const EventLimitsTab = ({ eventType }: Pick<EventTypeSetupProps, "eventTy
           if (!active) {
             formMethods.setValue("offsetStart", 0);
           }
-        }}>
+        }}
+      >
         <TextField
           required
           type="number"
@@ -466,8 +491,12 @@ export const EventLimitsTab = ({ eventType }: Pick<EventTypeSetupProps, "eventTy
           {...formMethods.register("offsetStart")}
           addOnSuffix={<>{t("minutes")}</>}
           hint={t("offset_start_description", {
-            originalTime: offsetOriginalTime.toLocaleTimeString(i18n.language, { timeStyle: "short" }),
-            adjustedTime: offsetAdjustedTime.toLocaleTimeString(i18n.language, { timeStyle: "short" }),
+            originalTime: offsetOriginalTime.toLocaleTimeString(i18n.language, {
+              timeStyle: "short",
+            }),
+            adjustedTime: offsetAdjustedTime.toLocaleTimeString(i18n.language, {
+              timeStyle: "short",
+            }),
           })}
         />
       </SettingsToggle>
@@ -531,7 +560,12 @@ const IntervalLimitItem = ({
         onChange={onIntervalSelect}
       />
       {hasDeleteButton && !disabled && (
-        <Button variant="icon" StartIcon={Trash} color="destructive" onClick={() => onDelete(limitKey)} />
+        <Button
+          variant="icon"
+          StartIcon={Trash}
+          color="destructive"
+          onClick={() => onDelete(limitKey)}
+        />
       )}
     </div>
   );
@@ -570,7 +604,7 @@ const IntervalLimitsManager = <K extends "durationLimits" | "bookingLimits">({
           const currentKeys = Object.keys(watchIntervalLimits);
 
           const [rest] = Object.values(INTERVAL_LIMIT_OPTIONS).filter(
-            (option) => !currentKeys.includes(option.value)
+            (option) => !currentKeys.includes(option.value),
           );
           if (!rest || !currentKeys.length) return;
           //currentDurationLimits is always defined so can be casted
@@ -604,7 +638,7 @@ const IntervalLimitsManager = <K extends "durationLimits" | "bookingLimits">({
                       textFieldSuffix={textFieldSuffix}
                       hasDeleteButton={Object.keys(currentIntervalLimits).length > 1}
                       selectOptions={INTERVAL_LIMIT_OPTIONS.filter(
-                        (option) => !Object.keys(currentIntervalLimits).includes(option.value)
+                        (option) => !Object.keys(currentIntervalLimits).includes(option.value),
                       )}
                       onLimitChange={(intervalLimitKey, val) =>
                         // @ts-expect-error FIXME Fix these typings
@@ -631,11 +665,13 @@ const IntervalLimitsManager = <K extends "durationLimits" | "bookingLimits">({
                     />
                   );
                 })}
-            {currentIntervalLimits && Object.keys(currentIntervalLimits).length <= 3 && !disabled && (
-              <Button color="minimal" StartIcon={Plus} onClick={addLimit}>
-                {t("add_limit")}
-              </Button>
-            )}
+            {currentIntervalLimits &&
+              Object.keys(currentIntervalLimits).length <= 3 &&
+              !disabled && (
+                <Button color="minimal" StartIcon={Plus} onClick={addLimit}>
+                  {t("add_limit")}
+                </Button>
+              )}
           </ul>
         );
       }}

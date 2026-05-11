@@ -16,7 +16,10 @@ type GetMemberAvailabilityOptions = {
   input: TGetMemberAvailabilityInputSchema;
 };
 
-export const getMemberAvailabilityHandler = async ({ ctx, input }: GetMemberAvailabilityOptions) => {
+export const getMemberAvailabilityHandler = async ({
+  ctx,
+  input,
+}: GetMemberAvailabilityOptions) => {
   const team = await isTeamMember(ctx.user?.id, input.teamId);
   if (!team) throw new TRPCError({ code: "UNAUTHORIZED" });
 
@@ -51,6 +54,6 @@ export const getMemberAvailabilityHandler = async ({ ctx, input }: GetMemberAvai
       dateFrom: input.dateFrom,
       dateTo: input.dateTo,
     },
-    { user: member.user }
+    { user: member.user },
   );
 };

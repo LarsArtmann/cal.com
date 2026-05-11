@@ -11,7 +11,15 @@ import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { trpc } from "@calcom/trpc/react";
 import type { App as AppType } from "@calcom/types/App";
 import { Badge, Button, showToast, SkeletonButton, SkeletonText } from "@calcom/ui";
-import { BookOpen, Check, ExternalLink, File, Flag, Mail, Shield } from "@calcom/ui/components/icon";
+import {
+  BookOpen,
+  Check,
+  ExternalLink,
+  File,
+  Flag,
+  Mail,
+  Shield,
+} from "@calcom/ui/components/icon";
 
 import { InstallAppButtonChild } from "./InstallAppButtonChild";
 
@@ -77,7 +85,8 @@ export const AppPage = ({
       showToast(t("app_successfully_installed"), "success");
     },
     onError: (error) => {
-      if (error instanceof Error) showToast(error.message || t("app_could_not_be_installed"), "error");
+      if (error instanceof Error)
+        showToast(error.message || t("app_could_not_be_installed"), "error");
     },
   });
 
@@ -95,11 +104,13 @@ export const AppPage = ({
       onSettled(data) {
         const credentialsCount = data?.credentials.length || 0;
         setShowDisconnectIntegration(
-          data?.userAdminTeams.length ? credentialsCount >= data?.userAdminTeams.length : credentialsCount > 0
+          data?.userAdminTeams.length
+            ? credentialsCount >= data?.userAdminTeams.length
+            : credentialsCount > 0,
         );
         setExistingCredentials(data?.credentials.map((credential) => credential.id) || []);
       },
-    }
+    },
   );
 
   const dependencyData = trpc.viewer.appsRouter.queryForDependencies.useQuery(dependencies, {
@@ -124,7 +135,8 @@ export const AppPage = ({
               typeof descriptionItem === "object" ? (
                 <div
                   key={`iframe-${index}`}
-                  className="mr-4 max-h-full min-h-[315px] min-w-[90%] max-w-full snap-center last:mb-0 lg:mb-4 lg:mr-0 [&_iframe]:h-full [&_iframe]:min-h-[315px] [&_iframe]:w-full">
+                  className="mr-4 max-h-full min-h-[315px] min-w-[90%] max-w-full snap-center last:mb-0 lg:mb-4 lg:mr-0 [&_iframe]:h-full [&_iframe]:min-h-[315px] [&_iframe]:w-full"
+                >
                   <iframe allowFullScreen {...descriptionItem.iframe} />
                 </div>
               ) : (
@@ -134,7 +146,7 @@ export const AppPage = ({
                   alt={`Screenshot of app ${name}`}
                   className="mr-4 h-auto max-h-80 max-w-[90%] snap-center rounded-md object-contain last:mb-0 md:max-h-min lg:mb-4 lg:mr-0  lg:max-w-full"
                 />
-              )
+              ),
             )
           ) : (
             <SkeletonText />
@@ -144,13 +156,17 @@ export const AppPage = ({
       <div
         className={classNames(
           "sticky top-0 -mt-4 max-w-xl basis-2/5 pb-12 text-sm lg:pb-0",
-          hasDescriptionItems && "lg:ml-8"
-        )}>
+          hasDescriptionItems && "lg:ml-8",
+        )}
+      >
         <div className="mb-8 flex pt-4">
           <header>
             <div className="mb-4 flex items-center">
               <img
-                className={classNames(logo.includes("-dark") && "dark:invert", "min-h-16 min-w-16 h-16 w-16")}
+                className={classNames(
+                  logo.includes("-dark") && "dark:invert",
+                  "min-h-16 min-w-16 h-16 w-16",
+                )}
                 src={logo}
                 alt={name}
               />
@@ -159,7 +175,8 @@ export const AppPage = ({
             <h2 className="text-default text-sm font-medium">
               <Link
                 href={`categories/${categories[0]}`}
-                className="bg-subtle text-emphasis rounded-md p-1 text-xs capitalize">
+                className="bg-subtle text-emphasis rounded-md p-1 text-xs capitalize"
+              >
                 {categories[0]}
               </Link>{" "}
               •{" "}
@@ -264,7 +281,9 @@ export const AppPage = ({
 
         {price !== 0 && (
           <span className="block text-right">
-            {feeType === "usage-based" ? commission + "% + " + priceInDollar + "/booking" : priceInDollar}
+            {feeType === "usage-based"
+              ? commission + "% + " + priceInDollar + "/booking"
+              : priceInDollar}
             {feeType === "monthly" && "/" + t("month")}
           </span>
         )}
@@ -298,7 +317,8 @@ export const AppPage = ({
                 target="_blank"
                 rel="noreferrer"
                 className="text-emphasis text-sm font-normal no-underline hover:underline"
-                href={docs}>
+                href={docs}
+              >
                 <BookOpen className="text-subtle -mt-1 mr-1 inline h-4 w-4" />
                 {t("documentation")}
               </a>
@@ -310,7 +330,8 @@ export const AppPage = ({
                 target="_blank"
                 rel="noreferrer"
                 className="text-emphasis font-normal no-underline hover:underline"
-                href={website}>
+                href={website}
+              >
                 <ExternalLink className="text-subtle -mt-px mr-1 inline h-4 w-4" />
                 {website.replace("https://", "")}
               </a>
@@ -322,7 +343,8 @@ export const AppPage = ({
                 target="_blank"
                 rel="noreferrer"
                 className="text-emphasis font-normal no-underline hover:underline"
-                href={"mailto:" + email}>
+                href={"mailto:" + email}
+              >
                 <Mail className="text-subtle -mt-px mr-1 inline h-4 w-4" />
 
                 {email}
@@ -335,7 +357,8 @@ export const AppPage = ({
                 target="_blank"
                 rel="noreferrer"
                 className="text-emphasis font-normal no-underline hover:underline"
-                href={tos}>
+                href={tos}
+              >
                 <File className="text-subtle -mt-px mr-1 inline h-4 w-4" />
                 {t("terms_of_service")}
               </a>
@@ -347,7 +370,8 @@ export const AppPage = ({
                 target="_blank"
                 rel="noreferrer"
                 className="text-emphasis font-normal no-underline hover:underline"
-                href={privacy}>
+                href={privacy}
+              >
                 <Shield className="text-subtle -mt-px mr-1 inline h-4 w-4" />
                 {t("privacy_policy")}
               </a>

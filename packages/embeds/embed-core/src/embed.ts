@@ -125,7 +125,7 @@ function getColorScheme(el: Element) {
 
 function withColorScheme(
   queryObject: PrefillAndIframeAttrsConfig & { guest?: string | string[] },
-  containerEl: Element
+  containerEl: Element,
 ) {
   // If color-scheme not explicitly configured, keep it same as the webpage that has the iframe
   // This is done to avoid having an opaque background of iframe that arises when they aren't same. We really need to have a transparent background to make embed part of the page
@@ -143,7 +143,9 @@ function withColorScheme(
 type SingleInstructionMap = {
   // TODO: This makes api("on", {}) loose it's generic type. Find a way to fix it.
   // e.g. api("on", { action: "__dimensionChanged", callback: (e) => { /* `e.detail.data` has all possible values for all events/actions */} });
-  [K in keyof CalApi]: CalApi[K] extends (...args: never[]) => void ? [K, ...Parameters<CalApi[K]>] : never;
+  [K in keyof CalApi]: CalApi[K] extends (...args: never[]) => void
+    ? [K, ...Parameters<CalApi[K]>]
+    : never;
 };
 
 type SingleInstruction = SingleInstructionMap[keyof SingleInstructionMap];
@@ -154,7 +156,10 @@ export type InstructionQueue = Instruction[];
 /**
  * All types of config that are critical to be processed as soon as possible are provided as query params to the iframe
  */
-export type PrefillAndIframeAttrsConfig = Record<string, string | string[] | Record<string, string>> & {
+export type PrefillAndIframeAttrsConfig = Record<
+  string,
+  string | string[] | Record<string, string>
+> & {
   // TODO: iframeAttrs shouldn't be part of it as that configures the iframe element and not the iframed app.
   iframeAttrs?: Record<string, string> & {
     id?: string;
@@ -281,7 +286,7 @@ export class Cal {
     // cal.com has rewrite issues on Safari that sometimes cause 404 for assets.
     const originToUse = (calOrigin || config.calOrigin || "").replace(
       "https://cal.com",
-      "https://app.cal.com"
+      "https://app.cal.com",
     );
     const urlInstance = new URL(`${originToUse}/${calLink}`);
     if (!urlInstance.pathname.endsWith("embed")) {
@@ -328,7 +333,7 @@ export class Cal {
       // Maybe we can derive targetOrigin from __config.origin
       this.iframe.contentWindow.postMessage(
         { originator: "CAL", method: doInIframeArg.method, arg: doInIframeArg.arg },
-        "*"
+        "*",
       );
     }
   }
@@ -686,7 +691,10 @@ class CalApi {
 
 // This is a full fledged Cal instance but doesn't have ns property because it would be nested inside an ns instance already
 export interface GlobalCalWithoutNs {
-  <T extends keyof SingleInstructionMap>(methodName: T, ...arg: Rest<SingleInstructionMap[T]>): void;
+  <T extends keyof SingleInstructionMap>(
+    methodName: T,
+    ...arg: Rest<SingleInstructionMap[T]>
+  ): void;
   /** Marks that the embed.js is loaded. Avoids re-downloading it. */
   loaded?: boolean;
   /** Maintains a queue till the time embed.js isn't loaded */
@@ -755,7 +763,8 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  const modalUniqueId = (targetEl.dataset.uniqueId = targetEl.dataset.uniqueId || String(Date.now()));
+  const modalUniqueId = (targetEl.dataset.uniqueId =
+    targetEl.dataset.uniqueId || String(Date.now()));
   const namespace = targetEl.dataset.calNamespace;
   const configString = targetEl.dataset.calConfig || "";
   const calOrigin = targetEl.dataset.calOrigin || "";

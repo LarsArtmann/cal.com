@@ -6,7 +6,7 @@ const variantSchema = z.nativeEnum(AppCategories);
 
 export default function getInstalledAppPath(
   { variant, slug }: { variant?: string; slug?: string },
-  locationSearch = ""
+  locationSearch = "",
 ): string {
   if (!variant) return `/apps/installed${locationSearch}`;
 

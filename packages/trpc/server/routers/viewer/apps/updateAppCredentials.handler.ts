@@ -32,7 +32,11 @@ export const updateAppCredentialsHandler = async ({ ctx, input }: UpdateAppCrede
     });
   }
 
-  const validatedKeys = await handleCustomValidations({ ctx, input, appId: credential.appId || "" });
+  const validatedKeys = await handleCustomValidations({
+    ctx,
+    input,
+    appId: credential.appId || "",
+  });
 
   const updated = await prisma.credential.update({
     where: {

@@ -11,7 +11,7 @@ import { defaultLocations } from "./locations";
 
 export async function getLocationGroupedOptions(
   userOrTeamId: { userId: number } | { teamId: number },
-  t: TFunction
+  t: TFunction,
 ) {
   const apps: Record<
     string,
@@ -72,7 +72,9 @@ export async function getLocationGroupedOptions(
     },
   });
 
-  const integrations = await getEnabledAppsFromCredentials(credentials, { filterOnCredentials: true });
+  const integrations = await getEnabledAppsFromCredentials(credentials, {
+    filterOnCredentials: true,
+  });
 
   integrations.forEach((app) => {
     // All apps that are labeled as a locationOption are video apps.
@@ -80,7 +82,9 @@ export async function getLocationGroupedOptions(
       // All apps that are labeled as a locationOption are video apps. Extract the secondary category if available
       let groupByCategory =
         app.categories.length >= 2
-          ? app.categories.find((groupByCategory) => !defaultVideoAppCategories.includes(groupByCategory))
+          ? app.categories.find(
+              (groupByCategory) => !defaultVideoAppCategories.includes(groupByCategory),
+            )
           : app.categories[0] || app.category;
       if (!groupByCategory) groupByCategory = AppCategories.conferencing;
 

@@ -5,7 +5,15 @@ import { useForm } from "react-hook-form";
 import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
 import { useCallbackRef } from "@calcom/lib/hooks/useCallbackRef";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button, Dialog, DialogContent, DialogFooter, Form, PasswordField, showToast } from "@calcom/ui";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  Form,
+  PasswordField,
+  showToast,
+} from "@calcom/ui";
 
 import TwoFactor from "@components/auth/TwoFactor";
 
@@ -49,7 +57,12 @@ interface EnableTwoFactorValues {
   totpCode: string;
 }
 
-const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: EnableTwoFactorModalProps) => {
+const EnableTwoFactorModal = ({
+  onEnable,
+  onCancel,
+  open,
+  onOpenChange,
+}: EnableTwoFactorModalProps) => {
   const { t } = useLocale();
   const form = useForm<EnableTwoFactorValues>();
 
@@ -117,7 +130,10 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
     }
   }
 
-  async function handleEnable({ totpCode }: EnableTwoFactorValues, e: BaseSyntheticEvent | undefined) {
+  async function handleEnable(
+    { totpCode }: EnableTwoFactorValues,
+    e: BaseSyntheticEvent | undefined,
+  ) {
     e?.preventDefault();
 
     if (isSubmitting) {
@@ -167,7 +183,8 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
       <DialogContent
         title={step === SetupStep.DisplayBackupCodes ? t("backup_codes") : t("enable_2fa")}
         description={setupDescriptions[step]}
-        type="creation">
+        type="creation"
+      >
         <WithStep step={SetupStep.ConfirmPassword} current={step}>
           <form onSubmit={handleSetup}>
             <div className="mb-4">
@@ -224,7 +241,8 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
                 onClick={() => {
                   onCancel();
                   resetState();
-                }}>
+                }}
+              >
                 {t("cancel")}
               </Button>
             ) : null}
@@ -234,7 +252,8 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
                 className="me-2 ms-2"
                 onClick={handleSetup}
                 loading={isSubmitting}
-                disabled={password.length === 0 || isSubmitting}>
+                disabled={password.length === 0 || isSubmitting}
+              >
                 {t("continue")}
               </Button>
             </WithStep>
@@ -243,7 +262,8 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
                 type="submit"
                 data-testid="goto-otp-screen"
                 className="me-2 ms-2"
-                onClick={() => setStep(SetupStep.EnterTotpCode)}>
+                onClick={() => setStep(SetupStep.EnterTotpCode)}
+              >
                 {t("continue")}
               </Button>
             </WithStep>
@@ -253,7 +273,8 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
                 className="me-2 ms-2"
                 data-testid="enable-2fa"
                 loading={isSubmitting}
-                disabled={isSubmitting}>
+                disabled={isSubmitting}
+              >
                 {t("enable")}
               </Button>
             </WithStep>
@@ -266,7 +287,8 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
                     e.preventDefault();
                     resetState();
                     onEnable();
-                  }}>
+                  }}
+                >
                   {t("close")}
                 </Button>
                 <Button
@@ -276,7 +298,8 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
                     e.preventDefault();
                     navigator.clipboard.writeText(backupCodes.map(formatBackupCode).join("\n"));
                     showToast(t("backup_codes_copied"), "success");
-                  }}>
+                  }}
+                >
                   {t("copy")}
                 </Button>
                 <a download="cal-backup-codes.txt" href={backupCodesUrl}>

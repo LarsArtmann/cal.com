@@ -39,8 +39,9 @@ export function DisplayInfo<T extends boolean>({
               <span
                 className={classNames(
                   "text-emphasis inline-flex items-center gap-1 font-normal leading-5",
-                  asBadge ? "text-xs" : "text-sm"
-                )}>
+                  asBadge ? "text-xs" : "text-sm",
+                )}
+              >
                 {v}
                 {displayCopy && (
                   <Button

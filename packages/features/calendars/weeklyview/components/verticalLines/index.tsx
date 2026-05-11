@@ -16,7 +16,8 @@ export const VeritcalLines = ({ days }: { days: dayjs.Dayjs[] }) => {
       dir={direction}
       style={{
         direction: direction,
-      }}>
+      }}
+    >
       {days.map((_, i) => (
         <div
           key={`Key_vertical_${i}`}

@@ -18,7 +18,15 @@ interface ICalendarSwitchProps {
   credentialId: number;
 }
 const CalendarSwitch = (props: ICalendarSwitchProps) => {
-  const { title, externalId, type, isChecked, name, isLastItemInList = false, credentialId } = props;
+  const {
+    title,
+    externalId,
+    type,
+    isChecked,
+    name,
+    isLastItemInList = false,
+    credentialId,
+  } = props;
   const [checkedInternal, setCheckedInternal] = useState(isChecked);
   const utils = trpc.useContext();
   const { t } = useLocale();
@@ -69,7 +77,7 @@ const CalendarSwitch = (props: ICalendarSwitchProps) => {
         setCheckedInternal(false);
         showToast(`Something went wrong when toggling "${title}""`, "error");
       },
-    }
+    },
   );
   return (
     <div className={classNames("my-2 flex flex-row items-center")}>
@@ -92,7 +100,9 @@ const CalendarSwitch = (props: ICalendarSwitchProps) => {
           {t("adding_events_to")}
         </span>
       )}
-      {mutation.isLoading && <RotateCw className="text-muted h-4 w-4 animate-spin ltr:ml-1 rtl:mr-1" />}
+      {mutation.isLoading && (
+        <RotateCw className="text-muted h-4 w-4 animate-spin ltr:ml-1 rtl:mr-1" />
+      )}
     </div>
   );
 };

@@ -20,7 +20,12 @@ import { Header } from "./components/Header";
 import { LargeCalendar } from "./components/LargeCalendar";
 import { BookerSection } from "./components/Section";
 import { Away, NotFound } from "./components/Unavailable";
-import { extraDaysConfig, fadeInLeft, getBookerSizeClassNames, useBookerResizeAnimation } from "./config";
+import {
+  extraDaysConfig,
+  fadeInLeft,
+  getBookerSizeClassNames,
+  useBookerResizeAnimation,
+} from "./config";
 import { useBookerStore, useInitializeBookerStore } from "./store";
 import type { BookerLayout, BookerProps } from "./types";
 import { useEvent, useScheduleForEvent } from "./utils/event";
@@ -61,9 +66,13 @@ const BookerComponent = ({
   const timeslotsRef = useRef<HTMLDivElement>(null);
   const StickyOnDesktop = isMobile ? "div" : StickyBox;
   const rescheduleUid =
-    typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("rescheduleUid") : null;
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("rescheduleUid")
+      : null;
   const bookingUid =
-    typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("bookingUid") : null;
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("bookingUid")
+      : null;
   const event = useEvent();
   const [_layout, setLayout] = useBookerStore((state) => [state.layout, state.setLayout], shallow);
 
@@ -75,27 +84,34 @@ const BookerComponent = ({
 
   // In Embed we give preference to embed configuration for the layout.If that's not set, we use the App configuration for the event layout
   // But if it's mobile view, there is only one layout supported which is 'mobile'
-  const layout = isEmbed ? (isMobile ? "mobile" : validateLayout(embedUiConfig.layout) || _layout) : _layout;
+  const layout = isEmbed
+    ? isMobile
+      ? "mobile"
+      : validateLayout(embedUiConfig.layout) || _layout
+    : _layout;
   const columnViewExtraDays = useRef<number>(
-    isTablet ? extraDaysConfig[layout].tablet : extraDaysConfig[layout].desktop
+    isTablet ? extraDaysConfig[layout].tablet : extraDaysConfig[layout].desktop,
   );
 
-  const [bookerState, setBookerState] = useBookerStore((state) => [state.state, state.setState], shallow);
+  const [bookerState, setBookerState] = useBookerStore(
+    (state) => [state.state, state.setState],
+    shallow,
+  );
   const selectedDate = useBookerStore((state) => state.selectedDate);
   const [selectedTimeslot, setSelectedTimeslot] = useBookerStore(
     (state) => [state.selectedTimeslot, state.setSelectedTimeslot],
-    shallow
+    shallow,
   );
   // const seatedEventData = useBookerStore((state) => state.seatedEventData);
   const [seatedEventData, setSeatedEventData] = useBookerStore(
     (state) => [state.seatedEventData, state.setSeatedEventData],
-    shallow
+    shallow,
   );
 
   const date = dayjs(selectedDate).format("YYYY-MM-DD");
 
   const nonEmptyScheduleDays = useNonEmptyScheduleDays(schedule?.data?.slots).filter(
-    (slot) => dayjs(selectedDate).diff(slot, "day") <= 0
+    (slot) => dayjs(selectedDate).diff(slot, "day") <= 0,
   );
 
   const extraDays = isTablet ? extraDaysConfig[layout].tablet : extraDaysConfig[layout].desktop;
@@ -106,22 +122,25 @@ const BookerComponent = ({
     nonEmptyScheduleDays.length < extraDays
       ? (extraDays - nonEmptyScheduleDays.length + 1) * totalWeekDays
       : nonEmptyScheduleDays.length === extraDays
-      ? totalWeekDays
-      : 0;
+        ? totalWeekDays
+        : 0;
 
   // Taking one more available slot(extraDays + 1) to calculate the no of days in between, that next and prev button need to shift.
   const availableSlots = nonEmptyScheduleDays.slice(0, extraDays + 1);
   if (nonEmptyScheduleDays.length !== 0)
     columnViewExtraDays.current =
-      Math.abs(dayjs(selectedDate).diff(availableSlots[availableSlots.length - 2], "day")) + addonDays;
+      Math.abs(dayjs(selectedDate).diff(availableSlots[availableSlots.length - 2], "day")) +
+      addonDays;
   const prefetchNextMonth =
     dayjs(date).month() !== dayjs(date).add(columnViewExtraDays.current, "day").month();
   const monthCount =
-    dayjs(date).add(1, "month").month() !== dayjs(date).add(columnViewExtraDays.current, "day").month()
+    dayjs(date).add(1, "month").month() !==
+    dayjs(date).add(columnViewExtraDays.current, "day").month()
       ? 2
       : undefined;
   const nextSlots =
-    Math.abs(dayjs(selectedDate).diff(availableSlots[availableSlots.length - 1], "day")) + addonDays;
+    Math.abs(dayjs(selectedDate).diff(availableSlots[availableSlots.length - 1], "day")) +
+    addonDays;
 
   // I would expect isEmbed to be not needed here as it's handled in derived variable layout, but somehow removing it breaks the views.
   const defaultLayout = isEmbed
@@ -222,8 +241,9 @@ const BookerComponent = ({
           // In a popup embed, if someone clicks outside the main(having main class or main tag), it closes the embed
           "main",
           "text-default flex min-h-full w-full flex-col items-center",
-          layout === BookerLayouts.MONTH_VIEW ? "overflow-visible" : "overflow-clip"
-        )}>
+          layout === BookerLayouts.MONTH_VIEW ? "overflow-visible" : "overflow-clip",
+        )}
+      >
         <div
           ref={animationScope}
           className={classNames(
@@ -233,20 +253,26 @@ const BookerComponent = ({
             // We remove border only when the content covers entire viewport. Because in embed, it can almost never be the case that it covers entire viewport, we show the border there
             (layout === BookerLayouts.MONTH_VIEW || isEmbed) && "border-subtle rounded-md border",
             !isEmbed && "sm:transition-[width] sm:duration-300",
-            isEmbed && layout === BookerLayouts.MONTH_VIEW && "border-booker sm:border-booker-width",
-            !isEmbed && layout === BookerLayouts.MONTH_VIEW && "border-subtle"
-          )}>
+            isEmbed &&
+              layout === BookerLayouts.MONTH_VIEW &&
+              "border-booker sm:border-booker-width",
+            !isEmbed && layout === BookerLayouts.MONTH_VIEW && "border-subtle",
+          )}
+        >
           <AnimatePresence>
             <BookerSection
               area="header"
               className={classNames(
                 layout === BookerLayouts.MONTH_VIEW && "fixed top-4 z-10 ltr:right-4 rtl:left-4",
                 (layout === BookerLayouts.COLUMN_VIEW || layout === BookerLayouts.WEEK_VIEW) &&
-                  "bg-default dark:bg-muted sticky top-0 z-10"
-              )}>
+                  "bg-default dark:bg-muted sticky top-0 z-10",
+              )}
+            >
               <Header
                 enabledLayouts={bookerLayouts.enabledLayouts}
-                extraDays={layout === BookerLayouts.COLUMN_VIEW ? columnViewExtraDays.current : extraDays}
+                extraDays={
+                  layout === BookerLayouts.COLUMN_VIEW ? columnViewExtraDays.current : extraDays
+                }
                 isMobile={isMobile}
                 nextSlots={nextSlots}
               />
@@ -256,11 +282,13 @@ const BookerComponent = ({
               className={classNames(
                 "relative z-10 flex [grid-area:meta]",
                 // Important: In Embed if we make min-height:100vh, it will cause the height to continuously keep on increasing
-                layout !== BookerLayouts.MONTH_VIEW && !isEmbed && "sm:min-h-screen"
-              )}>
+                layout !== BookerLayouts.MONTH_VIEW && !isEmbed && "sm:min-h-screen",
+              )}
+            >
               <BookerSection
                 area="meta"
-                className="max-w-screen flex w-full flex-col md:w-[var(--booker-meta-width)]">
+                className="max-w-screen flex w-full flex-col md:w-[var(--booker-meta-width)]"
+              >
                 <EventMeta />
                 {layout !== BookerLayouts.MONTH_VIEW &&
                   !(layout === "mobile" && bookerState === "booking") && (
@@ -276,12 +304,17 @@ const BookerComponent = ({
               area="main"
               className="border-subtle sticky top-0 ml-[-1px] h-full p-6 md:w-[var(--booker-main-width)] md:border-l"
               {...fadeInLeft}
-              visible={bookerState === "booking" && !shouldShowFormInDialog}>
+              visible={bookerState === "booking" && !shouldShowFormInDialog}
+            >
               <BookEventForm
                 onCancel={() => {
                   setSelectedTimeslot(null);
                   if (seatedEventData.bookingUid) {
-                    setSeatedEventData({ ...seatedEventData, bookingUid: undefined, attendees: undefined });
+                    setSeatedEventData({
+                      ...seatedEventData,
+                      bookingUid: undefined,
+                      attendees: undefined,
+                    });
                   }
                 }}
               />
@@ -293,7 +326,8 @@ const BookerComponent = ({
               visible={bookerState !== "booking" && layout === BookerLayouts.MONTH_VIEW}
               {...fadeInLeft}
               initial="visible"
-              className="md:border-subtle ml-[-1px] h-full flex-shrink px-5 py-3 md:border-l lg:w-[var(--booker-main-width)]">
+              className="md:border-subtle ml-[-1px] h-full flex-shrink px-5 py-3 md:border-l lg:w-[var(--booker-main-width)]"
+            >
               <DatePicker />
             </BookerSection>
 
@@ -302,7 +336,8 @@ const BookerComponent = ({
               area="main"
               visible={layout === BookerLayouts.WEEK_VIEW}
               className="border-subtle sticky top-0 ml-[-1px] h-full md:border-l"
-              {...fadeInLeft}>
+              {...fadeInLeft}
+            >
               <LargeCalendar extraDays={extraDays} />
             </BookerSection>
 
@@ -317,10 +352,11 @@ const BookerComponent = ({
                 "border-subtle rtl:border-default flex h-full w-full flex-col overflow-x-auto px-5 py-3 pb-0 rtl:border-r ltr:md:border-l",
                 layout === BookerLayouts.MONTH_VIEW &&
                   "scroll-bar h-full overflow-auto md:w-[var(--booker-timeslots-width)]",
-                layout !== BookerLayouts.MONTH_VIEW && "sticky top-0"
+                layout !== BookerLayouts.MONTH_VIEW && "sticky top-0",
               )}
               ref={timeslotsRef}
-              {...fadeInLeft}>
+              {...fadeInLeft}
+            >
               <AvailableTimeSlots
                 extraDays={extraDays}
                 limitHeight={layout === BookerLayouts.MONTH_VIEW}
@@ -338,8 +374,9 @@ const BookerComponent = ({
           className={classNames(
             "-z-10 mb-6 mt-auto pt-6 [&_img]:h-[15px]",
             hasDarkBackground ? "dark" : "",
-            layout === BookerLayouts.MONTH_VIEW ? "block" : "hidden"
-          )}>
+            layout === BookerLayouts.MONTH_VIEW ? "block" : "hidden",
+          )}
+        >
           {!hideBranding ? <PoweredBy logoOnly /> : null}
         </m.span>
       </div>

@@ -30,7 +30,8 @@ export function OrgUpgradeBanner() {
           className="border-b border-b-black"
           onClick={() => {
             publishOrgMutation.mutate();
-          }}>
+          }}
+        >
           {t("upgrade_banner_action")}
         </button>
       }

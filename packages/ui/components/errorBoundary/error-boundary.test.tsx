@@ -8,7 +8,7 @@ describe("ErrorBoundary", () => {
     const { container } = render(
       <ErrorBoundary>
         <div>Child Component</div>
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     const childElement = container.querySelector("div");
@@ -28,7 +28,7 @@ describe("ErrorBoundary", () => {
     render(
       <ErrorBoundary message="Error Message">
         <ErrorThrowingComponent />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     const errorMessage = screen.getByText("Error Message");

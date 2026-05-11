@@ -21,7 +21,8 @@ const StepDone = (props: {
         props.setIsLoading(true);
         e.preventDefault();
         router.replace(props.nextStepPath);
-      }}>
+      }}
+    >
       <div className="min-h-36 my-6 flex flex-col items-center justify-center">
         <div className="dark:bg-default flex h-[72px] w-[72px] items-center justify-center rounded-full bg-gray-600">
           <Check className="text-inverted dark:bg-default dark:text-default inline-block h-10 w-10" />

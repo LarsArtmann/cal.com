@@ -41,7 +41,8 @@ export const BaseEmailHtml = (props: {
                   padding: "0px",
                   paddingTop: "40px",
                   textAlign: "center",
-                }}>
+                }}
+              >
                 <RawHtml
                   html={`<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr></tr></table><![endif]-->`}
                 />
@@ -56,7 +57,8 @@ export const BaseEmailHtml = (props: {
               border: "1px solid #E5E7EB",
               padding: "2px",
               backgroundColor: "#FFFFFF",
-            }}>
+            }}
+          >
             {props.headerType && (
               <EmailSchedulingBodyHeader headerType={props.headerType} headStyles={{ border: 0 }} />
             )}
@@ -80,18 +82,21 @@ export const BaseEmailHtml = (props: {
                 backgroundColor: "#FFFFFF",
                 margin: "0px auto",
                 maxWidth: 600,
-              }}>
+              }}
+            >
               <Row
                 align="center"
                 border="0"
-                style={{ background: "#FFFFFF", backgroundColor: "#FFFFFF", width: "100%" }}>
+                style={{ background: "#FFFFFF", backgroundColor: "#FFFFFF", width: "100%" }}
+              >
                 <td
                   style={{
                     direction: "ltr",
                     fontSize: 0,
                     padding: 0,
                     textAlign: "center",
-                  }}>
+                  }}
+                >
                   <RawHtml
                     html={`<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td className="" style="vertical-align:top;width:598px;" ><![endif]-->`}
                   />
@@ -104,9 +109,13 @@ export const BaseEmailHtml = (props: {
                       display: "inline-block",
                       verticalAlign: "top",
                       width: "100%",
-                    }}>
+                    }}
+                  >
                     <Row border="0" style={{ verticalAlign: "top" }} width="100%">
-                      <td align="left" style={{ fontSize: 0, padding: "10px 25px", wordBreak: "break-word" }}>
+                      <td
+                        align="left"
+                        style={{ fontSize: 0, padding: "10px 25px", wordBreak: "break-word" }}
+                      >
                         <div
                           style={{
                             fontFamily: "Roboto, Helvetica, sans-serif",
@@ -115,7 +124,8 @@ export const BaseEmailHtml = (props: {
                             lineHeight: 1,
                             textAlign: "left",
                             color: "#101010",
-                          }}>
+                          }}
+                        >
                           {props.children}
                         </div>
                       </td>
@@ -136,18 +146,21 @@ export const BaseEmailHtml = (props: {
                 backgroundColor: "#FFFFFF",
                 margin: "0px auto",
                 maxWidth: 600,
-              }}>
+              }}
+            >
               <Row
                 align="center"
                 border="0"
-                style={{ background: "#FFFFFF", backgroundColor: "#FFFFFF", width: "100%" }}>
+                style={{ background: "#FFFFFF", backgroundColor: "#FFFFFF", width: "100%" }}
+              >
                 <td
                   style={{
                     direction: "ltr",
                     fontSize: 0,
                     padding: 0,
                     textAlign: "center",
-                  }}>
+                  }}
+                >
                   <RawHtml
                     html={`<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td className="" style="vertical-align:top;width:598px;" ><![endif]-->`}
                   />
@@ -161,21 +174,24 @@ export const BaseEmailHtml = (props: {
                         display: "inline-block",
                         verticalAlign: "top",
                         width: "100%",
-                      }}>
+                      }}
+                    >
                       <BaseTable border="0" style={{ verticalAlign: "top" }} width="100%">
                         <tbody>
                           <tr>
                             <td
                               align="center"
                               vertical-align="middle"
-                              style={{ fontSize: 0, padding: "10px 25px", wordBreak: "break-word" }}>
+                              style={{ fontSize: 0, padding: "10px 25px", wordBreak: "break-word" }}
+                            >
                               {props.callToAction}
                             </td>
                           </tr>
                           <tr>
                             <td
                               align="left"
-                              style={{ fontSize: 0, padding: "10px 25px", wordBreak: "break-word" }}>
+                              style={{ fontSize: 0, padding: "10px 25px", wordBreak: "break-word" }}
+                            >
                               <div
                                 style={{
                                   fontFamily: "Roboto, Helvetica, sans-serif",

@@ -96,7 +96,10 @@ const EnableTwoFactorModal = ({ onEnable, onCancel }: EnableTwoFactorModalProps)
     }
   }
 
-  async function handleEnable({ totpCode }: EnableTwoFactorValues, e: BaseSyntheticEvent | undefined) {
+  async function handleEnable(
+    { totpCode }: EnableTwoFactorValues,
+    e: BaseSyntheticEvent | undefined,
+  ) {
     e?.preventDefault();
 
     if (isSubmitting) {
@@ -192,12 +195,17 @@ const EnableTwoFactorModal = ({ onEnable, onCancel }: EnableTwoFactorModalProps)
                 type="submit"
                 className="me-2 ms-2"
                 onClick={handleSetup}
-                disabled={password.length === 0 || isSubmitting}>
+                disabled={password.length === 0 || isSubmitting}
+              >
                 {t("continue")}
               </Button>
             </WithStep>
             <WithStep step={SetupStep.DisplayQrCode} current={step}>
-              <Button type="submit" className="me-2 ms-2" onClick={() => setStep(SetupStep.EnterTotpCode)}>
+              <Button
+                type="submit"
+                className="me-2 ms-2"
+                onClick={() => setStep(SetupStep.EnterTotpCode)}
+              >
                 {t("continue")}
               </Button>
             </WithStep>

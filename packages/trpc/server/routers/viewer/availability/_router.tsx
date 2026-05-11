@@ -45,9 +45,10 @@ export const availabilityRouter = router({
   }),
   listTeam: authedProcedure.input(ZListTeamAvailaiblityScheme).query(async ({ ctx, input }) => {
     if (!UNSTABLE_HANDLER_CACHE.listTeamAvailability) {
-      UNSTABLE_HANDLER_CACHE.listTeamAvailability = await import("./team/listTeamAvailability.handler").then(
-        (mod) => mod.listTeamAvailabilityHandler
-      );
+      UNSTABLE_HANDLER_CACHE.listTeamAvailability =
+        await import("./team/listTeamAvailability.handler").then(
+          (mod) => mod.listTeamAvailabilityHandler,
+        );
     }
 
     // Unreachable code but required for type safety

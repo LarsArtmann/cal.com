@@ -48,7 +48,10 @@ const generateHashedLink = (id: number) => {
   return uid;
 };
 
-export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, "eventType" | "team">) => {
+export const EventAdvancedTab = ({
+  eventType,
+  team,
+}: Pick<EventTypeSetupProps, "eventType" | "team">) => {
   const connectedCalendarsQuery = trpc.viewer.connectedCalendars.useQuery();
   const { data: user } = trpc.viewer.me.useQuery();
   const formMethods = useFormContext<FormValues>();
@@ -64,7 +67,9 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
   const workflows = eventType.workflows.map((workflowOnEventType) => workflowOnEventType.workflow);
   const selectedThemeIsDark =
     user?.theme === "dark" ||
-    (!user?.theme && typeof document !== "undefined" && document.documentElement.classList.contains("dark"));
+    (!user?.theme &&
+      typeof document !== "undefined" &&
+      document.documentElement.classList.contains("dark"));
 
   eventType.bookingFields.forEach(({ name }) => {
     bookingFields[name] = name + " input";
@@ -103,14 +108,14 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
           };
         }
         return field;
-      })
+      }),
     );
   };
 
   const { shouldLockDisableProps } = useLockedFieldsManager(
     eventType,
     t("locked_fields_admin_description"),
-    t("locked_fields_member_description")
+    t("locked_fields_member_description"),
   );
   const eventNamePlaceholder = getEventName({
     ...eventNameObject,
@@ -137,7 +142,8 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
             <Link
               href="/apps/categories/calendar"
               target="_blank"
-              className="hover:text-emphasis text-default text-sm">
+              className="hover:text-emphasis text-default text-sm"
+            >
               {t("add_another_calendar")}
             </Link>
           </div>
@@ -173,7 +179,8 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
               size="sm"
               aria-label="edit custom name"
               className="hover:stroke-3 hover:text-emphasis min-w-fit !py-0 px-0 hover:bg-transparent"
-              onClick={() => setShowEventNameTip((old) => !old)}>
+              onClick={() => setShowEventNameTip((old) => !old)}
+            >
               <Edit className="h-4 w-4" />
             </Button>
           }
@@ -248,7 +255,8 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
               onCheckedChange={(e) => {
                 setRedirectUrlVisible(e);
                 onChange(e ? value : "");
-              }}>
+              }}
+            >
               {/* Textfield has some margin by default we remove that so we can keep consistent alignment */}
               <div className="lg:-mb-2 lg:-ml-2">
                 <TextField
@@ -265,8 +273,9 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
                 <div
                   className={classNames(
                     "p-1 text-sm text-orange-600",
-                    formMethods.getValues("successRedirectUrl") ? "block" : "hidden"
-                  )}>
+                    formMethods.getValues("successRedirectUrl") ? "block" : "hidden",
+                  )}
+                >
                   {t("redirect_url_warning")}
                 </div>
               </div>
@@ -284,7 +293,8 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
         onCheckedChange={(e) => {
           formMethods.setValue("hashedLink", e ? hashedUrl : undefined);
           setHashedLinkVisible(e);
-        }}>
+        }}
+      >
         {/* Textfield has some margin by default we remove that so we can keep consitant aligment */}
         <div className="lg:-ml-2">
           {!IS_VISUAL_REGRESSION_TESTING && (
@@ -298,7 +308,11 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
               hint={t("private_link_hint")}
               defaultValue={placeholderHashedLink}
               addOnSuffix={
-                <Tooltip content={eventType.hashedLink ? t("copy_to_clipboard") : t("enabled_after_update")}>
+                <Tooltip
+                  content={
+                    eventType.hashedLink ? t("copy_to_clipboard") : t("enabled_after_update")
+                  }
+                >
                   <Button
                     color="minimal"
                     size="sm"
@@ -312,7 +326,8 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
                       } else {
                         showToast(t("enabled_after_update_description"), "warning");
                       }
-                    }}>
+                    }}
+                  >
                     <Copy className="h-4 w-4" />
                   </Button>
                 </Tooltip>
@@ -348,7 +363,8 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
                   toggleGuests(true);
                 }
                 onChange(e);
-              }}>
+              }}
+            >
               <Controller
                 name="seatsPerTimeSlot"
                 control={formMethods.control}
@@ -373,7 +389,9 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
                       <CheckboxField
                         description={t("show_attendees")}
                         disabled={seatsLocked.disabled}
-                        onChange={(e) => formMethods.setValue("seatsShowAttendees", e.target.checked)}
+                        onChange={(e) =>
+                          formMethods.setValue("seatsShowAttendees", e.target.checked)
+                        }
                         defaultChecked={!!eventType.seatsShowAttendees}
                       />
                     </div>
@@ -381,7 +399,9 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
                       <CheckboxField
                         description={t("show_available_seats_count")}
                         disabled={seatsLocked.disabled}
-                        onChange={(e) => formMethods.setValue("seatsShowAvailabilityCount", e.target.checked)}
+                        onChange={(e) =>
+                          formMethods.setValue("seatsShowAvailabilityCount", e.target.checked)
+                        }
                         defaultChecked={!!eventType.seatsShowAvailabilityCount}
                       />
                     </div>
@@ -389,7 +409,9 @@ export const EventAdvancedTab = ({ eventType, team }: Pick<EventTypeSetupProps, 
                 )}
               />
             </SettingsToggle>
-            {noShowFeeEnabled && <Alert severity="warning" title={t("seats_and_no_show_fee_error")} />}
+            {noShowFeeEnabled && (
+              <Alert severity="warning" title={t("seats_and_no_show_fee_error")} />
+            )}
           </>
         )}
       />

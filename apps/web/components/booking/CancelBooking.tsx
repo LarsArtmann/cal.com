@@ -35,7 +35,9 @@ export default function CancelBooking(props: Props) {
   const { booking, allRemainingBookings, seatReferenceUid } = props;
   const [loading, setLoading] = useState(false);
   const telemetry = useTelemetry();
-  const [error, setError] = useState<string | null>(booking ? null : t("booking_already_cancelled"));
+  const [error, setError] = useState<string | null>(
+    booking ? null : t("booking_already_cancelled"),
+  );
 
   const cancelBookingRef = useCallback((node: HTMLTextAreaElement) => {
     if (node !== null) {
@@ -75,7 +77,8 @@ export default function CancelBooking(props: Props) {
               <Button
                 className="ml-auto"
                 color="secondary"
-                onClick={() => props.setIsCancellationMode(false)}>
+                onClick={() => props.setIsCancellationMode(false)}
+              >
                 {t("nevermind")}
               </Button>
               <Button
@@ -105,12 +108,13 @@ export default function CancelBooking(props: Props) {
                     setLoading(false);
                     setError(
                       `${t("error_with_status_code_occured", { status: res.status })} ${t(
-                        "please_try_again"
-                      )}`
+                        "please_try_again",
+                      )}`,
                     );
                   }
                 }}
-                loading={loading}>
+                loading={loading}
+              >
                 {props.allRemainingBookings ? t("cancel_all_remaining") : t("cancel_event")}
               </Button>
             </div>

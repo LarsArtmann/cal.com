@@ -10,7 +10,15 @@ describe("Weekday tests", () => {
       for (const locale of locales) {
         const result = weekdayNames(locale);
 
-        const expected = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const expected = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ];
 
         expect(result).toEqual(expected);
       }
@@ -34,7 +42,15 @@ describe("Weekday tests", () => {
       for (const locale of locales) {
         const result = weekdayNames(locale, 1);
 
-        const expected = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        const expected = [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ];
 
         expect(result).toEqual(expected);
       }

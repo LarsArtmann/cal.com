@@ -31,7 +31,12 @@ export const TeamsFilter = ({
 }) => {
   const { t } = useLocale();
   const session = useSession();
-  const { data: query, pushItemToKey, removeItemByKeyAndValue, removeAllQueryParams } = useFilterQuery();
+  const {
+    data: query,
+    pushItemToKey,
+    removeItemByKeyAndValue,
+    removeAllQueryParams,
+  } = useFilterQuery();
   const { data: teams } = trpc.viewer.teams.list.useQuery(undefined, {
     // Teams don't change that frequently
     refetchOnWindowFocus: false,
@@ -60,7 +65,10 @@ export const TeamsFilter = ({
 
   return (
     <div className="flex items-center">
-      <AnimatedPopover text={getCheckedOptionsNames()} popoverTriggerClassNames={popoverTriggerClassNames}>
+      <AnimatedPopover
+        text={getCheckedOptionsNames()}
+        popoverTriggerClassNames={popoverTriggerClassNames}
+      >
         <FilterCheckboxFieldsContainer>
           <FilterCheckboxField
             id="all"
@@ -126,7 +134,11 @@ export const FilterCheckboxFieldsContainer = ({
 }) => {
   return (
     <div
-      className={classNames("flex flex-col gap-0.5 [&>*:first-child]:mt-1 [&>*:last-child]:mb-1", className)}>
+      className={classNames(
+        "flex flex-col gap-0.5 [&>*:first-child]:mt-1 [&>*:last-child]:mb-1",
+        className,
+      )}
+    >
       {children}
     </div>
   );
@@ -137,33 +149,36 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
   icon: ReactNode;
 };
 
-export const FilterCheckboxField = forwardRef<HTMLInputElement, Props>(({ label, icon, ...rest }, ref) => {
-  return (
-    <div className="hover:bg-muted flex items-center py-2 pl-3 pr-2.5 hover:cursor-pointer">
-      <label className="flex w-full max-w-full items-center justify-between hover:cursor-pointer">
-        <div className="flex items-center truncate">
-          <div className="text-default flex h-4 w-4 items-center justify-center ltr:mr-2 rtl:ml-2">
-            {icon}
+export const FilterCheckboxField = forwardRef<HTMLInputElement, Props>(
+  ({ label, icon, ...rest }, ref) => {
+    return (
+      <div className="hover:bg-muted flex items-center py-2 pl-3 pr-2.5 hover:cursor-pointer">
+        <label className="flex w-full max-w-full items-center justify-between hover:cursor-pointer">
+          <div className="flex items-center truncate">
+            <div className="text-default flex h-4 w-4 items-center justify-center ltr:mr-2 rtl:ml-2">
+              {icon}
+            </div>
+            <Tooltip content={label}>
+              <label
+                htmlFor={rest.id}
+                className="text-default me-1 cursor-pointer truncate text-sm font-medium"
+              >
+                {label}
+              </label>
+            </Tooltip>
           </div>
-          <Tooltip content={label}>
-            <label
-              htmlFor={rest.id}
-              className="text-default me-1 cursor-pointer truncate text-sm font-medium">
-              {label}
-            </label>
-          </Tooltip>
-        </div>
-        <div className="flex h-5 items-center">
-          <input
-            {...rest}
-            ref={ref}
-            type="checkbox"
-            className="text-primary-600 focus:ring-primary-500 border-default bg-default h-4 w-4 rounded hover:cursor-pointer"
-          />
-        </div>
-      </label>
-    </div>
-  );
-});
+          <div className="flex h-5 items-center">
+            <input
+              {...rest}
+              ref={ref}
+              type="checkbox"
+              className="text-primary-600 focus:ring-primary-500 border-default bg-default h-4 w-4 rounded hover:cursor-pointer"
+            />
+          </div>
+        </label>
+      </div>
+    );
+  },
+);
 
 FilterCheckboxField.displayName = "FilterCheckboxField";

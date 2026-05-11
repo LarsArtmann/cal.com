@@ -14,7 +14,7 @@ const getStripe = (userPublicKey?: string) => {
     stripePromise = loadStripe(
       userPublicKey || stripePublicKey /* , {
       locale: "es-419" TODO: Handle multiple locales,
-    } */
+    } */,
     );
   }
   return stripePromise;

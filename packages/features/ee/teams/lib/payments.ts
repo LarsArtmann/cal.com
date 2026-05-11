@@ -50,7 +50,9 @@ export const purchaseTeamSubscription = async (input: {
     line_items: [
       {
         /** We only need to set the base price and we can upsell it directly on Stripe's checkout  */
-        price: isOrg ? process.env.STRIPE_ORG_MONTHLY_PRICE_ID : process.env.STRIPE_TEAM_MONTHLY_PRICE_ID,
+        price: isOrg
+          ? process.env.STRIPE_ORG_MONTHLY_PRICE_ID
+          : process.env.STRIPE_TEAM_MONTHLY_PRICE_ID,
         quantity: quantity,
       },
     ],
@@ -106,13 +108,13 @@ export const updateQuantitySubscriptionFromStripe = async (teamId: number) => {
     const membershipCount = team.members.length;
     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
     const subscriptionQuantity = subscription.items.data.find(
-      (sub) => sub.id === subscriptionItemId
+      (sub) => sub.id === subscriptionItemId,
     )?.quantity;
     if (!subscriptionQuantity) throw new Error("Subscription not found");
 
     if (!!team._count.orgUsers && membershipCount < ORGANIZATION_MIN_SEATS) {
       console.info(
-        `Org ${teamId} has less members than the min ${ORGANIZATION_MIN_SEATS}, skipping updating subscription.`
+        `Org ${teamId} has less members than the min ${ORGANIZATION_MIN_SEATS}, skipping updating subscription.`,
       );
       return;
     }
@@ -121,7 +123,7 @@ export const updateQuantitySubscriptionFromStripe = async (teamId: number) => {
       items: [{ quantity: membershipCount, id: subscriptionItemId }],
     });
     console.info(
-      `Updated subscription ${subscriptionId} for team ${teamId} to ${team.members.length} seats.`
+      `Updated subscription ${subscriptionId} for team ${teamId} to ${team.members.length} seats.`,
     );
   } catch (error) {
     let message = "Unknown error on updateQuantitySubscriptionFromStripe";

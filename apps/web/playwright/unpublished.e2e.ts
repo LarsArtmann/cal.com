@@ -44,7 +44,11 @@ test.describe("Unpublished", () => {
   });
 
   test("Organization profile", async ({ users, page }) => {
-    const owner = await users.create(undefined, { hasTeam: true, isUnpublished: true, isOrg: true });
+    const owner = await users.create(undefined, {
+      hasTeam: true,
+      isUnpublished: true,
+      isOrg: true,
+    });
     const { team: org } = await owner.getOrg();
     const { requestedSlug } = org.metadata as { requestedSlug: string };
     await page.goto(`/org/${requestedSlug}`);
@@ -94,7 +98,11 @@ test.describe("Unpublished", () => {
   });
 
   test("Organization user", async ({ users, page }) => {
-    const owner = await users.create(undefined, { hasTeam: true, isUnpublished: true, isOrg: true });
+    const owner = await users.create(undefined, {
+      hasTeam: true,
+      isUnpublished: true,
+      isOrg: true,
+    });
     const { team: org } = await owner.getOrg();
     const { requestedSlug } = org.metadata as { requestedSlug: string };
     await page.goto(`/org/${requestedSlug}/${owner.username}`);
@@ -106,7 +114,11 @@ test.describe("Unpublished", () => {
   });
 
   test("Organization user event-type", async ({ users, page }) => {
-    const owner = await users.create(undefined, { hasTeam: true, isUnpublished: true, isOrg: true });
+    const owner = await users.create(undefined, {
+      hasTeam: true,
+      isUnpublished: true,
+      isOrg: true,
+    });
     const { team: org } = await owner.getOrg();
     const { requestedSlug } = org.metadata as { requestedSlug: string };
     const [{ slug: ownerEventType }] = owner.eventTypes;

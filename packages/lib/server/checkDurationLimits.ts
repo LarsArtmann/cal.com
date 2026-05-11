@@ -10,14 +10,14 @@ import { getTotalBookingDuration } from "./queries";
 export async function checkDurationLimits(
   durationLimits: IntervalLimit,
   eventStartDate: Date,
-  eventId: number
+  eventId: number,
 ) {
   const parsedDurationLimits = parseDurationLimit(durationLimits);
   if (!parsedDurationLimits) return false;
 
   // not iterating entries to preserve types
   const limitCalculations = ascendingLimitKeys.map((key) =>
-    checkDurationLimit({ key, limitingNumber: parsedDurationLimits[key], eventStartDate, eventId })
+    checkDurationLimit({ key, limitingNumber: parsedDurationLimits[key], eventStartDate, eventId }),
   );
 
   try {

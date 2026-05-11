@@ -4,7 +4,10 @@ import { z } from "zod";
 import { Booker } from "@calcom/atoms";
 import { getBookerWrapperClasses } from "@calcom/features/bookings/Booker/utils/getBookerWrapperClasses";
 import { BookerSeo } from "@calcom/features/bookings/components/BookerSeo";
-import { getBookingForReschedule, getMultipleDurationValue } from "@calcom/features/bookings/lib/get-booking";
+import {
+  getBookingForReschedule,
+  getMultipleDurationValue,
+} from "@calcom/features/bookings/lib/get-booking";
 import type { GetBookingType } from "@calcom/features/bookings/lib/get-booking";
 import { getSlugOrRequestedSlug } from "@calcom/features/ee/organizations/lib/orgDomains";
 import { orgDomainConfig } from "@calcom/features/ee/organizations/lib/orgDomains";
@@ -70,13 +73,14 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   const ssr = await ssrInit(context);
   const { currentOrgDomain, isValidOrgDomain } = orgDomainConfig(
     context.req.headers.host ?? "",
-    context.params?.orgSlug
+    context.params?.orgSlug,
   );
 
   const team = await prisma.team.findFirst({
     where: {
       ...getSlugOrRequestedSlug(teamSlug),
-      parent: isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
+      parent:
+        isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
     },
     select: {
       id: true,
@@ -117,7 +121,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       duration: getMultipleDurationValue(
         eventData.metadata?.multipleDuration,
         queryDuration,
-        eventData.length
+        eventData.length,
       ),
       booking,
       away: false,

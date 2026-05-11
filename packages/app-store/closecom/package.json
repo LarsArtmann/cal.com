@@ -1,10 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "private": true,
   "name": "@calcom/closecom",
   "version": "0.0.0",
-  "main": "./index.ts",
+  "private": true,
   "description": "Close is the inside sales CRM of choice for startups and SMBs. Make more calls, send more emails and close more deals starting today.",
+  "main": "./index.ts",
   "scripts": {
     "test": "vitest",
     "test:coverage": "vitest run --coverage"

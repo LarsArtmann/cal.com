@@ -65,7 +65,9 @@ function isCurrentHourInRange({
     const diffEnd = newDate.diff(endHour, "minutes");
     if (Math.abs(diffEnd) < 60 && diffEnd != 0) {
       rangeOverlap =
-        diffEnd < 0 ? -(Math.floor(endHour.minute() / 15) * 25) : Math.floor(endHour.minute() / 15) * 25;
+        diffEnd < 0
+          ? -(Math.floor(endHour.minute() / 15) * 25)
+          : Math.floor(endHour.minute() / 15) * 25;
     }
 
     return newDate.isBetween(startHour, endHour, undefined, "[)"); // smiley faces or something
@@ -111,7 +113,10 @@ export function TimeDial({ timezone, dateRanges }: TimeDialProps) {
           if (!day.length) return null;
           const dateWithDaySet = usersTimezoneDate.add(i - 1, "day");
           return (
-            <div key={i} className={classNames("border-subtle overflow-hidden rounded-lg border-2")}>
+            <div
+              key={i}
+              className={classNames("border-subtle overflow-hidden rounded-lg border-2")}
+            >
               <div className="flex flex-none">
                 {day.map((h) => {
                   const hours = Math.floor(h); // Whole number part
@@ -167,13 +172,14 @@ export function TimeDial({ timezone, dateRanges }: TimeDialProps) {
                         "flex h-8 flex-col items-center justify-center",
                         isInRange ? "text-emphasis dark:text-inverted" : "",
                         isInRange && !rangeOverlap ? "bg-success" : "",
-                        hours ? "" : "bg-subtle font-medium"
+                        hours ? "" : "bg-subtle font-medium",
                       )}
                       style={{
                         ...minuteOffsetStyles,
                         width: `${DAY_CELL_WIDTH}px`,
                         backgroundImage: rangeGradients.backgroundGradient,
-                      }}>
+                      }}
+                    >
                       {hours ? (
                         <div title={hourSet.format("DD/MM HH:mm")}>
                           <div className="flex flex-col text-center text-xs leading-3">
@@ -190,8 +196,9 @@ export function TimeDial({ timezone, dateRanges }: TimeDialProps) {
                                   }}
                                   className={classNames(
                                     "text-1xl hidden font-bold dark:block",
-                                    rangeOverlap ? "bg-clip-text text-transparent" : ""
-                                  )}>
+                                    rangeOverlap ? "bg-clip-text text-transparent" : "",
+                                  )}
+                                >
                                   {hourSet.format("H")}
                                 </span>
                               </>

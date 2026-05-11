@@ -52,8 +52,9 @@ export const AnimatedPopover = ({
           ref={ref}
           className={classNames(
             "hover:border-emphasis border-default text-default hover:text-emphasis radix-state-open:border-emphasis radix-state-open:outline-none radix-state-open:ring-2 radix-state-open:ring-emphasis mb-4 flex h-9 max-h-72 items-center justify-between whitespace-nowrap rounded-md border px-3 py-2 text-sm hover:cursor-pointer",
-            popoverTriggerClassNames
-          )}>
+            popoverTriggerClassNames,
+          )}
+        >
           {Trigger ? (
             Trigger
           ) : (
@@ -70,7 +71,10 @@ export const AnimatedPopover = ({
                 </div>
               </Tooltip>
               <ChevronDown
-                className={classNames("ml-2 w-4 transition-transform duration-150", open && "rotate-180")}
+                className={classNames(
+                  "ml-2 w-4 transition-transform duration-150",
+                  open && "rotate-180",
+                )}
               />
             </div>
           )}
@@ -80,8 +84,9 @@ export const AnimatedPopover = ({
         <div
           className={classNames(
             "bg-default border-subtle scroll-bar absolute z-50 mt-1 max-h-64 w-56 select-none overflow-y-auto rounded-md border py-[2px] shadow-md focus-within:outline-none",
-            align === "end" && "-translate-x-[228px]"
-          )}>
+            align === "end" && "-translate-x-[228px]",
+          )}
+        >
           {children}
         </div>
       </Popover.Content>

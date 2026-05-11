@@ -110,7 +110,7 @@ export const getByViewerHandler = async ({ ctx }: GetByViewerOptions) => {
     })
     .map((membership) => {
       const orgMembership = teamMemberships.find(
-        (teamM) => teamM.teamId === membership.team.parentId
+        (teamM) => teamM.teamId === membership.team.parentId,
       )?.membershipRole;
       return {
         teamId: membership.team.id,

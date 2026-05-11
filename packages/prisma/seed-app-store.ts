@@ -131,7 +131,12 @@ async function seedAppData() {
         },
       ],
       fields: [
-        { id: "c4296635-9f12-47b1-8153-c3a854649182", type: "text", label: "Test field", required: true },
+        {
+          id: "c4296635-9f12-47b1-8153-c3a854649182",
+          type: "text",
+          label: "Test field",
+          required: true,
+        },
         {
           id: "d4292635-9f12-17b1-9153-c3a854649182",
           type: "multiselect",
@@ -163,7 +168,7 @@ async function createApp(
   /** This is used so credentials gets linked to the correct app */
   type: Prisma.CredentialCreateInput["type"],
   keys?: Prisma.AppCreateInput["keys"],
-  isTemplate?: boolean
+  isTemplate?: boolean,
 ) {
   try {
     const foundApp = await prisma.app.findFirst({
@@ -240,7 +245,7 @@ export default async function main() {
   await createApp("caldav-calendar", "caldavcalendar", ["calendar"], "caldav_calendar");
   try {
     const { client_secret, client_id, redirect_uris } = JSON.parse(
-      process.env.GOOGLE_API_CREDENTIALS || ""
+      process.env.GOOGLE_API_CREDENTIALS || "",
     ).web;
     await createApp("google-calendar", "googlecalendar", ["calendar"], "google_calendar", {
       client_id,
@@ -367,7 +372,7 @@ export default async function main() {
     }
 
     const validatedCategories = app.categories.filter(
-      (category): category is AppCategories => category in AppCategories
+      (category): category is AppCategories => category in AppCategories,
     );
 
     await createApp(
@@ -376,7 +381,7 @@ export default async function main() {
       validatedCategories,
       app.type,
       undefined,
-      app.isTemplate
+      app.isTemplate,
     );
   }
 

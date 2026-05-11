@@ -1,6 +1,10 @@
 import type { CloseComFieldOptions, CloseComLead } from "@calcom/lib/CloseCom";
 import CloseCom from "@calcom/lib/CloseCom";
-import { getCloseComContactIds, getCloseComLeadId, getCustomFieldsIds } from "@calcom/lib/CloseComeUtils";
+import {
+  getCloseComContactIds,
+  getCloseComLeadId,
+  getCustomFieldsIds,
+} from "@calcom/lib/CloseComeUtils";
 import logger from "@calcom/lib/logger";
 import type { TeamInfoType } from "@calcom/lib/sync/ISyncService";
 import SyncServiceCore from "@calcom/lib/sync/ISyncService";
@@ -22,7 +26,7 @@ const calComSharedFields: CloseComFieldOptions = [["Contact Role", "text", false
 const serviceName = "closecom_service";
 
 export default class CloseComService extends SyncServiceCore implements ISyncService {
-  protected declare service: CloseCom;
+  declare protected service: CloseCom;
 
   constructor() {
     super(serviceName, CloseCom, logger.getChildLogger({ prefix: [`[[sync] ${serviceName}`] }));
@@ -31,7 +35,7 @@ export default class CloseComService extends SyncServiceCore implements ISyncSer
   upsertAnyUser = async (
     user: WebUserInfoType | ConsoleUserInfoType,
     leadInfo?: CloseComLead,
-    role?: string
+    role?: string,
   ) => {
     this.log.debug("sync:closecom:user", { user });
     // Get Cal.com Lead
@@ -41,7 +45,11 @@ export default class CloseComService extends SyncServiceCore implements ISyncSer
     const [contactId] = await getCloseComContactIds([user], this.service, leadId);
     this.log.debug("sync:closecom:user:contactsIds", { contactId });
     // Get Custom Contact fields ids
-    const customFieldsIds = await getCustomFieldsIds("contact", calComCustomContactFields, this.service);
+    const customFieldsIds = await getCustomFieldsIds(
+      "contact",
+      calComCustomContactFields,
+      this.service,
+    );
     this.log.debug("sync:closecom:user:customFieldsIds", { customFieldsIds });
     // Get shared fields ids
     const sharedFieldsIds = await getCustomFieldsIds("shared", calComSharedFields, this.service);
@@ -74,7 +82,7 @@ export default class CloseComService extends SyncServiceCore implements ISyncSer
         return {
           [`custom.${fieldId}`]: allFieldsValues[index],
         };
-      })
+      }),
     );
     // Create Custom Activity type instance
     return await this.service.contact.update(person);
@@ -111,7 +119,7 @@ export default class CloseComService extends SyncServiceCore implements ISyncSer
           {
             companyName: team.name,
           },
-          role
+          role,
         );
       },
       delete: async (team: TeamInfoType) => {

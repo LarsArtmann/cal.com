@@ -9,7 +9,9 @@ type AppStoreMetaData = {
   [key in keyof RawAppStoreMetaData]: AppMeta;
 };
 
-export const getNormalizedAppMetadata = (appMeta: RawAppStoreMetaData[keyof RawAppStoreMetaData]) => {
+export const getNormalizedAppMetadata = (
+  appMeta: RawAppStoreMetaData[keyof RawAppStoreMetaData],
+) => {
   const dirName = "dirName" in appMeta ? appMeta.dirName : appMeta.slug;
   if (!dirName) {
     throw new Error(`Couldn't derive dirName for app ${appMeta.name}`);

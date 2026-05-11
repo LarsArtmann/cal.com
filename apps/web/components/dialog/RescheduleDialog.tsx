@@ -71,7 +71,8 @@ export const RescheduleDialog = (props: IRescheduleDialog) => {
                     bookingId,
                     rescheduleReason,
                   });
-                }}>
+                }}
+              >
                 {t("send_reschedule_request")}
               </Button>
             </DialogFooter>

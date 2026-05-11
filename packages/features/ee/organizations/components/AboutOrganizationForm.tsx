@@ -47,7 +47,8 @@ export const AboutOrganizationForm = () => {
             setServerErrorMessage(null);
             updateOrganizationMutation.mutate({ ...v, orgId });
           }
-        }}>
+        }}
+      >
         {serverErrorMessage && (
           <div>
             <Alert severity="error" message={serverErrorMessage} />
@@ -109,12 +110,14 @@ export const AboutOrganizationForm = () => {
         <div className="flex">
           <Button
             disabled={
-              aboutOrganizationFormMethods.formState.isSubmitting || updateOrganizationMutation.isLoading
+              aboutOrganizationFormMethods.formState.isSubmitting ||
+              updateOrganizationMutation.isLoading
             }
             color="primary"
             EndIcon={ArrowRight}
             type="submit"
-            className="w-full justify-center">
+            className="w-full justify-center"
+          >
             {t("continue")}
           </Button>
         </div>

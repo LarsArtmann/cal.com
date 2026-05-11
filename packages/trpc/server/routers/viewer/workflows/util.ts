@@ -6,23 +6,28 @@ import {
   getSmsReminderNumberField,
   getSmsReminderNumberSource,
 } from "@calcom/features/bookings/lib/getBookingFields";
-import { removeBookingField, upsertBookingField } from "@calcom/features/eventtypes/lib/bookingFieldsManager";
+import {
+  removeBookingField,
+  upsertBookingField,
+} from "@calcom/features/eventtypes/lib/bookingFieldsManager";
 import { SENDER_ID, SENDER_NAME } from "@calcom/lib/constants";
 import type { PrismaClient } from "@calcom/prisma";
 import type { WorkflowStep } from "@calcom/prisma/client";
 import { MembershipRole } from "@calcom/prisma/enums";
 
 export function getSender(
-  step: Pick<WorkflowStep, "action" | "sender"> & { senderName: string | null | undefined }
+  step: Pick<WorkflowStep, "action" | "sender"> & { senderName: string | null | undefined },
 ) {
-  return isSMSOrWhatsappAction(step.action) ? step.sender || SENDER_ID : step.senderName || SENDER_NAME;
+  return isSMSOrWhatsappAction(step.action)
+    ? step.sender || SENDER_ID
+    : step.senderName || SENDER_NAME;
 }
 
 export async function isAuthorized(
   workflow: Pick<Workflow, "id" | "teamId" | "userId"> | null,
   prisma: PrismaClient,
   currentUserId: number,
-  readOnly?: boolean
+  readOnly?: boolean,
 ) {
   if (!workflow) {
     return false;
@@ -92,7 +97,7 @@ export async function upsertSmsReminderFieldForBooking({
       workflowId,
       isSmsReminderNumberRequired,
     }),
-    eventTypeId
+    eventTypeId,
   );
 }
 
@@ -111,6 +116,6 @@ export async function removeSmsReminderFieldForBooking({
       id: "" + workflowId,
       type: "workflow",
     },
-    eventTypeId
+    eventTypeId,
   );
 }

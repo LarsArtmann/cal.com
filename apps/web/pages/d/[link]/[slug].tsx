@@ -4,7 +4,10 @@ import { z } from "zod";
 import { Booker } from "@calcom/atoms";
 import { getBookerWrapperClasses } from "@calcom/features/bookings/Booker/utils/getBookerWrapperClasses";
 import { BookerSeo } from "@calcom/features/bookings/components/BookerSeo";
-import { getBookingForReschedule, getMultipleDurationValue } from "@calcom/features/bookings/lib/get-booking";
+import {
+  getBookingForReschedule,
+  getMultipleDurationValue,
+} from "@calcom/features/bookings/lib/get-booking";
 import type { GetBookingType } from "@calcom/features/bookings/lib/get-booking";
 import { orgDomainConfig } from "@calcom/features/ee/organizations/lib/orgDomains";
 import slugify from "@calcom/lib/slugify";
@@ -124,7 +127,12 @@ async function getUserPageProps(context: GetServerSidePropsContext) {
 
   // We use this to both prefetch the query on the server,
   // as well as to check if the event exist, so we c an show a 404 otherwise.
-  const eventData = await ssr.viewer.public.event.fetch({ username, eventSlug: slug, isTeamEvent, org });
+  const eventData = await ssr.viewer.public.event.fetch({
+    username,
+    eventSlug: slug,
+    isTeamEvent,
+    org,
+  });
 
   if (!eventData) {
     return {
@@ -138,7 +146,7 @@ async function getUserPageProps(context: GetServerSidePropsContext) {
       duration: getMultipleDurationValue(
         eventData.metadata?.multipleDuration,
         queryDuration,
-        eventData.length
+        eventData.length,
       ),
       booking,
       away: user?.away,

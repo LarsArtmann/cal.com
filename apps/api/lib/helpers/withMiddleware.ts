@@ -38,7 +38,7 @@ const withMiddleware = label(
     "customPrismaClient",
     "verifyApiKey",
     "addRequestId",
-  ] // <-- Provide a list of middleware to call automatically
+  ], // <-- Provide a list of middleware to call automatically
 );
 
 export { withMiddleware };

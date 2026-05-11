@@ -36,7 +36,8 @@ export default function KYCVerificationView() {
               name: values.name || "",
               isTeam: true,
             });
-          }}>
+          }}
+        >
           <div className="flex space-x-2">
             <TextField
               {...teamForm.register("name")}
@@ -60,7 +61,8 @@ export default function KYCVerificationView() {
               name: values.name || "",
               isTeam: false,
             });
-          }}>
+          }}
+        >
           <div className="flex space-x-2">
             <TextField
               {...userForm.register("name")}

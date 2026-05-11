@@ -92,12 +92,12 @@ async function getEventTypeId({
   if (isTeamEvent) {
     teamId = await getTeamIdFromSlug(
       slug,
-      organizationDetails ?? { currentOrgDomain: null, isValidOrgDomain: false }
+      organizationDetails ?? { currentOrgDomain: null, isValidOrgDomain: false },
     );
   } else {
     userId = await getUserIdFromUsername(
       slug,
-      organizationDetails ?? { currentOrgDomain: null, isValidOrgDomain: false }
+      organizationDetails ?? { currentOrgDomain: null, isValidOrgDomain: false },
     );
   }
   const eventType = await prisma.eventType.findFirst({
@@ -118,7 +118,7 @@ async function getEventTypeId({
 
 export async function getEventType(
   input: TGetScheduleInputSchema,
-  organizationDetails: { currentOrgDomain: string | null; isValidOrgDomain: boolean }
+  organizationDetails: { currentOrgDomain: string | null; isValidOrgDomain: boolean },
 ) {
   const { eventTypeSlug, usernameList, isTeamEvent } = input;
   const eventTypeId =
@@ -204,7 +204,7 @@ export async function getEventType(
 
 export async function getDynamicEventType(
   input: TGetScheduleInputSchema,
-  organizationDetails: { currentOrgDomain: string | null; isValidOrgDomain: boolean }
+  organizationDetails: { currentOrgDomain: string | null; isValidOrgDomain: boolean },
 ) {
   const { currentOrgDomain, isValidOrgDomain } = organizationDetails;
   // For dynamic booking, we need to get and update user credentials, schedule and availability in the eventTypeObject as they're required in the new availability logic
@@ -221,10 +221,11 @@ export async function getDynamicEventType(
         in: Array.isArray(input.usernameList)
           ? input.usernameList
           : input.usernameList
-          ? [input.usernameList]
-          : [],
+            ? [input.usernameList]
+            : [],
       },
-      organization: isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
+      organization:
+        isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
     },
     select: {
       allowDynamicBooking: true,
@@ -248,7 +249,7 @@ export async function getDynamicEventType(
 
 export function getRegularOrDynamicEventType(
   input: TGetScheduleInputSchema,
-  organizationDetails: { currentOrgDomain: string | null; isValidOrgDomain: boolean }
+  organizationDetails: { currentOrgDomain: string | null; isValidOrgDomain: boolean },
 ) {
   const isDynamicBooking = input.usernameList && input.usernameList.length > 1;
   return isDynamicBooking
@@ -271,7 +272,7 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
   logger.debug(
     `Prisma eventType get took ${endPrismaEventTypeGet - startPrismaEventTypeGet}ms for event:${
       input.eventTypeId
-    }`
+    }`,
   );
   if (!eventType) {
     throw new TRPCError({ code: "NOT_FOUND" });
@@ -279,14 +280,17 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
 
   const getStartTime = (startTimeInput: string, timeZone?: string) => {
     const startTimeMin = dayjs.utc().add(eventType.minimumBookingNotice, "minutes");
-    const startTime = timeZone === "Etc/GMT" ? dayjs.utc(startTimeInput) : dayjs(startTimeInput).tz(timeZone);
+    const startTime =
+      timeZone === "Etc/GMT" ? dayjs.utc(startTimeInput) : dayjs(startTimeInput).tz(timeZone);
 
     return startTimeMin.isAfter(startTime) ? startTimeMin.tz(timeZone) : startTime;
   };
 
   const startTime = getStartTime(input.startTime, input.timeZone);
   const endTime =
-    input.timeZone === "Etc/GMT" ? dayjs.utc(input.endTime) : dayjs(input.endTime).utc().tz(input.timeZone);
+    input.timeZone === "Etc/GMT"
+      ? dayjs.utc(input.endTime)
+      : dayjs(input.endTime).utc().tz(input.timeZone);
 
   if (!startTime.isValid() || !endTime.isValid()) {
     throw new TRPCError({ message: "Invalid time range given.", code: "BAD_REQUEST" });
@@ -310,7 +314,9 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
       : startTime.toDate();
 
   const endTimeDate =
-    input.rescheduleUid && durationToUse ? endTime.add(durationToUse, "minute").toDate() : endTime.toDate();
+    input.rescheduleUid && durationToUse
+      ? endTime.add(durationToUse, "minute").toDate()
+      : endTime.toDate();
 
   const sharedQuery = {
     startTime: { gte: startTimeDate },
@@ -395,13 +401,15 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
           rescheduleUid: input.rescheduleUid,
           currentBookings: currentBookingsAllUsers
             .filter(
-              (b) => b.userId === currentUser.id || b.attendees?.some((a) => a.email === currentUser.email)
+              (b) =>
+                b.userId === currentUser.id ||
+                b.attendees?.some((a) => a.email === currentUser.email),
             )
             .map((bookings) => {
               const { attendees: _attendees, ...bookingWithoutAttendees } = bookings;
               return bookingWithoutAttendees;
             }),
-        }
+        },
       );
       if (!currentSeats && _currentSeats) currentSeats = _currentSeats;
       return {
@@ -410,7 +418,7 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
         busy,
         user: currentUser,
       };
-    })
+    }),
   );
 
   const availabilityCheckProps = {
@@ -439,7 +447,8 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
     dateRanges: getAggregatedAvailability(userAvailability, eventType.schedulingType),
     minimumBookingNotice: eventType.minimumBookingNotice,
     frequency: eventType.slotInterval || input.duration || eventType.length,
-    organizerTimeZone: eventType.timeZone || eventType?.schedule?.timeZone || userAvailability?.[0]?.timeZone,
+    organizerTimeZone:
+      eventType.timeZone || eventType?.schedule?.timeZone || userAvailability?.[0]?.timeZone,
   });
 
   let availableTimeSlots: typeof timeSlots = [];
@@ -461,41 +470,46 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
       },
     })) || [];
   await prisma.selectedSlots.deleteMany({
-    where: { eventTypeId: { equals: eventType.id }, id: { notIn: selectedSlots.map((item) => item.id) } },
+    where: {
+      eventTypeId: { equals: eventType.id },
+      id: { notIn: selectedSlots.map((item) => item.id) },
+    },
   });
 
   availableTimeSlots = timeSlots;
 
   if (selectedSlots?.length > 0) {
     let occupiedSeats: typeof selectedSlots = selectedSlots.filter(
-      (item) => item.isSeat && item.eventTypeId === eventType.id
+      (item) => item.isSeat && item.eventTypeId === eventType.id,
     );
     if (occupiedSeats?.length) {
       const addedToCurrentSeats: string[] = [];
       if (typeof availabilityCheckProps.currentSeats !== "undefined") {
-        availabilityCheckProps.currentSeats = (availabilityCheckProps.currentSeats as CurrentSeats).map(
-          (item) => {
-            const attendees =
-              occupiedSeats.filter(
-                (seat) => seat.slotUtcStartDate.toISOString() === item.startTime.toISOString()
-              )?.length || 0;
-            if (attendees) addedToCurrentSeats.push(item.startTime.toISOString());
-            return {
-              ...item,
-              _count: {
-                attendees: item._count.attendees + attendees,
-              },
-            };
-          }
-        ) as CurrentSeats;
+        availabilityCheckProps.currentSeats = (
+          availabilityCheckProps.currentSeats as CurrentSeats
+        ).map((item) => {
+          const attendees =
+            occupiedSeats.filter(
+              (seat) => seat.slotUtcStartDate.toISOString() === item.startTime.toISOString(),
+            )?.length || 0;
+          if (attendees) addedToCurrentSeats.push(item.startTime.toISOString());
+          return {
+            ...item,
+            _count: {
+              attendees: item._count.attendees + attendees,
+            },
+          };
+        }) as CurrentSeats;
         occupiedSeats = occupiedSeats.filter(
-          (item) => !addedToCurrentSeats.includes(item.slotUtcStartDate.toISOString())
+          (item) => !addedToCurrentSeats.includes(item.slotUtcStartDate.toISOString()),
         );
       }
 
       if (occupiedSeats?.length && typeof availabilityCheckProps.currentSeats === "undefined")
         availabilityCheckProps.currentSeats = [];
-      const occupiedSeatsCount = countBy(occupiedSeats, (item) => item.slotUtcStartDate.toISOString());
+      const occupiedSeatsCount = countBy(occupiedSeats, (item) =>
+        item.slotUtcStartDate.toISOString(),
+      );
       Object.keys(occupiedSeatsCount).forEach((date) => {
         (availabilityCheckProps.currentSeats as CurrentSeats).push({
           uid: uuid(),
@@ -532,13 +546,13 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
                 time: dayjs.Dayjs;
                 userIds?: number[] | undefined;
               }
-            | undefined
+            | undefined,
         ): item is {
           time: dayjs.Dayjs;
           userIds?: number[] | undefined;
         } => {
           return !!item;
-        }
+        },
       );
   }
 
@@ -553,8 +567,11 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
 
   const computedAvailableSlots = availableTimeSlots.reduce(
     (
-      r: Record<string, { time: string; users: string[]; attendees?: number; bookingUid?: string }[]>,
-      { time, ...passThroughProps }
+      r: Record<
+        string,
+        { time: string; users: string[]; attendees?: number; bookingUid?: string }[]
+      >,
+      { time, ...passThroughProps },
     ) => {
       // TODO: Adds unit tests to prevent regressions in getSchedule (try multiple timezones)
 
@@ -574,26 +591,32 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
           : eventType.users
         ).map((user) => user.username || ""),
         // Conditionally add the attendees and booking id to slots object if there is already a booking during that time
-        ...(currentSeats?.some((booking) => booking.startTime.toISOString() === time.toISOString()) && {
+        ...(currentSeats?.some(
+          (booking) => booking.startTime.toISOString() === time.toISOString(),
+        ) && {
           attendees:
             currentSeats[
-              currentSeats.findIndex((booking) => booking.startTime.toISOString() === time.toISOString())
+              currentSeats.findIndex(
+                (booking) => booking.startTime.toISOString() === time.toISOString(),
+              )
             ]._count.attendees,
           bookingUid:
             currentSeats[
-              currentSeats.findIndex((booking) => booking.startTime.toISOString() === time.toISOString())
+              currentSeats.findIndex(
+                (booking) => booking.startTime.toISOString() === time.toISOString(),
+              )
             ].uid,
         }),
       });
       return r;
     },
-    Object.create(null)
+    Object.create(null),
   );
 
   logger.debug(`getSlots took ${getSlotsTime}ms and executed ${getSlotsCount} times`);
 
   logger.debug(
-    `checkForAvailability took ${checkForAvailabilityTime}ms and executed ${checkForAvailabilityCount} times`
+    `checkForAvailability took ${checkForAvailabilityTime}ms and executed ${checkForAvailabilityCount} times`,
   );
   logger.silly(`Available slots: ${JSON.stringify(computedAvailableSlots)}`);
 
@@ -604,13 +627,14 @@ export async function getAvailableSlots({ input, ctx }: GetScheduleOptions) {
 
 async function getUserIdFromUsername(
   username: string,
-  organizationDetails: { currentOrgDomain: string | null; isValidOrgDomain: boolean }
+  organizationDetails: { currentOrgDomain: string | null; isValidOrgDomain: boolean },
 ) {
   const { currentOrgDomain, isValidOrgDomain } = organizationDetails;
   const user = await prisma.user.findFirst({
     where: {
       username,
-      organization: isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
+      organization:
+        isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
     },
     select: {
       id: true,
@@ -621,13 +645,14 @@ async function getUserIdFromUsername(
 
 async function getTeamIdFromSlug(
   slug: string,
-  organizationDetails: { currentOrgDomain: string | null; isValidOrgDomain: boolean }
+  organizationDetails: { currentOrgDomain: string | null; isValidOrgDomain: boolean },
 ) {
   const { currentOrgDomain, isValidOrgDomain } = organizationDetails;
   const team = await prisma.team.findFirst({
     where: {
       slug,
-      parent: isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
+      parent:
+        isValidOrgDomain && currentOrgDomain ? getSlugOrRequestedSlug(currentOrgDomain) : null,
     },
     select: {
       id: true,

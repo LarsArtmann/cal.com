@@ -22,7 +22,13 @@ export const EventDuration = ({ event }: { event: PublicEvent }) => {
     // Only store event duration in url if event has multiple durations.
     if (!selectedDuration && (event.metadata?.multipleDuration || isDynamicEvent))
       setSelectedDuration(event.length);
-  }, [selectedDuration, setSelectedDuration, event.metadata?.multipleDuration, event.length, isDynamicEvent]);
+  }, [
+    selectedDuration,
+    setSelectedDuration,
+    event.metadata?.multipleDuration,
+    event.length,
+    isDynamicEvent,
+  ]);
 
   if (!event?.metadata?.multipleDuration && !isDynamicEvent)
     return <>{t("multiple_duration_mins", { count: event.length })}</>;
@@ -39,7 +45,8 @@ export const EventDuration = ({ event }: { event: PublicEvent }) => {
             className={classNames(selectedDuration === duration && "bg-brand-default text-brand")}
             size="md"
             key={duration}
-            onClick={() => setSelectedDuration(duration)}>{`${duration} ${t("minute_timeUnit")}`}</Badge>
+            onClick={() => setSelectedDuration(duration)}
+          >{`${duration} ${t("minute_timeUnit")}`}</Badge>
         ))}
     </div>
   );

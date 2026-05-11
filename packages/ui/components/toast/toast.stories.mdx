@@ -53,7 +53,8 @@ Toasts are used to show an action has had a impact. If a user submits a form a t
     argTypes={{
       message: { control: "text" },
       toastVisible: { control: "boolean" },
-    }}>
+    }}
+  >
     {({ message, toastVisible }) => (
       <VariantsTable titles={["Default", "Success", "Warning", "Error"]} columnMinWidth={150}>
         <VariantRow variant="Default">

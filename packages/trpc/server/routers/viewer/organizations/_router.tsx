@@ -34,11 +34,17 @@ export const viewerOrganizationsRouter = router({
     return handler(opts);
   }),
   verifyCode: authedProcedure.input(ZVerifyCodeInputSchema).mutation(async (opts) => {
-    const handler = await importHandler(namespaced("verifyCode"), () => import("./verifyCode.handler"));
+    const handler = await importHandler(
+      namespaced("verifyCode"),
+      () => import("./verifyCode.handler"),
+    );
     return handler(opts);
   }),
   createTeams: authedProcedure.input(ZCreateTeamsSchema).mutation(async (opts) => {
-    const handler = await importHandler(namespaced("createTeams"), () => import("./createTeams.handler"));
+    const handler = await importHandler(
+      namespaced("createTeams"),
+      () => import("./createTeams.handler"),
+    );
     return handler(opts);
   }),
   listCurrent: authedProcedure.query(async (opts) => {
@@ -48,7 +54,7 @@ export const viewerOrganizationsRouter = router({
   checkIfOrgNeedsUpgrade: authedProcedure.query(async (opts) => {
     const handler = await importHandler(
       namespaced("checkIfOrgNeedsUpgrade"),
-      () => import("./checkIfOrgNeedsUpgrade.handler")
+      () => import("./checkIfOrgNeedsUpgrade.handler"),
     );
     return handler(opts);
   }),
@@ -57,23 +63,38 @@ export const viewerOrganizationsRouter = router({
     return handler(opts);
   }),
   setPassword: authedProcedure.input(ZSetPasswordSchema).mutation(async (opts) => {
-    const handler = await importHandler(namespaced("setPassword"), () => import("./setPassword.handler"));
+    const handler = await importHandler(
+      namespaced("setPassword"),
+      () => import("./setPassword.handler"),
+    );
     return handler(opts);
   }),
   getMembers: authedProcedure.input(ZGetMembersInput).query(async (opts) => {
-    const handler = await importHandler(namespaced("getMembers"), () => import("./getMembers.handler"));
+    const handler = await importHandler(
+      namespaced("getMembers"),
+      () => import("./getMembers.handler"),
+    );
     return handler(opts);
   }),
   adminGetAll: authedAdminProcedure.query(async (opts) => {
-    const handler = await importHandler(namespaced("adminGetAll"), () => import("./adminGetAll.handler"));
+    const handler = await importHandler(
+      namespaced("adminGetAll"),
+      () => import("./adminGetAll.handler"),
+    );
     return handler(opts);
   }),
   adminVerify: authedAdminProcedure.input(ZAdminVerifyInput).mutation(async (opts) => {
-    const handler = await importHandler(namespaced("adminVerify"), () => import("./adminVerify.handler"));
+    const handler = await importHandler(
+      namespaced("adminVerify"),
+      () => import("./adminVerify.handler"),
+    );
     return handler(opts);
   }),
   listMembers: authedProcedure.input(ZListMembersSchema).query(async (opts) => {
-    const handler = await importHandler(namespaced("listMembers"), () => import("./listMembers.handler"));
+    const handler = await importHandler(
+      namespaced("listMembers"),
+      () => import("./listMembers.handler"),
+    );
     return handler(opts);
   }),
   getBrand: authedProcedure.query(async (opts) => {
@@ -85,7 +106,10 @@ export const viewerOrganizationsRouter = router({
     return handler(opts);
   }),
   updateUser: authedProcedure.input(ZUpdateUserInputSchema).mutation(async (opts) => {
-    const handler = await importHandler(namespaced("updateUser"), () => import("./updateUser.handler"));
+    const handler = await importHandler(
+      namespaced("updateUser"),
+      () => import("./updateUser.handler"),
+    );
     return handler(opts);
   }),
   getTeams: authedProcedure.query(async (opts) => {
@@ -93,36 +117,47 @@ export const viewerOrganizationsRouter = router({
     return handler(opts);
   }),
   bulkAddToTeams: authedProcedure.input(ZAddBulkTeams).mutation(async (opts) => {
-    const handler = await importHandler(namespaced("addBulkTeams"), () => import("./addBulkTeams.handler"));
+    const handler = await importHandler(
+      namespaced("addBulkTeams"),
+      () => import("./addBulkTeams.handler"),
+    );
     return handler(opts);
   }),
   bulkDeleteUsers: authedProcedure.input(ZBulkUsersDelete).mutation(async (opts) => {
     const handler = await importHandler(
       namespaced("bulkDeleteUsers"),
-      () => import("./bulkDeleteUsers.handler")
+      () => import("./bulkDeleteUsers.handler"),
     );
     return handler(opts);
   }),
-  listOtherTeamMembers: authedOrgAdminProcedure.input(ZListOtherTeamMembersSchema).query(async (opts) => {
-    const handler = await importHandler(
-      namespaced("listOtherTeamMembers"),
-      () => import("./listOtherTeamMembers.handler")
-    );
-    return handler(opts);
-  }),
+  listOtherTeamMembers: authedOrgAdminProcedure
+    .input(ZListOtherTeamMembersSchema)
+    .query(async (opts) => {
+      const handler = await importHandler(
+        namespaced("listOtherTeamMembers"),
+        () => import("./listOtherTeamMembers.handler"),
+      );
+      return handler(opts);
+    }),
   getOtherTeam: authedOrgAdminProcedure.input(ZGetOtherTeamInputSchema).query(async (opts) => {
-    const handler = await importHandler(namespaced("getOtherTeam"), () => import("./getOtherTeam.handler"));
+    const handler = await importHandler(
+      namespaced("getOtherTeam"),
+      () => import("./getOtherTeam.handler"),
+    );
     return handler(opts);
   }),
   listOtherTeams: authedOrgAdminProcedure.query(async (opts) => {
     const handler = await importHandler(
       namespaced("listOtherTeams"),
-      () => import("./listOtherTeams.handler")
+      () => import("./listOtherTeams.handler"),
     );
     return handler(opts);
   }),
   deleteTeam: authedOrgAdminProcedure.input(ZDeleteTeamInputSchema).mutation(async (opts) => {
-    const handler = await importHandler(namespaced("deleteTeam"), () => import("./deleteTeam.handler"));
+    const handler = await importHandler(
+      namespaced("deleteTeam"),
+      () => import("./deleteTeam.handler"),
+    );
     return handler(opts);
   }),
 });

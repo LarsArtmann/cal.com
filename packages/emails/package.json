@@ -1,17 +1,17 @@
 {
   "name": "@calcom/emails",
-  "sideEffects": false,
   "version": "0.0.0",
   "private": true,
+  "sideEffects": false,
   "scripts": {
     "dx": "docker compose up -d || docker-compose up -d"
   },
   "dependencies": {
     "@calcom/dayjs": "*",
     "@calcom/lib": "*",
-    "next-i18next": "^16.0.5",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
+    "next-i18next": "^16.0.6",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "rrule": "^2.8.1"
   },
   "devDependencies": {

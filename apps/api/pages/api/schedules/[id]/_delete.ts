@@ -38,7 +38,10 @@ export async function deleteHandler(req: NextApiRequest) {
   const { id } = schemaQueryIdParseInt.parse(query);
 
   /* If we're deleting any default user schedule, we unset it */
-  await prisma.user.updateMany({ where: { defaultScheduleId: id }, data: { defaultScheduleId: undefined } });
+  await prisma.user.updateMany({
+    where: { defaultScheduleId: id },
+    data: { defaultScheduleId: undefined },
+  });
 
   await prisma.schedule.delete({ where: { id } });
   return { message: `Schedule with id: ${id} deleted successfully` };

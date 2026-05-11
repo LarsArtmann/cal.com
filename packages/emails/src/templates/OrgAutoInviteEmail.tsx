@@ -13,7 +13,7 @@ type TeamInvite = {
 };
 
 export const OrgAutoInviteEmail = (
-  props: TeamInvite & Partial<React.ComponentProps<typeof V2BaseEmailHtml>>
+  props: TeamInvite & Partial<React.ComponentProps<typeof V2BaseEmailHtml>>,
 ) => {
   return (
     <V2BaseEmailHtml
@@ -22,7 +22,8 @@ export const OrgAutoInviteEmail = (
         team: props.orgName,
         appName: APP_NAME,
         entity: "organization",
-      })}>
+      })}
+    >
       <p style={{ fontSize: "24px", marginBottom: "16px", textAlign: "center" }}>
         <>
           {props.language("organization_admin_invited_heading", {
@@ -52,7 +53,8 @@ export const OrgAutoInviteEmail = (
           marginBottom: "32px",
           marginTop: "32px",
           lineHeightStep: "24px",
-        }}>
+        }}
+      >
         <>
           {props.language("organization_admin_invited_body", {
             orgName: props.orgName,
@@ -77,7 +79,8 @@ export const OrgAutoInviteEmail = (
             marginBottom: "32px",
             marginTop: "32px",
             lineHeightStep: "24px",
-          }}>
+          }}
+        >
           <>
             {props.language("email_no_user_signoff", {
               appName: APP_NAME,
@@ -91,7 +94,12 @@ export const OrgAutoInviteEmail = (
         <p style={{ fontWeight: 400, margin: 0 }}>
           <>
             {props.language("have_any_questions")}{" "}
-            <a href="mailto:support@cal.com" style={{ color: "#3E3E3E" }} target="_blank" rel="noreferrer">
+            <a
+              href="mailto:support@cal.com"
+              style={{ color: "#3E3E3E" }}
+              target="_blank"
+              rel="noreferrer"
+            >
               <>{props.language("contact")}</>
             </a>{" "}
             {props.language("our_support_team")}

@@ -42,7 +42,7 @@ const AppConfiguration = (props: IAppConfigurationProps) => {
       { label: t("vital_app_total_label", { ns: "vital" }), value: "total" },
       { label: t("vital_app_duration_label", { ns: "vital" }), value: "duration" },
     ],
-    [t]
+    [t],
   );
 
   const [selectedParam, setSelectedParam] = useState<{ label: string; value: string }>(options[0]);
@@ -71,7 +71,7 @@ const AppConfiguration = (props: IAppConfigurationProps) => {
         }
         if (vitalSettings.sleepValue && vitalSettings.parameter) {
           const selectedParam = options.find(
-            (item: { value: string }) => item.value === vitalSettings.parameter
+            (item: { value: string }) => item.value === vitalSettings.parameter,
           );
           if (selectedParam) {
             setSelectedParam(selectedParam);
@@ -163,7 +163,8 @@ const AppConfiguration = (props: IAppConfigurationProps) => {
             setSaveLoading(false);
           }}
           loading={saveLoading}
-          disabled={disabledSaveButton}>
+          disabled={disabledSaveButton}
+        >
           {t("vital_app_save_button", { ns: "vital" })}
         </Button>
       </div>

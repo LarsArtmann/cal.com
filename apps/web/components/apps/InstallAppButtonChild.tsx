@@ -43,7 +43,8 @@ export const InstallAppButtonChild = ({
       showToast(t("app_successfully_installed"), "success");
     },
     onError: (error) => {
-      if (error instanceof Error) showToast(error.message || t("app_could_not_be_installed"), "error");
+      if (error instanceof Error)
+        showToast(error.message || t("app_could_not_be_installed"), "error");
     },
   });
 
@@ -55,7 +56,8 @@ export const InstallAppButtonChild = ({
         // @TODO: Overriding color and size prevent us from
         // having to duplicate InstallAppButton for now.
         color="primary"
-        size="base">
+        size="base"
+      >
         {multiInstall ? t("install_another") : t("install_app")}
       </Button>
     );
@@ -70,7 +72,8 @@ export const InstallAppButtonChild = ({
           // @TODO: Overriding color and size prevent us from
           // having to duplicate InstallAppButton for now.
           color="primary"
-          size="base">
+          size="base"
+        >
           {multiInstall ? t("install_another") : t("install_app")}
         </Button>
       </DropdownMenuTrigger>
@@ -78,7 +81,8 @@ export const InstallAppButtonChild = ({
         <DropdownMenuContent
           onInteractOutside={(event) => {
             if (mutation.isLoading) event.preventDefault();
-          }}>
+          }}
+        >
           {mutation.isLoading && (
             <div className="z-1 fixed inset-0 flex items-center justify-center">
               <Spinner />
@@ -89,7 +93,7 @@ export const InstallAppButtonChild = ({
             const isInstalled =
               credentials &&
               credentials.some((credential) =>
-                credential?.teamId ? credential?.teamId === team.id : credential.userId === team.id
+                credential?.teamId ? credential?.teamId === team.id : credential.userId === team.id,
               );
 
             return (
@@ -108,9 +112,10 @@ export const InstallAppButtonChild = ({
                 )}
                 onClick={() => {
                   mutation.mutate(
-                    team.isUser ? addAppMutationInput : { ...addAppMutationInput, teamId: team.id }
+                    team.isUser ? addAppMutationInput : { ...addAppMutationInput, teamId: team.id },
                   );
-                }}>
+                }}
+              >
                 <p>
                   {t(team.name)} {isInstalled && `(${t("installed")})`}
                 </p>

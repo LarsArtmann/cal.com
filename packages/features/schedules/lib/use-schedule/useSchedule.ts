@@ -62,6 +62,6 @@ export const useSchedule = ({
         Boolean(timezone) &&
         // Should only wait for one or the other, not both.
         (Boolean(eventSlug) || Boolean(eventId) || eventId === 0),
-    }
+    },
   );
 };

@@ -13,7 +13,7 @@ const onChangeMock = vi.fn();
 describe("Tests for InputField Component", () => {
   test("Should render correctly with label and placeholder", () => {
     const { getByLabelText, getByPlaceholderText } = render(
-      <InputField name="testInput" label="Test Label" placeholder="Test Placeholder" />
+      <InputField name="testInput" label="Test Label" placeholder="Test Placeholder" />,
     );
 
     expect(getByLabelText("Test Label")).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe("Tests for InputField Component", () => {
 
   it("should display both addOnLeading and addOnSuffix", () => {
     const { getByText } = render(
-      <InputField addOnLeading={<span>Leading</span>} addOnSuffix={<span>Suffix</span>} />
+      <InputField addOnLeading={<span>Leading</span>} addOnSuffix={<span>Suffix</span>} />,
     );
 
     const addOnLeadingElement = getByText("Leading");
@@ -69,7 +69,7 @@ describe("Tests for PasswordField Component", () => {
     const { getByLabelText, getByText } = render(
       <TooltipProvider>
         <PasswordField name="password" />
-      </TooltipProvider>
+      </TooltipProvider>,
     );
     const passwordInput = getByLabelText("password") as HTMLInputElement;
     const toggleButton = getByText("show_password");
@@ -99,7 +99,7 @@ describe("Tests for EmailField Component", () => {
 describe("Tests for TextAreaField Component", () => {
   test("Should render correctly with label and placeholder", () => {
     const { getByText, getByPlaceholderText, getByRole } = render(
-      <TextAreaField name="testTextArea" label="Test Label" placeholder="Test Placeholder" />
+      <TextAreaField name="testTextArea" label="Test Label" placeholder="Test Placeholder" />,
     );
 
     expect(getByText("Test Label")).toBeInTheDocument();
@@ -132,7 +132,9 @@ describe("Tests for InputFieldWithSelect Component", () => {
       ],
     } as unknown as typeof UnstyledSelect;
 
-    const { getByText } = render(<InputFieldWithSelect selectProps={selectProps} label="testSelect" />);
+    const { getByText } = render(
+      <InputFieldWithSelect selectProps={selectProps} label="testSelect" />,
+    );
 
     const inputElement = getByText("Select...");
     fireEvent.mouseDown(inputElement);

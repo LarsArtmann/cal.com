@@ -25,7 +25,7 @@ const NewWebhookView = () => {
     {
       suspense: true,
       enabled: session.status === "authenticated",
-    }
+    },
   );
   const { data: webhooks } = trpc.viewer.webhook.list.useQuery(undefined, {
     suspense: true,

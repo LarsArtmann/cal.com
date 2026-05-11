@@ -42,11 +42,13 @@ const tandemAuth = async (credential: CredentialPayload) => {
   if (typeof appKeys.client_secret === "string") client_secret = appKeys.client_secret;
   if (typeof appKeys.base_url === "string") base_url = appKeys.base_url;
   if (!client_id) throw new HttpError({ statusCode: 400, message: "Tandem client_id missing." });
-  if (!client_secret) throw new HttpError({ statusCode: 400, message: "Tandem client_secret missing." });
+  if (!client_secret)
+    throw new HttpError({ statusCode: 400, message: "Tandem client_secret missing." });
   if (!base_url) throw new HttpError({ statusCode: 400, message: "Tandem base_url missing." });
 
   const credentialKey = credential.key as unknown as TandemToken;
-  const isTokenValid = (token: TandemToken) => token && token.access_token && token.expiry_date < Date.now();
+  const isTokenValid = (token: TandemToken) =>
+    token && token.access_token && token.expiry_date < Date.now();
 
   const refreshAccessToken = async (refreshToken: string) => {
     const result = await fetch(`${base_url}/api/v1/oauth/v2/token`, {
@@ -148,7 +150,10 @@ const TandemVideoApiAdapter = (credential: CredentialPayload): VideoApiAdapter =
       return Promise.resolve();
     },
 
-    updateMeeting: async (bookingRef: PartialReference, event: CalendarEvent): Promise<VideoCallData> => {
+    updateMeeting: async (
+      bookingRef: PartialReference,
+      event: CalendarEvent,
+    ): Promise<VideoCallData> => {
       const accessToken = await (await auth).getToken();
 
       const result = await fetch(`${base_url}/api/v1/meetings/${bookingRef.meetingId}`, {

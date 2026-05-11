@@ -134,7 +134,9 @@ export const integrationsHandler = async ({ ctx, input }: IntegrationsOptions) =
   //TODO: Refactor this to pick up only needed fields and prevent more leaking
   let apps = enabledApps.map(
     ({ credentials: _, credential: _1, key: _2 /* don't leak to frontend */, ...app }) => {
-      const userCredentialIds = credentials.filter((c) => c.type === app.type && !c.teamId).map((c) => c.id);
+      const userCredentialIds = credentials
+        .filter((c) => c.type === app.type && !c.teamId)
+        .map((c) => c.id);
       const invalidCredentialIds = credentials
         .filter((c) => c.type === app.type && c.invalid)
         .map((c) => c.id);
@@ -151,7 +153,8 @@ export const integrationsHandler = async ({ ctx, input }: IntegrationsOptions) =
             logo: team.logo,
             credentialId: c.id,
             isAdmin:
-              team.members[0].role === MembershipRole.ADMIN || team.members[0].role === MembershipRole.OWNER,
+              team.members[0].role === MembershipRole.ADMIN ||
+              team.members[0].role === MembershipRole.OWNER,
           };
         });
       // type infer as CredentialOwner
@@ -170,7 +173,7 @@ export const integrationsHandler = async ({ ctx, input }: IntegrationsOptions) =
         teams,
         isInstalled: !!userCredentialIds.length || !!teams.length || app.isGlobal,
       };
-    }
+    },
   );
 
   if (variant) {
@@ -187,7 +190,7 @@ export const integrationsHandler = async ({ ctx, input }: IntegrationsOptions) =
 
   if (onlyInstalled) {
     apps = apps.flatMap((item) =>
-      item.userCredentialIds.length > 0 || item.teams.length || item.isGlobal ? [item] : []
+      item.userCredentialIds.length > 0 || item.teams.length || item.isGlobal ? [item] : [],
     );
   }
 

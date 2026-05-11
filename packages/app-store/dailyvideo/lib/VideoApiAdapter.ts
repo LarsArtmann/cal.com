@@ -2,7 +2,10 @@ import { z } from "zod";
 
 import { handleErrorsJson } from "@calcom/lib/errors";
 import { prisma } from "@calcom/prisma";
-import type { GetRecordingsResponseSchema, GetAccessLinkResponseSchema } from "@calcom/prisma/zod-utils";
+import type {
+  GetRecordingsResponseSchema,
+  GetAccessLinkResponseSchema,
+} from "@calcom/prisma/zod-utils";
 import { getRecordingsResponseSchema, getAccessLinkResponseSchema } from "@calcom/prisma/zod-utils";
 import type { CalendarEvent } from "@calcom/types/Calendar";
 import type { CredentialPayload } from "@calcom/types/Credential";
@@ -87,7 +90,10 @@ function postToDailyAPI(endpoint: string, body: Record<string, unknown>) {
 }
 
 const DailyVideoApiAdapter = (): VideoApiAdapter => {
-  async function createOrUpdateMeeting(endpoint: string, event: CalendarEvent): Promise<VideoCallData> {
+  async function createOrUpdateMeeting(
+    endpoint: string,
+    event: CalendarEvent,
+  ): Promise<VideoCallData> {
     if (!event.uid) {
       throw new Error("We need need the booking uid to create the Daily reference in DB");
     }
@@ -161,7 +167,7 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
     getRecordings: async (roomName: string): Promise<GetRecordingsResponseSchema> => {
       try {
         const res = await fetcher(`/recordings?room_name=${roomName}`).then(
-          getRecordingsResponseSchema.parse
+          getRecordingsResponseSchema.parse,
         );
         return Promise.resolve(res);
       } catch (err) {
@@ -170,9 +176,9 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
     },
     getRecordingDownloadLink: async (recordingId: string): Promise<GetAccessLinkResponseSchema> => {
       try {
-        const res = await fetcher(`/recordings/${recordingId}/access-link?valid_for_secs=172800`).then(
-          getAccessLinkResponseSchema.parse
-        );
+        const res = await fetcher(
+          `/recordings/${recordingId}/access-link?valid_for_secs=172800`,
+        ).then(getAccessLinkResponseSchema.parse);
         return Promise.resolve(res);
       } catch (err) {
         console.log("err", err);

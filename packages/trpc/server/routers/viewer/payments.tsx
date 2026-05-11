@@ -18,7 +18,7 @@ export const paymentsRouter = router({
     .input(
       z.object({
         bookingId: z.number(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { prisma } = ctx;
@@ -134,7 +134,7 @@ export const paymentsRouter = router({
               paymentData,
               eventTypeId: subscriberOptions.eventTypeId,
             });
-          })
+          }),
         );
 
         await sendNoShowFeeChargedEmail(attendeesListPromises[0], evt);

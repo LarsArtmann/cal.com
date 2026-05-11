@@ -36,7 +36,10 @@ export function AppStoreCategories({
             href={"/apps/categories/" + category.name}
             data-testid={`app-store-category-${category.name}`}
             className="relative flex rounded-md"
-            style={{ background: "radial-gradient(farthest-side at top right, #a2abbe 0%, #E3E3E3 100%)" }}>
+            style={{
+              background: "radial-gradient(farthest-side at top right, #a2abbe 0%, #E3E3E3 100%)",
+            }}
+          >
             <div className="dark:bg-muted light:bg-[url('/noise.svg')] dark:from-subtle dark:to-muted w-full self-center bg-cover bg-center bg-no-repeat px-6 py-4 dark:bg-gradient-to-tr">
               <Image
                 src={"/app-categories/" + category.name + ".svg"}
@@ -51,7 +54,11 @@ export function AppStoreCategories({
                 <SkeletonText invisible />
               )}
               <p className="text-subtle pt-2 text-sm font-medium">
-                {isLocaleReady ? t("number_apps", { count: category.count }) : <SkeletonText invisible />}{" "}
+                {isLocaleReady ? (
+                  t("number_apps", { count: category.count })
+                ) : (
+                  <SkeletonText invisible />
+                )}{" "}
                 <ArrowRight className="inline-block h-4 w-4" />
               </p>
             </div>

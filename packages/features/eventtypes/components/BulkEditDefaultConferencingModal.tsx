@@ -4,13 +4,24 @@ import { z } from "zod";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { trpc } from "@calcom/trpc/react";
-import { Dialog, DialogContent, Form, DialogFooter, DialogClose, Button, CheckboxField } from "@calcom/ui";
+import {
+  Dialog,
+  DialogContent,
+  Form,
+  DialogFooter,
+  DialogClose,
+  Button,
+  CheckboxField,
+} from "@calcom/ui";
 
 export const BulkUpdateEventSchema = z.object({
   eventTypeIds: z.array(z.number()),
 });
 
-export function BulkEditDefaultConferencingModal(props: { open: boolean; setOpen: (open: boolean) => void }) {
+export function BulkEditDefaultConferencingModal(props: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) {
   const { t } = useLocale();
   const utils = trpc.useContext();
   const { data, isFetching } = trpc.viewer.eventTypes.bulkEventFetch.useQuery();
@@ -38,12 +49,14 @@ export function BulkEditDefaultConferencingModal(props: { open: boolean; setOpen
         type="creation"
         title={t("default_conferencing_bulk_title")}
         description={t("default_conferencing_bulk_description")}
-        enableOverflow>
+        enableOverflow
+      >
         <Form
           form={form}
           handleSubmit={(values) => {
             updateLocationsMutation.mutate(values);
-          }}>
+          }}
+        >
           <div className="flex flex-col space-y-2">
             {data.eventTypes.length > 0 && (
               <div className="flex items-center space-x-2 rounded-md px-3 pb-2.5 pt-1">
@@ -51,14 +64,20 @@ export function BulkEditDefaultConferencingModal(props: { open: boolean; setOpen
                   description={t("select_all")}
                   descriptionAsLabel
                   onChange={(e) => {
-                    form.setValue("eventTypeIds", e.target.checked ? data.eventTypes.map((e) => e.id) : []);
+                    form.setValue(
+                      "eventTypeIds",
+                      e.target.checked ? data.eventTypes.map((e) => e.id) : [],
+                    );
                   }}
                   checked={eventTypesSelected.length === data.eventTypes.length}
                 />
               </div>
             )}
             {data.eventTypes.map((eventType) => (
-              <div key={eventType.id} className="bg-muted flex items-center space-x-2 rounded-md px-3 py-2.5">
+              <div
+                key={eventType.id}
+                className="bg-muted flex items-center space-x-2 rounded-md px-3 py-2.5"
+              >
                 <CheckboxField
                   description={eventType.title}
                   descriptionAsLabel
@@ -68,7 +87,7 @@ export function BulkEditDefaultConferencingModal(props: { open: boolean; setOpen
                       "eventTypeIds",
                       e.target.checked
                         ? [...eventTypesSelected, eventType.id]
-                        : eventTypesSelected.filter((id) => id !== eventType.id)
+                        : eventTypesSelected.filter((id) => id !== eventType.id),
                     );
                   }}
                 />

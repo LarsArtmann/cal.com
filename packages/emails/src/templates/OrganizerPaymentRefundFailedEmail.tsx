@@ -2,7 +2,7 @@ import { BaseEmailHtml } from "../components";
 import { OrganizerScheduledEmail } from "./OrganizerScheduledEmail";
 
 export const OrganizerPaymentRefundFailedEmail = (
-  props: React.ComponentProps<typeof OrganizerScheduledEmail>
+  props: React.ComponentProps<typeof OrganizerScheduledEmail>,
 ) => {
   const t = props.calEvent.organizer.language.translate;
 
@@ -18,7 +18,8 @@ export const OrganizerPaymentRefundFailedEmail = (
             user: props.calEvent.attendees[0].name,
           })}
         </>
-      }>
+      }
+    >
       <RefundInformation {...props} />
     </BaseEmailHtml>
   );
@@ -34,7 +35,10 @@ function RefundInformation(props: React.ComponentProps<typeof OrganizerPaymentRe
     <>
       {paymentInfo.reason && (
         <tr>
-          <td align="center" style={{ fontSize: "0px", padding: "10px 25px", wordBreak: "break-word" }}>
+          <td
+            align="center"
+            style={{ fontSize: "0px", padding: "10px 25px", wordBreak: "break-word" }}
+          >
             <div
               style={{
                 fontFamily: "Roboto, Helvetica, sans-serif",
@@ -43,7 +47,8 @@ function RefundInformation(props: React.ComponentProps<typeof OrganizerPaymentRe
                 lineHeight: "24px",
                 textAlign: "center",
                 color: "#494949",
-              }}>
+              }}
+            >
               {t("error_message", { errorMessage: paymentInfo.reason }).toString()}
             </div>
           </td>
@@ -51,7 +56,10 @@ function RefundInformation(props: React.ComponentProps<typeof OrganizerPaymentRe
       )}
       {paymentInfo.id && (
         <tr>
-          <td align="center" style={{ fontSize: "0px", padding: "10px 25px", wordBreak: "break-word" }}>
+          <td
+            align="center"
+            style={{ fontSize: "0px", padding: "10px 25px", wordBreak: "break-word" }}
+          >
             <div
               style={{
                 fontFamily: "Roboto, Helvetica, sans-serif",
@@ -60,7 +68,8 @@ function RefundInformation(props: React.ComponentProps<typeof OrganizerPaymentRe
                 lineHeight: "24px",
                 textAlign: "center",
                 color: "#494949",
-              }}>
+              }}
+            >
               Payment {paymentInfo.id}
             </div>
           </td>

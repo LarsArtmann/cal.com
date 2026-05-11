@@ -24,7 +24,7 @@ export const BaseScheduledEmail = (
     t: TFunction;
     locale: string;
     timeFormat: TimeFormat | undefined;
-  } & Partial<React.ComponentProps<typeof BaseEmailHtml>>
+  } & Partial<React.ComponentProps<typeof BaseEmailHtml>>,
 ) => {
   const { t, timeZone, locale, timeFormat: timeFormat_ } = props;
 
@@ -42,7 +42,7 @@ export const BaseScheduledEmail = (
     eventType: props.calEvent.type,
     name: props.calEvent.team?.name || props.calEvent.organizer.name,
     date: `${getRecipientStart("h:mma")} - ${getRecipientEnd("h:mma")}, ${t(
-      getRecipientStart("dddd").toLowerCase()
+      getRecipientStart("dddd").toLowerCase(),
     )}, ${t(getRecipientStart("MMMM").toLowerCase())} ${getRecipientStart("D, YYYY")}`,
   });
 
@@ -54,40 +54,55 @@ export const BaseScheduledEmail = (
         props.title
           ? props.title
           : props.calEvent.recurringEvent?.count
-          ? "your_event_has_been_scheduled_recurring"
-          : "your_event_has_been_scheduled"
+            ? "your_event_has_been_scheduled_recurring"
+            : "your_event_has_been_scheduled",
       )}
       callToAction={
         props.callToAction === null
           ? null
           : props.callToAction || <ManageLink attendee={props.attendee} calEvent={props.calEvent} />
       }
-      subtitle={props.subtitle || <>{t("emailed_you_and_any_other_attendees")}</>}>
+      subtitle={props.subtitle || <>{t("emailed_you_and_any_other_attendees")}</>}
+    >
       {props.calEvent.cancellationReason && (
         <Info
           label={t(
             props.calEvent.cancellationReason.startsWith("$RCH$")
               ? "reason_for_reschedule"
-              : "cancellation_reason"
+              : "cancellation_reason",
           )}
           description={
-            !!props.calEvent.cancellationReason && props.calEvent.cancellationReason.replace("$RCH$", "")
+            !!props.calEvent.cancellationReason &&
+            props.calEvent.cancellationReason.replace("$RCH$", "")
           } // Removing flag to distinguish reschedule from cancellation
           withSpacer
         />
       )}
       <Info label={t("rejection_reason")} description={props.calEvent.rejectionReason} withSpacer />
       <Info label={t("what")} description={props.calEvent.title} withSpacer />
-      <WhenInfo timeFormat={timeFormat} calEvent={props.calEvent} t={t} timeZone={timeZone} locale={locale} />
+      <WhenInfo
+        timeFormat={timeFormat}
+        calEvent={props.calEvent}
+        t={t}
+        timeZone={timeZone}
+        locale={locale}
+      />
       <WhoInfo calEvent={props.calEvent} t={t} />
       <LocationInfo calEvent={props.calEvent} t={t} />
-      <Info label={t("description")} description={props.calEvent.description} withSpacer formatted />
+      <Info
+        label={t("description")}
+        description={props.calEvent.description}
+        withSpacer
+        formatted
+      />
       <Info label={t("additional_notes")} description={props.calEvent.additionalNotes} withSpacer />
       {props.includeAppsStatus && <AppsStatus calEvent={props.calEvent} t={t} />}
       <UserFieldsResponses calEvent={props.calEvent} />
       {props.calEvent.paymentInfo?.amount && (
         <Info
-          label={props.calEvent.paymentInfo?.paymentOption === "HOLD" ? t("no_show_fee") : t("price")}
+          label={
+            props.calEvent.paymentInfo?.paymentOption === "HOLD" ? t("no_show_fee") : t("price")
+          }
           description={new Intl.NumberFormat(props.attendee.language.locale, {
             style: "currency",
             currency: props.calEvent.paymentInfo?.currency || "USD",

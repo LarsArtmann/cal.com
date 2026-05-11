@@ -30,7 +30,8 @@ export default function Credits() {
             <Link
               href={`https://github.com/calcom/cal.com/commit/${vercelCommitHash}`}
               target="_blank"
-              className="hover:underline">
+              className="hover:underline"
+            >
               {commitHash}
             </Link>
           ) : (

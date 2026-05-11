@@ -85,7 +85,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { user } = booking;
       const name = user?.name || user?.username;
       if (!user || !name || !user.timeZone) {
-        console.error(`Booking ${booking.id} is missing required properties for booking reminder`, { user });
+        console.error(`Booking ${booking.id} is missing required properties for booking reminder`, {
+          user,
+        });
         continue;
       }
 

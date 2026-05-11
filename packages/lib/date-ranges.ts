@@ -22,16 +22,26 @@ export function processWorkingHours({
   dateTo: Dayjs;
 }) {
   const results = [];
-  for (let date = dateFrom.tz(timeZone).startOf("day"); dateTo.isAfter(date); date = date.add(1, "day")) {
+  for (
+    let date = dateFrom.tz(timeZone).startOf("day");
+    dateTo.isAfter(date);
+    date = date.add(1, "day")
+  ) {
     const dateInTz = date.tz(timeZone);
 
     if (!item.days.includes(dateInTz.day())) {
       continue;
     }
 
-    let start = dateInTz.hour(item.startTime.getUTCHours()).minute(item.startTime.getUTCMinutes()).second(0);
+    let start = dateInTz
+      .hour(item.startTime.getUTCHours())
+      .minute(item.startTime.getUTCMinutes())
+      .second(0);
 
-    let end = dateInTz.hour(item.endTime.getUTCHours()).minute(item.endTime.getUTCMinutes()).second(0);
+    let end = dateInTz
+      .hour(item.endTime.getUTCHours())
+      .minute(item.endTime.getUTCMinutes())
+      .second(0);
 
     const offsetBeginningOfDay = dayjs(start.format("YYYY-MM-DD hh:mm")).tz(timeZone).utcOffset();
     const offsetDiff = start.utcOffset() - offsetBeginningOfDay; // there will be 60 min offset on the day day of DST change
@@ -93,7 +103,7 @@ export function buildDateRanges({
         processed = processed.concat(processWorkingHours({ item, timeZone, dateFrom, dateTo }));
       }
       return processed;
-    }, [])
+    }, []),
   );
   const groupedDateOverrides = groupByDate(
     availability.reduce((processed: DateRange[], item) => {
@@ -101,7 +111,7 @@ export function buildDateRanges({
         processed.push(processDateOverride({ item, timeZone }));
       }
       return processed;
-    }, [])
+    }, []),
   );
 
   const dateRanges = Object.values({
@@ -109,7 +119,7 @@ export function buildDateRanges({
     ...groupedDateOverrides,
   }).map(
     // remove 0-length overrides that were kept to cancel out working dates until now.
-    (ranges) => ranges.filter((range) => range.start.valueOf() !== range.end.valueOf())
+    (ranges) => ranges.filter((range) => range.start.valueOf() !== range.end.valueOf()),
   );
 
   return dateRanges.flat();
@@ -121,7 +131,7 @@ export function groupByDate(ranges: DateRange[]): { [x: string]: DateRange[] } {
       previousValue: {
         [date: string]: DateRange[];
       },
-      currentValue
+      currentValue,
     ) => {
       const dateString = dayjs(currentValue.start).format("YYYY-MM-DD");
 
@@ -131,7 +141,7 @@ export function groupByDate(ranges: DateRange[]): { [x: string]: DateRange[] } {
           : [...previousValue[dateString], currentValue];
       return previousValue;
     },
-    {}
+    {},
   );
 
   return results;
@@ -183,7 +193,7 @@ function getIntersection(range1: DateRange, range2: DateRange) {
 
 export function subtract(
   sourceRanges: (DateRange & { [x: string]: unknown })[],
-  excludedRanges: DateRange[]
+  excludedRanges: DateRange[],
 ) {
   const result: DateRange[] = [];
 
@@ -191,7 +201,7 @@ export function subtract(
     let currentStart = sourceStart;
 
     const overlappingRanges = excludedRanges.filter(
-      ({ start, end }) => start.isBefore(sourceEnd) && end.isAfter(sourceStart)
+      ({ start, end }) => start.isBefore(sourceEnd) && end.isAfter(sourceStart),
     );
 
     overlappingRanges.sort((a, b) => (a.start.isAfter(b.start) ? 1 : -1));

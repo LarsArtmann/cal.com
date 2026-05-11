@@ -25,7 +25,9 @@ export default function TeamInviteFromOrg({
       return true; // return all members if searchQuery is empty
     }
     const { user } = member ?? {}; // destructuring with default value in case member is undefined
-    return keysToCheck.some((key) => user?.[key]?.toLowerCase().includes(searchQuery.toLowerCase()));
+    return keysToCheck.some((key) =>
+      user?.[key]?.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
   });
 
   return (
@@ -72,8 +74,9 @@ function UserToInviteItem({
       onClick={() => onChange()} // We handle this on click on the div also - for a11y we handle it with label and checkbox below
       className={classNames(
         "flex cursor-pointer items-center rounded-md px-2 py-1",
-        isSelected ? "bg-emphasis" : "hover:bg-subtle "
-      )}>
+        isSelected ? "bg-emphasis" : "hover:bg-subtle ",
+      )}
+    >
       <div className="flex items-center space-x-2 rtl:space-x-reverse">
         <Avatar
           size="sm"
@@ -83,7 +86,8 @@ function UserToInviteItem({
         />
         <label
           htmlFor={`${member.user.id}`}
-          className="text-emphasis cursor-pointer text-sm font-medium leading-none">
+          className="text-emphasis cursor-pointer text-sm font-medium leading-none"
+        >
           {member.user.name || member.user.email || "Nameless User"}
         </label>
       </div>

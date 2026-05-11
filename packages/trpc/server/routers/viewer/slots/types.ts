@@ -33,7 +33,7 @@ export const getScheduleSchema = z
   })
   .refine(
     (data) => !!data.eventTypeId || (!!data.usernameList && !!data.eventTypeSlug),
-    "You need to either pass an eventTypeId OR an usernameList/eventTypeSlug combination"
+    "You need to either pass an eventTypeId OR an usernameList/eventTypeSlug combination",
   );
 
 export const reserveSlotSchema = z
@@ -47,7 +47,7 @@ export const reserveSlotSchema = z
   })
   .refine(
     (data) => !!data.eventTypeId || !!data.slotUtcStartDate || !!data.slotUtcEndDate,
-    "Either slotUtcStartDate, slotUtcEndDate or eventTypeId should be filled in."
+    "Either slotUtcStartDate, slotUtcEndDate or eventTypeId should be filled in.",
   );
 
 export type Slot = {

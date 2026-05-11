@@ -32,7 +32,10 @@ export function AvailabilityList({ schedules }: RouterOutputs["viewer"]["availab
       const previousValue = utils.viewer.availability.list.getData();
       if (previousValue) {
         const filteredValue = previousValue.schedules.filter(({ id }) => id !== scheduleId);
-        utils.viewer.availability.list.setData(undefined, { ...previousValue, schedules: filteredValue });
+        utils.viewer.availability.list.setData(undefined, {
+          ...previousValue,
+          schedules: filteredValue,
+        });
       }
 
       return { previousValue };
@@ -62,7 +65,7 @@ export function AvailabilityList({ schedules }: RouterOutputs["viewer"]["availab
         t("availability_updated_successfully", {
           scheduleName: schedule.name,
         }),
-        "success"
+        "success",
       );
     },
     onError: (err) => {
@@ -144,7 +147,7 @@ export default function AvailabilityPage() {
 
       return params.toString();
     },
-    [searchParams]
+    [searchParams],
   );
   return (
     <div>
@@ -168,7 +171,8 @@ export default function AvailabilityPage() {
             />
             <NewScheduleButton />
           </div>
-        }>
+        }
+      >
         {searchParams?.get("type") === "team" ? (
           <AvailabilitySliderTable />
         ) : (

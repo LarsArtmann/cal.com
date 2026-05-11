@@ -13,7 +13,8 @@ export const LargeCalendar = ({ extraDays }: { extraDays: number }) => {
   const setSelectedTimeslot = useBookerStore((state) => state.setSelectedTimeslot);
   const selectedEventDuration = useBookerStore((state) => state.selectedDuration);
   const schedule = useScheduleForEvent({
-    prefetchNextMonth: !!extraDays && dayjs(date).month() !== dayjs(date).add(extraDays, "day").month(),
+    prefetchNextMonth:
+      !!extraDays && dayjs(date).month() !== dayjs(date).add(extraDays, "day").month(),
   });
 
   const event = useEvent();

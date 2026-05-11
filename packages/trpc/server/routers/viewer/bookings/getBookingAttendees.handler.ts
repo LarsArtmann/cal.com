@@ -7,7 +7,10 @@ type GetBookingAttendeesOptions = {
   input: TGetBookingAttendeesInputSchema;
 };
 
-export const getBookingAttendeesHandler = async ({ ctx: _ctx, input }: GetBookingAttendeesOptions) => {
+export const getBookingAttendeesHandler = async ({
+  ctx: _ctx,
+  input,
+}: GetBookingAttendeesOptions) => {
   const bookingSeat = await prisma.bookingSeat.findUniqueOrThrow({
     where: {
       referenceUid: input.seatReferenceUid,

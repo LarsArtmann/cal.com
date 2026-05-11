@@ -97,15 +97,20 @@ const ProfileView = () => {
           form.setValue("logo", team.logo || "");
           form.setValue("bio", team.bio || "");
           if (team.slug === null && (team?.metadata as Prisma.JsonObject)?.requestedSlug) {
-            form.setValue("slug", ((team?.metadata as Prisma.JsonObject)?.requestedSlug as string) || "");
+            form.setValue(
+              "slug",
+              ((team?.metadata as Prisma.JsonObject)?.requestedSlug as string) || "",
+            );
           }
         }
       },
-    }
+    },
   );
 
   const isAdmin =
-    team && (team.membership.role === MembershipRole.OWNER || team.membership.role === MembershipRole.ADMIN);
+    team &&
+    (team.membership.role === MembershipRole.OWNER ||
+      team.membership.role === MembershipRole.ADMIN);
 
   const permalink = `${WEBAPP_URL}/team/${team?.slug}`;
 
@@ -171,18 +176,24 @@ const ProfileView = () => {
                     bio: values.bio,
                   };
                   objectKeys(variables).forEach((key) => {
-                    if (variables[key as keyof typeof variables] === team?.[key]) delete variables[key];
+                    if (variables[key as keyof typeof variables] === team?.[key])
+                      delete variables[key];
                   });
                   mutation.mutate({ id: team.id, ...variables });
                 }
-              }}>
+              }}
+            >
               <div className="flex items-center">
                 <Controller
                   control={form.control}
                   name="logo"
                   render={({ field: { value } }) => (
                     <>
-                      <Avatar alt="" imageSrc={getPlaceholderAvatar(value, team?.name as string)} size="lg" />
+                      <Avatar
+                        alt=""
+                        imageSrc={getPlaceholderAvatar(value, team?.name as string)}
+                        size="lg"
+                      />
                       <div className="ms-4">
                         <ImageUploader
                           target="avatar"
@@ -263,7 +274,8 @@ const ProfileView = () => {
                     type="button"
                     onClick={() => {
                       publishMutation.mutate({ teamId: team.id });
-                    }}>
+                    }}
+                  >
                     Publish
                   </Button>
                 )}
@@ -294,7 +306,8 @@ const ProfileView = () => {
                   onClick={() => {
                     navigator.clipboard.writeText(permalink);
                     showToast("Copied to clipboard", "success");
-                  }}>
+                  }}
+                >
                   {t("copy_link_team")}
                 </LinkIconButton>
               </div>
@@ -314,7 +327,8 @@ const ProfileView = () => {
                 variety="danger"
                 title={t("disband_team")}
                 confirmBtnText={t("confirm_disband_team")}
-                onConfirm={deleteTeam}>
+                onConfirm={deleteTeam}
+              >
                 {t("disband_team_confirmation_message")}
               </ConfirmationDialogContent>
             </Dialog>
@@ -329,7 +343,8 @@ const ProfileView = () => {
                 variety="danger"
                 title={t("leave_team")}
                 confirmBtnText={t("confirm_leave_team")}
-                onConfirm={leaveTeam}>
+                onConfirm={leaveTeam}
+              >
                 {t("leave_team_confirmation_message")}
               </ConfirmationDialogContent>
             </Dialog>

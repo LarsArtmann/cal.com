@@ -22,7 +22,7 @@ type BookingSelect = {
 function getResponsesFromOldBooking(
   rawBooking: Prisma.BookingGetPayload<{
     select: BookingSelect;
-  }>
+  }>,
 ) {
   const customInputs = rawBooking.customInputs || {};
   const responses = Object.keys(customInputs).reduce((acc, label) => {
@@ -97,13 +97,15 @@ export const getBookingWithResponses = <
     select: BookingSelect & {
       responses: true;
     };
-  }>
+  }>,
 >(
-  booking: T
+  booking: T,
 ) => {
   return {
     ...booking,
-    responses: bookingResponsesDbSchema.parse(booking.responses || getResponsesFromOldBooking(booking)),
+    responses: bookingResponsesDbSchema.parse(
+      booking.responses || getResponsesFromOldBooking(booking),
+    ),
   } as Omit<T, "responses"> & { responses: z.infer<typeof bookingResponsesDbSchema> };
 };
 
@@ -229,7 +231,7 @@ export const getBookingForSeatedEvent = async (uid: string) => {
 export const getMultipleDurationValue = (
   multipleDurationConfig: number[] | undefined,
   queryDuration: string | string[] | undefined,
-  defaultValue: number
+  defaultValue: number,
 ) => {
   if (!multipleDurationConfig) return null;
   if (multipleDurationConfig.includes(Number(queryDuration))) return Number(queryDuration);

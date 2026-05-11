@@ -16,13 +16,16 @@ import { useBookerStore } from "../store";
  * of combining multiple conditional hooks.
  */
 export const useEvent = () => {
-  const [username, eventSlug] = useBookerStore((state) => [state.username, state.eventSlug], shallow);
+  const [username, eventSlug] = useBookerStore(
+    (state) => [state.username, state.eventSlug],
+    shallow,
+  );
   const isTeamEvent = useBookerStore((state) => state.isTeamEvent);
   const org = useBookerStore((state) => state.org);
 
   return trpc.viewer.public.event.useQuery(
     { username: username ?? "", eventSlug: eventSlug ?? "", isTeamEvent, org: org ?? null },
-    { refetchOnWindowFocus: false, enabled: Boolean(username) && Boolean(eventSlug) }
+    { refetchOnWindowFocus: false, enabled: Boolean(username) && Boolean(eventSlug) },
   );
 };
 
@@ -59,7 +62,7 @@ export const useScheduleForEvent = ({
   const event = useEvent();
   const [usernameFromStore, eventSlugFromStore, monthFromStore, durationFromStore] = useBookerStore(
     (state) => [state.username, state.eventSlug, state.month, state.selectedDuration],
-    shallow
+    shallow,
   );
   const searchParams = useSearchParams();
   const rescheduleUid = searchParams.get("rescheduleUid");

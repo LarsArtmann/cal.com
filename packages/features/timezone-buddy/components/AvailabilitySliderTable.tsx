@@ -45,7 +45,8 @@ function UpgradeTeamTip() {
             </Button>
           </ButtonGroup>
         </div>
-      }>
+      }
+    >
       <></>
     </UpgradeTip>
   );
@@ -58,18 +59,19 @@ export function AvailabilitySliderTable() {
   const [editSheetOpen, setEditSheetOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<SliderUser | null>(null);
 
-  const { data, isLoading, fetchNextPage, isFetching } = trpc.viewer.availability.listTeam.useInfiniteQuery(
-    {
-      limit: 10,
-      loggedInUsersTz: dayjs.tz.guess(),
-      startDate: browsingDate.startOf("day").toISOString(),
-      endDate: browsingDate.endOf("day").toISOString(),
-    },
-    {
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-      keepPreviousData: true,
-    }
-  );
+  const { data, isLoading, fetchNextPage, isFetching } =
+    trpc.viewer.availability.listTeam.useInfiniteQuery(
+      {
+        limit: 10,
+        loggedInUsersTz: dayjs.tz.guess(),
+        startDate: browsingDate.startOf("day").toISOString(),
+        endDate: browsingDate.endOf("day").toISOString(),
+      },
+      {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+        keepPreviousData: true,
+      },
+    );
 
   const memorisedColumns = useMemo(() => {
     const cols: ColumnDef<SliderUser>[] = [
@@ -150,7 +152,10 @@ export function AvailabilitySliderTable() {
   }, [browsingDate]);
 
   //we must flatten the array of arrays from the useInfiniteQuery hook
-  const flatData = useMemo(() => data?.pages?.flatMap((page) => page.rows) ?? [], [data]) as SliderUser[];
+  const flatData = useMemo(
+    () => data?.pages?.flatMap((page) => page.rows) ?? [],
+    [data],
+  ) as SliderUser[];
   const totalDBRowCount = data?.pages?.[0]?.meta?.totalRowCount ?? 0;
   const totalFetched = flatData.length;
 
@@ -160,12 +165,16 @@ export function AvailabilitySliderTable() {
       if (containerRefElement) {
         const { scrollHeight, scrollTop, clientHeight } = containerRefElement;
         //once the user has scrolled within 300px of the bottom of the table, fetch more data if there is any
-        if (scrollHeight - scrollTop - clientHeight < 300 && !isFetching && totalFetched < totalDBRowCount) {
+        if (
+          scrollHeight - scrollTop - clientHeight < 300 &&
+          !isFetching &&
+          totalFetched < totalDBRowCount
+        ) {
           fetchNextPage();
         }
       }
     },
-    [fetchNextPage, isFetching, totalFetched, totalDBRowCount]
+    [fetchNextPage, isFetching, totalFetched, totalDBRowCount],
   );
 
   useEffect(() => {
@@ -179,7 +188,8 @@ export function AvailabilitySliderTable() {
     <TBContext.Provider
       value={createTimezoneBuddyStore({
         browsingDate: browsingDate.toDate(),
-      })}>
+      })}
+    >
       <>
         <div className="relative">
           <DataTable

@@ -107,22 +107,25 @@ async function getTenantAccessTokenByTenantKey(tenantKey: string): Promise<strin
 export async function sendPostMsg(
   tenantKey: string,
   senderOpenId: string,
-  message: string = JSON.stringify(msg)
+  message: string = JSON.stringify(msg),
 ): Promise<{ code: number; msg: string }> {
   const tenantAccessToken = await getTenantAccessTokenByTenantKey(tenantKey);
 
-  const response = await fetch(`https://${LARK_HOST}/open-apis/im/v1/messages?receive_id_type=open_id`, {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer " + tenantAccessToken,
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `https://${LARK_HOST}/open-apis/im/v1/messages?receive_id_type=open_id`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + tenantAccessToken,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        receive_id: senderOpenId,
+        content: message,
+        msg_type: "post",
+      }),
     },
-    body: JSON.stringify({
-      receive_id: senderOpenId,
-      content: message,
-      msg_type: "post",
-    }),
-  });
+  );
 
   const responseBody = await response.json();
   log.debug("send message success", responseBody);

@@ -5,7 +5,7 @@ import type { fieldSchema } from "./schema";
 
 export const preprocessNameFieldDataWithVariant = (
   variantName: "fullName" | "firstAndLastName",
-  value: string | Record<"firstName" | "lastName", string> | undefined
+  value: string | Record<"firstName" | "lastName", string> | undefined,
 ) => {
   // We expect an object here, but if we get a string, then we will try to transform it into the appropriate object
   if (variantName === "firstAndLastName") {
@@ -16,7 +16,9 @@ export const preprocessNameFieldDataWithVariant = (
   }
 };
 
-export const getFullName = (name: string | { firstName: string; lastName?: string } | undefined) => {
+export const getFullName = (
+  name: string | { firstName: string; lastName?: string } | undefined,
+) => {
   if (!name) {
     return "";
   }
@@ -57,7 +59,9 @@ function getFirstAndLastName(value: string | Record<"firstName" | "lastName", st
 /**
  * Get's the field's variantsConfig and if not available, then it will get the default variantsConfig from the fieldTypesConfigMap
  */
-export const getVariantsConfig = (field: Pick<z.infer<typeof fieldSchema>, "variantsConfig" | "type">) => {
+export const getVariantsConfig = (
+  field: Pick<z.infer<typeof fieldSchema>, "variantsConfig" | "type">,
+) => {
   const fieldVariantsConfig = field.variantsConfig;
   const fieldTypeConfig = fieldTypesConfigMap[field.type as keyof typeof fieldTypesConfigMap];
 

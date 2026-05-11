@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   await createOAuthAppCredential(
     { appId: "stripe", type: "stripe_payment" },
     data as unknown as Prisma.InputJsonObject,
-    req
+    req,
   );
 
   const returnTo = getReturnToValueFromQueryState(req);

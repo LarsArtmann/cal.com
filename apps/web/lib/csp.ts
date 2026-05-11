@@ -79,7 +79,7 @@ export function csp(req: IncomingMessage | null, res: OutgoingMessage | null) {
         : "Content-Security-Policy-Report-Only",
       getCspPolicy(nonce)
         .replace(/\s{2,}/g, " ")
-        .trim()
+        .trim(),
     );
   }
 

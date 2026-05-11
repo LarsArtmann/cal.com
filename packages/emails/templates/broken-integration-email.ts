@@ -45,11 +45,13 @@ export default class BrokenIntegrationEmail extends BaseEmail {
     title = "",
     subtitle = "emailed_you_and_any_other_attendees",
     extraInfo = "",
-    callToAction = ""
+    callToAction = "",
   ): string {
     return `
 ${this.t(
-  title || this.calEvent.recurringEvent?.count ? "new_event_scheduled_recurring" : "new_event_scheduled"
+  title || this.calEvent.recurringEvent?.count
+    ? "new_event_scheduled_recurring"
+    : "new_event_scheduled",
 )}
 ${this.t(subtitle)}
 ${extraInfo}
@@ -83,9 +85,9 @@ ${callToAction}
   protected getFormattedDate() {
     const organizerTimeFormat = this.calEvent.organizer.timeFormat || TimeFormat.TWELVE_HOUR;
     return `${this.getOrganizerStart(organizerTimeFormat)} - ${this.getOrganizerEnd(
-      organizerTimeFormat
+      organizerTimeFormat,
     )}, ${this.t(this.getOrganizerStart("dddd").toLowerCase())}, ${this.t(
-      this.getOrganizerStart("MMMM").toLowerCase()
+      this.getOrganizerStart("MMMM").toLowerCase(),
     )} ${this.getOrganizerStart("D, YYYY")}`;
   }
 }

@@ -42,7 +42,8 @@ export const createHandler = async ({ ctx, input }: CreateOptions) => {
       },
     });
 
-    if (nameCollisions) throw new TRPCError({ code: "BAD_REQUEST", message: "team_slug_exists_as_user" });
+    if (nameCollisions)
+      throw new TRPCError({ code: "BAD_REQUEST", message: "team_slug_exists_as_user" });
   }
 
   // Ensure that the user is not duplicating a requested team

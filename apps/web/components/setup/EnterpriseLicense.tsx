@@ -17,7 +17,10 @@ type EnterpriseLicenseFormValues = {
   licenseKey: string;
 };
 
-const makeSchemaLicenseKey = (args: { callback: (valid: boolean) => void; onSuccessValidate: () => void }) =>
+const makeSchemaLicenseKey = (args: {
+  callback: (valid: boolean) => void;
+  onSuccessValidate: () => void;
+}) =>
   z.object({
     licenseKey: z
       .string()
@@ -51,9 +54,9 @@ const EnterpriseLicense = (
     onSubmit: (value: EnterpriseLicenseFormValues) => void;
     onSuccess?: (
       data: RouterOutputs["viewer"]["deploymentSetup"]["update"],
-      variables: RouterInputs["viewer"]["deploymentSetup"]["update"]
+      variables: RouterInputs["viewer"]["deploymentSetup"]["update"],
     ) => void;
-  } & Omit<JSX.IntrinsicElements["form"], "onSubmit">
+  } & Omit<JSX.IntrinsicElements["form"], "onSubmit">,
 ) => {
   const { onSubmit, onSuccess = noop, onSuccessValidate = noop, ...rest } = props;
   const { t } = useLocale();
@@ -68,7 +71,7 @@ const EnterpriseLicense = (
         callback: setCheckLicenseLoading,
         onSuccessValidate,
       }),
-    [setCheckLicenseLoading, onSuccessValidate]
+    [setCheckLicenseLoading, onSuccessValidate],
   );
 
   const formMethods = useForm<EnterpriseLicenseFormValues>({
@@ -88,13 +91,18 @@ const EnterpriseLicense = (
 
   return (
     <FormProvider {...formMethods}>
-      <form {...rest} className="bg-default space-y-4 rounded-md px-8 py-10" onSubmit={handleSubmit}>
+      <form
+        {...rest}
+        className="bg-default space-y-4 rounded-md px-8 py-10"
+        onSubmit={handleSubmit}
+      >
         <div>
           <Button
             className="w-full justify-center text-lg"
             EndIcon={ExternalLink}
             href="https://console.cal.com"
-            target="_blank">
+            target="_blank"
+          >
             {t("purchase_license")}
           </Button>
           <div className="relative flex justify-center">
@@ -110,7 +118,8 @@ const EnterpriseLicense = (
                 {...formMethods.register("licenseKey")}
                 className={classNames(
                   "group-hover:border-emphasis mb-0",
-                  (checkLicenseLoading || (errors.licenseKey === undefined && isDirty)) && "border-r-0"
+                  (checkLicenseLoading || (errors.licenseKey === undefined && isDirty)) &&
+                    "border-r-0",
                 )}
                 placeholder="xxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
                 labelSrOnly={true}
@@ -118,7 +127,7 @@ const EnterpriseLicense = (
                 addOnFilled={false}
                 addOnClassname={classNames(
                   "hover:border-default",
-                  errors.licenseKey === undefined && isDirty && "group-hover:border-emphasis"
+                  errors.licenseKey === undefined && isDirty && "group-hover:border-emphasis",
                 )}
                 addOnSuffix={
                   checkLicenseLoading ? (

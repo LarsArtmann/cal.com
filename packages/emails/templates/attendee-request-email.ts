@@ -24,7 +24,7 @@ export default class AttendeeRequestEmail extends AttendeeScheduledEmail {
         }),
         this.calEvent.attendees[0].language.translate("user_needs_to_confirm_or_reject_booking", {
           user: this.calEvent.organizer.name,
-        })
+        }),
       ),
     };
   }

@@ -3,7 +3,13 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 import type { Message } from "./embed";
 import { sdkActionManager } from "./sdk-event";
-import type { EmbedThemeConfig, UiConfig, EmbedNonStylesConfig, BookerLayouts, EmbedStyles } from "./types";
+import type {
+  EmbedThemeConfig,
+  UiConfig,
+  EmbedNonStylesConfig,
+  BookerLayouts,
+  EmbedStyles,
+} from "./types";
 
 type SetStyles = React.Dispatch<React.SetStateAction<EmbedStyles>>;
 type setNonStylesConfig = React.Dispatch<React.SetStateAction<EmbedNonStylesConfig>>;
@@ -114,12 +120,13 @@ const registerNewSetter = (
         elementName: keyof EmbedNonStylesConfig;
         setState: setNonStylesConfig;
         styles: false;
-      }
+      },
 ) => {
   // It's possible that 'ui' instruction has already been processed and the registration happened due to some action by the user in iframe.
   // So, we should call the setter immediately with available embedStyles
   if (registration.styles) {
-    embedStore.reactStylesStateSetters[registration.elementName as keyof EmbedStyles] = registration.setState;
+    embedStore.reactStylesStateSetters[registration.elementName as keyof EmbedStyles] =
+      registration.setState;
     registration.setState(embedStore.styles || {});
     return () => {
       delete embedStore.reactStylesStateSetters[registration.elementName];
@@ -160,7 +167,7 @@ const useUrlChange = (callback: (newUrl: string) => void) => {
 export const useEmbedTheme = () => {
   const searchParams = useSearchParams();
   const [theme, setTheme] = useState(
-    embedStore.theme || (searchParams?.get("theme") as typeof embedStore.theme)
+    embedStore.theme || (searchParams?.get("theme") as typeof embedStore.theme),
   );
 
   const onUrlChange = useCallback(() => {
@@ -263,7 +270,7 @@ export const useIsEmbed = (embedSsr?: boolean) => {
     const _isValidNamespace = isValidNamespace(namespace);
     if (parent !== window && !_isValidNamespace) {
       log(
-        "Looks like you have iframed cal.com but not using Embed Snippet. Directly using an iframe isn't recommended."
+        "Looks like you have iframed cal.com but not using Embed Snippet. Directly using an iframe isn't recommended.",
       );
     }
     setIsEmbed(window?.isEmbed?.() || false);
@@ -292,7 +299,7 @@ const methods = {
 
     if (stylesConfig) {
       console.warn(
-        "Cal.com Embed: `styles` prop is deprecated. Use `cssVarsPerTheme` instead to achieve the same effect. Here is a list of CSS variables that are supported. https://github.com/calcom/cal.com/blob/main/packages/config/tailwind-preset.js#L19"
+        "Cal.com Embed: `styles` prop is deprecated. Use `cssVarsPerTheme` instead to achieve the same effect. Here is a list of CSS variables that are supported. https://github.com/calcom/cal.com/blob/main/packages/config/tailwind-preset.js#L19",
       );
     }
 
@@ -346,7 +353,9 @@ const methods = {
 };
 
 export type InterfaceWithParent = {
-  [key in keyof typeof methods]: (firstAndOnlyArg: Parameters<(typeof methods)[key]>[number]) => void;
+  [key in keyof typeof methods]: (
+    firstAndOnlyArg: Parameters<(typeof methods)[key]>[number],
+  ) => void;
 };
 
 export const interfaceWithParent: InterfaceWithParent = methods;
@@ -357,7 +366,7 @@ const messageParent = (data: CustomEvent["detail"]) => {
       originator: "CAL",
       ...data,
     },
-    "*"
+    "*",
   );
 };
 
@@ -403,12 +412,12 @@ function keepParentInformedAboutDimensionChanges() {
     const contentHeight = Math.ceil(
       parseFloat(mainElementStyles.height) +
         parseFloat(mainElementStyles.marginTop) +
-        parseFloat(mainElementStyles.marginBottom)
+        parseFloat(mainElementStyles.marginBottom),
     );
     const contentWidth = Math.ceil(
       parseFloat(mainElementStyles.width) +
         parseFloat(mainElementStyles.marginLeft) +
-        parseFloat(mainElementStyles.marginRight)
+        parseFloat(mainElementStyles.marginRight),
     );
 
     // During first render let iframe tell parent that how much is the expected height to avoid scroll.

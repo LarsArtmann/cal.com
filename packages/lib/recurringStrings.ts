@@ -16,7 +16,7 @@ export const getRecurringFreq = ({
         Frequency[recurringEvent.freq].toString().toLowerCase(),
         {
           count: recurringEvent.interval,
-        }
+        },
       )}`,
     });
   }

@@ -13,7 +13,8 @@ export const schemaSelectedCalendarBodyParams = schemaSelectedCalendarBaseBodyPa
   userId: true,
 });
 
-export const schemaSelectedCalendarUpdateBodyParams = schemaSelectedCalendarBaseBodyParams.partial();
+export const schemaSelectedCalendarUpdateBodyParams =
+  schemaSelectedCalendarBaseBodyParams.partial();
 
 export const selectedCalendarIdSchema = schemaQueryIdAsString.transform((v, ctx) => {
   /** We can assume the first part is the userId since it's an integer */

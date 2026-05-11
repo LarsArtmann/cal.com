@@ -9,7 +9,9 @@ export const schemaTeamBaseBodyParams = Team.omit({ id: true, createdAt: true })
 
 const schemaTeamRequiredParams = z.object({});
 
-export const schemaTeamBodyParams = schemaTeamBaseBodyParams.merge(schemaTeamRequiredParams).strict();
+export const schemaTeamBodyParams = schemaTeamBaseBodyParams
+  .merge(schemaTeamRequiredParams)
+  .strict();
 
 export const schemaTeamUpdateBodyParams = schemaTeamBodyParams.partial();
 

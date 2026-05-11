@@ -15,7 +15,11 @@ export const AverageEventDurationChart = () => {
   const { dateRange, selectedMemberUserId, isAll, initialConfig } = filter;
   const [startDate, endDate] = dateRange;
   const { selectedTeamId: teamId, selectedUserId } = filter;
-  const initialConfigIsReady = !!(initialConfig?.teamId || initialConfig?.userId || initialConfig?.isAll);
+  const initialConfigIsReady = !!(
+    initialConfig?.teamId ||
+    initialConfig?.userId ||
+    initialConfig?.isAll
+  );
   const { data, isSuccess, isLoading } = trpc.viewer.insights.averageEventDuration.useQuery(
     {
       startDate: startDate.toISOString(),
@@ -32,7 +36,7 @@ export const AverageEventDurationChart = () => {
       },
       // At least one of the following initial configs should have a value
       enabled: initialConfigIsReady,
-    }
+    },
   );
 
   if (isLoading) return <LoadingInsight />;

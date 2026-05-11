@@ -48,7 +48,9 @@ function SettingsToggle({
                 {title}
                 {LockedIcon}
               </Label>
-              {description && <p className="text-default -mt-1.5 text-sm leading-normal">{description}</p>}
+              {description && (
+                <p className="text-default -mt-1.5 text-sm leading-normal">{description}</p>
+              )}
             </div>
           </div>
           {children && (

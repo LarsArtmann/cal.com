@@ -40,11 +40,13 @@ export const CheckedTeamSelect = ({
        - Slides down from the top instead of just teleporting in from nowhere*/}
       <ul
         className={classNames("mb-1 mt-3 rounded-md", value.length >= 1 && "border-subtle border")}
-        ref={animationRef}>
+        ref={animationRef}
+      >
         {value.map((option, index) => (
           <li
             key={option.value}
-            className={`flex px-3 py-2 ${index === value.length - 1 ? "" : "border-subtle border-b"}`}>
+            className={`flex px-3 py-2 ${index === value.length - 1 ? "" : "border-subtle border-b"}`}
+          >
             <Avatar size="sm" imageSrc={option.avatar} alt={option.label} />
             <p className="text-emphasis my-auto ms-3 text-sm">{option.label}</p>
             <X

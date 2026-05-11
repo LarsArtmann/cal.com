@@ -17,7 +17,7 @@ export function UserFieldsResponses(props: { calEvent: CalendarEvent }) {
             description={`${labelValueMap[key] ? labelValueMap[key] : ""}`}
             withSpacer
           />
-        ) : null
+        ) : null,
       )}
     </>
   );

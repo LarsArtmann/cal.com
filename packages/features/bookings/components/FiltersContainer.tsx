@@ -42,7 +42,7 @@ const PeopleFilter = () => {
       searchText.trim() !== ""
         ? member?.name?.toLowerCase()?.includes(searchText.toLowerCase()) ||
           member?.username?.toLowerCase()?.includes(searchText.toLowerCase())
-        : true
+        : true,
     );
 
   const getTextForPopover = () => {
@@ -55,7 +55,10 @@ const PeopleFilter = () => {
 
   return (
     <AnimatedPopover text={getTextForPopover()}>
-      <FilterSearchField onChange={(e) => setSearchText(e.target.value)} placeholder={t("search")} />
+      <FilterSearchField
+        onChange={(e) => setSearchText(e.target.value)}
+        placeholder={t("search")}
+      />
       <FilterCheckboxFieldsContainer>
         {filteredMembers?.map((member) => (
           <FilterCheckboxField
@@ -84,7 +87,9 @@ const PeopleFilter = () => {
           />
         ))}
         {filteredMembers?.length === 0 && (
-          <h2 className="text-default px-4 py-2 text-sm font-medium">{t("no_options_available")}</h2>
+          <h2 className="text-default px-4 py-2 text-sm font-medium">
+            {t("no_options_available")}
+          </h2>
         )}
       </FilterCheckboxFieldsContainer>
     </AnimatedPopover>
@@ -124,7 +129,8 @@ export function FiltersContainer() {
                   StartIcon={option.StartIcon}
                   onClick={() => {
                     toggleOption(option);
-                  }}>
+                  }}
+                >
                   {t(option.label)}
                 </DropdownItem>
               </DropdownMenuItem>

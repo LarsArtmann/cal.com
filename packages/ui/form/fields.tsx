@@ -19,7 +19,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(pro
       ref={ref}
       className={classNames(
         "border-default mt-1 block w-full rounded-sm border px-3 py-2 shadow-sm focus:border-neutral-800 focus:outline-none focus:ring-1 focus:ring-neutral-800 sm:text-sm",
-        props.className
+        props.className,
       )}
     />
   );
@@ -27,7 +27,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(pro
 
 export function Label(props: JSX.IntrinsicElements["label"]) {
   return (
-    <label {...props} className={classNames("text-default block text-sm font-medium", props.className)}>
+    <label
+      {...props}
+      className={classNames("text-default block text-sm font-medium", props.className)}
+    >
       {props.children}
     </label>
   );
@@ -97,61 +100,74 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(function InputF
   );
 });
 
-export const TextField = forwardRef<HTMLInputElement, InputFieldProps>(function TextField(props, ref) {
-  return <InputField ref={ref} {...props} />;
-});
+export const TextField = forwardRef<HTMLInputElement, InputFieldProps>(
+  function TextField(props, ref) {
+    return <InputField ref={ref} {...props} />;
+  },
+);
 
-export const PasswordField = forwardRef<HTMLInputElement, InputFieldProps>(function PasswordField(
-  props,
-  ref
-) {
-  return (
-    <InputField data-testid="password" type="password" placeholder="•••••••••••••" ref={ref} {...props} />
-  );
-});
+export const PasswordField = forwardRef<HTMLInputElement, InputFieldProps>(
+  function PasswordField(props, ref) {
+    return (
+      <InputField
+        data-testid="password"
+        type="password"
+        placeholder="•••••••••••••"
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
 
-export const EmailInput = forwardRef<HTMLInputElement, InputFieldProps>(function EmailInput(props, ref) {
-  return (
-    <Input
-      ref={ref}
-      type="email"
-      autoCapitalize="none"
-      autoComplete="email"
-      autoCorrect="off"
-      inputMode="email"
-      {...props}
-    />
-  );
-});
+export const EmailInput = forwardRef<HTMLInputElement, InputFieldProps>(
+  function EmailInput(props, ref) {
+    return (
+      <Input
+        ref={ref}
+        type="email"
+        autoCapitalize="none"
+        autoComplete="email"
+        autoCorrect="off"
+        inputMode="email"
+        {...props}
+      />
+    );
+  },
+);
 
-export const EmailField = forwardRef<HTMLInputElement, InputFieldProps>(function EmailField(props, ref) {
-  return (
-    <InputField
-      ref={ref}
-      type="email"
-      autoCapitalize="none"
-      autoComplete="email"
-      autoCorrect="off"
-      inputMode="email"
-      {...props}
-    />
-  );
-});
+export const EmailField = forwardRef<HTMLInputElement, InputFieldProps>(
+  function EmailField(props, ref) {
+    return (
+      <InputField
+        ref={ref}
+        type="email"
+        autoCapitalize="none"
+        autoComplete="email"
+        autoCorrect="off"
+        inputMode="email"
+        {...props}
+      />
+    );
+  },
+);
 
 type TextAreaProps = Omit<JSX.IntrinsicElements["textarea"], "name"> & { name: string };
 
-export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function TextAreaInput(props, ref) {
-  return (
-    <textarea
-      ref={ref}
-      {...props}
-      className={classNames(
-        "border-default block w-full rounded-sm shadow-sm focus:border-neutral-900 focus:ring-neutral-900 sm:text-sm",
-        props.className
-      )}
-    />
-  );
-});
+export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
+  function TextAreaInput(props, ref) {
+    return (
+      <textarea
+        ref={ref}
+        {...props}
+        className={classNames(
+          "border-default block w-full rounded-sm shadow-sm focus:border-neutral-900 focus:ring-neutral-900 sm:text-sm",
+          props.className,
+        )}
+      />
+    );
+  },
+);
 
 type TextAreaFieldProps = {
   label?: ReactNode;
@@ -159,44 +175,43 @@ type TextAreaFieldProps = {
     labelProps?: React.ComponentProps<typeof Label>;
   };
 
-export const TextAreaField = forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(function TextField(
-  props,
-  ref
-) {
-  const id = useId();
-  const { t } = useLocale();
-  const methods = useFormContext();
-  const {
-    label = t(props.name as string),
-    labelProps,
-    placeholder = t(props.name + "_placeholder") !== props.name + "_placeholder"
-      ? t(props.name + "_placeholder")
-      : "",
-    ...passThrough
-  } = props;
-  return (
-    <div>
-      {!!props.name && (
-        <Label htmlFor={id} {...labelProps}>
-          {label}
-        </Label>
-      )}
-      <TextArea ref={ref} placeholder={placeholder} {...passThrough} />
-      {methods?.formState?.errors[props.name]?.message && (
-        <Alert
-          className="mt-1"
-          severity="error"
-          message={<>{methods.formState.errors[props.name]?.message}</>}
-        />
-      )}
-    </div>
-  );
-});
+export const TextAreaField = forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(
+  function TextField(props, ref) {
+    const id = useId();
+    const { t } = useLocale();
+    const methods = useFormContext();
+    const {
+      label = t(props.name as string),
+      labelProps,
+      placeholder = t(props.name + "_placeholder") !== props.name + "_placeholder"
+        ? t(props.name + "_placeholder")
+        : "",
+      ...passThrough
+    } = props;
+    return (
+      <div>
+        {!!props.name && (
+          <Label htmlFor={id} {...labelProps}>
+            {label}
+          </Label>
+        )}
+        <TextArea ref={ref} placeholder={placeholder} {...passThrough} />
+        {methods?.formState?.errors[props.name]?.message && (
+          <Alert
+            className="mt-1"
+            severity="error"
+            message={<>{methods.formState.errors[props.name]?.message}</>}
+          />
+        )}
+      </div>
+    );
+  },
+);
 
-type FormProps<T extends object> = { form: UseFormReturn<T>; handleSubmit: SubmitHandler<T> } & Omit<
-  JSX.IntrinsicElements["form"],
-  "onSubmit"
->;
+type FormProps<T extends object> = {
+  form: UseFormReturn<T>;
+  handleSubmit: SubmitHandler<T>;
+} & Omit<JSX.IntrinsicElements["form"], "onSubmit">;
 
 const PlainForm = <T extends FieldValues>(props: FormProps<T>, ref: Ref<HTMLFormElement>) => {
   const { form, handleSubmit, ...passThrough } = props;
@@ -215,7 +230,8 @@ const PlainForm = <T extends FieldValues>(props: FormProps<T>, ref: Ref<HTMLForm
               showToast(`${getErrorFromUnknown(err).message}`, "error");
             });
         }}
-        {...passThrough}>
+        {...passThrough}
+      >
         {
           /* @see https://react-hook-form.com/advanced-usage/#SmartFormComponent */
           React.Children.map(props.children, (child) => {
@@ -225,11 +241,11 @@ const PlainForm = <T extends FieldValues>(props: FormProps<T>, ref: Ref<HTMLForm
               child &&
               "props" in child &&
               child.props.name
-              ? React.createElement(child.type, ({
-	...child.props,
-	register: form.register,
-	key: child.props.name
-}))
+              ? React.createElement(child.type, {
+                  ...child.props,
+                  register: form.register,
+                  key: child.props.name,
+                })
               : child;
           })
         }
@@ -239,7 +255,7 @@ const PlainForm = <T extends FieldValues>(props: FormProps<T>, ref: Ref<HTMLForm
 };
 
 export const Form = forwardRef(PlainForm) as <T extends FieldValues>(
-  p: FormProps<T> & { ref?: Ref<HTMLFormElement> }
+  p: FormProps<T> & { ref?: Ref<HTMLFormElement> },
 ) => ReactElement;
 
 export function FieldsetLegend(props: JSX.IntrinsicElements["legend"]) {
@@ -254,7 +270,11 @@ export function InputGroupBox(props: JSX.IntrinsicElements["div"]) {
   return (
     <div
       {...props}
-      className={classNames("bg-default border-default space-y-2 rounded-sm border p-2", props.className)}>
+      className={classNames(
+        "bg-default border-default space-y-2 rounded-sm border p-2",
+        props.className,
+      )}
+    >
       {props.children}
     </div>
   );

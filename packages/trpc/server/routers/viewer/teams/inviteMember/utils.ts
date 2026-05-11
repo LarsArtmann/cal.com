@@ -47,7 +47,10 @@ export async function getTeamOrThrow(teamId: number, isOrg?: boolean) {
   });
 
   if (!team)
-    throw new TRPCError({ code: "NOT_FOUND", message: `${isOrg ? "Organization" : "Team"} not found` });
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: `${isOrg ? "Organization" : "Team"} not found`,
+    });
 
   return team;
 }
@@ -283,7 +286,11 @@ export async function sendVerificationEmail({
   }
 }
 
-export function throwIfInviteIsToOrgAndUserExists(invitee: User, team: TeamWithParent, isOrg: boolean) {
+export function throwIfInviteIsToOrgAndUserExists(
+  invitee: User,
+  team: TeamWithParent,
+  isOrg: boolean,
+) {
   if (invitee.organizationId && invitee.organizationId === team.parentId) {
     return;
   }
@@ -307,7 +314,7 @@ export function getIsOrgVerified(
   isOrg: boolean,
   team: Team & {
     parent: Team | null;
-  }
+  },
 ) {
   const teamMetadata = teamMetadataSchema.parse(team.metadata);
   const orgMetadataSafeParse = teamMetadataSchema.safeParse(team.parent?.metadata);

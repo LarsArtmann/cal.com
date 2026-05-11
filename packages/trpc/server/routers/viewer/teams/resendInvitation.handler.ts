@@ -21,7 +21,9 @@ export const resendInvitationHandler = async ({ ctx, input }: InviteMemberOption
   await checkPermissions({
     userId: ctx.user.id,
     teamId:
-      ctx.user.organization.id && ctx.user.organization.isOrgAdmin ? ctx.user.organization.id : input.teamId,
+      ctx.user.organization.id && ctx.user.organization.isOrgAdmin
+        ? ctx.user.organization.id
+        : input.teamId,
     isOrg: input.isOrg,
   });
 
@@ -36,7 +38,10 @@ export const resendInvitationHandler = async ({ ctx, input }: InviteMemberOption
   });
 
   if (!verificationToken)
-    throw new TRPCError({ code: "NOT_FOUND", message: "Couldn't resend, no existing invitation found." });
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: "Couldn't resend, no existing invitation found.",
+    });
 
   const translation = await getTranslation(input.language ?? "en", "common");
 

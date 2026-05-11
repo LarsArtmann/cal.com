@@ -172,7 +172,8 @@ export default function RoutingForms({
       <ShellMain
         heading="Routing Forms"
         CTA={hasPaidPlan && forms?.length ? <NewFormButton /> : null}
-        subtitle={t("routing_forms_description")}>
+        subtitle={t("routing_forms_description")}
+      >
         <UpgradeTip
           title={t("teams_plan_required")}
           description={t("routing_forms_are_a_great_way")}
@@ -190,7 +191,8 @@ export default function RoutingForms({
                 </Button>
               </ButtonGroup>
             </div>
-          }>
+          }
+        >
           <FormActionsProvider appUrl={appUrl}>
             <div className="-mx-4 md:-mx-8">
               <div className="mb-10 w-full px-4 pb-2 sm:px-6 md:px-8">
@@ -214,7 +216,8 @@ export default function RoutingForms({
                       description={t("change_filter_common")}
                     />
                   }
-                  SkeletonLoader={SkeletonLoaderTeamList}>
+                  SkeletonLoader={SkeletonLoaderTeamList}
+                >
                   <div className="bg-default mb-16 overflow-hidden">
                     <List data-testid="routing-forms-list" ref={parent}>
                       {forms?.map(({ form, readOnly }, index) => {
@@ -232,13 +235,20 @@ export default function RoutingForms({
                         return (
                           <div
                             className="group flex w-full max-w-full items-center justify-between overflow-hidden"
-                            key={form.id}>
+                            key={form.id}
+                          >
                             {!(firstItem && firstItem.id === form.id) && (
-                              <ArrowButton onClick={() => moveRoutingForm(index, -1)} arrowDirection="up" />
+                              <ArrowButton
+                                onClick={() => moveRoutingForm(index, -1)}
+                                arrowDirection="up"
+                              />
                             )}
 
                             {!(lastItem && lastItem.id === form.id) && (
-                              <ArrowButton onClick={() => moveRoutingForm(index, 1)} arrowDirection="down" />
+                              <ArrowButton
+                                onClick={() => moveRoutingForm(index, 1)}
+                                arrowDirection="down"
+                              />
                             )}
                             <ListLinkItem
                               href={appUrl + "/form-edit/" + form.id}
@@ -294,14 +304,16 @@ export default function RoutingForms({
                                         routingForm={form}
                                         color="minimal"
                                         className="!flex"
-                                        StartIcon={Edit}>
+                                        StartIcon={Edit}
+                                      >
                                         {t("edit")}
                                       </FormAction>
                                       <FormAction
                                         action="download"
                                         routingForm={form}
                                         color="minimal"
-                                        StartIcon={Download}>
+                                        StartIcon={Download}
+                                      >
                                         {t("download_responses")}
                                       </FormAction>
                                       <FormAction
@@ -309,7 +321,8 @@ export default function RoutingForms({
                                         routingForm={form}
                                         color="minimal"
                                         className="w-full"
-                                        StartIcon={Copy}>
+                                        StartIcon={Copy}
+                                      >
                                         {t("duplicate")}
                                       </FormAction>
                                       {typeformApp?.isInstalled ? (
@@ -319,7 +332,8 @@ export default function RoutingForms({
                                           action="copyRedirectUrl"
                                           color="minimal"
                                           type="button"
-                                          StartIcon={LinkIcon}>
+                                          StartIcon={LinkIcon}
+                                        >
                                           {t("Copy Typeform Redirect Url")}
                                         </FormAction>
                                       ) : null}
@@ -328,13 +342,15 @@ export default function RoutingForms({
                                         routingForm={form}
                                         color="destructive"
                                         className="w-full"
-                                        StartIcon={Trash}>
+                                        StartIcon={Trash}
+                                      >
                                         {t("delete")}
                                       </FormAction>
                                     </FormActionsDropdown>
                                   </ButtonGroup>
                                 </>
-                              }>
+                              }
+                            >
                               <div className="flex flex-wrap gap-1">
                                 <Badge variant="gray" startIcon={Menu}>
                                   {fields.length} {fields.length === 1 ? "field" : "fields"}
@@ -375,7 +391,7 @@ export const getServerSideProps = async function getServerSideProps(
   context: AppGetServerSidePropsContext,
   prisma: AppPrisma,
   user: AppUser,
-  ssrInit: AppSsrInit
+  ssrInit: AppSsrInit,
 ) {
   if (!user) {
     return {

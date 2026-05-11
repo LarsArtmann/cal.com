@@ -38,7 +38,9 @@ describe("next.config.js - Org Rewrite", () => {
     it("https://app.cal.com", () => {
       const subdomainRegExp = getSubdomainRegExp("https://app.cal.com");
       expect(orgHostRegExp(subdomainRegExp).exec("app.cal.com")).toEqual(null);
-      expect(orgHostRegExp(subdomainRegExp).exec("company.app.cal.com")?.groups?.orgSlug).toEqual("company");
+      expect(orgHostRegExp(subdomainRegExp).exec("company.app.cal.com")?.groups?.orgSlug).toEqual(
+        "company",
+      );
       expect(orgHostRegExp(subdomainRegExp).exec("org.cal.com")?.groups?.orgSlug).toEqual("org");
 
       expect(orgHostRegExp(subdomainRegExp).exec("localhost:3000")).toEqual(null);
@@ -47,34 +49,38 @@ describe("next.config.js - Org Rewrite", () => {
     it("app.cal.com", () => {
       const subdomainRegExp = getSubdomainRegExp("app.cal.com");
       expect(orgHostRegExp(subdomainRegExp).exec("app.cal.com")).toEqual(null);
-      expect(orgHostRegExp(subdomainRegExp).exec("company.app.cal.com")?.groups?.orgSlug).toEqual("company");
+      expect(orgHostRegExp(subdomainRegExp).exec("company.app.cal.com")?.groups?.orgSlug).toEqual(
+        "company",
+      );
     });
 
     it("https://calcom.app.company.com", () => {
       const subdomainRegExp = getSubdomainRegExp("https://calcom.app.company.com");
       expect(orgHostRegExp(subdomainRegExp).exec("calcom.app.company.com")).toEqual(null);
-      expect(orgHostRegExp(subdomainRegExp).exec("acme.calcom.app.company.com")?.groups?.orgSlug).toEqual(
-        "acme"
-      );
+      expect(
+        orgHostRegExp(subdomainRegExp).exec("acme.calcom.app.company.com")?.groups?.orgSlug,
+      ).toEqual("acme");
     });
 
     it("https://calcom.example.com", () => {
       const subdomainRegExp = getSubdomainRegExp("https://calcom.example.com");
       expect(orgHostRegExp(subdomainRegExp).exec("calcom.example.com")).toEqual(null);
-      expect(orgHostRegExp(subdomainRegExp).exec("acme.calcom.example.com")?.groups?.orgSlug).toEqual("acme");
+      expect(
+        orgHostRegExp(subdomainRegExp).exec("acme.calcom.example.com")?.groups?.orgSlug,
+      ).toEqual("acme");
       // The following also matches which causes anything other than the domain in NEXT_PUBLIC_WEBAPP_URL to give 404
-      expect(orgHostRegExp(subdomainRegExp).exec("some-other.company.com")?.groups?.orgSlug).toEqual(
-        "some-other"
-      );
+      expect(
+        orgHostRegExp(subdomainRegExp).exec("some-other.company.com")?.groups?.orgSlug,
+      ).toEqual("some-other");
     });
     it("Should ignore Vercel preview URLs", () => {
       const subdomainRegExp = getSubdomainRegExp("https://cal-xxxxxxxx-cal.vercel.app");
       expect(
-        orgHostRegExp(subdomainRegExp).exec("https://cal-xxxxxxxx-cal.vercel.app")
+        orgHostRegExp(subdomainRegExp).exec("https://cal-xxxxxxxx-cal.vercel.app"),
       ).toMatchInlineSnapshot("null");
-      expect(orgHostRegExp(subdomainRegExp).exec("cal-xxxxxxxx-cal.vercel.app")).toMatchInlineSnapshot(
-        "null"
-      );
+      expect(
+        orgHostRegExp(subdomainRegExp).exec("cal-xxxxxxxx-cal.vercel.app"),
+      ).toMatchInlineSnapshot("null");
     });
   });
 

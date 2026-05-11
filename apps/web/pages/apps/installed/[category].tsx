@@ -76,7 +76,8 @@ function ConnectOrDisconnectIntegrationMenuItem(props: {
           color="destructive"
           onClick={() => handleDisconnect(credentialId, teamId)}
           disabled={isGlobal}
-          StartIcon={Trash}>
+          StartIcon={Trash}
+        >
           {t("remove_app")}
         </DropdownItem>
       </DropdownMenuItem>
@@ -120,9 +121,9 @@ const IntegrationsList = ({ data, handleDisconnect, variant }: IntegrationsListP
   const { data: defaultConferencingApp } = trpc.viewer.getUsersDefaultConferencingApp.useQuery();
   const utils = trpc.useContext();
   const [bulkUpdateModal, setBulkUpdateModal] = useState(false);
-  const [locationType, setLocationType] = useState<(EventLocationType & { slug: string }) | undefined>(
-    undefined
-  );
+  const [locationType, setLocationType] = useState<
+    (EventLocationType & { slug: string }) | undefined
+  >(undefined);
 
   const onSuccessCallback = useCallback(() => {
     setBulkUpdateModal(true);
@@ -159,7 +160,9 @@ const IntegrationsList = ({ data, handleDisconnect, variant }: IntegrationsListP
         isDefault={appIsDefault}
         shouldHighlight
         slug={item.slug}
-        invalidCredential={item?.invalidCredentialIds ? item.invalidCredentialIds.length > 0 : false}
+        invalidCredential={
+          item?.invalidCredentialIds ? item.invalidCredentialIds.length > 0 : false
+        }
         credentialOwner={item?.credentialOwner}
         actions={
           !item.credentialOwner?.readOnly ? (
@@ -176,7 +179,9 @@ const IntegrationsList = ({ data, handleDisconnect, variant }: IntegrationsListP
                         color="secondary"
                         StartIcon={Video}
                         onClick={() => {
-                          const locationType = getEventLocationTypeFromApp(item?.locationOption?.value ?? "");
+                          const locationType = getEventLocationTypeFromApp(
+                            item?.locationOption?.value ?? "",
+                          );
                           if (locationType?.linkType === "static") {
                             setLocationType({ ...locationType, slug: appSlug });
                           } else {
@@ -185,7 +190,8 @@ const IntegrationsList = ({ data, handleDisconnect, variant }: IntegrationsListP
                             });
                             setBulkUpdateModal(true);
                           }
-                        }}>
+                        }}
+                      >
                         {t("set_as_default")}
                       </DropdownItem>
                     </DropdownMenuItem>
@@ -203,7 +209,8 @@ const IntegrationsList = ({ data, handleDisconnect, variant }: IntegrationsListP
               </Dropdown>
             </div>
           ) : null
-        }>
+        }
+      >
         <AppSettings slug={item.slug} />
       </AppListCard>
     );
@@ -230,7 +237,7 @@ const IntegrationsList = ({ data, handleDisconnect, variant }: IntegrationsListP
                 readOnly: !team.isAdmin,
               },
             }}
-          />
+          />,
         );
       }
     }
@@ -307,7 +314,8 @@ const IntegrationsContainer = ({
                 <Button
                   color="secondary"
                   data-testid={`connect-${variant || "other"}-apps`}
-                  href={variant ? `/apps/categories/${variant}` : "/apps/categories/other"}>
+                  href={variant ? `/apps/categories/${variant}` : "/apps/categories/other"}
+                >
                   {t(`connect_${variant || "other"}_apps`)}
                 </Button>
               }
@@ -324,7 +332,8 @@ const IntegrationsContainer = ({
                 <Button
                   href={variant ? `/apps/categories/${variant}` : "/apps"}
                   color="secondary"
-                  StartIcon={Plus}>
+                  StartIcon={Plus}
+                >
                   {t("add")}
                 </Button>
               }
@@ -363,7 +372,7 @@ export default function InstalledApps() {
     {
       isOpen: false,
       credentialId: null,
-    }
+    },
   );
 
   const handleModelClose = () => {

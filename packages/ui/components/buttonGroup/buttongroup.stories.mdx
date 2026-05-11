@@ -31,12 +31,15 @@ Button group enables multiple buttons to be combined into a single unit. It offe
   footNote={
     <ul>
       <li>
-        Seperated: In general, seperated button group style can be included in container such as card, modal,
-        and page.
+        Seperated: In general, seperated button group style can be included in container such as
+        card, modal, and page.
       </li>
-      <li>Combined: Combined button group can be used standalone e.g. mini toggles for calendars</li>
+      <li>
+        Combined: Combined button group can be used standalone e.g. mini toggles for calendars
+      </li>
     </ul>
-  }>
+  }
+>
   <Example title="Default">
     <ButtonGroup>
       <Button StartIcon={Trash} variant="icon" color="secondary" />
@@ -108,7 +111,8 @@ Button group enables multiple buttons to be combined into a single unit. It offe
           type: "boolean",
         },
       },
-    }}>
+    }}
+  >
     {({ color, combined }) => (
       <VariantsTable titles={[`${color}`]} columnMinWidth={150}>
         <VariantRow variant="">

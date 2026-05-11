@@ -13,7 +13,7 @@ import {
 
 export async function destionationCalendarById(
   { method, query, body, userId, prisma }: NextApiRequest,
-  res: NextApiResponse<DestinationCalendarResponse>
+  res: NextApiResponse<DestinationCalendarResponse>,
 ) {
   const safeQuery = schemaQueryIdParseInt.safeParse(query);
   const safeBody = schemaDestinationCalendarEditBodyParams.safeParse(body);
@@ -25,7 +25,8 @@ export async function destionationCalendarById(
   const userDestinationCalendars = data.map((destinationCalendar) => destinationCalendar.id);
   //  FIXME: Should we also check ownership of bokingId and eventTypeId to avoid users cross-pollinating other users calendars.
   // On a related note, moving from sequential integer IDs to UUIDs would be a good idea. and maybe help avoid having this problem.
-  if (userDestinationCalendars.includes(safeQuery.data.id)) res.status(401).json({ message: "Unauthorized" });
+  if (userDestinationCalendars.includes(safeQuery.data.id))
+    res.status(401).json({ message: "Unauthorized" });
   else {
     switch (method) {
       /**
@@ -133,7 +134,7 @@ export async function destionationCalendarById(
             res.status(404).json({
               message: `DestinationCalendar with id: ${safeQuery.data.id} not found`,
               error,
-            })
+            }),
           );
         break;
       /**
@@ -179,7 +180,7 @@ export async function destionationCalendarById(
             res.status(404).json({
               message: `DestinationCalendar with id: ${safeQuery.data.id} not found`,
               error,
-            })
+            }),
           );
         break;
       /**
@@ -218,13 +219,13 @@ export async function destionationCalendarById(
           .then(() =>
             res.status(200).json({
               message: `DestinationCalendar with id: ${safeQuery.data.id} deleted`,
-            })
+            }),
           )
           .catch((error: Error) =>
             res.status(404).json({
               message: `DestinationCalendar with id: ${safeQuery.data.id} not found`,
               error,
-            })
+            }),
           );
         break;
 
@@ -236,5 +237,5 @@ export async function destionationCalendarById(
 }
 
 export default withMiddleware("HTTP_GET_DELETE_PATCH")(
-  withValidQueryIdTransformParseInt(destionationCalendarById)
+  withValidQueryIdTransformParseInt(destionationCalendarById),
 );

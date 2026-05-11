@@ -1,7 +1,7 @@
 import { OrganizerScheduledEmail } from "./OrganizerScheduledEmail";
 
 export const OrganizerAttendeeCancelledSeatEmail = (
-  props: React.ComponentProps<typeof OrganizerScheduledEmail>
+  props: React.ComponentProps<typeof OrganizerScheduledEmail>,
 ) => (
   <OrganizerScheduledEmail
     title="attendee_no_longer_attending"

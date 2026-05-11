@@ -10,7 +10,7 @@ const ChooseLicense = (
     value: string;
     onChange: (value: string) => void;
     onSubmit: (value: string) => void;
-  } & Omit<JSX.IntrinsicElements["form"], "onSubmit" | "onChange">
+  } & Omit<JSX.IntrinsicElements["form"], "onSubmit" | "onChange">,
 ) => {
   const { value: initialValue = "FREE", onChange, onSubmit, ...rest } = props;
   const [value, setValue] = useState(initialValue);
@@ -23,7 +23,8 @@ const ChooseLicense = (
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit(value);
-      }}>
+      }}
+    >
       <RadioGroup.Root
         defaultValue={initialValue}
         value={value}
@@ -32,13 +33,15 @@ const ChooseLicense = (
         onValueChange={(value) => {
           onChange(value);
           setValue(value);
-        }}>
+        }}
+      >
         <RadioGroup.Item value="FREE">
           <div
             className={classNames(
               "bg-default cursor-pointer space-y-2 rounded-md border p-4 hover:border-black",
-              value === "FREE" && "ring-2 ring-black"
-            )}>
+              value === "FREE" && "ring-2 ring-black",
+            )}
+          >
             <h2 className="font-cal text-emphasis text-xl">{t("agplv3_license")}</h2>
             <p className="font-medium text-green-800">{t("free_license_fee")}</p>
             <p className="text-subtle">{t("forever_open_and_free")}</p>
@@ -51,7 +54,11 @@ const ChooseLicense = (
         </RadioGroup.Item>
         <RadioGroup.Item value="EE" disabled>
           <Link href="https://cal.com/sales" target="_blank">
-            <div className={classNames("bg-default h-full cursor-pointer space-y-2 rounded-md border p-4")}>
+            <div
+              className={classNames(
+                "bg-default h-full cursor-pointer space-y-2 rounded-md border p-4",
+              )}
+            >
               <h2 className="font-cal text-emphasis text-xl">{t("custom_plan")}</h2>
               <p className="font-medium text-green-800">{t("contact_sales")}</p>
               <p className="text-subtle">Build on top of Cal.com</p>

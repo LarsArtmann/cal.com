@@ -31,7 +31,10 @@ import LocationSelect from "@components/ui/form/LocationSelect";
 type BookingItem = RouterOutputs["viewer"]["bookings"]["get"]["bookings"][number];
 
 interface ISetLocationDialog {
-  saveLocation: (newLocationType: EventLocationType["type"], details: { [key: string]: string }) => void;
+  saveLocation: (
+    newLocationType: EventLocationType["type"],
+    details: { [key: string]: string },
+  ) => void;
   selection?: LocationOption;
   booking?: BookingItem;
   defaultValues?: LocationObject[];
@@ -55,7 +58,11 @@ const LocationInput = (props: {
   const { control } = useFormContext() as typeof locationFormMethods;
   if (eventLocationType?.organizerInputType === "text") {
     return (
-      <Input {...locationFormMethods.register(eventLocationType.variable)} type="text" {...remainingProps} />
+      <Input
+        {...locationFormMethods.register(eventLocationType.variable)}
+        type="text"
+        {...remainingProps}
+      />
     );
   } else if (eventLocationType?.organizerInputType === "phone") {
     const { defaultValue, ...rest } = remainingProps;
@@ -115,7 +122,10 @@ export const EditLocationDialog = (props: ISetLocationDialog) => {
           eventLocationType.linkType === "static" &&
           eventLocationType.urlRegExp
         ) {
-          const valid = z.string().regex(new RegExp(eventLocationType.urlRegExp)).safeParse(val).success;
+          const valid = z
+            .string()
+            .regex(new RegExp(eventLocationType.urlRegExp))
+            .safeParse(val).success;
           if (!valid) {
             const sampleUrl = eventLocationType.organizerInputPlaceholder;
             ctx.addIssue({
@@ -172,7 +182,7 @@ export const EditLocationDialog = (props: ISetLocationDialog) => {
       } else {
         return location.type === eventLocationType?.type;
       }
-    }
+    },
   );
 
   const LocationOptions = (() => {
@@ -196,7 +206,9 @@ export const EditLocationDialog = (props: ISetLocationDialog) => {
               required
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               defaultValue={
-                defaultLocation ? defaultLocation[eventLocationType.defaultValueVariable] : undefined
+                defaultLocation
+                  ? defaultLocation[eventLocationType.defaultValueVariable]
+                  : undefined
               }
             />
             <ErrorMessage
@@ -248,7 +260,10 @@ export const EditLocationDialog = (props: ISetLocationDialog) => {
                 <p className="text-default text-sm">
                   <Trans i18nKey="cant_find_the_right_video_app_visit_our_app_store">
                     Can&apos;t find the right video app? Visit our
-                    <Link className="cursor-pointer text-blue-500 underline" href="/apps/categories/video">
+                    <Link
+                      className="cursor-pointer text-blue-500 underline"
+                      href="/apps/categories/video"
+                    >
                       App Store
                     </Link>
                     .
@@ -260,7 +275,9 @@ export const EditLocationDialog = (props: ISetLocationDialog) => {
 
             {booking && (
               <>
-                <p className="text-emphasis mb-2 ml-1 mt-6 text-sm font-bold">{t("current_location")}:</p>
+                <p className="text-emphasis mb-2 ml-1 mt-6 text-sm font-bold">
+                  {t("current_location")}:
+                </p>
                 <p className="text-emphasis mb-2 ml-1 text-sm">
                   {getHumanReadableLocationValue(booking.location, t)}
                 </p>
@@ -321,7 +338,8 @@ export const EditLocationDialog = (props: ISetLocationDialog) => {
                   "locationAddress",
                   "locationPhoneNumber",
                 ]);
-              }}>
+              }}
+            >
               <QueryCell
                 query={locationsQuery}
                 success={({ data }) => {
@@ -333,12 +351,16 @@ export const EditLocationDialog = (props: ISetLocationDialog) => {
                     }
                     return {
                       ...option,
-                      options: option.options.filter((o) => o.value !== OrganizerDefaultConferencingAppType),
+                      options: option.options.filter(
+                        (o) => o.value !== OrganizerDefaultConferencingAppType,
+                      ),
                     };
                   });
                   if (booking) {
                     locationOptions.map((location) =>
-                      location.options.filter((l) => !["phone", "attendeeInPerson"].includes(l.value))
+                      location.options.filter(
+                        (l) => !["phone", "attendeeInPerson"].includes(l.value),
+                      ),
                     );
                   }
                   return (
@@ -358,7 +380,10 @@ export const EditLocationDialog = (props: ISetLocationDialog) => {
                                 locationFormMethods.setValue("locationType", val.value);
                                 if (val.credential) {
                                   locationFormMethods.setValue("credentialId", val.credential.id);
-                                  locationFormMethods.setValue("teamName", val.credential.team?.name);
+                                  locationFormMethods.setValue(
+                                    "teamName",
+                                    val.credential.team?.name,
+                                  );
                                 }
 
                                 locationFormMethods.unregister([
@@ -391,7 +416,8 @@ export const EditLocationDialog = (props: ISetLocationDialog) => {
                     locationFormMethods.unregister(["locationType", "locationLink"]);
                   }}
                   type="button"
-                  color="secondary">
+                  color="secondary"
+                >
                   {t("cancel")}
                 </Button>
 

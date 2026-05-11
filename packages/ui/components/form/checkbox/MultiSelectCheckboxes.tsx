@@ -32,7 +32,8 @@ const InputOption: React.FC<OptionProps<unknown, boolean, GroupBase<unknown>>> =
       isDisabled={isDisabled}
       isFocused={isFocused}
       isSelected={isSelected}
-      innerProps={props}>
+      innerProps={props}
+    >
       <input
         type="checkbox"
         className="text-primary-600 focus:ring-primary-500 border-default h-4 w-4 rounded ltr:mr-2 rtl:ml-2"

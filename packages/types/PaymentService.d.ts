@@ -19,20 +19,23 @@ export interface IAbstractPaymentService {
     bookerEmail: string,
     paymentOption: PaymentOption,
     eventTitle?: string,
-    bookingTitle?: string
+    bookingTitle?: string,
   ): Promise<Payment>;
   /* This method is to collect card details to charge at a later date ex. no-show fees */
   collectCard(
     payment: Pick<Prisma.PaymentUncheckedCreateInput, "amount" | "currency">,
     bookingId: Booking["id"],
     bookerEmail: string,
-    paymentOption: PaymentOption
+    paymentOption: PaymentOption,
   ): Promise<Payment>;
   chargeCard(
     payment: Pick<Prisma.PaymentUncheckedCreateInput, "amount" | "currency">,
-    bookingId?: Booking["id"]
+    bookingId?: Booking["id"],
   ): Promise<Payment>;
-  update(paymentId: Payment["id"], data: Partial<Prisma.PaymentUncheckedCreateInput>): Promise<Payment>;
+  update(
+    paymentId: Payment["id"],
+    data: Partial<Prisma.PaymentUncheckedCreateInput>,
+  ): Promise<Payment>;
   refund(paymentId: Payment["id"]): Promise<Payment>;
   getPaymentPaidStatus(): Promise<string>;
   getPaymentDetails(): Promise<Payment>;
@@ -44,7 +47,7 @@ export interface IAbstractPaymentService {
       startTime: { toISOString: () => string };
       uid: string;
     },
-    paymentData: Payment
+    paymentData: Payment,
   ): Promise<void>;
   deletePayment(paymentId: Payment["id"]): Promise<boolean>;
 }

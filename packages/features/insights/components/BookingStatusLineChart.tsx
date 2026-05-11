@@ -21,7 +21,11 @@ export const BookingStatusLineChart = () => {
     isAll,
     initialConfig,
   } = filter;
-  const initialConfigIsReady = !!(initialConfig?.teamId || initialConfig?.userId || initialConfig?.isAll);
+  const initialConfigIsReady = !!(
+    initialConfig?.teamId ||
+    initialConfig?.userId ||
+    initialConfig?.isAll
+  );
   const [startDate, endDate] = dateRange;
 
   if (!startDate || !endDate) return null;
@@ -46,7 +50,7 @@ export const BookingStatusLineChart = () => {
         context: { skipBatch: true },
       },
       enabled: initialConfigIsReady,
-    }
+    },
   );
 
   if (isLoading) return <LoadingInsight />;

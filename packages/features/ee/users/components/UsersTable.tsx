@@ -67,7 +67,7 @@ function UsersTableBare() {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       keepPreviousData: true,
       refetchOnWindowFocus: false,
-    }
+    },
   );
 
   const sendPasswordResetEmail = trpc.viewer.admin.sendPasswordReset.useMutation({
@@ -87,12 +87,16 @@ function UsersTableBare() {
       if (containerRefElement) {
         const { scrollHeight, scrollTop, clientHeight } = containerRefElement;
         //once the user has scrolled within 300px of the bottom of the table, fetch more data if there is any
-        if (scrollHeight - scrollTop - clientHeight < 300 && !isFetching && totalFetched < totalDBRowCount) {
+        if (
+          scrollHeight - scrollTop - clientHeight < 300 &&
+          !isFetching &&
+          totalFetched < totalDBRowCount
+        ) {
           fetchNextPage();
         }
       }
     },
-    [fetchNextPage, isFetching, totalFetched, totalDBRowCount]
+    [fetchNextPage, isFetching, totalFetched, totalDBRowCount],
   );
 
   useEffect(() => {
@@ -115,7 +119,8 @@ function UsersTableBare() {
         style={{
           height: "calc(100vh - 30vh)",
           overflow: "auto",
-        }}>
+        }}
+      >
         <Table>
           <Header>
             <ColumnTitle widthClassNames="w-auto">User</ColumnTitle>
@@ -212,7 +217,8 @@ const DeleteUserDialog = ({
         confirmBtnText="Delete"
         cancelBtnText="Cancel"
         variety="danger"
-        onConfirm={onConfirm}>
+        onConfirm={onConfirm}
+      >
         <p>Are you sure you want to delete this user?</p>
       </ConfirmationDialogContent>
     </Dialog>

@@ -129,7 +129,7 @@ export default abstract class BaseCalendarService implements Calendar {
 
     if (event.team?.members) {
       const teamAttendeesWithoutCurrentUser = event.team.members.filter(
-        (member) => member.email !== this.credential.user?.email
+        (member) => member.email !== this.credential.user?.email,
       );
       attendees.push(...mapAttendees(teamAttendeesWithoutCurrentUser));
     }
@@ -166,8 +166,8 @@ export default abstract class BaseCalendarService implements Calendar {
         throw new Error(`Error creating iCalString:=> ${error?.message} : ${error?.name} `);
 
       const mainHostDestinationCalendar = event.destinationCalendar
-        ? event.destinationCalendar.find((cal) => cal.credentialId === credentialId) ??
-          event.destinationCalendar[0]
+        ? (event.destinationCalendar.find((cal) => cal.credentialId === credentialId) ??
+          event.destinationCalendar[0])
         : undefined;
 
       // We create the event directly on iCal
@@ -176,7 +176,7 @@ export default abstract class BaseCalendarService implements Calendar {
           .filter((c) =>
             mainHostDestinationCalendar?.externalId
               ? c.externalId === mainHostDestinationCalendar.externalId
-              : true
+              : true,
           )
           .map((calendar) =>
             createCalendarObject({
@@ -187,13 +187,13 @@ export default abstract class BaseCalendarService implements Calendar {
               // according to https://datatracker.ietf.org/doc/html/rfc4791#section-4.1, Calendar object resources contained in calendar collections MUST NOT specify the iCalendar METHOD property.
               iCalString: iCalString.replace(/METHOD:[^\r\n]+\r\n/g, ""),
               headers: this.headers,
-            })
-          )
+            }),
+          ),
       );
 
       if (responses.some((r) => !r.ok)) {
         throw new Error(
-          `Error creating event: ${(await Promise.all(responses.map((r) => r.text()))).join(", ")}`
+          `Error creating event: ${(await Promise.all(responses.map((r) => r.text()))).join(", ")}`,
         );
       }
 
@@ -214,7 +214,7 @@ export default abstract class BaseCalendarService implements Calendar {
 
   async updateEvent(
     uid: string,
-    event: CalendarEvent
+    event: CalendarEvent,
   ): Promise<NewCalendarEventType | NewCalendarEventType[]> {
     try {
       const events = await this.getEventsByUID(uid);
@@ -258,7 +258,7 @@ export default abstract class BaseCalendarService implements Calendar {
             },
             headers: this.headers,
           });
-        })
+        }),
       ).then((responses) =>
         responses.map((response) => {
           if (response.status >= 200 && response.status < 300) {
@@ -283,7 +283,7 @@ export default abstract class BaseCalendarService implements Calendar {
                 typeof event.additionalInformation === "string" ? event.additionalInformation : {},
             };
           }
-        })
+        }),
       );
     } catch (reason) {
       this.log.error(reason);
@@ -305,7 +305,7 @@ export default abstract class BaseCalendarService implements Calendar {
             },
             headers: this.headers,
           });
-        })
+        }),
       );
     } catch (reason) {
       this.log.error(reason);
@@ -359,7 +359,7 @@ export default abstract class BaseCalendarService implements Calendar {
   async getAvailability(
     dateFrom: string,
     dateTo: string,
-    selectedCalendars: IntegrationCalendar[]
+    selectedCalendars: IntegrationCalendar[],
   ): Promise<EventBusyDate[]> {
     const startISOString = new Date(dateFrom).toISOString();
 
@@ -390,11 +390,13 @@ export default abstract class BaseCalendarService implements Calendar {
         if (vevent?.getFirstPropertyValue("transp") === "TRANSPARENT") return;
 
         const event = new ICAL.Event(vevent);
-        const dtstart: { [key: string]: string } | undefined = vevent?.getFirstPropertyValue("dtstart");
+        const dtstart: { [key: string]: string } | undefined =
+          vevent?.getFirstPropertyValue("dtstart");
         const timezone = dtstart ? dtstart["timezone"] : undefined;
         // We check if the dtstart timezone is in UTC which is actually represented by Z instead, but not recognized as that in ICAL.js as UTC
         const isUTC = timezone === "Z";
-        const tzid: string | undefined = vevent?.getFirstPropertyValue("tzid") || isUTC ? "UTC" : timezone;
+        const tzid: string | undefined =
+          vevent?.getFirstPropertyValue("tzid") || isUTC ? "UTC" : timezone;
         // In case of icalendar, when only tzid is available without vtimezone, we need to add vtimezone explicitly to take care of timezone diff
         if (!vcalendar.getFirstSubcomponent("vtimezone")) {
           const timezoneToUse = tzid || userTimeZone;
@@ -512,7 +514,10 @@ export default abstract class BaseCalendarService implements Calendar {
       const calendars = (await fetchCalendars({
         account,
         headers: this.headers,
-      })) /** @url https://github.com/natelindev/tsdav/pull/139 */ as (Omit<DAVCalendar, "displayName"> & {
+      })) /** @url https://github.com/natelindev/tsdav/pull/139 */ as (Omit<
+        DAVCalendar,
+        "displayName"
+      > & {
         displayName?: string | Record<string, unknown>;
       })[];
 
@@ -593,18 +598,18 @@ export default abstract class BaseCalendarService implements Calendar {
             });
 
             return responseWithoutExpand.find(
-              (obj) => obj.url === calendarObject.url && obj.etag === calendarObject.etag
+              (obj) => obj.url === calendarObject.url && obj.etag === calendarObject.etag,
             );
           }
           return calendarObject;
-        })
+        }),
       );
       return processedResponse;
     });
     const resolvedPromises = await Promise.allSettled(fetchPromises);
     const fulfilledPromises = resolvedPromises.filter(
       (promise): promise is PromiseFulfilledResult<(DAVObject | undefined)[]> =>
-        promise.status === "fulfilled"
+        promise.status === "fulfilled",
     );
     const flatResult = fulfilledPromises
       .map((promise) => promise.value)
@@ -617,7 +622,7 @@ export default abstract class BaseCalendarService implements Calendar {
     calId: string,
     dateFrom: string | null,
     dateTo: string | null,
-    objectUrls?: string[] | null
+    objectUrls?: string[] | null,
   ) {
     try {
       const objects = await fetchCalendarObjects({
@@ -646,7 +651,8 @@ export default abstract class BaseCalendarService implements Calendar {
           const event = new ICAL.Event(vevent);
 
           const calendarTimezone =
-            vcalendar.getFirstSubcomponent("vtimezone")?.getFirstPropertyValue<string>("tzid") || "";
+            vcalendar.getFirstSubcomponent("vtimezone")?.getFirstPropertyValue<string>("tzid") ||
+            "";
 
           const startDate = calendarTimezone
             ? dayjs.tz(event.startDate.toString(), calendarTimezone)
@@ -692,7 +698,9 @@ export default abstract class BaseCalendarService implements Calendar {
     const calendars = await this.listCalendars();
 
     for (const cal of calendars) {
-      const calEvents = await this.getEvents(cal.externalId, null, null, [`${cal.externalId}${uid}.ics`]);
+      const calEvents = await this.getEvents(cal.externalId, null, null, [
+        `${cal.externalId}${uid}.ics`,
+      ]);
 
       for (const ev of calEvents) {
         events.push(ev);

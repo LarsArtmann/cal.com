@@ -56,7 +56,8 @@ export default function CalDavCalendarSetup() {
                   } else {
                     router.push(json.url);
                   }
-                }}>
+                }}
+              >
                 <fieldset className="space-y-2" disabled={form.formState.isSubmitting}>
                   <TextField
                     required
@@ -92,7 +93,8 @@ export default function CalDavCalendarSetup() {
                           href={errorActionUrl}
                           color="secondary"
                           target="_blank"
-                          className="ml-5 w-32 !p-5">
+                          className="ml-5 w-32 !p-5"
+                        >
                           Go to Admin
                         </Button>
                       ) : undefined

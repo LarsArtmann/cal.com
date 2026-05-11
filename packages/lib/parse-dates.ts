@@ -15,12 +15,18 @@ const processDate = (date: string | null | Dayjs, language: string, options?: Ex
   const formattedTime = parsedZone?.format(
     options?.withDefaultTimeFormat
       ? TimeFormat.TWELVE_HOUR
-      : options?.selectedTimeFormat || detectBrowserTimeFormat
+      : options?.selectedTimeFormat || detectBrowserTimeFormat,
   );
-  return formattedTime + ", " + dayjs(date).toDate().toLocaleString(language, { dateStyle: "full" });
+  return (
+    formattedTime + ", " + dayjs(date).toDate().toLocaleString(language, { dateStyle: "full" })
+  );
 };
 
-export const parseDate = (date: string | null | Dayjs, language: string, options?: ExtraOptions) => {
+export const parseDate = (
+  date: string | null | Dayjs,
+  language: string,
+  options?: ExtraOptions,
+) => {
   if (!date) return ["No date"];
   return processDate(date, language, options);
 };
@@ -43,7 +49,7 @@ export const parseDateTimeWithTimeZone = (
   date: Date,
   language: string,
   timezone: string,
-  options?: ExtraOptions
+  options?: ExtraOptions,
 ): string => {
   timeOptions.timeZone = timezone;
   dateOptions.timeZone = timezone;
@@ -80,7 +86,7 @@ export const parseRecurringDates = (
     selectedTimeFormat?: TimeFormat;
     withDefaultTimeFormat?: boolean;
   },
-  language: string
+  language: string,
 ): [string[], Date[]] => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { count, ...restRecurringEvent } = recurringEvent || {};

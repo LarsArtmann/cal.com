@@ -23,7 +23,11 @@ export const createHandler = async ({ ctx, input }: CreateHandlerOptions) => {
   const userId = ctx.user.id;
 
   /** Only admin or owner can create apiKeys of team (if teamId is passed) */
-  await checkPermissions({ userId, teamId, role: { in: [MembershipRole.OWNER, MembershipRole.ADMIN] } });
+  await checkPermissions({
+    userId,
+    teamId,
+    role: { in: [MembershipRole.OWNER, MembershipRole.ADMIN] },
+  });
 
   await prisma.apiKey.create({
     data: {

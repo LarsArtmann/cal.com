@@ -18,7 +18,9 @@ export default function AppCard({
   returnTo,
   teamId,
 }: {
-  app: RouterOutputs["viewer"]["integrations"]["items"][number] & { credentialOwner?: CredentialOwner };
+  app: RouterOutputs["viewer"]["integrations"]["items"][number] & {
+    credentialOwner?: CredentialOwner;
+  };
   description?: React.ReactNode;
   switchChecked?: boolean;
   switchOnClick?: (e: boolean) => void;
@@ -35,19 +37,26 @@ export default function AppCard({
       className={classNames(
         "border-subtle",
         app?.isInstalled && "mb-4 rounded-md border",
-        !app.enabled && "grayscale"
-      )}>
-      <div className={classNames(app.isInstalled ? "p-4 text-sm sm:p-4" : "px-5 py-4 text-sm sm:px-5")}>
+        !app.enabled && "grayscale",
+      )}
+    >
+      <div
+        className={classNames(app.isInstalled ? "p-4 text-sm sm:p-4" : "px-5 py-4 text-sm sm:px-5")}
+      >
         <div className="flex w-full flex-col gap-2 sm:flex-row sm:gap-0">
           {/* Don't know why but w-[42px] isn't working, started happening when I started using next/dynamic */}
           <Link
             href={"/apps/" + app.slug}
-            className={classNames(app?.isInstalled ? "mr-[11px]" : "mr-3", "h-auto w-10 rounded-sm")}>
+            className={classNames(
+              app?.isInstalled ? "mr-[11px]" : "mr-3",
+              "h-auto w-10 rounded-sm",
+            )}
+          >
             <img
               className={classNames(
                 app?.logo.includes("-dark") && "dark:invert",
                 app?.isInstalled ? "min-w-[42px]" : "min-w-[40px]",
-                "w-full"
+                "w-full",
               )}
               src={app?.logo}
               alt={app?.name}
@@ -55,7 +64,9 @@ export default function AppCard({
           </Link>
           <div className="flex flex-col pe-3">
             <div className="text-emphasis">
-              <span className={classNames(app?.isInstalled && "text-base", "font-semibold leading-4")}>
+              <span
+                className={classNames(app?.isInstalled && "text-base", "font-semibold leading-4")}
+              >
                 {app?.name}
               </span>
               {!app?.isInstalled && (
@@ -64,7 +75,10 @@ export default function AppCard({
                 </span>
               )}
             </div>
-            <p title={app?.description} className="text-default line-clamp-1 pt-1 text-sm font-normal">
+            <p
+              title={app?.description}
+              className="text-default line-clamp-1 pt-1 text-sm font-normal"
+            >
               {description || app?.description}
             </p>
           </div>

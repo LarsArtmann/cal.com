@@ -25,7 +25,10 @@ export default class AttendeeDailyVideoDownloadRecordingEmail extends BaseEmail 
     return {
       to: `${this.attendee.name} <${this.attendee.email}>`,
       from: `${this.calEvent.organizer.name} <${this.getMailerOptions().from}>`,
-      replyTo: [...this.calEvent.attendees.map(({ email }) => email), this.calEvent.organizer.email],
+      replyTo: [
+        ...this.calEvent.attendees.map(({ email }) => email),
+        this.calEvent.organizer.email,
+      ],
       subject: `${this.t("download_recording_subject", {
         title: this.calEvent.title,
         date: this.getFormattedDate(),
@@ -66,7 +69,7 @@ export default class AttendeeDailyVideoDownloadRecordingEmail extends BaseEmail 
     const inviteeTimeFormat = this.attendee.timeFormat || TimeFormat.TWELVE_HOUR;
 
     return `${this.getInviteeStart(inviteeTimeFormat)} - ${this.getInviteeEnd(inviteeTimeFormat)}, ${this.t(
-      this.getInviteeStart("dddd").toLowerCase()
+      this.getInviteeStart("dddd").toLowerCase(),
     )}, ${this.t(this.getInviteeStart("MMMM").toLowerCase())} ${this.getInviteeStart("D, YYYY")}`;
   }
 }

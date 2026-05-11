@@ -26,9 +26,9 @@ const ApiKeysView = () => {
   const { data, isLoading } = trpc.viewer.apiKeys.list.useQuery();
 
   const [apiKeyModal, setApiKeyModal] = useState(false);
-  const [apiKeyToEdit, setApiKeyToEdit] = useState<(TApiKeys & { neverExpires?: boolean }) | undefined>(
-    undefined
-  );
+  const [apiKeyToEdit, setApiKeyToEdit] = useState<
+    (TApiKeys & { neverExpires?: boolean }) | undefined
+  >(undefined);
 
   const NewApiKeyButton = () => {
     return (
@@ -38,7 +38,8 @@ const ApiKeysView = () => {
         onClick={() => {
           setApiKeyToEdit(undefined);
           setApiKeyModal(true);
-        }}>
+        }}
+      >
         {t("new_api_key")}
       </Button>
     );
@@ -86,7 +87,10 @@ const ApiKeysView = () => {
 
       <Dialog open={apiKeyModal} onOpenChange={setApiKeyModal}>
         <DialogContent type="creation">
-          <ApiKeyDialogForm handleClose={() => setApiKeyModal(false)} defaultValues={apiKeyToEdit} />
+          <ApiKeyDialogForm
+            handleClose={() => setApiKeyModal(false)}
+            defaultValues={apiKeyToEdit}
+          />
         </DialogContent>
       </Dialog>
     </>

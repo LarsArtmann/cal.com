@@ -28,7 +28,7 @@ export default function FormCard({
 } & JSX.IntrinsicElements["div"]) {
   className = classNames(
     className,
-    "flex items-center group relative w-full rounded-md p-4 border border-subtle"
+    "flex items-center group relative w-full rounded-md p-4 border border-subtle",
   );
 
   return (
@@ -38,7 +38,8 @@ export default function FormCard({
           <button
             type="button"
             className="bg-default text-muted hover:text-emphasis invisible absolute left-0 -ml-[13px] -mt-10 flex h-6 w-6 scale-0 items-center   justify-center rounded-md border p-1 transition-all hover:border-transparent  hover:shadow group-hover:visible group-hover:scale-100 "
-            onClick={() => moveUp?.fn()}>
+            onClick={() => moveUp?.fn()}
+          >
             <ArrowUp />
           </button>
         ) : null}
@@ -46,7 +47,8 @@ export default function FormCard({
           <button
             type="button"
             className="bg-default text-muted hover:text-emphasis invisible absolute left-0 -ml-[13px] -mt-2  flex h-6 w-6 scale-0 items-center justify-center rounded-md border p-1 transition-all hover:border-transparent hover:shadow group-hover:visible group-hover:scale-100"
-            onClick={() => moveDown?.fn()}>
+            onClick={() => moveDown?.fn()}
+          >
             <ArrowDown />
           </button>
         ) : null}
@@ -67,7 +69,8 @@ export default function FormCard({
               onClick={() => {
                 deleteField?.fn();
               }}
-              color="secondary">
+              color="secondary"
+            >
               <Trash2 className="text-default h-4 w-4" />
             </button>
           ) : null}

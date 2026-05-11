@@ -182,19 +182,26 @@ function buildSlotsWithDateRanges({
 
     slotStartTime =
       slotStartTime.minute() % interval !== 0
-        ? slotStartTime.startOf("hour").add(Math.ceil(slotStartTime.minute() / interval) * interval, "minute")
+        ? slotStartTime
+            .startOf("hour")
+            .add(Math.ceil(slotStartTime.minute() / interval) * interval, "minute")
         : slotStartTime;
 
     // Adding 1 minute to date ranges that end at midnight to ensure that the last slot is included
     const rangeEnd = range.end
       .add(dayjs().tz(organizerTimeZone).utcOffset(), "minutes")
-      .isSame(range.end.endOf("day").add(dayjs().tz(organizerTimeZone).utcOffset(), "minutes"), "minute")
+      .isSame(
+        range.end.endOf("day").add(dayjs().tz(organizerTimeZone).utcOffset(), "minutes"),
+        "minute",
+      )
       ? range.end.add(1, "minute")
       : range.end;
 
     slotStartTime = slotStartTime.add(offsetStart ?? 0, "minutes").tz(timeZone);
 
-    while (!slotStartTime.add(eventLength, "minutes").subtract(1, "second").utc().isAfter(rangeEnd)) {
+    while (
+      !slotStartTime.add(eventLength, "minutes").subtract(1, "second").utc().isAfter(rangeEnd)
+    ) {
       slots.push({
         time: slotStartTime,
       });
@@ -267,7 +274,7 @@ const getSlots = ({
       // initialize current day with timeZone without conversion, just parse.
       utcOffset: -dayjs.tz(dayjs(), timeZone).utcOffset(),
     },
-    workingHoursUTC
+    workingHoursUTC,
   ).filter((hours) => hours.days.includes(inviteeDate.day()));
 
   // Here we split working hour in chunks for every frequency available that can fit in whole working hours
@@ -299,7 +306,9 @@ const getSlots = ({
   });
   // an override precedes all the local working hour availability logic.
   const activeOverrides = dateOverrides.filter((override) => {
-    return dayjs.utc(override.start).isBetween(startOfInviteeDay, startOfInviteeDay.endOf("day"), null, "[)");
+    return dayjs
+      .utc(override.start)
+      .isBetween(startOfInviteeDay, startOfInviteeDay.endOf("day"), null, "[)");
   });
 
   if (activeOverrides.length) {
@@ -315,9 +324,11 @@ const getSlots = ({
       while (
         (i = computedLocalAvailability.findIndex(
           fromIndex(
-            (a) => !a.userIds?.length || (!!override.userIds[0] && a.userIds?.includes(override.userIds[0])),
-            i + 1
-          )
+            (a) =>
+              !a.userIds?.length ||
+              (!!override.userIds[0] && a.userIds?.includes(override.userIds[0])),
+            i + 1,
+          ),
         )) != -1
       ) {
         indexes.push(i);

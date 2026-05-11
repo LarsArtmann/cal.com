@@ -15,7 +15,9 @@ import { ArrowRight } from "@calcom/ui/components/icon";
 function extractDomainFromEmail(email: string) {
   let out = "";
   try {
-    const match = email.match(/^(?:.*?:\/\/)?.*?(?<root>[\w-]*(?:\.\w{2,}|\.\w{2,}\.\w{2}))(?:[/?#:]|$)/);
+    const match = email.match(
+      /^(?:.*?:\/\/)?.*?(?<root>[\w-]*(?:\.\w{2,}|\.\w{2,}\.\w{2}))(?:[/?#:]|$)/,
+    );
     out = (match && match.groups?.root) ?? "";
   } catch (ignore) {}
   return out.split(".")[0];
@@ -84,7 +86,8 @@ export const CreateANewOrganizationForm = ({ slug }: { slug?: string }) => {
             setServerErrorMessage(null);
             createOrganizationMutation.mutate(v);
           }
-        }}>
+        }}
+      >
         <div className="mb-5">
           {serverErrorMessage && (
             <div className="mb-4">
@@ -112,14 +115,14 @@ export const CreateANewOrganizationForm = ({ slug }: { slug?: string }) => {
                     newOrganizationFormMethods.setValue("adminEmail", e?.target.value.trim());
                     newOrganizationFormMethods.setValue(
                       "adminUsername",
-                      e?.target.value.split("@")[0].trim()
+                      e?.target.value.split("@")[0].trim(),
                     );
                     if (newOrganizationFormMethods.getValues("slug") === "") {
                       newOrganizationFormMethods.setValue("slug", domain);
                     }
                     newOrganizationFormMethods.setValue(
                       "name",
-                      domain.charAt(0).toUpperCase() + domain.slice(1)
+                      domain.charAt(0).toUpperCase() + domain.slice(1),
                     );
                   }}
                   autoComplete="off"
@@ -188,13 +191,15 @@ export const CreateANewOrganizationForm = ({ slug }: { slug?: string }) => {
         <div className="flex space-x-2 rtl:space-x-reverse">
           <Button
             disabled={
-              newOrganizationFormMethods.formState.isSubmitting || createOrganizationMutation.isLoading
+              newOrganizationFormMethods.formState.isSubmitting ||
+              createOrganizationMutation.isLoading
             }
             color="primary"
             EndIcon={ArrowRight}
             type="submit"
             form="createOrg"
-            className="w-full justify-center">
+            className="w-full justify-center"
+          >
             {t("continue")}
           </Button>
         </div>

@@ -4,7 +4,10 @@ import type { NextApiRequest } from "next";
 import { HttpError } from "@calcom/lib/http-error";
 import { defaultResponder } from "@calcom/lib/server";
 
-import { schemaEventTypeCreateBodyParams, schemaEventTypeReadPublic } from "~/lib/validations/event-type";
+import {
+  schemaEventTypeCreateBodyParams,
+  schemaEventTypeReadPublic,
+} from "~/lib/validations/event-type";
 
 import checkTeamEventEditPermission from "./_utils/checkTeamEventEditPermission";
 import ensureOnlyMembersAsHosts from "./_utils/ensureOnlyMembersAsHosts";
@@ -305,7 +308,8 @@ async function checkPermissions(req: NextApiRequest) {
       message: "ADMIN required for `userId`",
     });
   /* Admin users are required to pass in a userId */
-  if (isAdmin && !body.userId) throw new HttpError({ statusCode: 400, message: "`userId` required" });
+  if (isAdmin && !body.userId)
+    throw new HttpError({ statusCode: 400, message: "`userId` required" });
 }
 
 export default defaultResponder(postHandler);

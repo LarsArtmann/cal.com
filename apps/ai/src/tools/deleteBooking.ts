@@ -52,7 +52,7 @@ const cancelBookingTool = (apiKey: string) => {
           apiKey,
           id,
           reason,
-        })
+        }),
       );
     },
     name: "cancelBooking",

@@ -39,12 +39,14 @@ export const EventTypeFilter = () => {
       // Group event types by team
       const grouped = groupBy<IEventTypeFilter>(
         data.filter((el) => el.team),
-        (item) => item?.team?.name || ""
+        (item) => item?.team?.name || "",
       ); // Add the team name
       const individualEvents = data.filter((el) => !el.team);
       // push indivdual events to the start of grouped array
       setGroupedEventTypes(
-        individualEvents.length > 0 ? { user_own_event_types: individualEvents, ...grouped } : grouped
+        individualEvents.length > 0
+          ? { user_own_event_types: individualEvents, ...grouped }
+          : grouped,
       );
     },
     enabled: !!user,
@@ -89,7 +91,9 @@ export const EventTypeFilter = () => {
             </Fragment>
           ))}
         {isEmpty && (
-          <h2 className="text-default px-4 py-2 text-sm font-medium">{t("no_options_available")}</h2>
+          <h2 className="text-default px-4 py-2 text-sm font-medium">
+            {t("no_options_available")}
+          </h2>
         )}
       </div>
     </AnimatedPopover>

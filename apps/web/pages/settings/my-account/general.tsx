@@ -48,7 +48,8 @@ const GeneralQueryView = () => {
   const { t } = useLocale();
 
   const { data: user, isLoading } = trpc.viewer.me.useQuery();
-  if (isLoading) return <SkeletonLoader title={t("general")} description={t("general_description")} />;
+  if (isLoading)
+    return <SkeletonLoader title={t("general")} description={t("general_description")} />;
   if (!user) {
     throw new Error(t("something_went_wrong"));
   }
@@ -126,7 +127,8 @@ const GeneralView = ({ localeProp, user }: GeneralViewProps) => {
           timeFormat: values.timeFormat.value,
           weekStart: values.weekStart.value,
         });
-      }}>
+      }}
+    >
       <Meta title={t("general")} description={t("general_description")} />
       <Controller
         name="locale"
@@ -240,7 +242,8 @@ const GeneralView = ({ localeProp, user }: GeneralViewProps) => {
         disabled={isDisabled}
         color="primary"
         type="submit"
-        className="mt-8">
+        className="mt-8"
+      >
         <>{t("update")}</>
       </Button>
     </Form>

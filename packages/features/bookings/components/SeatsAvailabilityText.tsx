@@ -36,16 +36,19 @@ export const SeatsAvailabilityText = ({
   return (
     <span className={classNames(showExact && "lowercase")}>
       {showExact
-        ? `${availableSeats}${variant === "fraction" ? ` / ${totalSeats}` : ""} ${t("seats_available", {
-            count: availableSeats,
-          })}`
+        ? `${availableSeats}${variant === "fraction" ? ` / ${totalSeats}` : ""} ${t(
+            "seats_available",
+            {
+              count: availableSeats,
+            },
+          )}`
         : isNearlyFull
-        ? t("seats_nearly_full")
-        : isHalfFull
-        ? t("seats_half_full")
-        : t("seats_available", {
-            count: availableSeats,
-          })}
+          ? t("seats_nearly_full")
+          : isHalfFull
+            ? t("seats_half_full")
+            : t("seats_available", {
+                count: availableSeats,
+              })}
     </span>
   );
 };

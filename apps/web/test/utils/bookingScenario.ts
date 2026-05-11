@@ -156,7 +156,9 @@ function addEventTypes(eventTypes: InputEventType[], usersStore: InputUser[]) {
   // @ts-ignore
   const eventTypeMock = ({ where }) => {
     return new Promise((resolve) => {
-      const eventType = eventTypesWithUsers.find((e) => e.id === where.id) as unknown as PrismaEventType & {
+      const eventType = eventTypesWithUsers.find(
+        (e) => e.id === where.id,
+      ) as unknown as PrismaEventType & {
         users: PrismaUser[];
       };
       resolve(eventType);
@@ -214,7 +216,7 @@ async function addBookings(bookings: InputBooking[], eventTypes: InputEventType[
             title: "Test Booking Title",
             ...booking,
             eventType: eventTypes.find((eventType) => eventType.id === booking.eventTypeId),
-          })) as unknown as PrismaBooking[]
+          })) as unknown as PrismaBooking[],
       );
     });
   });
@@ -233,7 +235,7 @@ async function addWebhooks(webhooks: InputWebhook[]) {
         eventTypeId: webhook.eventTypeId || null,
         teamId: webhook.teamId || null,
       };
-    })
+    }),
   );
 }
 
@@ -255,7 +257,7 @@ function addUsers(users: InputUser[]) {
         username: `IntegrationTestUser${user.id}`,
         email: `IntegrationTestUser${user.id}@example.com`,
       };
-    }) as unknown as PrismaUser[]
+    }) as unknown as PrismaUser[],
   );
 }
 
@@ -280,12 +282,14 @@ export async function createBookingScenario(data: ScenarioData) {
         resolve(
           ({
             ...foundApp,
-            ...(foundApp?.slug ? TestData.apps[foundApp.slug as keyof typeof TestData.apps] || {} : {}),
+            ...(foundApp?.slug
+              ? TestData.apps[foundApp.slug as keyof typeof TestData.apps] || {}
+              : {}),
             enabled: true,
             createdAt: new Date(),
             updatedAt: new Date(),
             categories: [],
-          } as PrismaApp) || null
+          } as PrismaApp) || null,
         );
       });
     };
@@ -315,7 +319,7 @@ export async function createBookingScenario(data: ScenarioData) {
  * - `yearIncrement` adds the increment to current year
  */
 export const getDate = (
-  param: { dateIncrement?: number; monthIncrement?: number; yearIncrement?: number } = {}
+  param: { dateIncrement?: number; monthIncrement?: number; yearIncrement?: number } = {},
 ) => {
   let { dateIncrement, monthIncrement, yearIncrement } = param;
   dateIncrement = dateIncrement || 0;
@@ -549,7 +553,9 @@ export function getScenarioData({
         return !users.find((userToCreate) => userToCreate.id === eventTypeUser.id);
       }).length
     ) {
-      throw new Error(`EventType ${eventType.id} has users that are not present in ScenarioData["users"]`);
+      throw new Error(
+        `EventType ${eventType.id} has users that are not present in ScenarioData["users"]`,
+      );
     }
   });
   return {
@@ -621,26 +627,28 @@ export function mockSuccessfulVideoMeetingCreation({
   appStoreLookupKey = appStoreLookupKey || metadataLookupKey;
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  appStoreMock.default[appStoreLookupKey as keyof typeof appStoreMock.default].mockImplementation(() => {
-    return new Promise((resolve) => {
-      resolve({
-        lib: {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-ignore
-          VideoApiAdapter: () => ({
-            createMeeting: () => {
-              return Promise.resolve({
-                type: appStoreMetadata[metadataLookupKey as keyof typeof appStoreMetadata].type,
-                id: "MOCK_ID",
-                password: "MOCK_PASS",
-                url: `http://mock-${metadataLookupKey}.example.com`,
-              });
-            },
-          }),
-        },
+  appStoreMock.default[appStoreLookupKey as keyof typeof appStoreMock.default].mockImplementation(
+    () => {
+      return new Promise((resolve) => {
+        resolve({
+          lib: {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
+            VideoApiAdapter: () => ({
+              createMeeting: () => {
+                return Promise.resolve({
+                  type: appStoreMetadata[metadataLookupKey as keyof typeof appStoreMetadata].type,
+                  id: "MOCK_ID",
+                  password: "MOCK_PASS",
+                  url: `http://mock-${metadataLookupKey}.example.com`,
+                });
+              },
+            }),
+          },
+        });
       });
-    });
-  });
+    },
+  );
 }
 
 export function mockErrorOnVideoMeetingCreation({
@@ -675,7 +683,7 @@ export function expectWebhookToHaveBeenCalledWith(
   data: {
     triggerEvent: WebhookTriggerEvents;
     payload: { metadata: Record<string, unknown>; responses: Record<string, unknown> };
-  }
+  },
 ) {
   const fetchCalls = fetchMock.mock.calls;
   const webhookFetchCall = fetchCalls.find((call) => call[0] === subscriberUrl);
@@ -688,7 +696,10 @@ export function expectWebhookToHaveBeenCalledWith(
   console.log({ payload: parsedBody.payload });
   expect(parsedBody.triggerEvent).toBe(data.triggerEvent);
   parsedBody.payload.metadata.videoCallUrl = parsedBody.payload.metadata.videoCallUrl
-    ? parsedBody.payload.metadata.videoCallUrl.replace(/\/video\/[a-zA-Z0-9]{22}/, "/video/DYNAMIC_UID")
+    ? parsedBody.payload.metadata.videoCallUrl.replace(
+        /\/video\/[a-zA-Z0-9]{22}/,
+        "/video/DYNAMIC_UID",
+      )
     : parsedBody.payload.metadata.videoCallUrl;
   expect(parsedBody.payload.metadata).toContain(data.payload.metadata);
   expect(parsedBody.payload.responses).toEqual(data.payload.responses);
@@ -726,7 +737,7 @@ expect.extend({
       //TODO: Support email HTML parsing to target specific elements
       htmlToContain?: string;
       to: string;
-    }
+    },
   ) {
     let isHtmlContained = true;
     let isToAddressExpected = true;
