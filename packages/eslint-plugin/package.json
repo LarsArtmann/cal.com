@@ -5,8 +5,8 @@
   "sideEffects": false,
   "main": "./src/index.js",
   "dependencies": {
-    "@typescript-eslint/parser": "^8.59.2",
-    "@typescript-eslint/utils": "^8.59.2",
+    "@typescript-eslint/parser": "^8.59.3",
+    "@typescript-eslint/utils": "^8.59.3",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   },
