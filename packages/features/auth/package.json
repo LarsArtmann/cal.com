@@ -16,7 +16,7 @@
     "jose": "^6.2.3",
     "lru-cache": "^11.3.6",
     "next-auth": "^4.24.14",
-    "nodemailer": "^8.0.7",
+    "nodemailer": "^9.0.1",
     "otplib": "^13.4.0"
   },
   "authors": "Cal.com, Inc."
